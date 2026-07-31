@@ -1,202 +1,617 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Portfolio — Methodology Whitepapers | Astha Jain</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Astha Jain — Supply Chain Analytics Portfolio</title>
 <style>
-:root{--s0:#f9f9f7;--s1:#fcfcfb;--ink:#0b0b0b;--sec:#52514e;--muted:#898781;--grid:#e1e0d9;--border:rgba(11,11,11,.10);--blue:#2a78d6;--aqua:#1baf7a;}
+/* ── Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg:       #070c19;
+  --surface:  #0e1526;
+  --card:     #131d30;
+  --card-h:   #192440;
+  --border:   rgba(99,102,241,.15);
+  --border-s: rgba(99,102,241,.30);
+  --ind:      #6366f1;
+  --ind-l:    #818cf8;
+  --ind-d:    #4f46e5;
+  --em:       #10b981;
+  --am:       #f59e0b;
+  --rose:     #f43f5e;
+  --t1:       #e2e8f0;
+  --t2:       #94a3b8;
+  --t3:       #64748b;
+  --t4:       #475569;
+  --glow:     rgba(99,102,241,.12);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.65;background:var(--s0);color:var(--ink);}
-header{background:var(--s1);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px;}
-header h1{font-size:18px;font-weight:800;} header .sub{font-size:12px;color:var(--sec);margin-top:2px;}
-header .links{margin-left:auto;display:flex;gap:12px;}
-header .links a{color:var(--blue);font-size:12px;font-weight:600;text-decoration:none;} header .links a:hover{text-decoration:underline;}
-.hero{background:var(--blue);color:#fff;padding:40px 32px;}
-.hero h2{font-size:26px;font-weight:800;margin-bottom:8px;}
-.hero p{font-size:14px;opacity:.88;max-width:680px;line-height:1.6;}
-.hero .scale-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
-.hero .pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:600;}
-main{max-width:900px;margin:0 auto;padding:40px 32px;}
-.project-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px;}
-.project-card .tag{display:inline-block;background:#e0eeff;color:var(--blue);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:999px;margin-bottom:12px;}
-.project-card h3{font-size:18px;font-weight:800;margin-bottom:8px;}
-.project-card .meta{font-size:12px;color:var(--muted);margin-bottom:16px;}
-.project-card .abstract{font-size:13px;color:var(--sec);margin-bottom:20px;}
-.section-hed{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px;}
-.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
-.method-item{background:var(--s0);border-radius:6px;padding:10px 12px;}
-.method-item .mi-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
-.method-item .mi-val{font-size:12px;color:var(--sec);}
-.results-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
-.result-stat{background:var(--s0);border-left:3px solid var(--aqua);border-radius:0 6px 6px 0;padding:8px 12px;}
-.result-stat .rs-val{font-size:18px;font-weight:800;color:var(--ink);}
-.result-stat .rs-lbl{font-size:10px;color:var(--muted);margin-top:2px;}
-.card-footer{display:flex;gap:12px;align-items:center;border-top:1px solid var(--grid);padding-top:16px;margin-top:4px;}
-.card-footer a{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:5px;font-size:12px;font-weight:600;text-decoration:none;}
-.btn-primary{background:var(--blue);color:#fff;} .btn-primary:hover{background:#256abf;}
-.btn-ghost{background:transparent;color:var(--blue);border:1px solid var(--blue);} .btn-ghost:hover{background:#e0eeff;}
-.lessons{font-size:12px;color:var(--sec);}
-.lessons li{margin-bottom:6px;padding-left:4px;}
-footer{margin-top:40px;padding:24px 32px;border-top:1px solid var(--grid);font-size:12px;color:var(--muted);text-align:center;}
-footer a{color:var(--blue);text-decoration:none;} footer a:hover{text-decoration:underline;}
-@media(max-width:640px){.method-grid,.results-row{grid-template-columns:1fr;} main{padding:24px 16px;} .hero{padding:28px 16px;}}
+html{scroll-behavior:smooth;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(7,12,25,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 8px;
+  height: 56px;
+}
+.nav-brand {
+  font-size: 15px; font-weight: 800; letter-spacing: -.02em;
+  color: var(--t1); margin-right: 24px; white-space: nowrap;
+}
+.nav-brand span { color: var(--ind-l); }
+.nav-items { display: flex; align-items: center; gap: 4px; flex: 1; }
+.nav-link {
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  transition: color .15s, background .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--t1); background: rgba(255,255,255,.06); }
+
+/* ── Dropdowns ──────────────────────────────────────────────────── */
+.dropdown { position: relative; }
+.dropdown-toggle {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  cursor: pointer; transition: color .15s, background .15s;
+  user-select: none; white-space: nowrap;
+}
+.dropdown-toggle:hover { color: var(--t1); background: rgba(255,255,255,.06); }
+.dropdown-toggle svg { width:10px;height:10px;transition:transform .2s; }
+.dropdown:hover .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #1a2540;
+  border: 1px solid var(--border-s);
+  border-radius: 10px; padding: 6px;
+  min-width: 220px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .18s, transform .18s, visibility .18s;
+}
+.dropdown:hover .dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+}
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--t2);
+  transition: background .12s, color .12s;
+}
+.dropdown-item:hover { background: rgba(99,102,241,.12); color: var(--t1); }
+.dropdown-item .di-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.dropdown-item .di-text .di-label { font-weight: 600; color: var(--t1); font-size: 12px; }
+.dropdown-item .di-text .di-sub { font-size: 10px; color: var(--t3); margin-top: 1px; }
+.dropdown-divider { height: 1px; background: var(--border); margin: 5px 2px; }
+
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.nav-badge {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border-s); color: var(--ind-l);
+  transition: background .15s, border-color .15s;
+}
+.nav-badge:hover { background: var(--glow); border-color: var(--ind); }
+.nav-cta {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  background: var(--ind); color: #fff;
+  transition: background .15s;
+}
+.nav-cta:hover { background: var(--ind-d); }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 80px 32px 64px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(99,102,241,.1); border: 1px solid var(--border-s);
+  border-radius: 999px; padding: 4px 14px;
+  font-size: 11px; font-weight: 700; color: var(--ind-l);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-eyebrow::before { content:""; width:6px;height:6px;border-radius:50%;background:var(--ind-l);animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1 {
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 800; line-height: 1.08; letter-spacing: -.03em;
+  color: var(--t1); margin-bottom: 20px;
+}
+.hero h1 .accent { color: var(--ind-l); }
+.hero .tagline {
+  font-size: 17px; color: var(--t2); max-width: 600px;
+  line-height: 1.65; margin-bottom: 36px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--ind); color: #fff; }
+.btn-primary:hover { background: var(--ind-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
+.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-s); }
+.btn-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── Stats bar ──────────────────────────────────────────────────── */
+.stats-bar {
+  display: flex; flex-wrap: wrap; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  background: var(--surface);
+}
+.stat-item {
+  flex: 1; min-width: 140px; padding: 18px 24px;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-val { font-size: 22px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.stat-lbl { font-size: 11px; color: var(--t3); margin-top: 3px; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ── Section ────────────────────────────────────────────────────── */
+section { max-width: 1100px; margin: 0 auto; padding: 0 32px 80px; }
+.section-header { margin-bottom: 32px; }
+.section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind-l); margin-bottom: 8px;
+}
+.section-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.section-sub { font-size: 14px; color: var(--t2); margin-top: 6px; }
+
+/* ── Project grid ───────────────────────────────────────────────── */
+.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.project-card:hover {
+  border-color: var(--border-s);
+  box-shadow: 0 0 0 1px rgba(99,102,241,.1), 0 24px 48px rgba(0,0,0,.4);
+  transform: translateY(-2px);
+}
+.project-card.featured { grid-column: 1 / -1; flex-direction: row; gap: 32px; }
+.project-card.featured .card-body { flex: 1; }
+.project-card.featured .card-sidebar {
+  width: 260px; flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.card-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-ind { background: rgba(99,102,241,.12); color: var(--ind-l); }
+.tag-em  { background: rgba(16,185,129,.12); color: #34d399; }
+.tag-am  { background: rgba(245,158,11,.12); color: #fbbf24; }
+.tag-rose{ background: rgba(244,63,94,.12);  color: #fb7185; }
+
+.card-title { font-size: 16px; font-weight: 700; color: var(--t1); line-height: 1.3; }
+.card-meta  { font-size: 11px; color: var(--t3); margin-top: 4px; }
+.card-desc  { font-size: 13px; color: var(--t2); line-height: 1.6; }
+
+.method-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.method-pill {
+  padding: 3px 9px; border-radius: 5px;
+  font-size: 10px; font-weight: 600; color: var(--t3);
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06);
+}
+
+.metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px;
+  flex: 1; min-width: 90px;
+}
+.metric .m-val { font-size: 17px; font-weight: 800; color: var(--t1); }
+.metric .m-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+
+.card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+.ca-primary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 7px;
+  font-size: 11px; font-weight: 700;
+  background: var(--ind); color: #fff;
+  transition: background .15s, box-shadow .15s;
+}
+.ca-primary:hover { background: var(--ind-d); box-shadow: 0 4px 16px rgba(99,102,241,.4); }
+.ca-ghost {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 14px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: var(--t2);
+  border: 1px solid var(--border-s);
+  transition: border-color .15s, color .15s;
+}
+.ca-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── Sidebar metrics (featured card) ────────────────────────────── */
+.sidebar-metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+}
+.sidebar-metric .sm-val { font-size: 22px; font-weight: 800; color: var(--t1); }
+.sidebar-metric .sm-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+.sidebar-metric .sm-delta { font-size: 11px; font-weight: 600; color: var(--em); margin-top: 4px; }
+
+/* ── Skills section ─────────────────────────────────────────────── */
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.skill-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+}
+.skill-card .sk-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ind-l); margin-bottom: 8px; }
+.skill-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.skill-pill {
+  padding: 3px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 500; color: var(--t2);
+  background: rgba(255,255,255,.05);
+}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px; margin-top: 20px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 12px; color: var(--t3);
+  max-width: 1100px; margin: 20px auto 0;
+}
+footer a { color: var(--t2); transition: color .12s; }
+footer a:hover { color: var(--ind-l); }
+.footer-note { margin-left: auto; }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .project-grid { grid-template-columns: 1fr; }
+  .project-card.featured { flex-direction: column; }
+  .project-card.featured .card-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .stats-bar { flex-direction: row; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+}
+@media (max-width: 600px) {
+  .hero { padding: 48px 20px 40px; }
+  section { padding: 0 20px 60px; }
+  .navbar { padding: 0 16px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .nav-items .dropdown:not(:first-child) { display: none; }
+}
 </style>
 </head>
 <body>
-<header>
-  <div>
-    <h1>Astha Jain — Portfolio</h1>
-    <div class="sub">Demand Planning &amp; Forecasting Science · Supply Chain Analytics</div>
-  </div>
-  <div class="links">
-    <a href="https://linkedin.com/in/ajwalmart12" target="_blank">LinkedIn</a>
-    <a href="https://github.com/ajwalmart12" target="_blank">GitHub</a>
-  </div>
-</header>
 
+<!-- ── Navbar ──────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <span class="nav-brand">AJ<span> · Portfolio</span></span>
+
+  <div class="nav-items">
+    <!-- Dashboards dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">
+        Dashboards
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://ajwalmart12.github.io/forecast-governance/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">📊</div>
+          <div class="di-text">
+            <div class="di-label">Forecast Governance</div>
+            <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://ajwalmart12.github.io/forecast-accuracy/">
+          <div class="di-icon" style="background:rgba(16,185,129,.15)">🎯</div>
+          <div class="di-text">
+            <div class="di-label">Forecast Accuracy</div>
+            <div class="di-sub">FOM recap · Bias by category · SOT adjustments</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://ajwalmart12.github.io/seasonal-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">📅</div>
+          <div class="di-text">
+            <div class="di-label">Seasonal Planning</div>
+            <div class="di-sub">Scenario modeling · Event risk · Lift analysis</div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://ajwalmart12.github.io/replenishment-risk/">
+          <div class="di-icon" style="background:rgba(244,63,94,.15)">⚡</div>
+          <div class="di-text">
+            <div class="di-label">Replenishment Risk</div>
+            <div class="di-sub">RISM violations · Safety stock · Recovery tracking</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://ajwalmart12.github.io/pricing-demand-response/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">💹</div>
+          <div class="di-text">
+            <div class="di-label">Price & Promotion Response</div>
+            <div class="di-sub">Elasticity modeling · Lift attribution · Causal inference</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Resumes dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">
+        Resumes
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="resumes/resume-industry-senior-ic.html" target="_blank">
+          <div class="di-icon" style="background:rgba(16,185,129,.15)">💻</div>
+          <div class="di-text">
+            <div class="di-label">Industry / Senior IC</div>
+            <div class="di-sub">Data science & analytics roles</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="resumes/resume-leadership-director.html" target="_blank">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">🏢</div>
+          <div class="di-text">
+            <div class="di-label">Leadership / Director+</div>
+            <div class="di-sub">VP Supply Chain & Analytics</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="resumes/resume-consulting-strategy.html" target="_blank">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">📈</div>
+          <div class="di-text">
+            <div class="di-label">Consulting / Strategy</div>
+            <div class="di-sub">McKinsey · BCG · Oliver Wyman</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="resumes/resume-grad-school.html" target="_blank">
+          <div class="di-icon" style="background:rgba(244,63,94,.15)">🎓</div>
+          <div class="di-text">
+            <div class="di-label">PhD / MS Programs</div>
+            <div class="di-sub">OR · Supply Chain · Data Science</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link" href="#skills">Skills</a>
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-badge" href="https://linkedin.com/in/ajwalmart12" target="_blank">LinkedIn ↗</a>
+    <a class="nav-badge" href="https://github.com/ajwalmart12" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
 <div class="hero">
-  <h2>Methodology Whitepapers</h2>
-  <p>Five case studies from high-volume retail demand planning and supply chain analytics. Each describes a production system — problem framing, methodology, results, and lessons. All figures are illustrative.</p>
-  <div class="scale-pills">
-    <span class="pill">5B+ units/month</span>
-    <span class="pill">4,500+ stores</span>
-    <span class="pill">50K+ weekly anomaly signals</span>
-    <span class="pill">$400M+ inventory informed</span>
-    <span class="pill">Food &amp; Grocery SBU</span>
+  <div class="hero-eyebrow">Available for opportunities</div>
+  <h1>Astha Jain<br><span class="accent">Supply Chain Analytics</span></h1>
+  <p class="tagline">Senior Manager II at Walmart US — building forecasting systems, S&OP governance frameworks, and causal inference models that operate at billion-unit scale.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#projects">View Projects →</a>
+    <a class="btn btn-ghost" href="resumes/resume-industry-senior-ic.html" target="_blank">Download Resume</a>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">5–10B</div>
+      <div class="stat-lbl">Units / month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">4,500+</div>
+      <div class="stat-lbl">Stores covered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">50K+</div>
+      <div class="stat-lbl">Weekly signals triaged</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$400M+</div>
+      <div class="stat-lbl">Inventory informed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">MIT</div>
+      <div class="stat-lbl">Supply Chain MicroMasters</div>
+    </div>
   </div>
 </div>
 
-<main>
-
-<!-- ── Paper 1 ─────────────────────────────────────────────────── -->
-<div class="project-card">
-  <div class="tag">Forecast Governance</div>
-  <h3>Forecast Governance &amp; Inventory Risk: Anomaly Prioritization at Scale</h3>
-  <div class="meta">Domain: S&OP · Anomaly Detection · Bias Correction &nbsp;|&nbsp; Tools: SQL, Python, BigQuery</div>
-  <p class="abstract">A centralized governance framework for triaging 50,000+ weekly forecast anomalies in high-volume retail. The framework corrected structural under-forecasting from −20% to near-neutral and flagged $7M+ in anomalous manual overrides, enabling a shift from reactive to proactive risk management.</p>
-
-  <div class="section-hed">Methodology</div>
-  <div class="method-grid">
-    <div class="method-item"><div class="mi-label">Anomaly Scoring</div><div class="mi-val">Multi-axis composite: volume exposure, directional risk, recurrence pattern</div></div>
-    <div class="method-item"><div class="mi-label">Override Governance</div><div class="mi-val">Magnitude thresholding + reason-code accountability + escalation routing</div></div>
-    <div class="method-item"><div class="mi-label">Bias Correction</div><div class="mi-val">Daily-granularity bias monitoring with root-cause attribution + post-processing</div></div>
-    <div class="method-item"><div class="mi-label">Triage Architecture</div><div class="mi-val">Priority-ranked weekly queue; planner workflow redesign</div></div>
+<!-- ── Projects ─────────────────────────────────────────────────── -->
+<section id="projects">
+  <div class="section-header">
+    <div class="section-label">Portfolio</div>
+    <div class="section-title">Selected Projects</div>
+    <div class="section-sub">Each is a live interactive dashboard with illustrative demo data — click to explore.</div>
   </div>
 
-  <div class="section-hed">Key Results</div>
-  <div class="results-row">
-    <div class="result-stat"><div class="rs-val">50K+</div><div class="rs-lbl">Weekly signals triaged</div></div>
-    <div class="result-stat"><div class="rs-val">−20% → 0</div><div class="rs-lbl">Bias corrected</div></div>
-    <div class="result-stat"><div class="rs-val">$7M+</div><div class="rs-lbl">Anomalous overrides flagged</div></div>
-    <div class="result-stat"><div class="rs-val">Proactive</div><div class="rs-lbl">Risk posture shift</div></div>
+  <div class="project-grid">
+
+    <!-- Featured: Forecast Governance -->
+    <div class="project-card featured">
+      <div class="card-body">
+        <div style="margin-bottom:12px"><span class="card-tag tag-ind">Flagship Project</span></div>
+        <div class="card-title" style="font-size:20px">Forecast Governance & Inventory Risk</div>
+        <div class="card-meta">S&OP · Anomaly Detection · Bias Correction · Override Governance</div>
+        <p class="card-desc" style="margin-top:12px">Centralized anomaly governance framework for triaging 50K+ weekly forecast signals. Corrected structural under-forecasting from −20% bias to near-neutral. Flagged $7M+ in anomalous manual overrides using a composite risk-scoring engine.</p>
+        <div class="method-pills" style="margin-top:12px">
+          <span class="method-pill">Multi-axis anomaly scoring</span>
+          <span class="method-pill">Daily bias monitoring pipeline</span>
+          <span class="method-pill">Override accountability framework</span>
+          <span class="method-pill">Priority-ranked triage queue</span>
+          <span class="method-pill">SQL · Python · BigQuery</span>
+        </div>
+        <div class="card-actions" style="margin-top:20px">
+          <a class="ca-primary" href="https://ajwalmart12.github.io/forecast-governance/">🖥 View Dashboard →</a>
+          <a class="ca-ghost" href="https://ajwalmart12.github.io/forecast-governance/rism_impact_tracker/">RISM Tracker</a>
+          <a class="ca-ghost" href="https://ajwalmart12.github.io/forecast-governance/price_change_tracker/">Price Tracker</a>
+        </div>
+      </div>
+      <div class="card-sidebar">
+        <div class="sidebar-metric">
+          <div class="sm-val">50K+</div>
+          <div class="sm-lbl">Weekly signals triaged</div>
+        </div>
+        <div class="sidebar-metric">
+          <div class="sm-val">−20% → 0</div>
+          <div class="sm-lbl">Bias corrected</div>
+          <div class="sm-delta">↑ Structural fix</div>
+        </div>
+        <div class="sidebar-metric">
+          <div class="sm-val">$7M+</div>
+          <div class="sm-lbl">Overrides flagged</div>
+        </div>
+        <div class="sidebar-metric">
+          <div class="sm-val">5 tabs</div>
+          <div class="sm-lbl">Interactive dashboard</div>
+          <div class="sm-delta">+ 2 sub-dashboards</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forecast Accuracy -->
+    <div class="project-card">
+      <div><span class="card-tag tag-em">ML / Statistical Modeling</span></div>
+      <div>
+        <div class="card-title">Forecast Accuracy at Scale</div>
+        <div class="card-meta">Time Series · XGBoost/LightGBM · Hierarchical Reconciliation</div>
+      </div>
+      <p class="card-desc">Hybrid ensemble combining gradient-boosted trees with statistical baselines. Daily bias monitoring pipeline, stockout-adjusted demand reconstruction, and bottom-up reconciliation across 4,500+ store locations.</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val">5–10B</div><div class="m-lbl">Units/month</div></div>
+        <div class="metric"><div class="m-val">−20%→0</div><div class="m-lbl">Bias</div></div>
+        <div class="metric"><div class="m-val">4 tabs</div><div class="m-lbl">Dashboard</div></div>
+      </div>
+      <div class="card-actions">
+        <a class="ca-primary" href="https://ajwalmart12.github.io/forecast-accuracy/">🖥 View Dashboard →</a>
+      </div>
+    </div>
+
+    <!-- Seasonal Planning -->
+    <div class="project-card">
+      <div><span class="card-tag tag-am">Event Forecasting</span></div>
+      <div>
+        <div class="card-title">Seasonal & Event Demand Planning</div>
+        <div class="card-meta">Scenario Modeling · Risk Framework · Pre-event Positioning</div>
+      </div>
+      <p class="card-desc">Bear/Base/Bull scenario framework for major retail events. Dynamic probability updates from leading indicators. Tiered risk escalation protocol with staged inventory commitment optionality.</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val">$292M+</div><div class="m-lbl">Error reduction</div></div>
+        <div class="metric"><div class="m-val">3</div><div class="m-lbl">Scenarios</div></div>
+        <div class="metric"><div class="m-val">4 tabs</div><div class="m-lbl">Dashboard</div></div>
+      </div>
+      <div class="card-actions">
+        <a class="ca-primary" href="https://ajwalmart12.github.io/seasonal-planning/">🖥 View Dashboard →</a>
+      </div>
+    </div>
+
+    <!-- Replenishment Risk -->
+    <div class="project-card">
+      <div><span class="card-tag tag-rose">Replenishment Risk</span></div>
+      <div>
+        <div class="card-title">Macro-Economic Demand Signal Monitoring</div>
+        <div class="card-meta">Policy Impact · Multi-wave Monitoring · Causal Attribution</div>
+      </div>
+      <p class="card-desc">Multi-wave demand monitoring during federal SNAP policy changes across 24 states. Difference-in-differences design to isolate policy-driven demand from baseline. Confidence-weighted decision packages for leadership.</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val">970M+</div><div class="m-lbl">Units tracked</div></div>
+        <div class="metric"><div class="m-val">24</div><div class="m-lbl">States</div></div>
+        <div class="metric"><div class="m-val">DiD</div><div class="m-lbl">Causal design</div></div>
+      </div>
+      <div class="card-actions">
+        <a class="ca-primary" href="https://ajwalmart12.github.io/replenishment-risk/">🖥 View Dashboard →</a>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="project-card">
+      <div><span class="card-tag tag-ind">Econometrics</span></div>
+      <div>
+        <div class="card-title">Pricing & Promotion Demand Response</div>
+        <div class="card-meta">Causal Inference · Price Elasticity · Promotional Lift Attribution</div>
+      </div>
+      <p class="card-desc">Instrumental variables + DiD framework to isolate true price-demand causal relationships. Decomposes promotional lift into price reduction, display, and visibility components. Guided $400M+ in inventory investment.</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val">$400M+</div><div class="m-lbl">Inventory guided</div></div>
+        <div class="metric"><div class="m-val">IV + DiD</div><div class="m-lbl">Causal ID</div></div>
+        <div class="metric"><div class="m-val">−1.42</div><div class="m-lbl">Avg elasticity</div></div>
+      </div>
+      <div class="card-actions">
+        <a class="ca-primary" href="https://ajwalmart12.github.io/pricing-demand-response/">🖥 View Dashboard →</a>
+      </div>
+    </div>
+
   </div>
+</section>
 
-  <div class="section-hed">Lessons</div>
-  <ul class="lessons">
-    <li>Governance before optimization: a well-governed mediocre model outperforms an unmonitored excellent one.</li>
-    <li>Granularity reveals what aggregates hide — daily bias was invisible at weekly rollup.</li>
-    <li>Anomaly triage is a product design problem as much as a data science one.</li>
-  </ul>
-
-  <div class="card-footer">
-    <a href="forecast-governance/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
-    <a href="forecast-governance/rism_impact_tracker/index.html" class="btn-ghost">RISM Tracker</a>
-    <a href="forecast-governance/price_change_tracker/index.html" class="btn-ghost">Price Tracker</a>
+<!-- ── Skills ────────────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="section-header">
+    <div class="section-label">Competencies</div>
+    <div class="section-title">Technical Skills</div>
   </div>
-</div>
-
-<!-- ── Paper 2 ─────────────────────────────────────────────────── -->
-<div class="project-card">
-  <div class="tag">Forecast Accuracy</div>
-  <h3>Forecast Accuracy at Scale: Hybrid ML &amp; Statistical Approaches for Retail Demand</h3>
-  <div class="meta">Domain: Time Series · Machine Learning · Replenishment &nbsp;|&nbsp; Tools: Python, XGBoost, BigQuery ML</div>
-  <p class="abstract">A hybrid ensemble approach combining gradient-boosting models with statistical baselines (ETS, ARIMA) to improve daily-level forecast accuracy across thousands of SKUs and 4,500+ store locations. Bias monitoring pipeline, demand signal reconstruction, and hierarchical reconciliation delivered sustained accuracy gains.</p>
-
-  <div class="section-hed">Methodology</div>
-  <div class="method-grid">
-    <div class="method-item"><div class="mi-label">Ensemble Architecture</div><div class="mi-val">XGBoost/LightGBM + ETS/ARIMA, dynamic weight adjustment by rolling error</div></div>
-    <div class="method-item"><div class="mi-label">Bias Pipeline</div><div class="mi-val">Daily-granularity ME tracking by category, store cluster, event window</div></div>
-    <div class="method-item"><div class="mi-label">Signal Reconstruction</div><div class="mi-val">Stockout-adjusted demand via store-cluster analogues + velocity trends</div></div>
-    <div class="method-item"><div class="mi-label">Hierarchical Reconciliation</div><div class="mi-val">Bottom-up reconciliation: item-location → store → region → network</div></div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="sk-cat">Modeling & Statistics</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Time Series Forecasting</span>
+        <span class="skill-pill">Causal Inference</span>
+        <span class="skill-pill">XGBoost / LightGBM</span>
+        <span class="skill-pill">Hierarchical Reconciliation</span>
+        <span class="skill-pill">DiD / IV Methods</span>
+        <span class="skill-pill">Anomaly Detection</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Tools & Infrastructure</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">SQL</span>
+        <span class="skill-pill">BigQuery</span>
+        <span class="skill-pill">BigQuery ML</span>
+        <span class="skill-pill">dbt</span>
+        <span class="skill-pill">Airflow</span>
+        <span class="skill-pill">Looker</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Domain Expertise</div>
+      <div class="skill-pills">
+        <span class="skill-pill">S&OP Governance</span>
+        <span class="skill-pill">Demand Planning</span>
+        <span class="skill-pill">Replenishment</span>
+        <span class="skill-pill">Inventory Optimization</span>
+        <span class="skill-pill">Price Elasticity</span>
+        <span class="skill-pill">Event Forecasting</span>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="section-hed">Key Results</div>
-  <div class="results-row">
-    <div class="result-stat"><div class="rs-val">5–10B</div><div class="rs-lbl">Units/month covered</div></div>
-    <div class="result-stat"><div class="rs-val">Near-0</div><div class="rs-lbl">Structural bias (from −20%)</div></div>
-    <div class="result-stat"><div class="rs-val">↑ In-stock</div><div class="rs-lbl">Inventory productivity</div></div>
-    <div class="result-stat"><div class="rs-val">Hybrid &gt; ML</div><div class="rs-lbl">During high-volatility events</div></div>
-  </div>
-
-  <div class="card-footer">
-    <a href="forecast-accuracy/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
-  </div>
-</div>
-
-<!-- ── Paper 3 ─────────────────────────────────────────────────── -->
-<div class="project-card">
-  <div class="tag">Seasonal Planning</div>
-  <h3>Seasonal &amp; Event-Driven Demand Planning: Enterprise Risk Framework for High-Volatility Retail</h3>
-  <div class="meta">Domain: Event Forecasting · Scenario Modeling · Risk Management &nbsp;|&nbsp; Tools: Python, SQL, BigQuery</div>
-  <p class="abstract">A pre-event demand risk framework combining scenario modeling, risk-adjusted inventory positioning, and structured escalation protocols. Delivered hundreds of millions in forecast error reduction across major retail events by shifting from reactive to proactive event planning.</p>
-
-  <div class="section-hed">Methodology</div>
-  <div class="method-grid">
-    <div class="method-item"><div class="mi-label">Event Profiling</div><div class="mi-val">Historical demand shape library: pre-event pull, peak lift, post-event correction by category</div></div>
-    <div class="method-item"><div class="mi-label">Scenario Modeling</div><div class="mi-val">Bear / Base / Bull case with dynamic weekly probability updates from leading signals</div></div>
-    <div class="method-item"><div class="mi-label">Risk Framework</div><div class="mi-val">Tiered escalation: Yellow / Red / Critical flags with cross-functional protocols</div></div>
-    <div class="method-item"><div class="mi-label">Staged Commitment</div><div class="mi-val">Incremental inventory optionality based on confidence-weighted decision packages</div></div>
-  </div>
-
-  <div class="section-hed">Key Results</div>
-  <div class="results-row">
-    <div class="result-stat"><div class="rs-val">$292M+</div><div class="rs-lbl">Forecast error reduction</div></div>
-    <div class="result-stat"><div class="rs-val">Proactive</div><div class="rs-lbl">Pre-event vs. reactive</div></div>
-    <div class="result-stat"><div class="rs-val">Weekly</div><div class="rs-lbl">Scenario refresh cadence</div></div>
-    <div class="result-stat"><div class="rs-val">Multi-wave</div><div class="rs-lbl">Event demand shape captured</div></div>
-  </div>
-
-  <div class="card-footer">
-    <a href="seasonal-planning/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
-  </div>
-</div>
-
-<!-- ── Papers 4 & 5 collapsed ─────────────────────────────────── -->
-<div class="project-card">
-  <div class="tag">Replenishment Risk</div>
-  <h3>Replenishment Risk &amp; Macro-Economic Demand Signals</h3>
-  <div class="meta">Domain: Replenishment · Policy Impact · Demand Monitoring &nbsp;|&nbsp; Tools: Python, SQL, BigQuery</div>
-  <p class="abstract">Multi-wave demand monitoring framework for policy-driven demand shocks. Covered 970M+ units across 24 states during federal SNAP policy changes, providing leadership with data-backed confidence to prevent costly reactive inventory decisions.</p>
-  <div class="results-row">
-    <div class="result-stat"><div class="rs-val">970M+</div><div class="rs-lbl">Units monitored</div></div>
-    <div class="result-stat"><div class="rs-val">24</div><div class="rs-lbl">States tracked</div></div>
-    <div class="result-stat"><div class="rs-val">Real-time</div><div class="rs-lbl">Daily signal updates</div></div>
-  </div>
-  <div class="card-footer">
-    <a href="forecast-governance/rism_impact_tracker/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
-  </div>
-</div>
-
-<div class="project-card">
-  <div class="tag">Pricing & Promotion</div>
-  <h3>Pricing &amp; Promotion Demand Response Modeling</h3>
-  <div class="meta">Domain: Econometrics · Causal Inference · Promotional Lift &nbsp;|&nbsp; Tools: Python, SQL, BigQuery</div>
-  <p class="abstract">Causal inference framework for price elasticity and promotional lift estimation. Used instrumental variables and difference-in-differences designs to isolate true demand response. Guided $400M+ in strategic inventory investments.</p>
-  <div class="results-row">
-    <div class="result-stat"><div class="rs-val">$400M+</div><div class="rs-lbl">Inventory guided</div></div>
-    <div class="result-stat"><div class="rs-val">IV + DiD</div><div class="rs-lbl">Causal identification</div></div>
-    <div class="result-stat"><div class="rs-val">15–30%</div><div class="rs-lbl">Elasticity correction vs. OLS</div></div>
-  </div>
-  <div class="card-footer">
-    <a href="forecast-governance/price_change_tracker/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
-  </div>
-</div>
-
-</main>
+<!-- ── Footer ────────────────────────────────────────────────────── -->
 <footer>
-  <a href="https://linkedin.com/in/ajwalmart12" target="_blank">LinkedIn</a> &nbsp;·&nbsp;
-  <a href="https://github.com/ajwalmart12" target="_blank">GitHub</a> &nbsp;·&nbsp;
-  All figures are illustrative demo data &nbsp;·&nbsp; © Astha Jain 2026
+  <strong style="color:var(--t1)">Astha Jain</strong>
+  <span>·</span>
+  <a href="https://linkedin.com/in/ajwalmart12" target="_blank">LinkedIn</a>
+  <span>·</span>
+  <a href="https://github.com/ajwalmart12" target="_blank">GitHub</a>
+  <span>·</span>
+  <a href="mailto:astha_jain@outlook.com">astha_jain@outlook.com</a>
+  <div class="footer-note">All dashboard data is illustrative. © 2026 Astha Jain</div>
 </footer>
+
 </body>
 </html>

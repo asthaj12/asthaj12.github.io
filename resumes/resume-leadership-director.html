@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Astha Jain — Resume (Director / VP Leadership)</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 9.6pt;
+      line-height: 1.38;
+      color: #1a1a1a;
+      background: #fff;
+    }
+
+    .page {
+      max-width: 8.5in;
+      margin: 0 auto;
+      padding: 0.45in 0.58in 0.38in;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 7px;
+      border-bottom: 1.8px solid #2a78d6;
+      margin-bottom: 8px;
+    }
+    header .left h1 {
+      font-size: 21pt;
+      font-weight: 800;
+      letter-spacing: 0.025em;
+      color: #111;
+      line-height: 1;
+    }
+    header .left .version-tag {
+      font-size: 7.2pt;
+      color: #2a78d6;
+      font-variant: small-caps;
+      letter-spacing: 0.07em;
+      margin-top: 3px;
+      font-weight: 600;
+    }
+    header .right {
+      text-align: right;
+      font-size: 8.2pt;
+      color: #444;
+      line-height: 1.6;
+    }
+    header .right a {
+      color: #2a78d6;
+      text-decoration: none;
+    }
+
+    /* ── Section ── */
+    section {
+      margin-bottom: 7px;
+    }
+    .section-title {
+      font-size: 7.4pt;
+      font-variant: small-caps;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      font-weight: 700;
+      color: #2a78d6;
+      border-bottom: 0.8px solid #c5d8f0;
+      padding-bottom: 2px;
+      margin-bottom: 5px;
+    }
+
+    /* ── Summary ── */
+    .summary {
+      font-size: 9.1pt;
+      line-height: 1.45;
+      color: #232323;
+    }
+
+    /* ── Competencies ── */
+    .competencies {
+      font-size: 8.6pt;
+      color: #333;
+      line-height: 1.6;
+    }
+    .competencies strong {
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* ── Experience ── */
+    .job {
+      margin-bottom: 7px;
+    }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .job-title {
+      font-weight: 700;
+      font-size: 9.4pt;
+      color: #111;
+    }
+    .job-date {
+      font-size: 8.2pt;
+      color: #555;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .job-org {
+      font-size: 8.3pt;
+      color: #444;
+      margin-top: 1px;
+      margin-bottom: 3px;
+    }
+    .job-org em {
+      font-style: normal;
+      color: #777;
+    }
+    .award {
+      font-size: 7.9pt;
+      color: #2a78d6;
+      font-style: italic;
+      margin-bottom: 2px;
+    }
+    ul {
+      padding-left: 1.05em;
+    }
+    li {
+      font-size: 9.1pt;
+      margin-bottom: 2px;
+      line-height: 1.38;
+    }
+
+    /* ── Education ── */
+    .edu-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+    .edu-left .edu-degree {
+      font-weight: 600;
+      font-size: 9.1pt;
+    }
+    .edu-left .edu-school {
+      font-size: 8.3pt;
+      color: #444;
+    }
+    .edu-date {
+      font-size: 8.2pt;
+      color: #555;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Selected Work ── */
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .project-item {
+      font-size: 8.8pt;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .project-name {
+      font-weight: 600;
+      color: #111;
+      min-width: 220px;
+    }
+    .project-item a {
+      color: #2a78d6;
+      text-decoration: none;
+      font-size: 8.2pt;
+    }
+    .project-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Print ── */
+    @media print {
+      @page {
+        size: letter;
+        margin: 0.42in 0.5in;
+      }
+      body {
+        font-size: 9.6pt;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        padding: 0;
+        max-width: none;
+      }
+      header {
+        border-bottom-color: #888 !important;
+      }
+      .section-title {
+        color: #1a1a1a !important;
+        border-bottom-color: #aaa !important;
+      }
+      header .left .version-tag { color: #555 !important; }
+      a { color: #222 !important; text-decoration: none !important; }
+      header .right a { color: #222 !important; }
+      .project-item a { color: #222 !important; }
+      .award { color: #333 !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="left">
+      <h1>Astha Jain</h1>
+      <div class="version-tag">Director &amp; VP-Level Supply Chain &nbsp;/&nbsp; Demand Planning Leadership</div>
+    </div>
+    <div class="right">
+      astha_jain@outlook.com<br>
+      <a href="https://linkedin.com/in/ajwalmart12">linkedin.com/in/ajwalmart12</a><br>
+      <a href="https://github.com/ajwalmart12">github.com/ajwalmart12</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="section-title">Summary</div>
+      <p class="summary">
+        Strategic supply chain leader with a track record of governing enterprise-scale demand planning operations and aligning cross-functional organizations around commercial outcomes. Led S&OP and forecast governance for Walmart's Food &amp; Grocery SBU — one of the highest-volume planning environments in global retail — with direct accountability for $400M+ in strategic inventory decisions across 4,593 stores. Builds the frameworks, processes, and stakeholder relationships that enable planning teams to operate with rigor at scale.
+      </p>
+    </section>
+
+    <section>
+      <div class="section-title">Core Competencies</div>
+      <div class="competencies">
+        S&OP Governance &middot; Commercial Strategy &middot; Risk Management &middot; Cross-functional Leadership &middot; Demand Forecasting &middot; Inventory Optimization &middot; Organizational Influence &middot; Executive Communication &middot; Supplier &amp; Carrier Partnership
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Experience</div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Senior Manager II, Demand Planning — Food &amp; Grocery SBU</span>
+          <span class="job-date">Oct 2023 – Present</span>
+        </div>
+        <div class="job-org">Walmart US &nbsp;<em>· Retail &middot; Bentonville, AR</em></div>
+        <div class="award">&#9733; Making a Difference Award — cross-functional forecast improvement initiative</div>
+        <ul>
+          <li>Led demand planning governance for the Food &amp; Grocery SBU — 4,593 stores, 5–10B monthly units — setting forecast strategy, owning S&OP cadence, and aligning merchandising, finance, and supply chain leadership on inventory positioning decisions exceeding $400M.</li>
+          <li>Designed and institutionalized a forecast governance and risk-escalation framework that surfaced $7.6M in anomalous manual override activity, preventing systemic forecast degradation and establishing accountability standards across planning teams.</li>
+          <li>Directed organizational response to a 970M-unit SNAP policy shift across 24 states, coordinating cross-functional alignment between supply chain, merchandising, and government affairs to realign inventory strategy with zero service disruption.</li>
+          <li>Led a high-visibility forecast improvement initiative that eliminated $292M in peak-event forecast error and corrected chronic bias from &minus;20% to near-neutral — recognized with the Making a Difference Award for enterprise-wide impact.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Senior Transportation Demand Planner</span>
+          <span class="job-date">Feb 2022 – May 2023</span>
+        </div>
+        <div class="job-org">Shopify Logistics &nbsp;<em>· E-Commerce &middot; San Francisco, CA</em></div>
+        <div class="award">&#9733; Five consecutive performance recognitions for cross-functional impact</div>
+        <ul>
+          <li>Built and led commercial planning strategy across Shopify's logistics network (85 warehouses, 12 carrier partners, ~1M+ monthly orders, $1.1B GMV), establishing demand forecasting as a core commercial capability from the ground up.</li>
+          <li>Drove initiatives that reduced merchant stockout rates by 15% and generated $2M in incremental merchant revenue through improved inventory positioning and carrier routing alignment — directly contributing to platform retention and GMV growth.</li>
+          <li>Managed external carrier and warehouse relationships; earned five performance recognitions for cross-functional execution, stakeholder alignment, and consistent delivery against business targets.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Global Supply Product Planner</span>
+          <span class="job-date">Mar 2020 – Feb 2022</span>
+        </div>
+        <div class="job-org">Logitech Inc. &nbsp;<em>· Consumer Electronics &middot; Newark, CA</em></div>
+        <ul>
+          <li>Oversaw supply planning for a ~$400M global consumer electronics portfolio; led cross-regional S&OP alignment across international markets to improve finished-goods availability by 40% — driving measurable revenue protection and margin improvement.</li>
+          <li>Championed a supply risk reduction program that decreased expedite and air freight spend by ~$200K annually; presented findings to senior leadership and secured cross-functional commitment to revised inventory governance standards.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Sourcing Engineer</span>
+          <span class="job-date">Sep 2018 – Jan 2020</span>
+        </div>
+        <div class="job-org">Cummins Inc. &nbsp;<em>· Automotive &middot; Columbus, IN</em></div>
+        <ul>
+          <li>Managed sourcing relationships across 800+ global suppliers for 15+ engine lines; led a supplier risk governance initiative that reduced average supply disruption recovery time from 16 to 6 weeks, meaningfully improving production continuity.</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <section>
+      <div class="section-title">Education</div>
+      <div class="edu-row">
+        <div class="edu-left">
+          <div class="edu-degree">MicroMasters in Supply Chain Management</div>
+          <div class="edu-school">Massachusetts Institute of Technology (MIT)</div>
+        </div>
+        <div class="edu-date">2025</div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-left">
+          <div class="edu-degree">B.S. Mechanical Engineering &nbsp;·&nbsp; Engineering Leadership Development Minor</div>
+          <div class="edu-school">Pennsylvania State University</div>
+        </div>
+        <div class="edu-date">2018</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Selected Work &amp; Portfolio</div>
+      <div class="project-list">
+        <div class="project-item">
+          <span class="project-name">Forecast Governance &amp; Inventory Risk</span>
+          <a href="https://github.com/ajwalmart12/forecast-governance">github.com/ajwalmart12/forecast-governance</a>
+        </div>
+        <div class="project-item">
+          <span class="project-name">Forecast Accuracy Modeling</span>
+          <a href="https://github.com/ajwalmart12/forecast-accuracy">github.com/ajwalmart12/forecast-accuracy</a>
+        </div>
+        <div class="project-item">
+          <span class="project-name">Seasonal Planning System</span>
+          <a href="https://github.com/ajwalmart12/seasonal-planning">github.com/ajwalmart12/seasonal-planning</a>
+        </div>
+        <div class="project-item">
+          <span class="project-name">Replenishment Risk Analysis</span>
+          <a href="https://github.com/ajwalmart12/replenishment-risk">github.com/ajwalmart12/replenishment-risk</a>
+        </div>
+        <div class="project-item">
+          <span class="project-name">Pricing Demand Response</span>
+          <a href="https://github.com/ajwalmart12/pricing-demand-response">github.com/ajwalmart12/pricing-demand-response</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>
