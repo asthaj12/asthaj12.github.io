@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Portfolio — Methodology Whitepapers | Astha Jain</title>
+<style>
+:root{--s0:#f9f9f7;--s1:#fcfcfb;--ink:#0b0b0b;--sec:#52514e;--muted:#898781;--grid:#e1e0d9;--border:rgba(11,11,11,.10);--blue:#2a78d6;--aqua:#1baf7a;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.65;background:var(--s0);color:var(--ink);}
+header{background:var(--s1);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px;}
+header h1{font-size:18px;font-weight:800;} header .sub{font-size:12px;color:var(--sec);margin-top:2px;}
+header .links{margin-left:auto;display:flex;gap:12px;}
+header .links a{color:var(--blue);font-size:12px;font-weight:600;text-decoration:none;} header .links a:hover{text-decoration:underline;}
+.hero{background:var(--blue);color:#fff;padding:40px 32px;}
+.hero h2{font-size:26px;font-weight:800;margin-bottom:8px;}
+.hero p{font-size:14px;opacity:.88;max-width:680px;line-height:1.6;}
+.hero .scale-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.hero .pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:600;}
+main{max-width:900px;margin:0 auto;padding:40px 32px;}
+.project-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px;}
+.project-card .tag{display:inline-block;background:#e0eeff;color:var(--blue);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:999px;margin-bottom:12px;}
+.project-card h3{font-size:18px;font-weight:800;margin-bottom:8px;}
+.project-card .meta{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.project-card .abstract{font-size:13px;color:var(--sec);margin-bottom:20px;}
+.section-hed{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.method-item{background:var(--s0);border-radius:6px;padding:10px 12px;}
+.method-item .mi-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
+.method-item .mi-val{font-size:12px;color:var(--sec);}
+.results-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+.result-stat{background:var(--s0);border-left:3px solid var(--aqua);border-radius:0 6px 6px 0;padding:8px 12px;}
+.result-stat .rs-val{font-size:18px;font-weight:800;color:var(--ink);}
+.result-stat .rs-lbl{font-size:10px;color:var(--muted);margin-top:2px;}
+.card-footer{display:flex;gap:12px;align-items:center;border-top:1px solid var(--grid);padding-top:16px;margin-top:4px;}
+.card-footer a{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:5px;font-size:12px;font-weight:600;text-decoration:none;}
+.btn-primary{background:var(--blue);color:#fff;} .btn-primary:hover{background:#256abf;}
+.btn-ghost{background:transparent;color:var(--blue);border:1px solid var(--blue);} .btn-ghost:hover{background:#e0eeff;}
+.lessons{font-size:12px;color:var(--sec);}
+.lessons li{margin-bottom:6px;padding-left:4px;}
+footer{margin-top:40px;padding:24px 32px;border-top:1px solid var(--grid);font-size:12px;color:var(--muted);text-align:center;}
+footer a{color:var(--blue);text-decoration:none;} footer a:hover{text-decoration:underline;}
+@media(max-width:640px){.method-grid,.results-row{grid-template-columns:1fr;} main{padding:24px 16px;} .hero{padding:28px 16px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Astha Jain — Portfolio</h1>
+    <div class="sub">Demand Planning &amp; Forecasting Science · Supply Chain Analytics</div>
+  </div>
+  <div class="links">
+    <a href="https://linkedin.com/in/ajwalmart12" target="_blank">LinkedIn</a>
+    <a href="https://github.com/ajwalmart12" target="_blank">GitHub</a>
+  </div>
+</header>
+
+<div class="hero">
+  <h2>Methodology Whitepapers</h2>
+  <p>Five case studies from high-volume retail demand planning and supply chain analytics. Each describes a production system — problem framing, methodology, results, and lessons. All figures are illustrative.</p>
+  <div class="scale-pills">
+    <span class="pill">5B+ units/month</span>
+    <span class="pill">4,500+ stores</span>
+    <span class="pill">50K+ weekly anomaly signals</span>
+    <span class="pill">$400M+ inventory informed</span>
+    <span class="pill">Food &amp; Grocery SBU</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ── Paper 1 ─────────────────────────────────────────────────── -->
+<div class="project-card">
+  <div class="tag">Forecast Governance</div>
+  <h3>Forecast Governance &amp; Inventory Risk: Anomaly Prioritization at Scale</h3>
+  <div class="meta">Domain: S&OP · Anomaly Detection · Bias Correction &nbsp;|&nbsp; Tools: SQL, Python, BigQuery</div>
+  <p class="abstract">A centralized governance framework for triaging 50,000+ weekly forecast anomalies in high-volume retail. The framework corrected structural under-forecasting from −20% to near-neutral and flagged $7M+ in anomalous manual overrides, enabling a shift from reactive to proactive risk management.</p>
+
+  <div class="section-hed">Methodology</div>
+  <div class="method-grid">
+    <div class="method-item"><div class="mi-label">Anomaly Scoring</div><div class="mi-val">Multi-axis composite: volume exposure, directional risk, recurrence pattern</div></div>
+    <div class="method-item"><div class="mi-label">Override Governance</div><div class="mi-val">Magnitude thresholding + reason-code accountability + escalation routing</div></div>
+    <div class="method-item"><div class="mi-label">Bias Correction</div><div class="mi-val">Daily-granularity bias monitoring with root-cause attribution + post-processing</div></div>
+    <div class="method-item"><div class="mi-label">Triage Architecture</div><div class="mi-val">Priority-ranked weekly queue; planner workflow redesign</div></div>
+  </div>
+
+  <div class="section-hed">Key Results</div>
+  <div class="results-row">
+    <div class="result-stat"><div class="rs-val">50K+</div><div class="rs-lbl">Weekly signals triaged</div></div>
+    <div class="result-stat"><div class="rs-val">−20% → 0</div><div class="rs-lbl">Bias corrected</div></div>
+    <div class="result-stat"><div class="rs-val">$7M+</div><div class="rs-lbl">Anomalous overrides flagged</div></div>
+    <div class="result-stat"><div class="rs-val">Proactive</div><div class="rs-lbl">Risk posture shift</div></div>
+  </div>
+
+  <div class="section-hed">Lessons</div>
+  <ul class="lessons">
+    <li>Governance before optimization: a well-governed mediocre model outperforms an unmonitored excellent one.</li>
+    <li>Granularity reveals what aggregates hide — daily bias was invisible at weekly rollup.</li>
+    <li>Anomaly triage is a product design problem as much as a data science one.</li>
+  </ul>
+
+  <div class="card-footer">
+    <a href="forecast-governance/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
+    <a href="forecast-governance/rism_impact_tracker/index.html" class="btn-ghost">RISM Tracker</a>
+    <a href="forecast-governance/price_change_tracker/index.html" class="btn-ghost">Price Tracker</a>
+  </div>
+</div>
+
+<!-- ── Paper 2 ─────────────────────────────────────────────────── -->
+<div class="project-card">
+  <div class="tag">Forecast Accuracy</div>
+  <h3>Forecast Accuracy at Scale: Hybrid ML &amp; Statistical Approaches for Retail Demand</h3>
+  <div class="meta">Domain: Time Series · Machine Learning · Replenishment &nbsp;|&nbsp; Tools: Python, XGBoost, BigQuery ML</div>
+  <p class="abstract">A hybrid ensemble approach combining gradient-boosting models with statistical baselines (ETS, ARIMA) to improve daily-level forecast accuracy across thousands of SKUs and 4,500+ store locations. Bias monitoring pipeline, demand signal reconstruction, and hierarchical reconciliation delivered sustained accuracy gains.</p>
+
+  <div class="section-hed">Methodology</div>
+  <div class="method-grid">
+    <div class="method-item"><div class="mi-label">Ensemble Architecture</div><div class="mi-val">XGBoost/LightGBM + ETS/ARIMA, dynamic weight adjustment by rolling error</div></div>
+    <div class="method-item"><div class="mi-label">Bias Pipeline</div><div class="mi-val">Daily-granularity ME tracking by category, store cluster, event window</div></div>
+    <div class="method-item"><div class="mi-label">Signal Reconstruction</div><div class="mi-val">Stockout-adjusted demand via store-cluster analogues + velocity trends</div></div>
+    <div class="method-item"><div class="mi-label">Hierarchical Reconciliation</div><div class="mi-val">Bottom-up reconciliation: item-location → store → region → network</div></div>
+  </div>
+
+  <div class="section-hed">Key Results</div>
+  <div class="results-row">
+    <div class="result-stat"><div class="rs-val">5–10B</div><div class="rs-lbl">Units/month covered</div></div>
+    <div class="result-stat"><div class="rs-val">Near-0</div><div class="rs-lbl">Structural bias (from −20%)</div></div>
+    <div class="result-stat"><div class="rs-val">↑ In-stock</div><div class="rs-lbl">Inventory productivity</div></div>
+    <div class="result-stat"><div class="rs-val">Hybrid &gt; ML</div><div class="rs-lbl">During high-volatility events</div></div>
+  </div>
+
+  <div class="card-footer">
+    <a href="forecast-accuracy/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
+  </div>
+</div>
+
+<!-- ── Paper 3 ─────────────────────────────────────────────────── -->
+<div class="project-card">
+  <div class="tag">Seasonal Planning</div>
+  <h3>Seasonal &amp; Event-Driven Demand Planning: Enterprise Risk Framework for High-Volatility Retail</h3>
+  <div class="meta">Domain: Event Forecasting · Scenario Modeling · Risk Management &nbsp;|&nbsp; Tools: Python, SQL, BigQuery</div>
+  <p class="abstract">A pre-event demand risk framework combining scenario modeling, risk-adjusted inventory positioning, and structured escalation protocols. Delivered hundreds of millions in forecast error reduction across major retail events by shifting from reactive to proactive event planning.</p>
+
+  <div class="section-hed">Methodology</div>
+  <div class="method-grid">
+    <div class="method-item"><div class="mi-label">Event Profiling</div><div class="mi-val">Historical demand shape library: pre-event pull, peak lift, post-event correction by category</div></div>
+    <div class="method-item"><div class="mi-label">Scenario Modeling</div><div class="mi-val">Bear / Base / Bull case with dynamic weekly probability updates from leading signals</div></div>
+    <div class="method-item"><div class="mi-label">Risk Framework</div><div class="mi-val">Tiered escalation: Yellow / Red / Critical flags with cross-functional protocols</div></div>
+    <div class="method-item"><div class="mi-label">Staged Commitment</div><div class="mi-val">Incremental inventory optionality based on confidence-weighted decision packages</div></div>
+  </div>
+
+  <div class="section-hed">Key Results</div>
+  <div class="results-row">
+    <div class="result-stat"><div class="rs-val">$292M+</div><div class="rs-lbl">Forecast error reduction</div></div>
+    <div class="result-stat"><div class="rs-val">Proactive</div><div class="rs-lbl">Pre-event vs. reactive</div></div>
+    <div class="result-stat"><div class="rs-val">Weekly</div><div class="rs-lbl">Scenario refresh cadence</div></div>
+    <div class="result-stat"><div class="rs-val">Multi-wave</div><div class="rs-lbl">Event demand shape captured</div></div>
+  </div>
+
+  <div class="card-footer">
+    <a href="seasonal-planning/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
+  </div>
+</div>
+
+<!-- ── Papers 4 & 5 collapsed ─────────────────────────────────── -->
+<div class="project-card">
+  <div class="tag">Replenishment Risk</div>
+  <h3>Replenishment Risk &amp; Macro-Economic Demand Signals</h3>
+  <div class="meta">Domain: Replenishment · Policy Impact · Demand Monitoring &nbsp;|&nbsp; Tools: Python, SQL, BigQuery</div>
+  <p class="abstract">Multi-wave demand monitoring framework for policy-driven demand shocks. Covered 970M+ units across 24 states during federal SNAP policy changes, providing leadership with data-backed confidence to prevent costly reactive inventory decisions.</p>
+  <div class="results-row">
+    <div class="result-stat"><div class="rs-val">970M+</div><div class="rs-lbl">Units monitored</div></div>
+    <div class="result-stat"><div class="rs-val">24</div><div class="rs-lbl">States tracked</div></div>
+    <div class="result-stat"><div class="rs-val">Real-time</div><div class="rs-lbl">Daily signal updates</div></div>
+  </div>
+  <div class="card-footer">
+    <a href="forecast-governance/rism_impact_tracker/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
+  </div>
+</div>
+
+<div class="project-card">
+  <div class="tag">Pricing & Promotion</div>
+  <h3>Pricing &amp; Promotion Demand Response Modeling</h3>
+  <div class="meta">Domain: Econometrics · Causal Inference · Promotional Lift &nbsp;|&nbsp; Tools: Python, SQL, BigQuery</div>
+  <p class="abstract">Causal inference framework for price elasticity and promotional lift estimation. Used instrumental variables and difference-in-differences designs to isolate true demand response. Guided $400M+ in strategic inventory investments.</p>
+  <div class="results-row">
+    <div class="result-stat"><div class="rs-val">$400M+</div><div class="rs-lbl">Inventory guided</div></div>
+    <div class="result-stat"><div class="rs-val">IV + DiD</div><div class="rs-lbl">Causal identification</div></div>
+    <div class="result-stat"><div class="rs-val">15–30%</div><div class="rs-lbl">Elasticity correction vs. OLS</div></div>
+  </div>
+  <div class="card-footer">
+    <a href="forecast-governance/price_change_tracker/index.html" class="btn-primary">🖥 View Dashboard Demo</a>
+  </div>
+</div>
+
+</main>
+<footer>
+  <a href="https://linkedin.com/in/ajwalmart12" target="_blank">LinkedIn</a> &nbsp;·&nbsp;
+  <a href="https://github.com/ajwalmart12" target="_blank">GitHub</a> &nbsp;·&nbsp;
+  All figures are illustrative demo data &nbsp;·&nbsp; © Astha Jain 2026
+</footer>
+</body>
+</html>
