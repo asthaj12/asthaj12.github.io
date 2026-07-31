@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Astha Jain — Supply Chain Analytics Portfolio</title>
+<title>Astha Jain — Operations Planning & Product Strategy</title>
 <style>
 /* ── Tokens ─────────────────────────────────────────────────────── */
 :root {
@@ -277,6 +277,16 @@ footer a { color: var(--t2); transition: color .12s; }
 footer a:hover { color: var(--ind-l); }
 .footer-note { margin-left: auto; }
 
+/* ── Confidentiality banner ─────────────────────────────────────── */
+.confidentiality-banner {
+  background: #f1f5f9;
+  border-bottom: 1px solid #cbd5e1;
+  padding: 10px 32px;
+  font-size: 11px;
+  color: #475569;
+  text-align: center;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .project-grid { grid-template-columns: 1fr; }
@@ -297,6 +307,10 @@ footer a:hover { color: var(--ind-l); }
 </head>
 <body>
 
+<div class="confidentiality-banner">
+  <strong>Independent portfolio case study.</strong> All data, company names, product identifiers, operating assumptions and results shown here are synthetic or materially transformed. This project does not reproduce any employer's data, systems, models or confidential business processes.
+</div>
+
 <!-- ── Navbar ──────────────────────────────────────────────────── -->
 <nav class="navbar">
   <span class="nav-brand">AJ<span> · Portfolio</span></span>
@@ -316,71 +330,18 @@ footer a:hover { color: var(--ind-l); }
             <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
           </div>
         </a>
-        <a class="dropdown-item" href="https://ajwalmart12.github.io/forecast-accuracy/">
-          <div class="di-icon" style="background:rgba(16,185,129,.15)">🎯</div>
-          <div class="di-text">
-            <div class="di-label">Forecast Accuracy</div>
-            <div class="di-sub">Period recap · Bias by category · Planner adjustments</div>
-          </div>
-        </a>
         <a class="dropdown-item" href="https://ajwalmart12.github.io/seasonal-planning/">
           <div class="di-icon" style="background:rgba(245,158,11,.15)">📅</div>
           <div class="di-text">
-            <div class="di-label">Seasonal Planning</div>
-            <div class="di-sub">Scenario modeling · Event risk · Lift analysis</div>
-          </div>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="https://ajwalmart12.github.io/replenishment-risk/">
-          <div class="di-icon" style="background:rgba(244,63,94,.15)">⚡</div>
-          <div class="di-text">
-            <div class="di-label">Replenishment Risk</div>
-            <div class="di-sub">Safety stock violations · Safety stock · Recovery tracking</div>
+            <div class="di-label">Scenario Planning</div>
+            <div class="di-sub">Scenario modeling · Inventory commitment · Event risk</div>
           </div>
         </a>
         <a class="dropdown-item" href="https://ajwalmart12.github.io/pricing-demand-response/">
           <div class="di-icon" style="background:rgba(99,102,241,.15)">💹</div>
           <div class="di-text">
-            <div class="di-label">Price & Promotion Response</div>
-            <div class="di-sub">Elasticity modeling · Lift attribution · Causal inference</div>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Resumes dropdown -->
-    <div class="dropdown">
-      <div class="dropdown-toggle">
-        Resumes
-        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
-      </div>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="resumes/resume-industry-senior-ic.html" target="_blank">
-          <div class="di-icon" style="background:rgba(16,185,129,.15)">💻</div>
-          <div class="di-text">
-            <div class="di-label">Industry / Senior IC</div>
-            <div class="di-sub">Data science & analytics roles</div>
-          </div>
-        </a>
-        <a class="dropdown-item" href="resumes/resume-leadership-director.html" target="_blank">
-          <div class="di-icon" style="background:rgba(99,102,241,.15)">🏢</div>
-          <div class="di-text">
-            <div class="di-label">Leadership / Director+</div>
-            <div class="di-sub">VP Supply Chain & Analytics</div>
-          </div>
-        </a>
-        <a class="dropdown-item" href="resumes/resume-consulting-strategy.html" target="_blank">
-          <div class="di-icon" style="background:rgba(245,158,11,.15)">📈</div>
-          <div class="di-text">
-            <div class="di-label">Consulting / Strategy</div>
-            <div class="di-sub">McKinsey · BCG · Oliver Wyman</div>
-          </div>
-        </a>
-        <a class="dropdown-item" href="resumes/resume-grad-school.html" target="_blank">
-          <div class="di-icon" style="background:rgba(244,63,94,.15)">🎓</div>
-          <div class="di-text">
-            <div class="di-label">PhD / MS Programs</div>
-            <div class="di-sub">OR · Supply Chain · Data Science</div>
+            <div class="di-label">Pricing & Demand Response</div>
+            <div class="di-sub">Elasticity modeling · Lift attribution · Demand response</div>
           </div>
         </a>
       </div>
@@ -399,8 +360,8 @@ footer a:hover { color: var(--ind-l); }
 <!-- ── Hero ────────────────────────────────────────────────────── -->
 <div class="hero">
   <div class="hero-eyebrow">Available for opportunities</div>
-  <h1>Astha Jain<br><span class="accent">Supply Chain Analytics</span></h1>
-  <p class="tagline">Senior Manager II at Walmart US — building forecasting systems, S&OP governance frameworks, and causal inference models that operate at billion-unit scale.</p>
+  <h1>Astha Jain<br><span class="accent">Operations Planning & Product Strategy</span></h1>
+  <p class="tagline">Building demand, capacity and scenario-planning systems that translate uncertain signals into executable business decisions.</p>
   <div class="hero-actions">
     <a class="btn btn-primary" href="#projects">View Projects →</a>
     <a class="btn btn-ghost" href="resumes/resume-industry-senior-ic.html" target="_blank">Download Resume</a>
@@ -408,20 +369,20 @@ footer a:hover { color: var(--ind-l); }
 
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-val">5–10B</div>
-      <div class="stat-lbl">Units / month</div>
+      <div class="stat-val">Multi-B</div>
+      <div class="stat-lbl">Units / month scale</div>
     </div>
     <div class="stat-item">
-      <div class="stat-val">4,500+</div>
-      <div class="stat-lbl">Stores covered</div>
+      <div class="stat-val">National</div>
+      <div class="stat-lbl">Multi-location network</div>
     </div>
     <div class="stat-item">
-      <div class="stat-val">50K+</div>
-      <div class="stat-lbl">Weekly signals triaged</div>
+      <div class="stat-val">Tens of K</div>
+      <div class="stat-lbl">Weekly exceptions</div>
     </div>
     <div class="stat-item">
-      <div class="stat-val">$400M+</div>
-      <div class="stat-lbl">Inventory informed</div>
+      <div class="stat-val">Nine-fig.</div>
+      <div class="stat-lbl">Inventory decisions</div>
     </div>
     <div class="stat-item">
       <div class="stat-val">MIT</div>
@@ -444,9 +405,10 @@ footer a:hover { color: var(--ind-l); }
     <div class="project-card featured">
       <div class="card-body">
         <div style="margin-bottom:12px"><span class="card-tag tag-ind">Flagship Project</span></div>
-        <div class="card-title" style="font-size:20px">Forecast Governance & Inventory Risk</div>
+        <div class="card-title" style="font-size:20px">Forecast Governance & Decision Control</div>
         <div class="card-meta">S&OP · Anomaly Detection · Bias Correction · Override Governance</div>
-        <p class="card-desc" style="margin-top:12px">Centralized anomaly governance framework for triaging 50K+ weekly forecast signals. Corrected structural under-forecasting from −20% bias to near-neutral. Flagged $7M+ in anomalous manual overrides using a composite risk-scoring engine.</p>
+        <p class="card-desc" style="margin-top:12px">Centralized anomaly governance framework for triaging tens of thousands of weekly forecast exceptions. Corrected structural under-forecasting from material underforecast toward neutral. Identified multimillion-dollar override exposure using a composite risk-scoring engine.</p>
+        <p style="font-style:italic;font-size:12px;color:var(--t3);margin-top:8px"><em>My contribution:</em> Defined the planning problem, designed the analytical framework, developed the synthetic prototype, selected the success metrics and translated model outputs into operating recommendations.</p>
         <div class="method-pills" style="margin-top:12px">
           <span class="method-pill">Multi-axis anomaly scoring</span>
           <span class="method-pill">Daily bias monitoring pipeline</span>
@@ -462,17 +424,17 @@ footer a:hover { color: var(--ind-l); }
       </div>
       <div class="card-sidebar">
         <div class="sidebar-metric">
-          <div class="sm-val">50K+</div>
-          <div class="sm-lbl">Weekly signals triaged</div>
+          <div class="sm-val">Tens of K</div>
+          <div class="sm-lbl">Weekly exceptions triaged</div>
         </div>
         <div class="sidebar-metric">
-          <div class="sm-val">−20% → 0</div>
-          <div class="sm-lbl">Bias corrected</div>
+          <div class="sm-val">Material → ~0</div>
+          <div class="sm-lbl">Underforecast corrected</div>
           <div class="sm-delta">↑ Structural fix</div>
         </div>
         <div class="sidebar-metric">
-          <div class="sm-val">$7M+</div>
-          <div class="sm-lbl">Overrides flagged</div>
+          <div class="sm-val">Multi-M+</div>
+          <div class="sm-lbl">Override exposure flagged</div>
         </div>
         <div class="sidebar-metric">
           <div class="sm-val">5 tabs</div>
@@ -482,34 +444,17 @@ footer a:hover { color: var(--ind-l); }
       </div>
     </div>
 
-    <!-- Forecast Accuracy -->
-    <div class="project-card">
-      <div><span class="card-tag tag-em">ML / Statistical Modeling</span></div>
-      <div>
-        <div class="card-title">Forecast Accuracy at Scale</div>
-        <div class="card-meta">Time Series · XGBoost/LightGBM · Hierarchical Reconciliation</div>
-      </div>
-      <p class="card-desc">Hybrid ensemble combining gradient-boosted trees with statistical baselines. Daily bias monitoring pipeline, stockout-adjusted demand reconstruction, and bottom-up reconciliation across 4,500+ store locations.</p>
-      <div class="metric-row">
-        <div class="metric"><div class="m-val">5–10B</div><div class="m-lbl">Units/month</div></div>
-        <div class="metric"><div class="m-val">−20%→0</div><div class="m-lbl">Bias</div></div>
-        <div class="metric"><div class="m-val">4 tabs</div><div class="m-lbl">Dashboard</div></div>
-      </div>
-      <div class="card-actions">
-        <a class="ca-primary" href="https://ajwalmart12.github.io/forecast-accuracy/">🖥 View Dashboard →</a>
-      </div>
-    </div>
-
-    <!-- Seasonal Planning -->
+    <!-- Scenario Planning & Inventory Commitment -->
     <div class="project-card">
       <div><span class="card-tag tag-am">Event Forecasting</span></div>
       <div>
-        <div class="card-title">Seasonal & Event Demand Planning</div>
+        <div class="card-title">Scenario Planning & Inventory Commitment</div>
         <div class="card-meta">Scenario Modeling · Risk Framework · Pre-event Positioning</div>
       </div>
       <p class="card-desc">Bear/Base/Bull scenario framework for major retail events. Dynamic probability updates from leading indicators. Tiered risk escalation protocol with staged inventory commitment optionality.</p>
+      <p style="font-style:italic;font-size:12px;color:var(--t3);margin-top:8px"><em>My contribution:</em> Defined the planning problem, designed the analytical framework, developed the synthetic prototype, selected the success metrics and translated model outputs into operating recommendations.</p>
       <div class="metric-row">
-        <div class="metric"><div class="m-val">$292M+</div><div class="m-lbl">Error reduction</div></div>
+        <div class="metric"><div class="m-val">Nine-fig.</div><div class="m-lbl">Forecast-error opportunity</div></div>
         <div class="metric"><div class="m-val">3</div><div class="m-lbl">Scenarios</div></div>
         <div class="metric"><div class="m-val">4 tabs</div><div class="m-lbl">Dashboard</div></div>
       </div>
@@ -518,35 +463,18 @@ footer a:hover { color: var(--ind-l); }
       </div>
     </div>
 
-    <!-- Replenishment Risk -->
-    <div class="project-card">
-      <div><span class="card-tag tag-rose">Replenishment Risk</span></div>
-      <div>
-        <div class="card-title">Macro-Economic Demand Signal Monitoring</div>
-        <div class="card-meta">Policy Impact · Multi-wave Monitoring · Causal Attribution</div>
-      </div>
-      <p class="card-desc">Multi-wave demand monitoring during federal SNAP policy changes across 24 states. Difference-in-differences design to isolate policy-driven demand from baseline. Confidence-weighted decision packages for leadership.</p>
-      <div class="metric-row">
-        <div class="metric"><div class="m-val">970M+</div><div class="m-lbl">Units tracked</div></div>
-        <div class="metric"><div class="m-val">24</div><div class="m-lbl">States</div></div>
-        <div class="metric"><div class="m-val">DiD</div><div class="m-lbl">Causal design</div></div>
-      </div>
-      <div class="card-actions">
-        <a class="ca-primary" href="https://ajwalmart12.github.io/replenishment-risk/">🖥 View Dashboard →</a>
-      </div>
-    </div>
-
-    <!-- Pricing -->
+    <!-- Pricing & Demand Response -->
     <div class="project-card">
       <div><span class="card-tag tag-ind">Econometrics</span></div>
       <div>
-        <div class="card-title">Pricing & Promotion Demand Response</div>
-        <div class="card-meta">Causal Inference · Price Elasticity · Promotional Lift Attribution</div>
+        <div class="card-title">Pricing & Demand Response</div>
+        <div class="card-meta">Price Elasticity · Promotional Lift Attribution · Demand Analysis</div>
       </div>
-      <p class="card-desc">Instrumental variables + DiD framework to isolate true price-demand causal relationships. Decomposes promotional lift into price reduction, display, and visibility components. Guided $400M+ in inventory investment.</p>
+      <p class="card-desc">Observed demand response and elasticity estimation to isolate price-demand relationships. Decomposes promotional lift into price reduction, display, and visibility components. Informed nine-figure inventory decisions.</p>
+      <p style="font-style:italic;font-size:12px;color:var(--t3);margin-top:8px"><em>My contribution:</em> Defined the planning problem, designed the analytical framework, developed the synthetic prototype, selected the success metrics and translated model outputs into operating recommendations.</p>
       <div class="metric-row">
-        <div class="metric"><div class="m-val">$400M+</div><div class="m-lbl">Inventory guided</div></div>
-        <div class="metric"><div class="m-val">IV + DiD</div><div class="m-lbl">Causal ID</div></div>
+        <div class="metric"><div class="m-val">Nine-fig.</div><div class="m-lbl">Inventory guided</div></div>
+        <div class="metric"><div class="m-val">Elasticity</div><div class="m-lbl">Demand model</div></div>
         <div class="metric"><div class="m-val">−1.42</div><div class="m-lbl">Avg elasticity</div></div>
       </div>
       <div class="card-actions">
