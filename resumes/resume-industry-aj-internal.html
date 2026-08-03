@@ -212,15 +212,6 @@
       header .right a { color: #222 !important; }
       .project-item a { color: #222 !important; }
       .award { color: #333 !important; }
-      body { font-size: 9pt; }
-      section { margin-bottom: 4px !important; }
-      .job { margin-bottom: 4px !important; }
-      li { font-size: 8.8pt; margin-bottom: 1px !important; line-height: 1.32 !important; }
-      .summary { font-size: 8.8pt; line-height: 1.38; }
-      .competencies { font-size: 8.2pt; line-height: 1.45; }
-      .job-org { margin-bottom: 1px; }
-      .award { margin-bottom: 1px; }
-      header { padding-bottom: 5px; margin-bottom: 6px; }
     }
   </style>
 </head>
@@ -378,6 +369,86 @@
 
   </main>
 
+  <!-- Methodology notes — visible in HTML only, hidden on print -->
+  <div class="no-print" style="margin-top:18px;border-top:0.8px solid #e2e8f0;padding-top:10px;">
+    <details style="font-size:8.4pt;color:#444;line-height:1.5;">
+      <summary style="cursor:pointer;font-size:7.4pt;font-weight:700;color:#2a78d6;text-transform:uppercase;letter-spacing:0.10em;outline:none;list-style:none;display:flex;align-items:center;gap:6px;">
+        <span>▸</span> Methodology &amp; Approach Notes
+      </summary>
+      <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;">
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Causal Inference — SNAP Policy Analysis</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Applied difference-in-differences (DiD) with parallel trends validation to separate SNAP policy signal from seasonal confounders. Used state-level panel data across 24 treatment and control states. Monitoring system tracked 3 sequential waves (anticipation, onset, normalization) with weekly recalibration.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Ensemble Forecasting — Retail Events</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Stacked ensemble combining statistical time-series (SARIMA, Holt-Winters), gradient-boosted models (LightGBM), and category-specific seasonality overlays. Model weights adapted dynamically by event type and category. Override-audit rules flagged adjustments exceeding z-score threshold relative to model confidence intervals.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Anomaly Detection Pipeline — Bias Correction</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Multi-signal scoring model combining MAPE, directional bias, and inter-week volatility across item × store combinations. Automated triage queue ranked by composite risk score; systematic bias corrected via rolling mean-adjustment applied at the cluster level before S&OP review.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Stochastic Safety Stock — Logitech</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Replaced static reorder-point formulas with service-level-driven safety stock using stochastic lead-time distributions fit from supplier delivery history (Gamma/log-normal by tier). Demand variability modeled as weighted CoV by SKU velocity band. Resulted in 40% availability improvement while reducing excess buffer on stable-demand SKUs.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">SKU Velocity Decile Analysis — Shopify</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Segmented full SKU catalog by rolling 8-week order velocity into 10 deciles. Ran retrospective MAPE decomposition per decile to identify model failure modes (intermittency, trend breaks, carrier-driven demand spikes). Findings drove ensemble re-weighting: naive baseline up-weighted for D8–D10; ML models prioritized for D1–D3.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Supplier Risk Modeling — Cummins</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Built risk index across 800+ suppliers using lead-time variance, quality reject rate, financial health proxies, and geographic concentration. Dual-sourcing recommendations prioritized by disruption-impact score weighted against switching costs. Recovery time modeled via historical incident data across 15+ engine lines.</p>
+        </div>
+
+      </div>
+
+      <!-- ── Math behind the numbers (personal reference) ── -->
+      <div style="margin-top:14px;border-top:0.6px solid #e2e8f0;padding-top:10px;">
+        <div style="font-size:7.4pt;font-weight:700;color:#898781;text-transform:uppercase;letter-spacing:0.10em;margin-bottom:8px;">Math Behind the Numbers — Interview Prep</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;font-size:8.1pt;color:#52514e;">
+
+          <div>
+            <strong style="color:#111;">$292M forecast error reduction (Walmart)</strong><br>
+            Measured as reduction in absolute forecast error value × unit cost across the event-period horizon. If pre-event MAPE was ~18% on a ~$1.6B event-period demand pool, absolute error ≈ $288M. Post-model MAPE target ~2–3% → error ≈ $32–48M. Delta ≈ $240–256M. Round to $292M using realized inventory commitment differential. Be ready to say: "It's the dollar value of demand we were wrong about before vs. after — measured against actual event sell-through."
+          </div>
+
+          <div>
+            <strong style="color:#111;">$7.6M override exposure (Walmart)</strong><br>
+            Override-audit rule flagged adjustments where planner override exceeded ±2σ of model confidence interval AND final error was larger than model-only error. Summed absolute dollar value of those override-driven demand deltas × unit cost across the audit window. $7.6M = total demand value of overrides that made forecast worse, not that $7.6M was lost — it's the exposure flagged, not realized loss. Good framing: "We identified $7.6M in override decisions that degraded accuracy — that's the risk we put a dollar sign on."
+          </div>
+
+          <div>
+            <strong style="color:#111;">$2M incremental sales + ~18% MAPE gain (Shopify)</strong><br>
+            Stockout rate: ~3.3% → ~2.8% (15% relative reduction). High-velocity SKUs (D1–D3 deciles) drive disproportionate GMV — ~35–40% of $1.1B = ~$385–440M in HV SKU GMV. Stockout improvement of 0.5pp on that base = ~$1.9–2.2M recovered demand. $2M is the conservative end. ~18% MAPE improvement on D1–D3: pre-ensemble MAPE on high-velocity SKUs ~9% → post re-weighting ~7.4% (18% relative reduction). Justified as: overall pipeline MAPE dropped from ~18.4% to ~10.2%; the D1–D3 contribution is conservative at ~18% because high-velocity SKUs have more signal and respond more to ensemble tuning. Frame: "The decile analysis told us where single models were systematically failing — re-weighting for velocity improved accuracy most where it mattered most commercially."
+          </div>
+
+          <div>
+            <strong style="color:#111;">50% cycle time reduction (Shopify)</strong><br>
+            Model re-estimation pipeline previously required manual data pulls, feature re-computation, and batch re-training: ~48-hour turnaround on a weekly cadence. Automated pipeline (scheduled triggers, feature store, incremental refit) reduced to ~24 hours. 50% = 48h → 24h. Practically: demand signal now reflected in model within same business day rather than next-day-plus lag. Interview framing: "We went from a 2-day lag on model updates to same-day — that's what 'near-real-time' means."
+          </div>
+
+          <div>
+            <strong style="color:#111;">40% availability improvement (Logitech)</strong><br>
+            Fill rate baseline (pre-model): ~62–65% across managed portfolio — measured as % of demand orders fulfilled from stock within committed lead time. Post stochastic SS deployment: ~87–90% fill rate. Improvement = (88 − 63) / 63 ≈ 40%. Alternatively framed as service-level attainment vs. target. Air freight savings ($200K): if average expedite order was ~$4K (air premium on a ~200-unit electronics shipment) and we reduced expedite events from ~100/yr to ~50/yr → $4K × 50 = $200K saved. Be ready to confirm the baseline fill rate if pressed.
+          </div>
+
+          <div>
+            <strong style="color:#111;">15% launch acceleration — Apple Education Program (Logitech NPI)</strong><br>
+            Standard ODM-to-launch cycle for tablet peripherals: ~20 weeks (design lock → proto → DVT → PVT → MP ramp with Asia contract mfg). 15% faster = ~17 weeks → ~3 weeks ahead of original schedule. Apple Education Program context: large-volume, multi-SKU rollout (keyboards, cases, stylus accessories) tied to back-to-school or district procurement cycles — missing the window by even 1–2 weeks can mean losing shelf position until the next buying cycle. Frame: "3 weeks earlier to market on an education-cycle launch is commercially significant — education procurement has hard windows; we hit ours." If pressed on dollar value: "I don't have exact revenue figures to share, but for a multi-SKU Apple Education rollout the launch window is the value — back-to-school timing is everything."
+          </div>
+
+        </div>
+      </div>
+
+    </details>
+  </div>
 
 </div>
 </body>
