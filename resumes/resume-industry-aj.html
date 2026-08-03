@@ -16,9 +16,11 @@
     }
 
     .page {
-      max-width: 8.5in;
+      max-width: 960px;
+      width: 100%;
       margin: 0 auto;
-      padding: 0.45in 0.58in 0.38in;
+      padding: clamp(16px, 4vw, 64px) clamp(16px, 5vw, 72px) clamp(12px, 3vw, 48px);
+      box-sizing: border-box;
     }
 
     /* ── Header ── */
@@ -185,6 +187,17 @@
       text-decoration: underline;
     }
 
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      body { font-size: 10pt; line-height: 1.5; }
+      header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      header .right { text-align: left; }
+      .job-header { flex-direction: column; gap: 2px; }
+      .job-date { font-size: 8.5pt; }
+      .edu-row { flex-direction: column; gap: 2px; }
+      .edu-date { font-size: 8.5pt; }
+    }
+
     /* ── Print / PDF ── */
     @media print {
       @page {
@@ -200,6 +213,7 @@
       .page {
         padding: 0;
         max-width: none;
+        width: auto;
       }
       a { text-decoration: none !important; }
       section { margin-bottom: 5px !important; }
