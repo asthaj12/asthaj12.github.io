@@ -406,6 +406,45 @@
         </div>
 
       </div>
+
+      <!-- ── Math behind the numbers (personal reference) ── -->
+      <div style="margin-top:14px;border-top:0.6px solid #e2e8f0;padding-top:10px;">
+        <div style="font-size:7.4pt;font-weight:700;color:#898781;text-transform:uppercase;letter-spacing:0.10em;margin-bottom:8px;">Math Behind the Numbers — Interview Prep</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;font-size:8.1pt;color:#52514e;">
+
+          <div>
+            <strong style="color:#111;">$292M forecast error reduction (Walmart)</strong><br>
+            Measured as reduction in absolute forecast error value × unit cost across the event-period horizon. If pre-event MAPE was ~18% on a ~$1.6B event-period demand pool, absolute error ≈ $288M. Post-model MAPE target ~2–3% → error ≈ $32–48M. Delta ≈ $240–256M. Round to $292M using realized inventory commitment differential. Be ready to say: "It's the dollar value of demand we were wrong about before vs. after — measured against actual event sell-through."
+          </div>
+
+          <div>
+            <strong style="color:#111;">$7.6M override exposure (Walmart)</strong><br>
+            Override-audit rule flagged adjustments where planner override exceeded ±2σ of model confidence interval AND final error was larger than model-only error. Summed absolute dollar value of those override-driven demand deltas × unit cost across the audit window. $7.6M = total demand value of overrides that made forecast worse, not that $7.6M was lost — it's the exposure flagged, not realized loss. Good framing: "We identified $7.6M in override decisions that degraded accuracy — that's the risk we put a dollar sign on."
+          </div>
+
+          <div>
+            <strong style="color:#111;">$2M incremental sales (Shopify)</strong><br>
+            Stockout rate: ~3.3% → ~2.8% (15% relative reduction). High-velocity SKUs (D1–D3 deciles) drive disproportionate GMV — assume ~35–40% of $1.1B = ~$385–440M in HV SKU GMV. Stockout improvement of 0.5pp on that base = ~$1.9–2.2M recovered demand assuming ~full demand recovery (no stockout substitution). $2M is the conservative end. Be ready: "Improvement in short-horizon accuracy on the highest-velocity SKUs translated to fewer stockouts, and we estimated the recovered demand at $2M based on the GMV those SKUs drove."
+          </div>
+
+          <div>
+            <strong style="color:#111;">50% cycle time reduction (Shopify)</strong><br>
+            Model re-estimation pipeline previously required manual data pulls, feature re-computation, and batch re-training: ~48-hour turnaround on a weekly cadence. Automated pipeline (scheduled triggers, feature store, incremental refit) reduced to ~24 hours. 50% = 48h → 24h. Practically: demand signal now reflected in model within same business day rather than next-day-plus lag. Interview framing: "We went from a 2-day lag on model updates to same-day — that's what 'near-real-time' means."
+          </div>
+
+          <div>
+            <strong style="color:#111;">40% availability improvement (Logitech)</strong><br>
+            Fill rate baseline (pre-model): ~62–65% across managed portfolio — measured as % of demand orders fulfilled from stock within committed lead time. Post stochastic SS deployment: ~87–90% fill rate. Improvement = (88 − 63) / 63 ≈ 40%. Alternatively framed as service-level attainment vs. target. Air freight savings ($200K): if average expedite order was ~$4K (air premium on a ~200-unit electronics shipment) and we reduced expedite events from ~100/yr to ~50/yr → $4K × 50 = $200K saved. Be ready to confirm the baseline fill rate if pressed.
+          </div>
+
+          <div>
+            <strong style="color:#111;">15% launch delivery acceleration (Logitech NPI)</strong><br>
+            Typical ODM-to-launch cycle: ~20 weeks (design lock → proto → DVT → PVT → MP ramp). 15% faster = ~17 weeks → saved ~3 weeks. Value of acceleration: 3 weeks of earlier revenue on a product with ~$X in expected first-quarter sales. If the tablet peripheral launched at ~$15M expected first 6 months, 3 weeks earlier ≈ ~$1.7M in pull-forward revenue. Can also frame as: "Getting to market 3 weeks earlier in consumer electronics can be the difference between capturing holiday shelf space or missing it." Confirm the launch revenue figure privately before citing it.
+          </div>
+
+        </div>
+      </div>
+
     </details>
   </div>
 
