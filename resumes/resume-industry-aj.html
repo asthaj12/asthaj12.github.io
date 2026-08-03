@@ -185,42 +185,26 @@
       text-decoration: underline;
     }
 
-    /* ── Print ── */
+    /* ── Print / PDF ── */
     @media print {
       @page {
         size: letter;
-        margin: 0.42in 0.5in;
+        margin: 0.45in 0.55in;
       }
       body {
-        font-size: 9.6pt;
+        font-size: 9.2pt;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        color: #1a1a1a;
       }
       .page {
         padding: 0;
         max-width: none;
       }
-      header {
-        border-bottom-color: #888 !important;
-      }
-      .section-title {
-        color: #1a1a1a !important;
-        border-bottom-color: #aaa !important;
-      }
-      header .left .version-tag { color: #555 !important; }
-      a { color: #222 !important; text-decoration: none !important; }
-      header .right a { color: #222 !important; }
-      .project-item a { color: #222 !important; }
-      .award { color: #333 !important; }
-      body { font-size: 9pt; }
-      section { margin-bottom: 4px !important; }
-      .job { margin-bottom: 4px !important; }
-      li { font-size: 8.8pt; margin-bottom: 1px !important; line-height: 1.32 !important; }
-      .summary { font-size: 8.8pt; line-height: 1.38; }
-      .competencies { font-size: 8.2pt; line-height: 1.45; }
-      .job-org { margin-bottom: 1px; }
-      .award { margin-bottom: 1px; }
-      header { padding-bottom: 5px; margin-bottom: 6px; }
+      a { text-decoration: none !important; }
+      section { margin-bottom: 5px !important; }
+      .job { margin-bottom: 5px !important; }
+      li { margin-bottom: 2px !important; line-height: 1.36 !important; }
     }
   </style>
 </head>
