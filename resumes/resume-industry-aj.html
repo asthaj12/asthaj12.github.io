@@ -366,6 +366,49 @@
     </section>
 
   </main>
+
+  <!-- Methodology notes — visible in HTML only, hidden on print -->
+  <div class="no-print" style="margin-top:18px;border-top:0.8px solid #e2e8f0;padding-top:10px;">
+    <details style="font-size:8.4pt;color:#444;line-height:1.5;">
+      <summary style="cursor:pointer;font-size:7.4pt;font-weight:700;color:#2a78d6;text-transform:uppercase;letter-spacing:0.10em;outline:none;list-style:none;display:flex;align-items:center;gap:6px;">
+        <span>▸</span> Methodology &amp; Approach Notes
+      </summary>
+      <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;">
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Causal Inference — SNAP Policy Analysis</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Applied difference-in-differences (DiD) with parallel trends validation to separate SNAP policy signal from seasonal confounders. Used state-level panel data across 24 treatment and control states. Monitoring system tracked 3 sequential waves (anticipation, onset, normalization) with weekly recalibration.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Ensemble Forecasting — Retail Events</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Stacked ensemble combining statistical time-series (SARIMA, Holt-Winters), gradient-boosted models (LightGBM), and category-specific seasonality overlays. Model weights adapted dynamically by event type and category. Override-audit rules flagged adjustments exceeding z-score threshold relative to model confidence intervals.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Anomaly Detection Pipeline — Bias Correction</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Multi-signal scoring model combining MAPE, directional bias, and inter-week volatility across item × store combinations. Automated triage queue ranked by composite risk score; systematic bias corrected via rolling mean-adjustment applied at the cluster level before S&OP review.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Stochastic Safety Stock — Logitech</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Replaced static reorder-point formulas with service-level-driven safety stock using stochastic lead-time distributions fit from supplier delivery history (Gamma/log-normal by tier). Demand variability modeled as weighted CoV by SKU velocity band. Resulted in 40% availability improvement while reducing excess buffer on stable-demand SKUs.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">SKU Velocity Decile Analysis — Shopify</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Segmented full SKU catalog by rolling 8-week order velocity into 10 deciles. Ran retrospective MAPE decomposition per decile to identify model failure modes (intermittency, trend breaks, carrier-driven demand spikes). Findings drove ensemble re-weighting: naive baseline up-weighted for D8–D10; ML models prioritized for D1–D3.</p>
+        </div>
+
+        <div>
+          <div style="font-weight:700;color:#111;font-size:8.3pt;margin-bottom:3px;">Supplier Risk Modeling — Cummins</div>
+          <p style="margin:0;font-size:8.1pt;color:#52514e;">Built risk index across 800+ suppliers using lead-time variance, quality reject rate, financial health proxies, and geographic concentration. Dual-sourcing recommendations prioritized by disruption-impact score weighted against switching costs. Recovery time modeled via historical incident data across 15+ engine lines.</p>
+        </div>
+
+      </div>
+    </details>
+  </div>
+
 </div>
 </body>
 </html>
