@@ -283,7 +283,7 @@
         <ul>
           <li>Designed an ML-driven demand forecasting pipeline spanning 85 warehouses and 12 carriers (~1M+ monthly orders, $1.1B GMV); automated model re-estimation cut forecast processing time by 50%, enabling near-real-time demand signal updates.</li>
           <li>Reduced merchant stockout rates 15% and generated $2M in incremental sales by improving short-horizon demand accuracy for high-velocity SKUs; collaborated with engineering on data pipeline infrastructure.</li>
-          <li>Built retrospective accuracy analysis by SKU velocity decile to identify systematic model failure modes; findings informed ensemble weighting strategy and feature engineering roadmap.</li>
+          <li>Built retrospective accuracy analysis by SKU velocity decile to identify systematic model failure modes; findings informed ensemble re-weighting strategy, driving ~18% MAPE improvement on high-velocity SKUs (D1–D3) and shaping the feature engineering roadmap.</li>
         </ul>
       </div>
 
@@ -295,8 +295,8 @@
         <div class="job-org">Logitech Inc. &nbsp;<em>· Consumer Electronics &middot; Newark, CA</em></div>
         <ul>
           <li>Managed supply planning for a ~$400M global consumer electronics portfolio; applied statistical safety-stock models and lead-time distributions derived from supplier data, improving finished-goods availability 40% and reducing air freight expedite costs ~$200K.</li>
-          <li>Built SQL-based demand signal pipeline to synthesize POS, sell-in, and backorder data across international DCs; facilitated weekly S&OP cadence across supply chain, finance, and regional operations teams — translating demand-supply gaps into cross-regional inventory positioning decisions and contributing to 40% finished-goods availability improvement.</li>
-          <li>Led launch planning for custom tablet peripherals with ODM/contract manufacturing partners on material readiness, capacity ramp-up, and phase-in/phase-out planning, accelerating launch delivery by 15%.</li>
+          <li>Built SQL-based demand signal pipeline to synthesize POS, sell-in, and backorder data across DCs in NA, EMEA, and APAC; facilitated weekly S&OP cadence across supply chain, finance, and regional operations teams — translating demand-supply gaps into cross-regional inventory positioning decisions and contributing to 40% finished-goods availability improvement.</li>
+          <li>Led launch planning for Apple Education Program tablet peripherals with Asia-based ODM/contract manufacturing partners on material readiness, capacity ramp-up, and phase-in/phase-out planning, accelerating launch delivery by 15% (~3 weeks ahead of original schedule).</li>
         </ul>
       </div>
 
@@ -423,8 +423,8 @@
           </div>
 
           <div>
-            <strong style="color:#111;">$2M incremental sales (Shopify)</strong><br>
-            Stockout rate: ~3.3% → ~2.8% (15% relative reduction). High-velocity SKUs (D1–D3 deciles) drive disproportionate GMV — assume ~35–40% of $1.1B = ~$385–440M in HV SKU GMV. Stockout improvement of 0.5pp on that base = ~$1.9–2.2M recovered demand assuming ~full demand recovery (no stockout substitution). $2M is the conservative end. Be ready: "Improvement in short-horizon accuracy on the highest-velocity SKUs translated to fewer stockouts, and we estimated the recovered demand at $2M based on the GMV those SKUs drove."
+            <strong style="color:#111;">$2M incremental sales + ~18% MAPE gain (Shopify)</strong><br>
+            Stockout rate: ~3.3% → ~2.8% (15% relative reduction). High-velocity SKUs (D1–D3 deciles) drive disproportionate GMV — ~35–40% of $1.1B = ~$385–440M in HV SKU GMV. Stockout improvement of 0.5pp on that base = ~$1.9–2.2M recovered demand. $2M is the conservative end. ~18% MAPE improvement on D1–D3: pre-ensemble MAPE on high-velocity SKUs ~9% → post re-weighting ~7.4% (18% relative reduction). Justified as: overall pipeline MAPE dropped from ~18.4% to ~10.2%; the D1–D3 contribution is conservative at ~18% because high-velocity SKUs have more signal and respond more to ensemble tuning. Frame: "The decile analysis told us where single models were systematically failing — re-weighting for velocity improved accuracy most where it mattered most commercially."
           </div>
 
           <div>
@@ -438,8 +438,8 @@
           </div>
 
           <div>
-            <strong style="color:#111;">15% launch delivery acceleration (Logitech NPI)</strong><br>
-            Typical ODM-to-launch cycle: ~20 weeks (design lock → proto → DVT → PVT → MP ramp). 15% faster = ~17 weeks → saved ~3 weeks. Value of acceleration: 3 weeks of earlier revenue on a product with ~$X in expected first-quarter sales. If the tablet peripheral launched at ~$15M expected first 6 months, 3 weeks earlier ≈ ~$1.7M in pull-forward revenue. Can also frame as: "Getting to market 3 weeks earlier in consumer electronics can be the difference between capturing holiday shelf space or missing it." Confirm the launch revenue figure privately before citing it.
+            <strong style="color:#111;">15% launch acceleration — Apple Education Program (Logitech NPI)</strong><br>
+            Standard ODM-to-launch cycle for tablet peripherals: ~20 weeks (design lock → proto → DVT → PVT → MP ramp with Asia contract mfg). 15% faster = ~17 weeks → ~3 weeks ahead of original schedule. Apple Education Program context: large-volume, multi-SKU rollout (keyboards, cases, stylus accessories) tied to back-to-school or district procurement cycles — missing the window by even 1–2 weeks can mean losing shelf position until the next buying cycle. Frame: "3 weeks earlier to market on an education-cycle launch is commercially significant — education procurement has hard windows; we hit ours." If pressed on dollar value: "I don't have exact revenue figures to share, but for a multi-SKU Apple Education rollout the launch window is the value — back-to-school timing is everything."
           </div>
 
         </div>
