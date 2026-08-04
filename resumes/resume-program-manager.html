@@ -190,15 +190,8 @@
     .project-bucket-label { font-weight: 600; color: #111; }
     .project-bucket a { color: #2a78d6; text-decoration: none; font-size: 8.2pt; }
     .project-bucket a:hover { text-decoration: underline; }
-    .project-bucket a::after {
-      content: " (" attr(href) ")";
-      font-size: 7.2pt;
-      color: #777;
-      display: none;
-    }
     @media print {
-      .project-bucket a::after { display: inline; }
-      .project-bucket a { color: #222 !important; }
+      .project-bucket a { color: #222 !important; text-decoration: none !important; }
     }
 
     /* ── Mobile ── */
