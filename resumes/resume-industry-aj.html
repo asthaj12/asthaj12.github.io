@@ -16,10 +16,10 @@
     }
 
     .page {
-      max-width: 960px;
+      max-width: 1100px;
       width: 100%;
       margin: 0 auto;
-      padding: clamp(16px, 4vw, 64px) clamp(16px, 5vw, 72px) clamp(12px, 3vw, 48px);
+      padding: clamp(12px, 3vw, 48px) clamp(20px, 5vw, 80px) clamp(10px, 2vw, 36px);
       box-sizing: border-box;
     }
 
@@ -202,13 +202,14 @@
     @media print {
       @page {
         size: letter;
-        margin: 0.45in 0.55in;
+        margin: 0.38in 0.48in;
       }
       body {
-        font-size: 9.2pt;
+        font-size: 8.6pt;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
         color: #1a1a1a;
+        line-height: 1.32;
       }
       .page {
         padding: 0;
@@ -216,9 +217,16 @@
         width: auto;
       }
       a { text-decoration: none !important; }
-      section { margin-bottom: 5px !important; }
-      .job { margin-bottom: 5px !important; }
-      li { margin-bottom: 2px !important; line-height: 1.36 !important; }
+      section { margin-bottom: 3px !important; }
+      .job { margin-bottom: 3px !important; }
+      li { font-size: 8.5pt; margin-bottom: 1px !important; line-height: 1.3 !important; }
+      .summary { font-size: 8.5pt; line-height: 1.35; }
+      .competencies { font-size: 8.2pt; line-height: 1.35; }
+      .job-org { margin-bottom: 0; margin-top: 0; }
+      .award { margin-bottom: 1px; font-size: 7.6pt; }
+      .section-title { margin-bottom: 3px; padding-bottom: 1px; }
+      header { margin-bottom: 5px; padding-bottom: 5px; }
+      .selected-work { page-break-before: always; }
     }
   </style>
 </head>
@@ -258,8 +266,8 @@
       <div class="section-title">Technical Competencies</div>
       <div class="competencies">
         <strong>Languages &amp; Tools:</strong> Python &middot; SQL &middot; BigQuery &middot; Git &middot; Kinaxis<br>
-        <strong>Analytics &amp; Data Science:</strong> Gradient Boosting Models &middot; Time Series Forecasting &middot; Causal Inference &middot; Anomaly Detection &middot; Ensemble Methods &middot; Probabilistic Forecasting<br>
-        <strong>Planning &amp; Operations:</strong> S&amp;OP / IBP &middot; NPI Launch Planning &middot; Demand Sensing &middot; Replenishment &middot; Inventory Optimization &middot; E&amp;O &amp; CTB Management<br>
+        <strong>Analytics &amp; Data Science:</strong> Time Series Forecasting &middot; Causal Inference &middot; Anomaly Detection &middot; Ensemble Methods<br>
+        <strong>Planning &amp; Operations:</strong> S&amp;OP / IBP &middot; NPI Launch Planning &middot; Replenishment &middot; Inventory Optimization &middot; E&amp;O &amp; CTB Management<br>
         <strong>Commercial Analytics:</strong> Promotional Demand Modeling &middot; Pricing Impact Analysis &middot; Safety Stock Strategy
       </div>
     </section>
@@ -342,7 +350,7 @@
     </section>
 
     <section>
-      <div class="section-title">Selected Work &amp; Portfolio</div>
+      <div class="section-title selected-work">Selected Work &amp; Portfolio</div>
       <div class="project-list">
         <div class="project-item">
           <span class="project-name">Forecast Governance &amp; Inventory Risk</span>
