@@ -226,7 +226,11 @@
       .award { margin-bottom: 1px; font-size: 7.6pt; }
       .section-title { margin-bottom: 3px; padding-bottom: 1px; }
       header { margin-bottom: 5px; padding-bottom: 5px; }
-      .selected-work { page-break-before: always; }
+      .edu-row { page-break-inside: avoid; margin-bottom: 1px !important; }
+      .edu-left { page-break-inside: avoid; }
+      .edu-left .edu-degree { font-size: 8.5pt; }
+      .edu-left .edu-school { font-size: 7.8pt; }
+      .section-selected-work { page-break-before: always; }
     }
   </style>
 </head>
@@ -350,7 +354,7 @@
     </section>
 
     <section>
-      <div class="section-title selected-work">Selected Work &amp; Portfolio</div>
+      <div class="section-title section-selected-work">Selected Work &amp; Portfolio</div>
       <div class="project-list">
         <div class="project-item">
           <span class="project-name">Forecast Governance &amp; Inventory Risk</span>
