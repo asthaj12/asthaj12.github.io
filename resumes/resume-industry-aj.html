@@ -199,15 +199,16 @@
       }
       a { text-decoration: none !important; }
       section { margin-bottom: 7px !important; }
-      .job { margin-bottom: 6px !important; }
-      li { font-size: 9pt; margin-bottom: 3px !important; line-height: 1.4 !important; }
+      .job { margin-bottom: 8px !important; }
+      li { font-size: 9pt; margin-bottom: 4px !important; line-height: 1.42 !important; }
       .summary { font-size: 9pt; line-height: 1.45; }
       .competencies { font-size: 8.8pt; line-height: 1.5; }
       .job-org { margin-bottom: 2px; margin-top: 0; }
       .award { margin-bottom: 2px; font-size: 8.2pt; }
       .section-title { margin-bottom: 4px; padding-bottom: 2px; }
       header { margin-bottom: 7px; padding-bottom: 6px; }
-      .edu-row { page-break-inside: avoid; margin-bottom: 3px !important; }
+      .edu-row { page-break-inside: avoid; margin-bottom: 4px !important; }
+      section.edu-section-wrapper { page-break-inside: avoid; }
       .edu-left { page-break-inside: avoid; }
       .edu-left .edu-degree { font-size: 9pt; }
       .edu-left .edu-school { font-size: 8.6pt; }
@@ -317,13 +318,13 @@
 
     <section>
       <div class="section-title">Education</div>
-      <div class="edu-row">
+      <div class="edu-row" style="page-break-inside:avoid">
         <div class="edu-left">
           <div class="edu-degree">MicroMasters in Supply Chain Management</div>
           <div class="edu-school">Massachusetts Institute of Technology (MIT)</div>
         </div>
       </div>
-      <div class="edu-row">
+      <div class="edu-row" style="page-break-inside:avoid">
         <div class="edu-left">
           <div class="edu-degree">B.S. Mechanical Engineering &nbsp;·&nbsp; Engineering Leadership Development Minor</div>
           <div class="edu-school">Pennsylvania State University</div>
