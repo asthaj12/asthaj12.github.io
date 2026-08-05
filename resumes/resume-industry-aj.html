@@ -186,13 +186,12 @@
     .project-item a:hover {
       text-decoration: underline;
     }
-    .project-bucket { font-size: 8.8pt; margin-bottom: 3px; line-height: 1.5; }
-    .project-bucket-label { font-weight: 600; color: #111; }
-    .project-bucket a { color: #2a78d6; text-decoration: none; font-size: 8.2pt; }
-    .project-bucket a:hover { text-decoration: underline; }
-    @media print {
-      .project-bucket a { color: #222 !important; text-decoration: none !important; }
-    }
+    .project-bucket { font-size: 8.8pt; margin-bottom: 4px; line-height: 1.5; }
+    .project-bucket-label { font-weight: 600; color: #111; display: block; margin-bottom: 2px; font-size: 8.2pt; text-transform: uppercase; letter-spacing: 0.04em; }
+    .project-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .project-row .proj-name { color: #111; font-weight: 500; font-size: 8.4pt; }
+    .project-row .proj-url { color: #2a78d6; text-decoration: none; font-size: 7.8pt; white-space: nowrap; }
+    .project-row .proj-url:hover { text-decoration: underline; }
 
     /* ── Mobile ── */
     @media (max-width: 600px) {
@@ -238,6 +237,8 @@
       .edu-left .edu-degree { font-size: 8.8pt; }
       .edu-left .edu-school { font-size: 8.2pt; }
       /* no forced page break */
+      .proj-url { color: #2a78d6 !important; }
+      .project-bucket-label { color: #444 !important; }
     }
   </style>
 </head>
@@ -359,23 +360,24 @@
       <div class="section-title section-selected-work">Selected Work &amp; Portfolio</div>
       <div class="project-list">
         <div class="project-bucket">
-          <span class="project-bucket-label">Forecasting &amp; Accuracy:</span>
-          <a href="https://github.com/asthaj12/forecast-governance">Forecast Governance &amp; Inventory Risk</a> &nbsp;&middot;&nbsp;
-          <a href="https://github.com/asthaj12/forecast-accuracy">Forecast Accuracy Modeling</a> &nbsp;&middot;&nbsp;
-          <a href="https://github.com/asthaj12/seasonal-planning">Seasonal Planning System</a>
+          <span class="project-bucket-label">Forecasting &amp; Accuracy</span>
+          <div class="project-row"><span class="proj-name">Forecast Governance &amp; Inventory Risk</span><a class="proj-url" href="https://github.com/asthaj12/forecast-governance">github.com/asthaj12/forecast-governance</a></div>
+          <div class="project-row"><span class="proj-name">Forecast Accuracy Modeling</span><a class="proj-url" href="https://github.com/asthaj12/forecast-accuracy">github.com/asthaj12/forecast-accuracy</a></div>
+          <div class="project-row"><span class="proj-name">Seasonal Planning System</span><a class="proj-url" href="https://github.com/asthaj12/seasonal-planning">github.com/asthaj12/seasonal-planning</a></div>
         </div>
         <div class="project-bucket">
-          <span class="project-bucket-label">Inventory &amp; Supply Planning:</span>
-          <a href="https://github.com/asthaj12/replenishment-risk">Replenishment Risk Analysis</a> &nbsp;&middot;&nbsp;
-          <a href="https://github.com/asthaj12/logitech-supply-planning">Global Supply Planning</a>
+          <span class="project-bucket-label">Inventory &amp; Supply Planning</span>
+          <div class="project-row"><span class="proj-name">Replenishment Risk Analysis</span><a class="proj-url" href="https://github.com/asthaj12/replenishment-risk">github.com/asthaj12/replenishment-risk</a></div>
+          <div class="project-row"><span class="proj-name">Global Supply Planning</span><a class="proj-url" href="https://github.com/asthaj12/logitech-supply-planning">github.com/asthaj12/logitech-supply-planning</a></div>
+          <div class="project-row"><span class="proj-name">NPI Launch Planning</span><a class="proj-url" href="https://github.com/asthaj12/npi-launch-planning">github.com/asthaj12/npi-launch-planning</a></div>
         </div>
         <div class="project-bucket">
-          <span class="project-bucket-label">Network &amp; Transportation:</span>
-          <a href="https://github.com/asthaj12/shopify-demand-forecasting">Transportation Demand Forecasting</a>
+          <span class="project-bucket-label">Network &amp; Transportation</span>
+          <div class="project-row"><span class="proj-name">Transportation Demand Forecasting</span><a class="proj-url" href="https://github.com/asthaj12/shopify-demand-forecasting">github.com/asthaj12/shopify-demand-forecasting</a></div>
         </div>
         <div class="project-bucket">
-          <span class="project-bucket-label">Pricing &amp; Demand Response:</span>
-          <a href="https://github.com/asthaj12/pricing-demand-response">Pricing Demand Response</a>
+          <span class="project-bucket-label">Pricing &amp; Demand Response</span>
+          <div class="project-row"><span class="proj-name">Pricing Demand Response</span><a class="proj-url" href="https://github.com/asthaj12/pricing-demand-response">github.com/asthaj12/pricing-demand-response</a></div>
         </div>
       </div>
     </section>
