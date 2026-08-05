@@ -162,30 +162,11 @@
     }
 
     /* ── Selected Work ── */
-    .project-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .project-item {
-      font-size: 8.8pt;
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-    .project-name {
-      font-weight: 600;
-      color: #111;
-      min-width: 200px;
-    }
-    .project-item a {
-      color: #2a78d6;
-      text-decoration: none;
-      font-size: 8.2pt;
-    }
-    .project-item a:hover {
-      text-decoration: underline;
-    }
+    .project-list { display: flex; flex-direction: column; gap: 3px; }
+    .project-bucket-row { font-size: 8.6pt; line-height: 1.5; }
+    .project-bucket-row .pb-label { font-weight: 600; color: #111; }
+    .project-bucket-row a { color: #2a78d6; text-decoration: none; font-size: 8.4pt; }
+    .project-bucket-row a:hover { text-decoration: underline; }
 
     /* ── Mobile ── */
     @media (max-width: 600px) {
@@ -231,6 +212,7 @@
       .edu-left .edu-degree { font-size: 8.8pt; }
       .edu-left .edu-school { font-size: 8.2pt; }
       /* no forced page break */
+      .project-bucket-row a { color: #2a78d6 !important; }
     }
   </style>
 </head>
@@ -351,38 +333,10 @@
     <section>
       <div class="section-title section-selected-work">Selected Work &amp; Portfolio</div>
       <div class="project-list">
-        <div class="project-item">
-          <span class="project-name">Forecast Governance &amp; Inventory Risk</span>
-          <a href="https://github.com/asthaj12/forecast-governance">github.com/asthaj12/forecast-governance</a>
-        </div>
-        <div class="project-item">
-          <span class="project-name">Forecast Accuracy Modeling</span>
-          <a href="https://github.com/asthaj12/forecast-accuracy">github.com/asthaj12/forecast-accuracy</a>
-        </div>
-        <div class="project-item">
-          <span class="project-name">Seasonal Planning System</span>
-          <a href="https://github.com/asthaj12/seasonal-planning">github.com/asthaj12/seasonal-planning</a>
-        </div>
-        <div class="project-item">
-          <span class="project-name">Replenishment Risk Analysis</span>
-          <a href="https://github.com/asthaj12/replenishment-risk">github.com/asthaj12/replenishment-risk</a>
-        </div>
-        <div class="project-item">
-          <span class="project-name">Pricing Demand Response</span>
-          <a href="https://github.com/asthaj12/pricing-demand-response">github.com/asthaj12/pricing-demand-response</a>
-        </div>
-        <div class="project-item">
-          <span class="project-name">Transportation Demand Forecasting</span>
-          <a href="https://github.com/asthaj12/shopify-demand-forecasting">github.com/asthaj12/shopify-demand-forecasting</a>
-        </div>
-        <div class="project-item">
-          <span class="project-name">Global Supply Planning</span>
-          <a href="https://github.com/asthaj12/logitech-supply-planning">github.com/asthaj12/logitech-supply-planning</a>
-        </div>
-        <div class="project-item">
-          <span class="project-name">NPI Launch Planning</span>
-          <a href="https://github.com/asthaj12/npi-launch-planning">github.com/asthaj12/npi-launch-planning</a>
-        </div>
+        <div class="project-bucket-row"><span class="pb-label">Forecasting &amp; Accuracy:</span> <a href="https://github.com/asthaj12/forecast-governance">Forecast Governance &amp; Inventory Risk</a> &nbsp;&middot;&nbsp; <a href="https://github.com/asthaj12/forecast-accuracy">Forecast Accuracy Modeling</a> &nbsp;&middot;&nbsp; <a href="https://github.com/asthaj12/seasonal-planning">Seasonal Planning System</a></div>
+        <div class="project-bucket-row"><span class="pb-label">Inventory &amp; Supply Planning:</span> <a href="https://github.com/asthaj12/replenishment-risk">Replenishment Risk Analysis</a> &nbsp;&middot;&nbsp; <a href="https://github.com/asthaj12/logitech-supply-planning">Global Supply Planning</a> &nbsp;&middot;&nbsp; <a href="https://github.com/asthaj12/npi-launch-planning">NPI Launch Planning</a></div>
+        <div class="project-bucket-row"><span class="pb-label">Network &amp; Transportation:</span> <a href="https://github.com/asthaj12/shopify-demand-forecasting">Transportation Demand Forecasting</a></div>
+        <div class="project-bucket-row"><span class="pb-label">Pricing &amp; Demand Response:</span> <a href="https://github.com/asthaj12/pricing-demand-response">Pricing Demand Response</a></div>
       </div>
     </section>
 
