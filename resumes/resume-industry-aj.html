@@ -179,37 +179,37 @@
       .edu-date { font-size: 8.5pt; }
     }
 
-    /* ── Print / PDF — unified 8.5pt/1.32 system ── */
+    /* ── Print / PDF — p1: Experience · p2: Education + Portfolio ── */
     @media print {
       @page {
         size: letter;
         margin: 0.42in 0.5in;
       }
       body {
-        font-size: 8.5pt;
-        line-height: 1.32;
+        font-size: 9pt;
+        line-height: 1.42;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
         color: #1a1a1a;
       }
       .page { padding: 0; max-width: none; width: auto; }
       a { text-decoration: none !important; }
-      header { margin-bottom: 6px; padding-bottom: 5px; }
-      section { margin-bottom: 5px !important; }
-      .section-title { font-size: 7.2pt; margin-bottom: 3px; padding-bottom: 2px; }
-      .summary { font-size: 8.5pt; line-height: 1.38; }
-      .competencies { font-size: 8.2pt; line-height: 1.42; }
-      .job { margin-bottom: 6px !important; }
-      .job-org { font-size: 8pt; margin-top: 0; margin-bottom: 1px; }
-      .award { font-size: 7.8pt; margin-bottom: 1px; }
-      ul { padding-left: 1em; }
-      li { font-size: 8.5pt; margin-bottom: 2px !important; line-height: 1.32 !important; }
-      .edu-row { page-break-inside: avoid; margin-bottom: 2px !important; }
-      section.edu-section-wrapper { page-break-inside: avoid; }
-      .edu-left .edu-degree { font-size: 8.5pt; }
-      .edu-left .edu-school { font-size: 8.1pt; }
-      .project-bucket-row { font-size: 8.2pt; line-height: 1.42; }
-      .project-bucket-row a { color: #2a78d6 !important; }
+      header { margin-bottom: 8px; padding-bottom: 6px; }
+      section { margin-bottom: 10px !important; }
+      .section-title { font-size: 7.4pt; margin-bottom: 4px; padding-bottom: 2px; }
+      .summary { font-size: 9pt; line-height: 1.50; }
+      .competencies { font-size: 8.8pt; line-height: 1.55; }
+      .job { margin-bottom: 10px !important; }
+      .job-org { font-size: 8.3pt; margin-top: 1px; margin-bottom: 2px; }
+      .award { font-size: 7.9pt; margin-bottom: 2px; }
+      ul { padding-left: 1.05em; }
+      li { font-size: 9pt; margin-bottom: 3px !important; line-height: 1.42 !important; }
+      section.edu-section { page-break-before: always; }
+      .edu-row { page-break-inside: avoid; margin-bottom: 4px !important; }
+      .edu-left .edu-degree { font-size: 9pt; }
+      .edu-left .edu-school { font-size: 8.6pt; }
+      .project-bucket-row { font-size: 8.8pt; line-height: 1.55; }
+      .project-bucket-row a { color: #2a78d6 !important; text-decoration: underline !important; }
       .pb-label { color: #111 !important; }
     }
   </style>
@@ -312,7 +312,7 @@
 
     </section>
 
-    <section>
+    <section class="edu-section">
       <div class="section-title">Education</div>
       <div class="edu-row" style="page-break-inside:avoid">
         <div class="edu-left">
