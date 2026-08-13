@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Planning Decision &amp; Forecast Governance System — Astha Jain</title>
+<style>
+/* ── Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg:       #f8fafc;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --card-h:   #f1f5ff;
+  --border:   #e2e8f0;
+  --border-s: #c7d2fe;
+  --ind:      #6366f1;
+  --ind-l:    #4f46e5;
+  --ind-d:    #3730a3;
+  --em:       #059669;
+  --am:       #d97706;
+  --rose:     #e11d48;
+  --t1:       #0f172a;
+  --t2:       #475569;
+  --t3:       #94a3b8;
+  --t4:       #cbd5e1;
+  --glow:     rgba(99,102,241,.08);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 8px;
+  height: 56px;
+}
+.nav-brand {
+  font-size: 15px; font-weight: 800; letter-spacing: -.02em;
+  color: var(--t1); margin-right: 24px; white-space: nowrap;
+}
+.nav-brand span { color: var(--ind); }
+.nav-items { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow: visible; }
+.nav-link {
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  transition: color .15s, background .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.nav-link.active { color: var(--ind-l); background: rgba(99,102,241,.08); font-weight: 600; }
+
+/* ── Dropdowns ──────────────────────────────────────────────────── */
+.dropdown { position: relative; }
+.dropdown-toggle {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  cursor: pointer; transition: color .15s, background .15s;
+  user-select: none; white-space: nowrap;
+}
+.dropdown-toggle:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.dropdown-toggle svg { width:10px;height:10px;transition:transform .2s; }
+.dropdown:hover .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px;
+  min-width: 220px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .18s, transform .18s, visibility .18s;
+}
+.dropdown:hover .dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+}
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--t2);
+  transition: background .12s, color .12s;
+}
+.dropdown-item:hover { background: rgba(99,102,241,.12); color: var(--t1); }
+.dropdown-item .di-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.dropdown-item .di-text .di-label { font-weight: 600; color: var(--t1); font-size: 12px; }
+.dropdown-item .di-text .di-sub { font-size: 10px; color: var(--t3); margin-top: 1px; }
+.dropdown-divider { height: 1px; background: var(--border); margin: 5px 2px; }
+
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nav-badge {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--t2);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.nav-badge:hover { background: #eef2ff; border-color: var(--ind); color: var(--ind); }
+.nav-cta {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  background: var(--ind); color: #fff;
+  transition: background .15s;
+}
+.nav-cta:hover { background: var(--ind-d); }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 56px 32px 40px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #eef2ff; border: 1px solid var(--border-s);
+  border-radius: 999px; padding: 4px 14px;
+  font-size: 11px; font-weight: 700; color: var(--ind);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-eyebrow::before { content:""; width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1 {
+  font-size: clamp(30px, 4.2vw, 46px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -.03em;
+  color: var(--t1); margin-bottom: 20px;
+}
+.hero h1 .accent { color: var(--ind); }
+.hero .tagline {
+  font-size: 17px; color: var(--t2); max-width: 760px;
+  line-height: 1.65; margin-bottom: 28px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--ind); color: #fff; }
+.btn-primary:hover { background: var(--ind-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
+.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-s); }
+.btn-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── Stats bar ──────────────────────────────────────────────────── */
+.stats-bar {
+  display: flex; flex-wrap: wrap; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  background: var(--surface);
+}
+.stat-item {
+  flex: 1; min-width: 140px; padding: 18px 24px;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-val { font-size: 22px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.stat-lbl { font-size: 11px; color: var(--t3); margin-top: 3px; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ── Section ────────────────────────────────────────────────────── */
+section { max-width: 1100px; margin: 0 auto; padding: 0 32px 64px; }
+.section-header { margin-bottom: 24px; }
+.section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind); margin-bottom: 8px;
+}
+.section-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.section-sub { font-size: 14px; color: var(--t2); margin-top: 6px; }
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.card-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-ind { background: rgba(99,102,241,.12); color: var(--ind-l); }
+.tag-em  { background: rgba(16,185,129,.12); color: #047857; }
+.tag-am  { background: rgba(245,158,11,.12); color: #b45309; }
+.tag-rose{ background: rgba(244,63,94,.12);  color: #be123c; }
+
+.card-title { font-size: 16px; font-weight: 700; color: var(--t1); line-height: 1.3; }
+.card-meta  { font-size: 11px; color: var(--t3); margin-top: 4px; }
+.card-desc  { font-size: 13px; color: var(--t2); line-height: 1.6; }
+
+.method-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.method-pill {
+  padding: 3px 9px; border-radius: 5px;
+  font-size: 10px; font-weight: 600; color: var(--t2);
+  background: #f8fafc; border: 1px solid var(--border);
+}
+
+.metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px;
+  flex: 1; min-width: 120px;
+}
+.metric .m-val { font-size: 17px; font-weight: 800; color: var(--t1); }
+.metric .m-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+
+.sidebar-metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+}
+.sidebar-metric .sm-val { font-size: 22px; font-weight: 800; color: var(--t1); }
+.sidebar-metric .sm-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+.sidebar-metric .sm-delta { font-size: 11px; font-weight: 600; color: var(--em); margin-top: 4px; }
+
+/* ── Case-study specifics (built from existing tokens) ──────────── */
+.cs-body p { font-size: 14px; color: var(--t2); line-height: 1.7; }
+.cs-body p + p { margin-top: 14px; }
+.cs-body strong { color: var(--t1); font-weight: 700; }
+
+.cs-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cs-three { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+.cs-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cs-list li {
+  position: relative; padding-left: 20px;
+  font-size: 13px; color: var(--t2); line-height: 1.6;
+}
+.cs-list li::before {
+  content: ""; position: absolute; left: 4px; top: 8px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--ind);
+}
+.cs-list li strong { color: var(--t1); font-weight: 700; }
+
+.callout {
+  background: #f1f5ff; border: 1px solid var(--border-s);
+  border-left: 3px solid var(--ind);
+  border-radius: 10px; padding: 16px 18px;
+  font-size: 13px; color: var(--t2); line-height: 1.65;
+}
+.callout .co-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind-l); margin-bottom: 6px;
+}
+.callout strong { color: var(--t1); }
+
+/* Four-layer chain */
+.layer-chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-items: stretch; }
+.layer {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px;
+  position: relative;
+}
+.layer .ly-num {
+  font-size: 10px; font-weight: 800; letter-spacing: .08em;
+  color: var(--ind); text-transform: uppercase; margin-bottom: 6px;
+}
+.layer .ly-title { font-size: 13px; font-weight: 700; color: var(--t1); line-height: 1.35; }
+.layer .ly-sub { font-size: 11px; color: var(--t3); margin-top: 5px; line-height: 1.5; }
+.layer .ly-owner {
+  font-size: 10px; font-weight: 600; color: var(--t2);
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);
+}
+.layer::after {
+  content: "→"; position: absolute; right: -12px; top: 50%;
+  transform: translateY(-50%); color: var(--t4); font-size: 14px; font-weight: 700;
+  z-index: 2;
+}
+.layer:last-child::after { content: none; }
+
+/* Numbered steps */
+.step { display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-items: start; }
+.step-num {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: #eef2ff; border: 1px solid var(--border-s);
+  color: var(--ind-l); font-weight: 800; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-title { font-size: 14px; font-weight: 700; color: var(--t1); margin-bottom: 5px; }
+.step-desc { font-size: 13px; color: var(--t2); line-height: 1.65; }
+
+/* Table */
+.cs-table-wrap { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); }
+table.cs-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.cs-table th {
+  text-align: left; padding: 12px 16px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--t3); background: #f8fafc; border-bottom: 1px solid var(--border);
+}
+table.cs-table td { padding: 13px 16px; color: var(--t2); border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+table.cs-table tr:last-child td { border-bottom: none; }
+table.cs-table td.partner { color: var(--t1); font-weight: 700; white-space: nowrap; }
+
+/* Before / after */
+.ba-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; }
+.ba-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+.ba-box.after { border-color: var(--border-s); background: #f1f5ff; }
+.ba-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--t3); margin-bottom: 6px; }
+.ba-val { font-size: 24px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.ba-sub { font-size: 11px; color: var(--t3); margin-top: 4px; }
+.ba-arrow { color: var(--ind); font-size: 20px; font-weight: 800; }
+
+/* Ownership split */
+.own-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.own-box { border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; background: var(--surface); }
+.own-box.mine { border-color: var(--border-s); }
+.own-hd { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+.own-box.mine .own-hd { color: var(--ind-l); }
+.own-box.theirs .own-hd { color: var(--t3); }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 12px; color: var(--t3);
+  max-width: 1100px; margin: 20px auto 0;
+}
+footer a { color: var(--t2); transition: color .12s; }
+footer a:hover { color: var(--ind-l); }
+.footer-note { margin-left: auto; }
+
+/* ── Confidentiality banner ─────────────────────────────────────── */
+.confidentiality-banner {
+  background: #f1f5f9;
+  border-bottom: 1px solid #cbd5e1;
+  padding: 10px 32px;
+  font-size: 11px;
+  color: #475569;
+  text-align: center;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .cs-two, .cs-three, .own-grid { grid-template-columns: 1fr; }
+  .layer-chain { grid-template-columns: 1fr 1fr; }
+  .layer::after { content: none; }
+  .ba-grid { grid-template-columns: 1fr; }
+  .ba-arrow { transform: rotate(90deg); text-align: center; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+}
+@media (max-width: 600px) {
+  .hero { padding: 40px 20px 32px; }
+  section { padding: 0 20px 48px; }
+  .navbar { padding: 0 16px; }
+  .layer-chain { grid-template-columns: 1fr; }
+  .nav-items .dropdown:not(:first-child) { display: none; }
+  .cs-table-wrap { overflow-x: auto; }
+  table.cs-table { min-width: 520px; }
+}
+
+/* ── Print ──────────────────────────────────────────────────────── */
+@media print {
+  :root { --bg: #ffffff; }
+  body { background: #fff; font-size: 11px; }
+  .navbar, .hero-actions, .nav-right { display: none !important; }
+  .confidentiality-banner { border-bottom: 1px solid #cbd5e1; background: #fff; }
+  .hero { padding: 16px 0 12px; }
+  .hero h1 { font-size: 24px; }
+  .hero .tagline { font-size: 12px; }
+  section { padding: 0 0 22px; break-inside: avoid; }
+  .project-card, .own-box, .cs-table-wrap, .callout, .layer, .stats-bar {
+    box-shadow: none !important; break-inside: avoid; page-break-inside: avoid;
+  }
+  .section-title { font-size: 17px; }
+  .layer-chain { grid-template-columns: repeat(4,1fr); }
+  .layer::after { content: none; }
+  a { color: inherit !important; text-decoration: none !important; }
+  footer { margin-top: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="confidentiality-banner">
+  <strong>Independent portfolio case study.</strong> All data, company names, product identifiers, operating assumptions and results shown here are synthetic or materially transformed. This project does not reproduce any employer's data, systems, models or confidential business processes.
+</div>
+
+<!-- ── Navbar ──────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <a class="nav-brand" href="./index.html">AJ<span> · Portfolio</span></a>
+
+  <div class="nav-items">
+    <!-- Dashboards dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">
+        Dashboards
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://asthaj12.github.io/forecast-governance/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">📊</div>
+          <div class="di-text">
+            <div class="di-label">Forecast Governance</div>
+            <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">📅</div>
+          <div class="di-text">
+            <div class="di-label">Scenario Planning</div>
+            <div class="di-sub">Scenario modeling · Inventory commitment · Event risk</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/pricing-demand-response/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">💹</div>
+          <div class="di-text">
+            <div class="di-label">Pricing &amp; Demand Response</div>
+            <div class="di-sub">Elasticity modeling · Lift attribution · Demand response</div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+          <div class="di-icon" style="background:rgba(16,185,129,.15)">🚚</div>
+          <div class="di-text">
+            <div class="di-label">Transportation Forecasting</div>
+            <div class="di-sub">SKU velocity · Peak planning · Carrier allocation</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/logitech-supply-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">🏭</div>
+          <div class="di-text">
+            <div class="di-label">Global Supply Planning</div>
+            <div class="di-sub">Safety stock · S&amp;OP · NPI launch</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/npi-launch-planning/">
+          <div class="di-icon" style="background:rgba(139,92,246,.15)">🚀</div>
+          <div class="di-text">
+            <div class="di-label">NPI Launch Planning</div>
+            <div class="di-sub">CTB readiness · EOL wind-down · Material readiness</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="./index.html#projects">Projects</a>
+    <a class="nav-link" href="./index.html#skills">Skills</a>
+    <a class="nav-link active" href="./planning-command-center.html">Case Study</a>
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-badge" href="./index.html">← Portfolio</a>
+    <a class="nav-badge" href="https://linkedin.com/in/asthajain12" target="_blank">LinkedIn ↗</a>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Program Management Case Study</div>
+  <h1>Planning Decision &amp;<br><span class="accent">Forecast Governance System</span></h1>
+  <p class="tagline">An exception-based planning command center built at Walmart US that connects machine forecasts, planner interventions, replenishment outcomes and actual demand into a single accountable chain — so a planning organization covering 4,593 stores can see which decisions helped, which hurt, and which 50,000 weekly exceptions are worth working first.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;">
+    <span style="background:#eef2ff;color:#6366f1;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">Walmart US</span>
+    <span style="background:#f0f9ff;color:#0369a1;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">Senior Manager II, Demand Planning</span>
+    <span style="background:#f0fdf4;color:#166534;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">Food &amp; Grocery SBU</span>
+    <span style="background:#fff7ed;color:#9a3412;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">Oct 2023 – Present</span>
+  </div>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#problem">Read the case study →</a>
+    <a class="btn btn-ghost" href="./index.html">← Back to portfolio</a>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 32px 40px;">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">4,593</div>
+      <div class="stat-lbl">Stores in scope</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">49</div>
+      <div class="stat-lbl">States</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">5–10B</div>
+      <div class="stat-lbl">Units / Month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">50K+</div>
+      <div class="stat-lbl">Weekly exceptions triaged</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">~130,000</div>
+      <div class="stat-lbl">Products diagnosed</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Scope & ownership ────────────────────────────────────────── -->
+<section id="scope" style="padding-bottom:56px;">
+  <div class="section-header" style="margin-bottom:20px;">
+    <div class="section-label">Scope</div>
+    <div class="section-title">Role &amp; Ownership Boundary</div>
+    <div class="section-sub">Stating this up front, because the distinction is the whole point of the program.</div>
+  </div>
+  <div class="own-grid">
+    <div class="own-box mine">
+      <div class="own-hd">What I own</div>
+      <ul class="cs-list">
+        <li><strong>The governance system</strong> — the rules, thresholds and audit trail that determine when a planning decision is reviewed and who answers for it.</li>
+        <li><strong>The exception triage process</strong> — how 50,000+ weekly forecast and replenishment exceptions get scored, ranked and routed to a human.</li>
+        <li><strong>The S&amp;OP cycle</strong> — the recurring operating rhythm where those exceptions get reviewed, decided and closed out with partner teams.</li>
+        <li><strong>Ongoing forecast diagnostics</strong> across roughly 130,000 products, and the reporting layer leadership uses to act on them.</li>
+      </ul>
+    </div>
+    <div class="own-box theirs">
+      <div class="own-hd">What I do not own</div>
+      <ul class="cs-list">
+        <li><strong>The forecast engine.</strong> Data Science owns the machine forecast model, its features and its retraining. I do not build or tune it.</li>
+        <li><strong>Accuracy and bias</strong> are metrics my work is <em>measured against</em> — not assets I control. My leverage is on the decisions layered on top of the forecast, not the forecast itself.</li>
+        <li><strong>Order execution.</strong> Replenishment owns the replenishment system and the buy.</li>
+        <li><strong>Item and category strategy.</strong> Merchandising owns assortment, pricing and event calendars.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:16px;">
+    <div class="co-label">Why that matters</div>
+    A planning organization can have a well-built forecast and still miss, because thousands of humans quietly override it every week and nobody measures whether those overrides were right. That gap — <strong>not the model</strong> — is the problem this program was built to close.
+  </div>
+</section>
+
+<!-- ── 1. Problem ──────────────────────────────────────────────── -->
+<section id="problem">
+  <div class="section-header">
+    <div class="section-label">01 · Context</div>
+    <div class="section-title">Problem</div>
+    <div class="section-sub">Food &amp; Grocery demand planning across 4,593 stores in 49 states, moving 5–10 billion units a month.</div>
+  </div>
+
+  <div class="cs-two">
+    <div class="project-card">
+      <div><span class="card-tag tag-rose">Symptom</span></div>
+      <div class="cs-body">
+        <div class="card-title" style="margin-bottom:10px;">50,000 exceptions a week, no way to rank them</div>
+        <p>The planning systems generated more than <strong>50,000 forecast and replenishment exceptions every week</strong>. They arrived as an undifferentiated list. A low-volume tail item and a high-velocity staple flagged the same way, so the queue was worked in whatever order a planner happened to open it — or not worked at all. Volume alone made the queue unusable, which meant the exceptions that actually moved units were statistically likely to be skipped.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div><span class="card-tag tag-am">Cost</span></div>
+      <div class="cs-body">
+        <div class="card-title" style="margin-bottom:10px;">20+ minutes to diagnose one item</div>
+        <p>Answering "why is this item wrong?" meant a planner manually pulling the machine forecast, the adjustment history, the replenishment output and actual sales from separate places and reconciling them by hand — <strong>20+ minutes per item</strong>. At that unit cost, diagnosis was rationed. Planners defaulted to acting on intuition because investigating properly was more expensive than overriding.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card" style="margin-top:16px;">
+    <div><span class="card-tag tag-ind">Root problem</span></div>
+    <div class="cs-body">
+      <div class="card-title" style="margin-bottom:10px;">No feedback loop on manual overrides</div>
+      <p>The deeper issue was structural. Planners made manual adjustments to the machine forecast constantly, and <strong>nothing in the system ever told anyone whether those adjustments helped or hurt.</strong> There was no linkage from an override back to the replenishment outcome it produced or the demand that actually materialized. So an override could be a legitimate expert correction or a costly reflex, and both looked identical in the data.</p>
+      <p>That has three consequences worth naming, because they are what a program has to fix rather than a dashboard: good planner judgment could not be identified and scaled; bad judgment could not be coached; and the forecast engine's true performance could not be separated from the human layer sitting on top of it. Data Science was being evaluated on outputs that had been silently edited downstream.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. Approach ─────────────────────────────────────────────── -->
+<section id="approach">
+  <div class="section-header">
+    <div class="section-label">02 · Framing</div>
+    <div class="section-title">Approach</div>
+    <div class="section-sub">The ask arrived ambiguous — "forecast accuracy is a problem." Framing it was most of the work.</div>
+  </div>
+
+  <div class="project-card" style="margin-bottom:16px;">
+    <div class="cs-body">
+      <div class="card-title" style="margin-bottom:10px;">Reframing the question</div>
+      <p>The instinct in a forecast-accuracy conversation is to go after the model. I deliberately did not, for two reasons: Data Science owns the engine and is better at it than I am, and — more importantly — the evidence pointed elsewhere. The number the business consumed was not the machine forecast. It was the machine forecast <em>plus thousands of undocumented human edits.</em></p>
+      <p>So I reframed the problem from <strong>"make the forecast better"</strong> to <strong>"make the decisions on top of the forecast visible, ranked and accountable."</strong> That reframe is what made the problem tractable: it turned an open-ended modeling ask into a governance and operating-process program with a clear owner, a clear queue and a measurable cycle time.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin:32px 0 16px;">
+    <div class="section-label">Design</div>
+    <div class="section-title" style="font-size:19px;">The four-layer connection</div>
+    <div class="section-sub">One item, one row, four layers joined — the structural decision the whole system rests on.</div>
+  </div>
+
+  <div class="layer-chain">
+    <div class="layer">
+      <div class="ly-num">Layer 1</div>
+      <div class="ly-title">Machine forecast</div>
+      <div class="ly-sub">What the system predicted, before any human touched it.</div>
+      <div class="ly-owner">Owned by Data Science</div>
+    </div>
+    <div class="layer">
+      <div class="ly-num">Layer 2</div>
+      <div class="ly-title">Planner adjustments &amp; interventions</div>
+      <div class="ly-sub">Every manual override, with size, direction and author.</div>
+      <div class="ly-owner">Owned by Demand Planning</div>
+    </div>
+    <div class="layer">
+      <div class="ly-num">Layer 3</div>
+      <div class="ly-title">Replenishment outcome</div>
+      <div class="ly-sub">What the supply chain actually ordered as a result.</div>
+      <div class="ly-owner">Owned by Replenishment</div>
+    </div>
+    <div class="layer">
+      <div class="ly-num">Layer 4</div>
+      <div class="ly-title">Actual demand</div>
+      <div class="ly-sub">What customers bought — the only unarguable layer.</div>
+      <div class="ly-owner">Ground truth</div>
+    </div>
+  </div>
+
+  <div class="project-card" style="margin-top:16px;">
+    <div class="cs-body">
+      <p>Each of these four layers already existed. None of them were joined. Connecting them end to end is what converts a debate into an audit: with all four on one row you can state, per item, what was predicted, what a human changed, what the supply chain did about it, and whether the customer agreed. <strong>The override stops being an opinion and becomes a decision with a traceable result.</strong></p>
+      <p>Two framing choices followed directly from the design. First, <strong>exception-based by default</strong> — with ~130,000 products in scope, no reporting surface that asks a planner to browse can work; the system must decide what deserves attention and defend that choice. Second, <strong>impact-weighted, not error-weighted</strong> — the largest percentage error in the file is usually a low-volume tail item, so ranking by error magnitude sends planners to the least consequential work. Prioritization had to be scored by business impact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. What was built ───────────────────────────────────────── -->
+<section id="built">
+  <div class="section-header">
+    <div class="section-label">03 · Execution</div>
+    <div class="section-title">What Was Built</div>
+    <div class="section-sub">A planning command center: one diagnostic surface, one ranked queue, one accountability record.</div>
+  </div>
+
+  <div class="cs-three">
+    <div class="project-card">
+      <div><span class="card-tag tag-ind">Architecture</span></div>
+      <div class="cs-body">
+        <div class="card-title" style="margin-bottom:10px;">Connected diagnostic layer</div>
+        <p>A data layer in <strong>BigQuery</strong> that stitches the four sources into a single item-level record, built with <strong>SQL and Python</strong> and surfaced to planners and leadership in <strong>Power BI</strong>. The design goal was one screen, one item, complete story — so a planner never has to reconcile four systems by hand to answer a single question.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div><span class="card-tag tag-am">Prioritization</span></div>
+      <div class="cs-body">
+        <div class="card-title" style="margin-bottom:10px;">Impact-based triage queue</div>
+        <p>Exceptions are scored and ranked by <strong>business impact</strong> rather than raw error, then routed as a finite, ordered worklist. This is the piece that made 50,000+ weekly exceptions workable: the queue is explicit about what it is asking a planner to skip, so limited planner hours land on the items that move units.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div><span class="card-tag tag-em">Governance</span></div>
+      <div class="cs-body">
+        <div class="card-title" style="margin-bottom:10px;">Override accountability layer</div>
+        <p>Manual planner overrides are recorded, attributed and evaluated against the replenishment outcome and actual demand they produced. Overrides stayed permitted — planners often know something the model cannot — but they became <strong>visible and answerable</strong> rather than invisible and free.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card" style="margin-top:16px;">
+    <div class="cs-body">
+      <div class="card-title" style="margin-bottom:10px;">How it runs</div>
+      <ul class="cs-list">
+        <li><strong>Weekly triage.</strong> 50,000+ forecast and replenishment exceptions are scored and ranked by business impact, and the top of the queue is worked inside the S&amp;OP cycle rather than ad hoc.</li>
+        <li><strong>Standing diagnostics.</strong> Forecast diagnostics run continuously across roughly 130,000 products, so pattern-level problems surface as patterns instead of as a scattering of separate planner complaints.</li>
+        <li><strong>Override review.</strong> Manual adjustments are checked against outcomes, which is how the program surfaced <strong>$7.6M in anomalous replenishment adjustments across 34,952 products</strong> — a class of exposure that was previously unmeasurable because nobody could connect an adjustment to its result.</li>
+        <li><strong>Escalation path.</strong> Findings that are model behavior go to Data Science as evidence; findings that are process or judgment go back through the planning organization. Same data, two doors, no ambiguity about who acts.</li>
+      </ul>
+      <div class="method-pills" style="margin-top:16px;">
+        <span class="method-pill">SQL</span>
+        <span class="method-pill">Python</span>
+        <span class="method-pill">BigQuery</span>
+        <span class="method-pill">Power BI</span>
+        <span class="method-pill">Exception-based triage</span>
+        <span class="method-pill">Impact-weighted prioritization</span>
+        <span class="method-pill">Override governance</span>
+        <span class="method-pill">S&amp;OP cycle design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. Cross-functional ─────────────────────────────────────── -->
+<section id="cross-functional">
+  <div class="section-header">
+    <div class="section-label">04 · Influence</div>
+    <div class="section-title">Cross-Functional Execution</div>
+    <div class="section-sub">Five organizations, none of them reporting to me. Adoption had to be earned, not assigned.</div>
+  </div>
+
+  <div class="project-card" style="margin-bottom:16px;">
+    <div class="cs-body">
+      <p>A governance system is the hardest kind of program to land, because the honest reading of it from the outside is "someone built a tool to grade my work." I had no authority over Replenishment, Merchandising, Data Science, Store Operations or Supply Chain. The only workable path was to make each partner's own problem cheaper to solve <em>first</em>, and let the accountability arrive as a by-product of a tool they already wanted.</p>
+    </div>
+  </div>
+
+  <div class="cs-table-wrap">
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th style="width:150px;">Partner</th>
+          <th style="width:32%;">What they needed</th>
+          <th>How I earned adoption</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="partner">Replenishment</td>
+          <td>To know which of their orders were driven by a real signal versus an unexamined manual edit.</td>
+          <td>Gave them the adjustment-to-order trace they never had. The $7.6M in anomalous adjustments was framed as exposure we surfaced together, not as a finding against them — which is why the review became a standing item instead of a one-time argument.</td>
+        </tr>
+        <tr>
+          <td class="partner">Merchandising</td>
+          <td>Confidence that forecast misses on their categories were being diagnosed, not absorbed.</td>
+          <td>Ranked exceptions by business impact so category conversations opened with the items that actually mattered to their P&amp;L, and closed the loop on what was done about each one.</td>
+        </tr>
+        <tr>
+          <td class="partner">Data Science</td>
+          <td>Clean evidence of model behavior, unpolluted by downstream human edits.</td>
+          <td>Separating the machine forecast from planner adjustments was the single biggest thing I could give them — it let model performance be evaluated on the model. That made them an ally of the governance layer rather than a skeptic of it, and kept the ownership line clean: they own the engine, I own the decisions on top of it.</td>
+        </tr>
+        <tr>
+          <td class="partner">Store Operations</td>
+          <td>Fewer whiplash swings in what arrived on the truck.</td>
+          <td>Used store-level reality as the tiebreaker in triage. When a diagnosis and a store's lived experience disagreed, the store won and the rule got revised — which is what bought the process credibility in the field.</td>
+        </tr>
+        <tr>
+          <td class="partner">Supply Chain</td>
+          <td>Advance warning on demand signals that would stress the network.</td>
+          <td>Routed pattern-level findings into the S&amp;OP cycle early enough to be planned around instead of reacted to.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cs-two" style="margin-top:16px;">
+    <div class="callout">
+      <div class="co-label">What worked</div>
+      Leading with <strong>diagnostic value</strong> and letting accountability follow. Cutting a planner's per-item diagnosis from 20+ minutes to under 3 bought genuine goodwill, and a planner who trusts the tool will accept being measured by it. Governance introduced as a favor lands; governance introduced as an audit does not.
+    </div>
+    <div class="callout">
+      <div class="co-label">What I'd do differently</div>
+      I underestimated how much the <strong>framing of the override metric</strong> would determine adoption. Early on it read as a scorecard on individuals. Reframing it as "which decisions are working" — team-level pattern first, individual second — should have been the design from day one, not a correction.
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. Outcome ──────────────────────────────────────────────── -->
+<section id="outcome">
+  <div class="section-header">
+    <div class="section-label">05 · Results</div>
+    <div class="section-title">Outcome</div>
+    <div class="section-sub">Measured on cycle time, coverage, and exposure surfaced.</div>
+  </div>
+
+  <div class="ba-grid" style="margin-bottom:16px;">
+    <div class="ba-box">
+      <div class="ba-lbl">Before</div>
+      <div class="ba-val">20+ minutes</div>
+      <div class="ba-sub">Per-item diagnosis, reconciled by hand across four disconnected systems</div>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-box after">
+      <div class="ba-lbl">After</div>
+      <div class="ba-val">Under 3 minutes</div>
+      <div class="ba-sub">Per-item diagnosis on a single connected record</div>
+    </div>
+  </div>
+
+  <div class="cs-two" style="grid-template-columns:1fr 1fr;">
+    <div class="project-card">
+      <div class="cs-body">
+        <div class="card-title" style="margin-bottom:12px;">Operating scale</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="sidebar-metric">
+            <div class="sm-val">50,000+</div>
+            <div class="sm-lbl">Forecast &amp; replenishment exceptions triaged weekly</div>
+            <div class="sm-delta">Ranked by business impact</div>
+          </div>
+          <div class="sidebar-metric">
+            <div class="sm-val">~130,000</div>
+            <div class="sm-lbl">Products under ongoing forecast diagnostics</div>
+          </div>
+          <div class="sidebar-metric">
+            <div class="sm-val">4,593 · 49</div>
+            <div class="sm-lbl">Stores · States supported</div>
+            <div class="sm-delta">5–10B units per month</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="cs-body">
+        <div class="card-title" style="margin-bottom:12px;">Governance impact</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="sidebar-metric" style="border-color:var(--border-s);background:#f1f5ff;">
+            <div class="sm-val">$7.6M</div>
+            <div class="sm-lbl">Anomalous replenishment adjustments flagged</div>
+            <div class="sm-delta">Across 34,952 products</div>
+          </div>
+          <div class="sidebar-metric">
+            <div class="sm-val">20+ min → &lt;3 min</div>
+            <div class="sm-lbl">Per-item diagnostic time</div>
+          </div>
+          <div class="sidebar-metric">
+            <div class="sm-val">Established</div>
+            <div class="sm-lbl">Governance &amp; accountability around manual planner overrides</div>
+            <div class="sm-delta">Previously unmeasured</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card" style="margin-top:16px;">
+    <div class="cs-body">
+      <p>The durable result is not a number, it is a capability change. The organization moved from <strong>"the forecast was wrong"</strong> to <strong>"here is the layer where it went wrong, here is who decided it, and here is what we changed."</strong> Manual overrides went from an invisible free action to a governed decision with an owner. And because diagnosis dropped from 20+ minutes to under 3, investigating became the default planner behavior instead of a luxury — which is the change that compounds.</p>
+      <div style="margin-top:14px;"><span class="card-tag tag-em">Recognition</span> <span style="font-size:12px;color:var(--t2);margin-left:6px;">Making a Difference Award for a forecast improvement initiative.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 6. Reflection ───────────────────────────────────────────── -->
+<section id="reflection" style="padding-bottom:48px;">
+  <div class="section-header">
+    <div class="section-label">06 · Reflection</div>
+    <div class="section-title">Limits &amp; What's Next</div>
+  </div>
+
+  <div class="project-card">
+    <div class="cs-body">
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">The honest limit: this is a detection system, not a prevention system</div>
+            <div class="step-desc">Every exception the queue surfaces is a decision that has already happened. The system tells a planner an override was wrong after the replenishment outcome exists, which means the cost has usually already been incurred. Making diagnosis dramatically cheaper compresses the correction loop; it does not remove it. The next real step is moving the governance check upstream — flagging a high-risk override <em>at the moment it is entered</em>, not in the following week's review.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Triage rules encode today's judgment, and judgment drifts</div>
+            <div class="step-desc">The impact-based prioritization logic reflects what the business believed mattered when it was written. Category mix, event calendars and store footprints move, and a static ranking rule quietly decays into the wrong ranking rule. This needs a scheduled re-validation of the scoring logic against realized outcomes — governance for the governance system — otherwise the queue slowly loses the credibility that made planners adopt it.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Adoption is the fragile part, not the pipeline</div>
+            <div class="step-desc">The technical layer is stable. What is fragile is a planning organization's willingness to keep working a queue that measures it. That holds only while the tool is visibly more useful to the planner than it is threatening — so the roadmap has to keep paying planners in saved time, not just pay leadership in visibility. I treat that as an ongoing program obligation, not a launch task.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Where I'd take it</div>
+            <div class="step-desc">Close the loop back into the model handoff. The override record is now a labeled dataset of cases where a human believed the forecast was wrong — and the outcome says whether they were right. Those cases are exactly the signal Data Science needs to prioritize model work, and routing them back cleanly is the highest-leverage next move available. It keeps the ownership line intact: they own the engine, I own the evidence about where it needs attention.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">
+    <div class="co-label">Transferable takeaway</div>
+    The pattern here generalizes past retail demand planning: <strong>when humans intervene in an automated system at scale and no feedback loop exists, the intervention layer becomes the largest unmeasured source of error.</strong> Instrumenting that layer — and making it accountable without making it adversarial — is a program-management problem, not a modeling one.
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer>
+  <strong style="color:var(--t1)">Astha Jain</strong>
+  <span>·</span>
+  <a href="./index.html">Portfolio</a>
+  <span>·</span>
+  <a href="https://linkedin.com/in/asthajain12" target="_blank">LinkedIn</a>
+  <span>·</span>
+  <a href="https://github.com/asthaj12" target="_blank">GitHub</a>
+  <span>·</span>
+  <a href="mailto:astha_jain@outlook.com">astha_jain@outlook.com</a>
+  <div class="footer-note">All figures illustrative or materially transformed. © 2026 Astha Jain</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Astha Jain — NPI-through-EOL Launch Program Management (Logitech)</title>
+<meta name="description" content="Program-management case study: NPI-through-EOL consumer hardware lifecycle management across a ~$400M Logitech portfolio, including a ~$30M Apple Education Program launch delivered ~3 weeks ahead of schedule."/>
+<style>
+/* ── Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg:       #f8fafc;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --card-h:   #f1f5ff;
+  --border:   #e2e8f0;
+  --border-s: #c7d2fe;
+  --ind:      #6366f1;
+  --ind-l:    #4f46e5;
+  --ind-d:    #3730a3;
+  --em:       #059669;
+  --am:       #d97706;
+  --rose:     #e11d48;
+  --t1:       #0f172a;
+  --t2:       #475569;
+  --t3:       #94a3b8;
+  --t4:       #cbd5e1;
+  --glow:     rgba(99,102,241,.08);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 8px;
+  height: 56px;
+}
+.nav-brand {
+  font-size: 15px; font-weight: 800; letter-spacing: -.02em;
+  color: var(--t1); margin-right: 24px; white-space: nowrap;
+}
+.nav-brand span { color: var(--ind); }
+.nav-items { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow: visible; }
+.nav-link {
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  transition: color .15s, background .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.nav-link.active { color: var(--ind-l); background: rgba(99,102,241,.08); font-weight: 600; }
+
+/* ── Dropdowns ──────────────────────────────────────────────────── */
+.dropdown { position: relative; }
+.dropdown-toggle {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  cursor: pointer; transition: color .15s, background .15s;
+  user-select: none; white-space: nowrap;
+}
+.dropdown-toggle:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.dropdown-toggle svg { width:10px;height:10px;transition:transform .2s; }
+.dropdown:hover .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px;
+  min-width: 220px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .18s, transform .18s, visibility .18s;
+}
+.dropdown:hover .dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+}
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--t2);
+  transition: background .12s, color .12s;
+}
+.dropdown-item:hover { background: rgba(99,102,241,.12); color: var(--t1); }
+.dropdown-item .di-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.dropdown-item .di-text .di-label { font-weight: 600; color: var(--t1); font-size: 12px; }
+.dropdown-item .di-text .di-sub { font-size: 10px; color: var(--t3); margin-top: 1px; }
+.dropdown-divider { height: 1px; background: var(--border); margin: 5px 2px; }
+
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nav-badge {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--t2);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.nav-badge:hover { background: #eef2ff; border-color: var(--ind); color: var(--ind); }
+.nav-cta {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  background: var(--ind); color: #fff;
+  transition: background .15s;
+}
+.nav-cta:hover { background: var(--ind-d); }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 56px 32px 40px;
+}
+.hero-content { min-width: 0; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #eef2ff; border: 1px solid var(--border-s);
+  border-radius: 999px; padding: 4px 14px;
+  font-size: 11px; font-weight: 700; color: var(--ind);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-eyebrow::before { content:""; width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1 {
+  font-size: clamp(30px, 4.2vw, 46px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -.03em;
+  color: var(--t1); margin-bottom: 20px;
+}
+.hero h1 .accent { color: var(--ind); }
+.hero .tagline {
+  font-size: 16px; color: var(--t2); max-width: 780px;
+  line-height: 1.65; margin-bottom: 28px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--ind); color: #fff; }
+.btn-primary:hover { background: var(--ind-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
+.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-s); }
+.btn-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── Role meta strip ────────────────────────────────────────────── */
+.role-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.role-pill { padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+
+/* ── Stats bar ──────────────────────────────────────────────────── */
+.stats-bar {
+  display: flex; flex-wrap: wrap; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  background: var(--surface);
+}
+.stat-item {
+  flex: 1; min-width: 140px; padding: 18px 24px;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-val { font-size: 22px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.stat-lbl { font-size: 11px; color: var(--t3); margin-top: 3px; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ── Section ────────────────────────────────────────────────────── */
+section { max-width: 1100px; margin: 0 auto; padding: 0 32px 72px; }
+.section-header { margin-bottom: 32px; }
+.section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind); margin-bottom: 8px;
+}
+.section-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.section-sub { font-size: 14px; color: var(--t2); margin-top: 6px; }
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.project-card:hover {
+  border-color: var(--border-s);
+  box-shadow: 0 0 0 1px rgba(99,102,241,.1), 0 24px 48px rgba(0,0,0,.4);
+}
+.project-card.static:hover { box-shadow: none; border-color: var(--border); transform: none; }
+.project-card.featured { grid-column: 1 / -1; flex-direction: row; gap: 32px; }
+.project-card.featured .card-body { flex: 1; min-width: 0; }
+.project-card.featured .card-sidebar {
+  width: 260px; flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.card-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-ind { background: rgba(99,102,241,.12); color: var(--ind-l); }
+.tag-em  { background: rgba(16,185,129,.12); color: #047857; }
+.tag-am  { background: rgba(245,158,11,.12); color: #b45309; }
+.tag-rose{ background: rgba(244,63,94,.12);  color: #be123c; }
+
+.card-title { font-size: 16px; font-weight: 700; color: var(--t1); line-height: 1.3; }
+.card-meta  { font-size: 11px; color: var(--t3); margin-top: 4px; }
+.card-desc  { font-size: 13px; color: var(--t2); line-height: 1.6; }
+.card-desc + .card-desc { margin-top: 12px; }
+
+.method-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.method-pill {
+  padding: 3px 9px; border-radius: 5px;
+  font-size: 10px; font-weight: 600; color: var(--t3);
+  background: rgba(255,255,255,.04); border: 1px solid var(--border);
+}
+
+.metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px;
+  flex: 1; min-width: 90px;
+}
+.metric .m-val { font-size: 17px; font-weight: 800; color: var(--t1); }
+.metric .m-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+
+.card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+.ca-primary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 7px;
+  font-size: 11px; font-weight: 700;
+  background: var(--ind); color: #fff;
+  transition: background .15s, box-shadow .15s;
+}
+.ca-primary:hover { background: var(--ind-d); box-shadow: 0 4px 16px rgba(99,102,241,.4); }
+.ca-ghost {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 14px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: var(--t2);
+  border: 1px solid var(--border-s);
+  transition: border-color .15s, color .15s;
+}
+.ca-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── Sidebar metrics (featured card) ────────────────────────────── */
+.sidebar-metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+}
+.sidebar-metric .sm-val { font-size: 22px; font-weight: 800; color: var(--t1); }
+.sidebar-metric .sm-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+.sidebar-metric .sm-delta { font-size: 11px; font-weight: 600; color: var(--em); margin-top: 4px; }
+
+/* ── Skill / lesson cards ───────────────────────────────────────── */
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.skill-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+}
+.skill-card .sk-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ind-l); margin-bottom: 8px; }
+.skill-card .sk-body { font-size: 13px; color: var(--t2); line-height: 1.6; }
+.skill-card .sk-head { font-size: 14px; font-weight: 700; color: var(--t1); margin-bottom: 6px; }
+.skill-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.skill-pill {
+  padding: 3px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 500; color: var(--t2);
+  background: #f1f5f9;
+}
+
+/* ── Lifecycle phase rail ───────────────────────────────────────── */
+.phase-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.phase-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  border-top: 3px solid var(--ind);
+}
+.phase-card .ph-idx { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ind); }
+.phase-card .ph-name { font-size: 15px; font-weight: 800; color: var(--t1); margin: 4px 0 8px; letter-spacing: -.01em; }
+.phase-card .ph-body { font-size: 12.5px; color: var(--t2); line-height: 1.6; }
+.phase-card .ph-out { font-size: 11px; color: var(--t3); margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+.phase-card .ph-out strong { color: var(--ind-l); font-weight: 700; }
+
+/* ── Numbered method list ───────────────────────────────────────── */
+.num-list { list-style: none; counter-reset: n; display: flex; flex-direction: column; gap: 14px; }
+.num-list li { counter-increment: n; display: flex; gap: 14px; font-size: 13px; color: var(--t2); line-height: 1.6; }
+.num-list li::before {
+  content: counter(n);
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 6px;
+  background: #eef2ff; border: 1px solid var(--border-s);
+  color: var(--ind-l); font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.num-list li strong { color: var(--t1); }
+
+/* ── Table ──────────────────────────────────────────────────────── */
+.table-wrap {
+  border: 1px solid var(--border); border-radius: 14px;
+  background: var(--card); overflow-x: auto;
+}
+table.cs-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+table.cs-table th {
+  text-align: left; padding: 12px 18px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--ind); background: #f8fafc;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+table.cs-table td {
+  padding: 14px 18px; color: var(--t2); line-height: 1.55;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.cs-table tr:last-child td { border-bottom: none; }
+table.cs-table td strong { color: var(--t1); font-weight: 700; }
+
+/* ── Callout ────────────────────────────────────────────────────── */
+.callout {
+  background: #eef2ff; border: 1px solid var(--border-s);
+  border-left: 3px solid var(--ind);
+  border-radius: 10px; padding: 16px 18px;
+  font-size: 13px; color: var(--t2); line-height: 1.65;
+}
+.callout strong { color: var(--ind-d); }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px; margin-top: 20px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 12px; color: var(--t3);
+  max-width: 1100px; margin: 20px auto 0;
+}
+footer a { color: var(--t2); transition: color .12s; }
+footer a:hover { color: var(--ind-l); }
+.footer-note { margin-left: auto; }
+
+/* ── Confidentiality banner ─────────────────────────────────────── */
+.confidentiality-banner {
+  background: #f1f5f9;
+  border-bottom: 1px solid #cbd5e1;
+  padding: 10px 32px;
+  font-size: 11px;
+  color: #475569;
+  text-align: center;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .project-grid { grid-template-columns: 1fr; }
+  .project-card.featured { flex-direction: column; }
+  .project-card.featured .card-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .project-card.featured .card-sidebar .sidebar-metric { flex: 1; min-width: 140px; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .phase-grid { grid-template-columns: 1fr 1fr; }
+  .stats-bar { flex-direction: row; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+}
+@media (max-width: 600px) {
+  .hero { padding: 40px 20px 32px; }
+  section { padding: 0 20px 56px; }
+  .navbar { padding: 0 16px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .phase-grid { grid-template-columns: 1fr; }
+  .nav-items .dropdown:not(:first-child) { display: none; }
+  .confidentiality-banner { padding: 10px 16px; text-align: left; }
+}
+
+/* ── Print ──────────────────────────────────────────────────────── */
+@media print {
+  @page { margin: 14mm; }
+  html { scroll-behavior: auto; }
+  body { background: #fff; font-size: 10.5pt; color: #000; }
+  .navbar, .hero-actions, .nav-right, .dropdown, .card-actions { display: none !important; }
+  .hero-eyebrow::before { animation: none; }
+  .hero { padding: 0 0 18px; max-width: none; }
+  .hero h1 { font-size: 22pt; }
+  section { padding: 0 0 20px; max-width: none; break-inside: avoid; }
+  .project-card, .skill-card, .phase-card, .table-wrap, .stats-bar, .callout, .sidebar-metric, .metric {
+    box-shadow: none !important; break-inside: avoid; page-break-inside: avoid;
+    background: #fff; border-color: #cbd5e1;
+  }
+  .project-card.featured { flex-direction: column; }
+  .project-card.featured .card-sidebar { width: 100%; flex-direction: row; }
+  .section-title { font-size: 15pt; }
+  .confidentiality-banner { border: 1px solid #cbd5e1; margin-bottom: 12px; }
+  footer { max-width: none; padding: 12px 0 0; }
+  a { color: #000 !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="confidentiality-banner">
+  <strong>Independent portfolio case study.</strong> All figures shown are approximate, rounded and materially generalized. This case study does not reproduce any employer's data, systems, models, planning parameters or confidential business processes.
+</div>
+
+<!-- ── Navbar ──────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <a class="nav-brand" href="./index.html">AJ<span> · Portfolio</span></a>
+
+  <div class="nav-items">
+    <!-- Dashboards dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">
+        Dashboards
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://asthaj12.github.io/forecast-governance/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">📊</div>
+          <div class="di-text">
+            <div class="di-label">Forecast Governance</div>
+            <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">📅</div>
+          <div class="di-text">
+            <div class="di-label">Scenario Planning</div>
+            <div class="di-sub">Scenario modeling · Inventory commitment · Event risk</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/pricing-demand-response/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">💹</div>
+          <div class="di-text">
+            <div class="di-label">Pricing &amp; Demand Response</div>
+            <div class="di-sub">Elasticity modeling · Lift attribution · Demand response</div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+          <div class="di-icon" style="background:rgba(16,185,129,.15)">🚚</div>
+          <div class="di-text">
+            <div class="di-label">Transportation Forecasting</div>
+            <div class="di-sub">SKU velocity · Peak planning · Carrier allocation</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/logitech-supply-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">🏭</div>
+          <div class="di-text">
+            <div class="di-label">Global Supply Planning</div>
+            <div class="di-sub">Safety stock · S&amp;OP · NPI launch</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/npi-launch-planning/">
+          <div class="di-icon" style="background:rgba(139,92,246,.15)">🚀</div>
+          <div class="di-text">
+            <div class="di-label">NPI Launch Planning</div>
+            <div class="di-sub">CTB readiness · EOL wind-down · Material readiness</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="./index.html">← Portfolio</a>
+    <a class="nav-link" href="./index.html#projects">Projects</a>
+    <a class="nav-link active" href="#context">This Case Study</a>
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-badge" href="https://linkedin.com/in/asthajain12" target="_blank">LinkedIn ↗</a>
+    <a class="nav-badge" href="https://github.com/asthaj12" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Case Study · NPI → EOL Program Management</div>
+    <h1>Running Consumer Hardware Launches<br><span class="accent">From NPI Through End-of-Life</span></h1>
+    <p class="tagline">Two years owning supply planning and launch execution for a ~$400M global consumer electronics portfolio at Logitech — 20+ product lines, 400+ SKUs, Asia-based ODM and contract-manufacturing partners, weekly MRP/MPS in Kinaxis, and quarterly lifecycle cycles that never stopped moving. The worked example below is a ~$30M Apple Education Program launch delivered approximately three weeks ahead of schedule.</p>
+
+    <div class="role-strip">
+      <span class="role-pill" style="background:#eef2ff;color:#6366f1;">Global Supply Product Planner</span>
+      <span class="role-pill" style="background:#fff7ed;color:#9a3412;">Logitech Inc. · Consumer Electronics</span>
+      <span class="role-pill" style="background:#f0f9ff;color:#0369a1;">Newark, CA</span>
+      <span class="role-pill" style="background:#f0fdf4;color:#166534;">Mar 2020 – Feb 2022</span>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#execution">Jump to Program Execution →</a>
+      <a class="btn btn-ghost" href="./index.html">← Back to Portfolio</a>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 32px 40px;">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">~$400M</div>
+      <div class="stat-lbl">Portfolio Managed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">400+</div>
+      <div class="stat-lbl">SKUs · 20+ Product Lines</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">~$30M</div>
+      <div class="stat-lbl">Flagship Launch</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">~3 wks</div>
+      <div class="stat-lbl">Ahead of Schedule (~15%)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">+40%</div>
+      <div class="stat-lbl">Finished-Goods Availability</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 1. Problem / Context ─────────────────────────────────────── -->
+<section id="context">
+  <div class="section-header">
+    <div class="section-label">01 · Problem</div>
+    <div class="section-title">Context: Hardware Launch Complexity</div>
+    <div class="section-sub">Why launching consumer hardware is a program-management problem, not a planning-spreadsheet problem.</div>
+  </div>
+
+  <div class="project-card static" style="margin-bottom:16px;">
+    <p class="card-desc" style="font-size:14px;">I owned global supply planning for a ~$400M consumer electronics portfolio — 20+ product lines and 400+ SKUs — and carried each of them through the full product lifecycle, from new product introduction to end-of-life, on a quarterly cadence. That structure creates a permanent, overlapping problem: at any given moment some SKUs were ramping into first production, some were in steady-state replenishment, and some were being wound down, and all three states competed for the same factory capacity, the same components, and the same air-freight budget.</p>
+    <p class="card-desc" style="font-size:14px;">Manufacturing sat with Asia-based ODM partners and contract manufacturers, which meant every decision was made against long lead times. A component commitment made in one quarter landed as finished goods in the next; a missed material window did not surface as a late purchase order, it surfaced as a slipped launch date. Meanwhile demand was regional — NA, EMEA, and APAC distribution centers each with their own sell-in expectations — while supply was global and singular. The gap between those two views is where launches fail.</p>
+    <p class="card-desc" style="font-size:14px;">The core difficulty was not forecasting. It was that no single function owned the launch date. Factories owned build capacity, ODMs owned design and material availability, sourcing owned supplier commitments, and regional demand teams owned the sell-in plan. Each was individually reasonable and collectively unsynchronized. The planning role had visibility across all of them and authority over none of them.</p>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="sk-cat">Constraint 01</div>
+      <div class="sk-head">Long lead times</div>
+      <div class="sk-body">Asia-based ODM and contract-manufacturing lead times meant material and capacity commitments had to be made well before demand signals firmed. Late detection was equivalent to no detection.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Constraint 02</div>
+      <div class="sk-head">Material constraints</div>
+      <div class="sk-body">Component shortages and production constraints were recurring, not exceptional. Every launch plan needed a live view of which materials could actually be secured on the build date.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Constraint 03</div>
+      <div class="sk-head">Quarterly lifecycle cadence</div>
+      <div class="sk-body">NPI, sustain, and EOL activity all ran on quarterly cycles across 20+ product lines, so launch readiness always competed against transition and wind-down work on shared capacity.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Constraint 04</div>
+      <div class="sk-head">Regional vs. global mismatch</div>
+      <div class="sk-body">Demand was expressed regionally across NA, EMEA, and APAC distribution centers; supply was a single global pool. Allocation decisions were unavoidable and had to be defensible.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Constraint 05</div>
+      <div class="sk-head">Shortage vs. excess trade-off</div>
+      <div class="sk-body">Protecting availability with buffer stock raised excess and obsolete exposure at EOL. Protecting against E&amp;O raised stockout risk at launch. Both failure modes were expensive.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Constraint 06</div>
+      <div class="sk-head">Portfolio scale</div>
+      <div class="sk-body">400+ SKUs and a ~$400M portfolio ruled out per-SKU heroics. Anything that worked had to work as a repeatable weekly process, not a one-off escalation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. Approach ──────────────────────────────────────────────── -->
+<section id="approach">
+  <div class="section-header">
+    <div class="section-label">02 · Approach</div>
+    <div class="section-title">How Launch Readiness Was Framed</div>
+    <div class="section-sub">A lifecycle framework plus a constraint-identification loop, both running on the weekly planning cadence.</div>
+  </div>
+
+  <div class="project-card static" style="margin-bottom:20px;">
+    <p class="card-desc" style="font-size:14px;">I treated launch readiness as a supply-side gate rather than a date on a marketing calendar. A launch was ready when material was secured, factory capacity was committed, and the regional demand plan could actually be filled from the global supply position — not when the schedule said it should be. That reframing made readiness measurable week over week, which in turn made slippage visible early enough to act on rather than early enough only to report.</p>
+    <p class="card-desc" style="font-size:14px;">The mechanism was the weekly MRP/MPS planning run in Kinaxis. Every week the plan was regenerated across the portfolio, and every week the same question was asked at each lifecycle stage: what is the binding constraint, and who has to move to clear it? Kinaxis gave the quantitative supply-demand picture; the program work was converting that picture into a short, owned action list and then closing it before the next run.</p>
+  </div>
+
+  <div style="margin-bottom:12px;"><span class="card-tag tag-ind">NPI → EOL Lifecycle Framework</span></div>
+  <div class="phase-grid" style="margin-bottom:24px;">
+    <div class="phase-card">
+      <div class="ph-idx">Phase 01</div>
+      <div class="ph-name">NPI</div>
+      <div class="ph-body">Establish first-build feasibility with the ODM and contract manufacturer: material availability, long-lead component commitments, and an initial build schedule that the factory has actually confirmed rather than acknowledged.</div>
+      <div class="ph-out"><strong>Gate:</strong> material and capacity confirmed against the launch date</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph-idx">Phase 02</div>
+      <div class="ph-name">Ramp &amp; Launch</div>
+      <div class="ph-body">Convert the confirmed build into regional supply: sequence production against NA, EMEA, and APAC distribution-center requirements, position initial stock, and hold weekly supply readiness reviews through the launch window.</div>
+      <div class="ph-out"><strong>Gate:</strong> regional fill achievable from the global supply position</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph-idx">Phase 03</div>
+      <div class="ph-name">Sustain</div>
+      <div class="ph-body">Run weekly MRP/MPS in Kinaxis with stochastic safety-stock models sizing buffers to actual variability, and use supply allocation to resolve competing regional demand rather than letting the first order in consume the pool.</div>
+      <div class="ph-out"><strong>Gate:</strong> availability held without premium freight</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph-idx">Phase 04</div>
+      <div class="ph-name">EOL</div>
+      <div class="ph-body">Wind supply down against the remaining demand tail so the last builds clear rather than becoming excess and obsolete inventory, and hand the transition into the successor SKU without a coverage gap.</div>
+      <div class="ph-out"><strong>Gate:</strong> demand tail satisfied with minimal E&amp;O residual</div>
+    </div>
+  </div>
+
+  <div class="project-card static">
+    <div>
+      <div class="card-title">Constraint-identification methodology</div>
+      <div class="card-meta">The weekly loop applied to every lifecycle stage</div>
+    </div>
+    <ol class="num-list">
+      <li><strong>Regenerate the plan.</strong> Weekly MRP/MPS run in Kinaxis across 400+ SKUs, producing a fresh supply-demand position for every item in every lifecycle stage.</li>
+      <li><strong>Run supply-demand gap analysis.</strong> Compare regional demand against the global supply position weekly and isolate where projected supply cannot cover projected requirement, by SKU and by region.</li>
+      <li><strong>Classify the binding constraint.</strong> Separate material shortages from production and capacity constraints — the two require different owners and different remedies, and conflating them wastes the week.</li>
+      <li><strong>Assign the corrective action to an owner.</strong> Material issues went to sourcing and the supplier; build and capacity issues went to the factory and ODM; demand-side conflicts went to the regional planning teams and S&amp;OP forum.</li>
+      <li><strong>Decide the trade-off explicitly.</strong> Where supply could not cover everything, resolve shortage-versus-excess deliberately through safety-stock sizing and supply allocation rather than by default or by escalation volume.</li>
+      <li><strong>Close the loop before the next run.</strong> Carry every open action into the following week's review so nothing was quietly re-planned away, and so recurring constraints became visible as patterns rather than as fresh surprises.</li>
+    </ol>
+    <div class="callout">
+      <strong>Why it mattered for launches:</strong> proactive constraint identification only has value if it lands before the lead time closes. Running the loop weekly meant a material or capacity problem was raised with the factory or sourcing team while there was still schedule left to recover — which is the entire difference between a launch that moves left and one that slips right.
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. Program Execution ─────────────────────────────────────── -->
+<section id="execution">
+  <div class="section-header">
+    <div class="section-label">03 · Program Execution</div>
+    <div class="section-title">Worked Example: ~$30M Apple Education Program Launch</div>
+    <div class="section-sub">The flagship launch in the portfolio, and the clearest test of the readiness framework.</div>
+  </div>
+
+  <div class="project-grid" style="margin-bottom:20px;">
+    <div class="project-card featured">
+      <div class="card-body">
+        <div style="margin-bottom:12px"><span class="card-tag tag-ind">Flagship Launch</span> <span class="card-tag tag-am">NPI</span></div>
+        <div class="card-title" style="font-size:20px">Apple Education Program — supply readiness and launch execution</div>
+        <div class="card-meta">NPI · ODM coordination · Material readiness · Regional supply positioning</div>
+        <p class="card-desc" style="margin-top:12px">The Apple Education Program launch was a ~$30M program inside the ~$400M portfolio and the highest-visibility NPI I carried. It had the full set of hardware launch dependencies: an Asia-based ODM building to a fixed window, long-lead components that had to be committed before demand firmed, a factory schedule shared with other product lines in the same quarterly cycle, and regional distribution centers across NA, EMEA, and APAC that all needed stock in position at launch.</p>
+        <p class="card-desc">My role was to own supply readiness end to end. That meant establishing what the factory could actually build and by when, driving the material picture with sourcing and the ODM until every long-lead component had a confirmed commitment against the build schedule, and then sequencing production output against the regional demand plan so launch stock landed where it was needed rather than merely being produced on time.</p>
+        <p class="card-desc">The dependency management was the substance of the work. Material readiness gated the build; the build gated regional positioning; regional positioning gated the launch date. Because those dependencies were serial, every week of ambiguity anywhere in the chain cost a week at the end of it. So the program ran on the same weekly loop as the rest of the portfolio, with the constraint list reviewed with factories, ODM partners, and sourcing until it was empty — shortages resolved with suppliers, production constraints resolved with the factory, and the remaining risk converted into an explicit allocation decision rather than left as an open question.</p>
+        <p class="card-desc">Working the constraints proactively rather than reactively is what pulled the schedule forward. Material and capacity issues were identified and cleared while there was still recovery room inside the lead time, which compounded across the build and positioning phases. The program delivered approximately three weeks ahead of schedule — roughly a 15% acceleration against the original plan.</p>
+        <div class="method-pills" style="margin-top:12px">
+          <span class="method-pill">NPI supply readiness</span>
+          <span class="method-pill">ODM &amp; contract manufacturer coordination</span>
+          <span class="method-pill">Long-lead material commitment</span>
+          <span class="method-pill">Factory capacity sequencing</span>
+          <span class="method-pill">Regional launch positioning</span>
+          <span class="method-pill">Kinaxis MRP/MPS</span>
+        </div>
+        <div class="card-actions" style="margin-top:20px">
+          <a class="ca-primary" href="#outcome">Outcome metrics →</a>
+          <a class="ca-ghost" href="./index.html#background">Role context</a>
+        </div>
+      </div>
+      <div class="card-sidebar">
+        <div class="sidebar-metric">
+          <div class="sm-val">~$30M</div>
+          <div class="sm-lbl">Program value</div>
+        </div>
+        <div class="sidebar-metric">
+          <div class="sm-val">~3 weeks</div>
+          <div class="sm-lbl">Ahead of schedule</div>
+          <div class="sm-delta">↑ ~15% acceleration</div>
+        </div>
+        <div class="sidebar-metric">
+          <div class="sm-val">3 regions</div>
+          <div class="sm-lbl">NA · EMEA · APAC DCs</div>
+        </div>
+        <div class="sidebar-metric">
+          <div class="sm-val">Weekly</div>
+          <div class="sm-lbl">Readiness &amp; gap review</div>
+          <div class="sm-delta">Kinaxis MRP/MPS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th>Dependency</th>
+          <th>Owner</th>
+          <th>How it was managed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Long-lead material availability</strong></td>
+          <td>Sourcing · suppliers · ODM</td>
+          <td>Drove component commitments against the confirmed build schedule and resolved material shortages directly with sourcing teams and the ODM before they became build-blocking.</td>
+        </tr>
+        <tr>
+          <td><strong>Factory build capacity</strong></td>
+          <td>Contract manufacturer · ODM</td>
+          <td>Established a build schedule the factory confirmed, then sequenced it against the other product lines competing for the same capacity in the quarterly cycle.</td>
+        </tr>
+        <tr>
+          <td><strong>Production constraints</strong></td>
+          <td>Factory · sourcing</td>
+          <td>Identified constraints through the weekly plan review and worked each one to closure with the factory rather than absorbing it as schedule risk.</td>
+        </tr>
+        <tr>
+          <td><strong>Regional launch stock position</strong></td>
+          <td>Regional demand teams · NA/EMEA/APAC DCs</td>
+          <td>Aligned regional demand against the single global supply position and allocated output so each distribution center could fill its launch requirement.</td>
+        </tr>
+        <tr>
+          <td><strong>Portfolio contention</strong></td>
+          <td>S&amp;OP stakeholders</td>
+          <td>Surfaced launch needs against sustain and EOL activity across 20+ product lines so trade-offs were decided in the S&amp;OP forum instead of at the factory floor.</td>
+        </tr>
+        <tr>
+          <td><strong>Schedule risk</strong></td>
+          <td>Program-owned</td>
+          <td>Maintained a live constraint list reviewed weekly, with every open item carried forward until cleared — the mechanism that converted early detection into schedule recovery.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 4. Cross-Functional Coordination ─────────────────────────── -->
+<section id="coordination">
+  <div class="section-header">
+    <div class="section-label">04 · Coordination</div>
+    <div class="section-title">Driving Alignment Without Direct Authority</div>
+    <div class="section-sub">Factories, ODM partners, sourcing, regional demand teams, and S&amp;OP stakeholders across NA, EMEA, and APAC — none of whom reported to me.</div>
+  </div>
+
+  <div class="project-card static" style="margin-bottom:20px;">
+    <p class="card-desc" style="font-size:14px;">I had no authority over any of the groups whose decisions determined the launch date. Factories and ODM partners set build capability, sourcing controlled supplier commitments, and regional demand teams owned the sell-in plan. What the planning seat did have was the only complete view of the supply-demand position — and that view, published on a predictable weekly cadence, was the lever.</p>
+    <p class="card-desc" style="font-size:14px;">The approach was to make the constraint the subject of the conversation rather than the schedule. Instead of asking a factory to commit to a date, I brought the specific material or capacity gap, its quantified consequence on regional fill, and a proposed corrective action with a named owner. That reframing turned an escalation into a decision, and it worked across time zones and organizational boundaries because the underlying numbers were the same for everyone in the room.</p>
+    <p class="card-desc" style="font-size:14px;">Allocation was where the absence of authority mattered most. When global supply could not satisfy every region, someone had to be told no. Sizing safety stock with stochastic models and applying explicit supply allocation rules meant those decisions rested on stated variability and stated priorities rather than on whoever pushed hardest — which is what made them hold in the S&amp;OP forum rather than being relitigated every week.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th>Stakeholder</th>
+          <th>What they controlled</th>
+          <th>How alignment was achieved</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Asia-based ODM partners</strong></td>
+          <td>Design-side material availability and build feasibility</td>
+          <td>Worked the material and build picture jointly until commitments were confirmed against a specific schedule, not agreed in principle.</td>
+        </tr>
+        <tr>
+          <td><strong>Contract manufacturers / factories</strong></td>
+          <td>Production capacity and build execution</td>
+          <td>Brought quantified production constraints and resolved them at the constraint level, with the downstream regional impact made explicit.</td>
+        </tr>
+        <tr>
+          <td><strong>Sourcing teams</strong></td>
+          <td>Supplier commitments and component supply</td>
+          <td>Partnered on material shortage resolution, with shortages prioritized by their effect on launch readiness rather than by order date.</td>
+        </tr>
+        <tr>
+          <td><strong>Regional demand teams (NA / EMEA / APAC)</strong></td>
+          <td>Regional demand plans and DC requirements</td>
+          <td>Reconciled regional demand against the global supply position weekly, so each region saw the same constraint and the same allocation logic.</td>
+        </tr>
+        <tr>
+          <td><strong>S&amp;OP stakeholders</strong></td>
+          <td>Cross-portfolio priority calls</td>
+          <td>Presented supply-demand gaps and corrective actions weekly so contested trade-offs across 20+ product lines were decided in one forum.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 5. Outcome ───────────────────────────────────────────────── -->
+<section id="outcome">
+  <div class="section-header">
+    <div class="section-label">05 · Outcome</div>
+    <div class="section-title">Results</div>
+    <div class="section-sub">One launch pulled forward; a portfolio-wide change in how availability and inventory cost traded off.</div>
+  </div>
+
+  <div class="metric-row" style="margin-bottom:20px;">
+    <div class="metric" style="min-width:160px;">
+      <div class="m-val">~3 weeks early</div>
+      <div class="m-lbl">~$30M launch · ~15% acceleration</div>
+    </div>
+    <div class="metric" style="min-width:160px;">
+      <div class="m-val">+40%</div>
+      <div class="m-lbl">Finished-goods availability</div>
+    </div>
+    <div class="metric" style="min-width:160px;">
+      <div class="m-val">~$200K</div>
+      <div class="m-lbl">Premium air freight reduced</div>
+    </div>
+    <div class="metric" style="min-width:160px;">
+      <div class="m-val">~$1M / yr</div>
+      <div class="m-lbl">E&amp;O inventory cost reduced</div>
+    </div>
+  </div>
+
+  <div class="project-grid">
+    <div class="project-card static">
+      <div><span class="card-tag tag-ind">Launch Outcome</span></div>
+      <div>
+        <div class="card-title">The ~$30M Apple Education Program launch delivered approximately three weeks ahead of schedule</div>
+        <div class="card-meta">~15% acceleration against the original plan</div>
+      </div>
+      <p class="card-desc">Schedule was recovered by identifying material and production constraints early enough in the lead time to act on them, and by clearing each one with the responsible factory, ODM, or sourcing team before it propagated into the build and regional positioning phases. The acceleration was the cumulative result of the weekly constraint loop, not a single intervention.</p>
+    </div>
+
+    <div class="project-card static">
+      <div><span class="card-tag tag-em">Availability</span></div>
+      <div>
+        <div class="card-title">Finished-goods availability improved 40%</div>
+        <div class="card-meta">Stochastic safety-stock models across 400+ SKUs</div>
+      </div>
+      <p class="card-desc">Buffers were sized to actual demand and supply variability rather than to uniform rules of thumb, which moved coverage to the SKUs and regions where it changed fill outcomes. Combined with explicit supply allocation, this optimized the shortage-versus-excess trade-off instead of trading one failure mode for the other.</p>
+    </div>
+
+    <div class="project-card static">
+      <div><span class="card-tag tag-am">Cost to Serve</span></div>
+      <div>
+        <div class="card-title">Premium air freight reduced by approximately $200K</div>
+        <div class="card-meta">Consequence of proactive constraint resolution</div>
+      </div>
+      <p class="card-desc">Expedited freight is the price of late detection. Catching supply-demand gaps in the weekly review — while there was still ocean-transit time available — removed a recurring category of emergency spend rather than negotiating it down after the fact.</p>
+    </div>
+
+    <div class="project-card static">
+      <div><span class="card-tag tag-rose">Inventory Health</span></div>
+      <div>
+        <div class="card-title">Excess and obsolete inventory cost reduced by approximately $1M annually</div>
+        <div class="card-meta">Disciplined EOL wind-down across 20+ product lines</div>
+      </div>
+      <p class="card-desc">Managing the EOL phase as a planned program step — winding supply down against the remaining demand tail rather than stopping abruptly or over-building into a transition — kept last builds from becoming write-offs across the quarterly lifecycle cycles.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 6. Transferable Lessons ──────────────────────────────────── -->
+<section id="lessons" style="padding-bottom:60px;">
+  <div class="section-header">
+    <div class="section-label">06 · Transferable Lessons</div>
+    <div class="section-title">What This Demonstrates</div>
+    <div class="section-sub">Generalizable to hardware program management and capacity / launch planning at portfolio scale.</div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="sk-cat">Lesson 01</div>
+      <div class="sk-head">Launch dates are supply gates, not calendar entries</div>
+      <div class="sk-body">Defining readiness as material secured + capacity committed + regional demand fillable made slippage measurable weekly. A launch date that is only a commitment cannot be managed; a launch date backed by gate conditions can.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Lesson 02</div>
+      <div class="sk-head">Early detection is the only lever on long lead times</div>
+      <div class="sk-body">With Asia-based ODM lead times, the recovery window closes long before the launch date does. Proactive constraint identification is what pulled ~3 weeks out of a ~$30M program and what removed ~$200K of premium freight.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Lesson 03</div>
+      <div class="sk-head">Separate material constraints from capacity constraints</div>
+      <div class="sk-body">They have different owners and different remedies. Classifying the binding constraint before escalating is what turned a weekly plan output into a short, actionable list rather than a generalized alarm.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Lesson 04</div>
+      <div class="sk-head">Manage NPI and EOL as one system</div>
+      <div class="sk-body">Launch and wind-down compete for the same capacity, components, and freight. Running the full lifecycle on one quarterly cadence is what let availability improve 40% while E&amp;O cost fell ~$1M annually — outcomes that look opposed if the phases are owned separately.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Lesson 05</div>
+      <div class="sk-head">Influence comes from owning the shared number</div>
+      <div class="sk-body">Across factories, ODMs, sourcing, and NA/EMEA/APAC demand teams, the weekly supply-demand position was the one artifact everyone accepted. Publishing it on a predictable cadence produced alignment that no reporting line existed to enforce.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Lesson 06</div>
+      <div class="sk-head">Make the shortage-versus-excess trade-off explicit</div>
+      <div class="sk-body">Stochastic safety stock and stated allocation rules turned an implicit judgment call into a decision that could be reviewed, defended, and repeated across 400+ SKUs — which is what made it survive contact with competing regional priorities.</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:20px;">
+    <strong>Scope note:</strong> this work sits squarely in consumer hardware — supply planning and S&amp;OP across a ~$400M portfolio, NPI-through-EOL lifecycle management on a quarterly cadence, and direct execution with Asia-based ODM partners and contract manufacturers on material readiness, capacity, and launch schedules.
+  </div>
+
+  <div class="hero-actions" style="margin-top:24px;">
+    <a class="btn btn-primary" href="./index.html">← Back to Portfolio</a>
+    <a class="btn btn-ghost" href="./index.html#projects">Other Case Studies</a>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer>
+  <strong style="color:var(--t1)">Astha Jain</strong>
+  <span>·</span>
+  <a href="./index.html">Portfolio</a>
+  <span>·</span>
+  <a href="https://linkedin.com/in/asthajain12" target="_blank">LinkedIn</a>
+  <span>·</span>
+  <a href="https://github.com/asthaj12" target="_blank">GitHub</a>
+  <span>·</span>
+  <a href="mailto:astha_jain@outlook.com">astha_jain@outlook.com</a>
+  <div class="footer-note">Figures are approximate and rounded. © 2026 Astha Jain</div>
+</footer>
+
+</body>
+</html>

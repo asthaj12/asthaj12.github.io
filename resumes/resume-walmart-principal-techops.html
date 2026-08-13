@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Astha Jain - Resume (Principal, Technology Operations)</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 9.6pt; line-height: 1.38; color: #1a1a1a; background: #fff; }
+    .page { max-width: 1100px; width: 100%; margin: 0 auto; padding: clamp(10px,2vw,32px) clamp(20px,5vw,80px) clamp(10px,2vw,32px); box-sizing: border-box; }
+    header { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 7px; border-bottom: 1.8px solid #2a78d6; margin-bottom: 8px; }
+    header .left h1 { font-size: 21pt; font-weight: 800; letter-spacing: 0.025em; color: #111; line-height: 1; }
+    header .left .version-tag { font-size: 7.2pt; color: #2a78d6; font-variant: small-caps; letter-spacing: 0.07em; margin-top: 3px; font-weight: 600; }
+    header .right { text-align: right; font-size: 8.2pt; color: #444; line-height: 1.6; }
+    header .right a { color: #2a78d6; text-decoration: none; }
+    section { margin-bottom: 7px; }
+    .section-title { font-size: 7.4pt; font-variant: small-caps; text-transform: uppercase; letter-spacing: 0.10em; font-weight: 700; color: #2a78d6; border-bottom: 0.8px solid #c5d8f0; padding-bottom: 2px; margin-bottom: 5px; }
+    .summary { font-size: 9.1pt; line-height: 1.45; color: #232323; }
+    .competencies { font-size: 8.6pt; color: #333; line-height: 1.55; }
+    .competencies strong { font-weight: 600; color: #111; }
+    .job { margin-bottom: 7px; }
+    .job-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .job-title { font-weight: 700; font-size: 9.4pt; color: #111; }
+    .job-date { font-size: 8.2pt; color: #555; white-space: nowrap; flex-shrink: 0; }
+    .job-org { font-size: 8.3pt; color: #444; margin-top: 1px; margin-bottom: 3px; }
+    .job-org em { font-style: normal; color: #777; }
+    .award { font-size: 7.9pt; color: #2a78d6; font-style: italic; margin-bottom: 2px; }
+    ul { padding-left: 1.05em; }
+    li { font-size: 9.1pt; margin-bottom: 2px; line-height: 1.38; }
+    .edu-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 2px; }
+    .edu-left .edu-degree { font-weight: 600; font-size: 9.1pt; }
+    .edu-left .edu-school { font-size: 8.3pt; color: #444; }
+    .edu-date { font-size: 8.2pt; color: #555; white-space: nowrap; flex-shrink: 0; }
+    .project-list { display: flex; flex-direction: column; gap: 2px; }
+    .project-bucket-row { font-size: 8.6pt; line-height: 1.55; }
+    .project-bucket-row .pb-label { font-weight: 600; color: #111; }
+    .project-bucket-row a { color: #2a78d6; font-size: 8.4pt; }
+    .project-bucket-row a:hover { text-decoration: underline; }
+    @media (max-width: 600px) {
+      body { font-size: 10pt; line-height: 1.5; }
+      header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      header .right { text-align: left; }
+      .job-header { flex-direction: column; gap: 2px; }
+    }
+    @media print {
+      @page { size: letter; margin: 0.36in 0.5in; }
+      body { font-size: 8.4pt; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; color: #1a1a1a; }
+      .page { padding: 0; max-width: none; width: auto; }
+      header { margin-bottom: 8px; padding-bottom: 7px; }
+      section { margin-bottom: 12px !important; }
+      .section-title { font-size: 7.4pt; margin-bottom: 5px; padding-bottom: 2px; }
+      .summary { font-size: 8.4pt; line-height: 1.53; }
+      .competencies { font-size: 8.2pt; line-height: 1.55; }
+      .job { margin-bottom: 13px !important; }
+      .job-org { font-size: 8.3pt; margin-top: 2px; margin-bottom: 3px; }
+      .award { font-size: 7.9pt; margin-bottom: 3px; }
+      ul { padding-left: 1.05em; }
+      li { font-size: 8.4pt; margin-bottom: 4px !important; line-height: 1.45 !important; }
+      section.edu-section { page-break-before: always; }
+      .edu-row { page-break-inside: avoid; margin-bottom: 2px !important; }
+      .edu-left .edu-degree { font-size: 8.5pt; }
+      .edu-left .edu-school { font-size: 8.1pt; }
+      .project-list { gap: 2px; }
+      .project-bucket-row { font-size: 8.2pt; line-height: 1.55; }
+      .pb-label { color: #111 !important; }
+    }
+  </style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:100;background:#0f172a;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:system-ui,sans-serif;print-color-adjust:exact;" class="no-print">
+  <a href="https://asthaj12.github.io" style="color:#94a3b8;font-size:12px;font-weight:600;text-decoration:none;">← Portfolio</a>
+  <span style="color:#334155;flex:1"></span>
+  <button onclick="window.print()" style="background:#6366f1;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">Save as PDF</button>
+  <a href="https://asthaj12.github.io/resumes/Resume-AJ-2026.docx?v=20260805" download style="background:transparent;color:#94a3b8;border:1px solid #334155;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">Download Word</a>
+</div>
+<style>@media print{.no-print{display:none!important;}}</style>
+<div class="page">
+
+  <header>
+    <div class="left">
+      <h1>Astha Jain</h1>
+      <div class="version-tag">Principal, Technology Operations &nbsp;&middot;&nbsp; Program, Financial &amp; Risk Management</div>
+    </div>
+    <div class="right">
+      860-335-7134 &middot; astha_jain@outlook.com<br>
+      Portfolio: <a href="https://asthaj12.github.io" target="_blank">asthaj12.github.io</a> &middot; <a href="https://linkedin.com/in/asthajain12">linkedin.com/in/asthajain12</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="section-title">Summary</div>
+      <p class="summary">
+        Program leader who owns large-scale operations programs end-to-end — the weekly S&amp;OP / IBP cycle, an exception-based governance system, a national SNAP demand-risk program, and NPI-to-EOL launches — defining scope, milestones, and performance baselines and holding delivery against them. Anchors decisions in financial analysis: business cases weighing stockout exposure against carrying cost, cost control, and resource allocation across $5B+ in weekly inventory decisions and $400M+ in commitments. Builds the monitoring systems in SQL, Python, and BigQuery; drives consensus without direct authority.
+      </p>
+    </section>
+
+    <section>
+      <div class="section-title">Core Competencies</div>
+      <div class="competencies">
+        <strong>Program Management:</strong> Program Charters | Integrated Program Plans | Performance Baselines | Milestone Governance <br>
+        <strong>Financial &amp; Risk:</strong> Business Cases | Cost Control | Forecasting &amp; Resource Allocation | Risk Assessment &amp; Mitigation <br>
+        <strong>Technology &amp; Operations:</strong> SQL | Python | BigQuery | Power BI | Kinaxis / MRP | Scenario Modeling | Continuous Improvement
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Experience</div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Senior Manager II, Demand Planning — Food &amp; Grocery SBU</span>
+          <span class="job-date">Oct 2023 – Present</span>
+        </div>
+        <div class="job-org">Walmart US &nbsp;<em>&middot; Retail | Bentonville, AR</em></div>
+        <div class="award">&#9733; Making a Difference Award — forecast improvement initiative</div>
+        <ul>
+          <li><span style="font-weight:600;color:#333;">Integrated Program Planning &amp; Baselines:</span> Owns the weekly S&amp;OP / IBP cycle across Merchandising, Replenishment, Finance, and Operations — defines scope, milestones, and baselines converting $5B+ in weekly inventory decisions into committed plans across 4,593 stores; compressed decision cycles ~75%.</li>
+          <li><span style="font-weight:600;color:#333;">Risk Forecasting &amp; Business Case:</span> Led the SNAP policy demand-risk program across 24 states, 970M units, and 7 rollout waves — validated a correction on 2.9B data points at a 93% win rate, recovering 499M missed units, and built the business case weighing stockout exposure against carrying cost behind $400M+ in inventory commitments.</li>
+          <li><span style="font-weight:600;color:#333;">Program Monitoring Systems:</span> Built and productionized an exception-based governance system in SQL, Python, BigQuery, and Power BI — links machine forecasts to planner interventions and replenishment outcomes across ~130,000 products, triages 50,000+ weekly exceptions, and cut per-item diagnostics from 20+ minutes to under 3.</li>
+          <li><span style="font-weight:600;color:#333;">Stakeholder Consensus &amp; Continuous Improvement:</span> Owns event and seasonal planning across 10 retail events and 30+ categories, delivering $292M in forecast error reduction ($173M Thanksgiving and Black Friday), and replenishment risk monitoring across 34,952 products that flagged $7.6M in anomalous adjustments.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Senior Transportation Demand Planner</span>
+          <span class="job-date">Feb 2022 – May 2023</span>
+        </div>
+        <div class="job-org">Shopify Logistics &nbsp;<em>&middot; eCommerce | San Francisco, CA</em></div>
+        <div class="award">&#9733; Five consecutive performance recognitions</div>
+        <ul>
+          <li><span style="font-weight:600;color:#333;">Network Capacity &amp; Carrier Cost:</span> Owned planning across 85 warehouses and 12 carriers ($1.1B) — optimized FedEx/UPS/USPS for speed at lowest cost, cutting expedite spend ~$400K.</li>
+          <li><span style="font-weight:600;color:#333;">Peak Scenario Planning &amp; Process Improvement:</span> Built Black Friday / Cyber Monday scenario models translating demand amplification into capacity constraints — cut peak stockouts 15% and drove $2M incremental sales; automation lifted forecast accuracy 30% and halved planning cycle time.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Global Supply Product Planner</span>
+          <span class="job-date">Mar 2020 – Feb 2022</span>
+        </div>
+        <div class="job-org">Logitech Inc. &nbsp;<em>&middot; Consumer Electronics | Newark, CA</em></div>
+        <ul>
+          <li><span style="font-weight:600;color:#333;">NPI-to-EOL Launch Programs:</span> Led quarterly launch programs with Asia-based ODM partners — delivered a ~$30M Apple Education Program launch 3 weeks early (~15% acceleration).</li>
+          <li><span style="font-weight:600;color:#333;">Portfolio Planning &amp; Cost Control:</span> Owned weekly MRP / MPS planning in Kinaxis for a ~$400M portfolio (20+ product lines, 400+ SKUs) across NA, EMEA, and APAC DCs — gap analysis and corrective action lifted availability 40%, cut air freight ~$200K, and reduced E&amp;O ~$1M annually.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-title">Sourcing Engineer / Capacity Planner</span>
+          <span class="job-date">Sep 2018 – Jan 2020</span>
+        </div>
+        <div class="job-org">Cummins Inc. &nbsp;<em>&middot; Automotive | Columbus, IN &nbsp;—&nbsp; Supplier Capacity &amp; Manufacturing Risk</em></div>
+        <ul>
+          <li><span style="font-weight:600;color:#333;">Supplier Capacity &amp; Risk Framework:</span> Built a capacity and constraint framework across 800+ global suppliers and 15+ engine lines modeling throughput, lead-time variability, and tooling bottlenecks — improved risk identification 50%, compressed disruption recovery from 16 to 6 weeks, and cut ~$8M+ annual exposure.</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <section class="edu-section">
+      <div class="section-title">Education</div>
+      <div class="edu-row">
+        <div class="edu-left">
+          <div class="edu-degree">MicroMasters Program in Supply Chain Management (MITx)</div>
+          <div class="edu-school">Massachusetts Institute of Technology (MIT) &nbsp;&middot;&nbsp; Coursework: Linear Programming &amp; Network Optimization, Supply Chain Design, Analytics, Dynamics</div>
+        </div>
+        <div class="edu-date">2025</div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-left">
+          <div class="edu-degree">B.S. Mechanical Engineering &nbsp;&middot;&nbsp; Engineering Leadership Development Minor</div>
+          <div class="edu-school">Pennsylvania State University</div>
+        </div>
+        <div class="edu-date">2018</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Selected Work &amp; Portfolio</div>
+      <div class="project-list">
+        <div class="project-bucket-row"><span class="pb-label">Program Case Studies:</span> <a href="https://asthaj12.github.io/planning-command-center.html">Planning Command Center</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/npi-launch-program.html">NPI Launch Program</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/forecast-governance/">Forecast Governance</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/seasonal-planning/">Seasonal Planning</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/replenishment-risk/">Replenishment Risk</a></div>
+        <div class="project-bucket-row"><span class="pb-label">Analytics &amp; Network:</span> <a href="https://asthaj12.github.io/forecast-accuracy/">Forecast Accuracy</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/shopify-demand-forecasting/">Transportation Demand</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/logitech-supply-planning/">Global Supply Planning</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/pricing-demand-response/">Pricing &amp; Demand Response</a> &nbsp;|&nbsp; <a href="https://asthaj12.github.io/npi-launch-planning/">NPI Launch Planning</a></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>
