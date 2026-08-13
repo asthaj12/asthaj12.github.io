@@ -1,0 +1,4 @@
+
+# Internal-only resume variants — contain Walmart internal URLs, never publish
+*INTERNAL*
+resumes/*-internal.html
