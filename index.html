@@ -394,6 +394,7 @@ footer a:hover { color: var(--ind-l); }
     </div>
 
     <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link" href="#internal-work">Internal Work</a>
     <a class="nav-link" href="#skills">Skills</a>
   </div>
 
@@ -624,6 +625,79 @@ footer a:hover { color: var(--ind-l); }
       </div>
       <div class="card-actions">
         <a class="ca-primary" href="https://asthaj12.github.io/forecast-accuracy/">🖥 View Dashboard →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Internal Work ─────────────────────────────────────────────── -->
+<section id="internal-work">
+  <div class="section-header">
+    <div class="section-label">Walmart-Internal</div>
+    <div class="section-title">Internal Production Systems</div>
+    <div class="section-sub">Live systems built and running inside Walmart. Not published here — described by scope and impact only. Walmart colleagues can request access through internal channels.</div>
+  </div>
+
+  <div class="projects-grid" style="margin-top:20px;">
+
+    <div class="project-card">
+      <div class="card-tag tag-am">Internal &middot; Access on Request</div>
+      <div class="card-title">SNAP Demand Correction Monitor</div>
+      <div class="card-meta">Walmart US &middot; Food &amp; Grocery &middot; Production</div>
+      <div class="card-desc">
+        Production monitoring for a national demand-correction program covering a multi-state benefits policy change. Tracks correction performance against the uncorrected baseline on a weekly refresh cycle, with automated drift detection and re-validation. Surfaces where the correction is holding, where it is decaying, and which categories need planner review.
+      </div>
+      <div style="font-style:italic;color:var(--t2);font-size:13px;margin-top:10px;">
+        Defined the problem, designed and validated the statistical correction, and built the production monitoring layer. Data Science owns the underlying forecast engine.
+      </div>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val">24</div><div class="m-lbl">States Covered</div></div>
+        <div class="metric"><div class="m-val">93%</div><div class="m-lbl">Weekly Win Rate</div></div>
+        <div class="metric"><div class="m-val">Weekly</div><div class="m-lbl">Refresh Cadence</div></div>
+      </div>
+      <div class="card-actions">
+        <span style="color:var(--t2);font-size:13px;">&#128274; Walmart-internal &mdash; available on request</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-tag tag-em">Internal &middot; Access on Request</div>
+      <div class="card-title">Event &amp; Seasonal Planning Dashboard</div>
+      <div class="card-meta">Walmart US &middot; Food &amp; Grocery &middot; Production</div>
+      <div class="card-desc">
+        Planning surface for major retail events and seasonal categories. Combines event calendars, regional demand signals, and prior-year performance into pre-event positioning views, then tracks in-event actuals against plan so teams can correct mid-event rather than post-mortem.
+      </div>
+      <div style="font-style:italic;color:var(--t2);font-size:13px;margin-top:10px;">
+        Built the ensemble forecasting architecture and the planning views on top of it; partnered with Merchandising and Replenishment on the review cadence.
+      </div>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val">10</div><div class="m-lbl">Major Events</div></div>
+        <div class="metric"><div class="m-val">30+</div><div class="m-lbl">Seasonal Categories</div></div>
+        <div class="metric"><div class="m-val">Regional</div><div class="m-lbl">Signal Granularity</div></div>
+      </div>
+      <div class="card-actions">
+        <span style="color:var(--t2);font-size:13px;">&#128274; Walmart-internal &mdash; available on request</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-tag tag-ind">Internal &middot; Access on Request</div>
+      <div class="card-title">Planning Command Center</div>
+      <div class="card-meta">Walmart US &middot; Food &amp; Grocery &middot; Production</div>
+      <div class="card-desc">
+        Exception-based planning governance in production. Links machine forecasts to planner interventions, replenishment outcomes, and actual demand, then ranks the resulting exceptions by business impact so planners work the consequential ones first. A public write-up of the approach is available as a case study.
+      </div>
+      <div style="font-style:italic;color:var(--t2);font-size:13px;margin-top:10px;">
+        Framed the problem, designed the four-layer model, built the triage logic, and drove adoption across Replenishment, Merchandising, Data Science and Store Ops.
+      </div>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val">50K+</div><div class="m-lbl">Weekly Exceptions</div></div>
+        <div class="metric"><div class="m-val">20+ → &lt;3 min</div><div class="m-lbl">Diagnostic Time</div></div>
+        <div class="metric"><div class="m-val">~130K</div><div class="m-lbl">Products Covered</div></div>
+      </div>
+      <div class="card-actions">
+        <a class="ca-primary" href="./planning-command-center.html">Read the case study →</a>
       </div>
     </div>
 
