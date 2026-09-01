@@ -210,6 +210,19 @@ section{max-width:1100px;margin:0 auto;padding:0 32px 80px;}
 .skill-pills{display:flex;flex-wrap:wrap;gap:5px;}
 .skill-pill{padding:3px 8px;border-radius:4px;font-size:11px;font-weight:500;color:var(--t2);background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);}
 
+/* ── Credentials ────────────────────────────────────────────────── */
+.cred-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.cred-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;transition:box-shadow .15s,border-color .15s;}
+.cred-card:hover{border-color:var(--border-s);box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.cred-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.cred-body{flex:1;min-width:0;}
+.cred-institution{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.cred-name{font-size:14px;font-weight:700;color:var(--t1);line-height:1.35;margin-bottom:4px;}
+.cred-meta{font-size:11px;color:var(--t3);margin-bottom:9px;}
+.cred-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.cred-pill{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;color:var(--t2);background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);}
+@media(max-width:700px){.cred-grid{grid-template-columns:1fr;}}
+
 /* ── Footer ─────────────────────────────────────────────────────── */
 footer{border-top:1px solid var(--border);padding:28px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--t3);max-width:1100px;margin:20px auto 0;}
 footer a{color:var(--t2);transition:color .12s;}
@@ -326,6 +339,7 @@ footer a:hover{color:var(--ind-l);}
     <a class="nav-link" href="#projects">Case Library</a>
     <a class="nav-link" href="#stories">23 Stories</a>
     <a class="nav-link" href="#skills">Skills</a>
+    <a class="nav-link" href="#credentials">Credentials</a>
   </div>
 
   <div class="nav-right">
@@ -345,7 +359,7 @@ footer a:hover{color:var(--ind-l);}
       <span class="i-pill i-shopify">Shopify Logistics</span>
       <span class="i-pill i-logitech">Logitech Inc.</span>
       <span class="i-pill i-cummins">Cummins Inc.</span>
-      <span class="i-pill i-mit">MIT Supply Chain MicroMasters</span>
+      <span class="i-pill i-mit">MIT CTL Supply Chain · May 2025</span>
       <span class="i-pill i-award">Making a Difference Award</span>
     </div>
     <div class="hero-actions">
@@ -974,6 +988,84 @@ footer a:hover{color:var(--ind-l);}
         <span class="skill-pill">Price Elasticity</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── Credentials & Education ──────────────────────────────────── -->
+<section id="credentials">
+  <div class="section-header">
+    <div class="section-label">Background</div>
+    <div class="section-title">Education & Certifications</div>
+    <div class="section-sub">Degrees, institutional programs, and professional certifications.</div>
+  </div>
+  <div class="cred-grid">
+
+    <!-- Penn State — full width featured -->
+    <div class="cred-card" style="grid-column:1/-1;border-left:3px solid var(--ind)">
+      <div class="cred-icon" style="background:rgba(99,102,241,.10)">🎓</div>
+      <div class="cred-body">
+        <div class="cred-institution">Penn State University · College of Engineering · State College, PA</div>
+        <div class="cred-name">B.S. Mechanical Engineering · Minor in Engineering Leadership Development</div>
+        <div class="cred-meta">Class of 2018 · Full-time residential program</div>
+        <div class="cred-pills">
+          <span class="cred-pill">Mechanical Systems</span>
+          <span class="cred-pill">Manufacturing & Production</span>
+          <span class="cred-pill">Thermodynamics</span>
+          <span class="cred-pill">Engineering Leadership</span>
+          <span class="cred-pill">Operations Research</span>
+          <span class="cred-pill">Cross-Functional Team Leadership</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIT CTL -->
+    <div class="cred-card" style="border-left:3px solid #a00000">
+      <div class="cred-icon" style="background:rgba(160,0,0,.08)">🔬</div>
+      <div class="cred-body">
+        <div class="cred-institution">MIT Center for Transportation and Logistics · Walmart Custom Program</div>
+        <div class="cred-name">Supply Chain Education — Certificate of Completion</div>
+        <div class="cred-meta">May 2025 · Instructors: Chris Caplice PhD & Eva Ponce PhD</div>
+        <div class="cred-pills">
+          <span class="cred-pill">Supply Chain Strategy</span>
+          <span class="cred-pill">Operations Management</span>
+          <span class="cred-pill">Logistics Systems</span>
+          <span class="cred-pill">Inventory Optimization</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LinkedIn + Microsoft PM -->
+    <div class="cred-card" style="border-left:3px solid #0a66c2">
+      <div class="cred-icon" style="background:rgba(10,102,194,.08)">📋</div>
+      <div class="cred-body">
+        <div class="cred-institution">LinkedIn Learning · Microsoft</div>
+        <div class="cred-name">Career Essentials in Project Management</div>
+        <div class="cred-meta">Learning Path · August 2023 · 15 hours</div>
+        <div class="cred-pills">
+          <span class="cred-pill">Project Management</span>
+          <span class="cred-pill">Agile Methodologies</span>
+          <span class="cred-pill">Program Planning</span>
+          <span class="cred-pill">Stakeholder Management</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LinkedIn + Aha! -->
+    <div class="cred-card" style="border-left:3px solid #f96e58">
+      <div class="cred-icon" style="background:rgba(249,110,88,.08)">🚀</div>
+      <div class="cred-body">
+        <div class="cred-institution">LinkedIn Learning · Aha!</div>
+        <div class="cred-name">Product Management Professional Certificate</div>
+        <div class="cred-meta">Professional Certificate · August 2023 · 5h 38min</div>
+        <div class="cred-pills">
+          <span class="cred-pill">Product Management</span>
+          <span class="cred-pill">Product Strategy</span>
+          <span class="cred-pill">Product Roadmapping</span>
+          <span class="cred-pill">Go-to-Market Planning</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
