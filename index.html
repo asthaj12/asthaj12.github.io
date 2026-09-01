@@ -204,6 +204,7 @@ section{max-width:1100px;margin:0 auto;padding:0 32px 80px;}
 
 /* ── Skills section ─────────────────────────────────────────────── */
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.skill-card.ts-featured{grid-column:1/-1;background:#f8f9ff;border-left:3px solid var(--ind);}
 .skill-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
 .skill-card .sk-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ind-l);margin-bottom:8px;}
 .skill-pills{display:flex;flex-wrap:wrap;gap:5px;}
@@ -251,7 +252,7 @@ footer a:hover{color:var(--ind-l);}
         <div class="dropdown-section-label">Walmart US</div>
         <a class="dropdown-item" href="https://asthaj12.github.io/fom-backtesting/">
           <div class="di-icon" style="background:rgba(99,102,241,.14)">📊</div>
-          <div><div class="di-label">FOM 3.0 Backtesting</div><div class="di-sub">309 bps · 42% misallocated · $95M</div></div>
+          <div><div class="di-label">Intraweek Demand Correction</div><div class="di-sub">309 bps · 42% misallocated · $95M</div></div>
         </a>
         <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-event-intelligence/">
           <div class="di-icon" style="background:rgba(99,102,241,.14)">🗓</div>
@@ -401,19 +402,20 @@ footer a:hover{color:var(--ind-l);}
     </div>
 
     <div class="project-grid">
-      <!-- Featured: FOM 3.0 -->
+      <!-- Featured: Intraweek Demand Signal Correction -->
       <div class="project-card featured">
         <div class="card-body">
-          <div style="margin-bottom:10px"><span class="card-tag tag-flagship">Flagship · Quantitative Analytics</span></div>
-          <div class="card-title" style="font-size:18px">FOM 3.0 Backtesting & Demand Correction Targeting</div>
-          <div class="card-meta">Intervention Audit · wMAPE Improvement · Store-Level Backtesting · Targeting Framework</div>
-          <p class="card-desc" style="margin-top:10px">Improved wMAPE by 309 bps on a $3.1B portfolio by redesigning the demand correction targeting framework through store×CID×day backtesting — after diagnosing that 42% of legacy interventions were misallocated to stores where on-hand inventory was already sufficient, making corrections physically irrelevant. Proved Day-0 interventions were highly valuable while Day-3+ were actively harmful.</p>
-          <p class="card-contrib"><em>My contribution:</em> Owned the business logic, targeting criteria, and backtest design. DS/Engineering owned technical implementation. Turned the finding into the business case for a complete system redesign.</p>
+          <div style="margin-bottom:10px"><span class="card-tag tag-flagship">Flagship · Time Series · Quantitative</span></div>
+          <div class="card-title" style="font-size:18px">Intraweek Demand Signal Correction — Backtesting & Targeting Redesign</div>
+          <div class="card-meta">Temporal Bias Detection · Day-Level Targeting · wMAPE Improvement · Intervention Audit</div>
+          <p class="card-desc" style="margin-top:10px">The base ML model operates at weekly grain — smoothing over predictable intraweek demand spikes driven by benefit-issuance cycles. Temporal autocorrelation of residuals confirmed the bias was persistent, not random. Redesigned targeting through store × SKU × day holdout backtesting — diagnosing that 42% of legacy corrections targeted timesteps where on-hand inventory was already sufficient (physically impossible to impact), and that Day-0 interventions drove almost all the value while Day-3+ were actively harmful. Result: 309 bps wMAPE improvement on the pilot population.</p>
+          <p class="card-contrib"><em>My contribution:</em> Owned the business logic, temporal targeting criteria, and backtest design. DS/Engineering owned technical implementation. Turned the finding into the business case for a complete system redesign.</p>
           <div class="method-pills" style="margin-top:10px">
-            <span class="method-pill">Store × CID × Day backtesting</span>
-            <span class="method-pill">Intervention-level win rate tracking</span>
-            <span class="method-pill">SNAP benefit-cycle targeting</span>
-            <span class="method-pill">Day-of-intervention value curve</span>
+            <span class="method-pill">Store × SKU × Day holdout backtesting</span>
+            <span class="method-pill">Temporal autocorrelation of residuals</span>
+            <span class="method-pill">Intraweek bias detection</span>
+            <span class="method-pill">Benefit-cycle signal targeting</span>
+            <span class="method-pill">Day-level intervention value curve</span>
           </div>
           <div class="card-actions" style="margin-top:16px">
             <a class="ca-primary" href="https://asthaj12.github.io/fom-backtesting/">🖥 View Dashboard →</a>
@@ -429,12 +431,12 @@ footer a:hover{color:var(--ind-l);}
 
       <!-- Seasonal Intelligence -->
       <div class="project-card">
-        <div><span class="card-tag tag-dashboard">Dashboard · 4 Seasons</span></div>
+        <div><span class="card-tag tag-dashboard">Dashboard · Time Series · 4 Seasons</span></div>
         <div>
           <div class="card-title">Seasonal Event Intelligence</div>
           <div class="card-meta">BTS · Cold & Flu · Lent / Easter · Major Events</div>
         </div>
-        <p class="card-desc">$316M in seasonal demand repositioned across 4 event types — shifting signals 3–6 months early for BTS, replacing LY benchmarks with severity clusters for Cold/Flu, applying event-study decomposition for Easter, and eliminating 1.5M false-positive units across 10+ major retail events.</p>
+        <p class="card-desc">$316M in seasonal demand repositioned across 4 event types — using seasonal time series decomposition (shape vs. magnitude separation), event-study methodology (reindexing history by weeks-to-holiday rather than calendar weeks), and exogenous variable integration (geographic severity signals, substitution clusters). Eliminated 1.5M false-positive event lifts by proving demand followed organic trend, not the holiday.</p>
         <div class="metric-row">
           <div class="metric"><div class="m-val">$160M</div><div class="m-lbl">BTS excess prevented</div></div>
           <div class="metric"><div class="m-val">1.5M</div><div class="m-lbl">False positives eliminated</div></div>
@@ -451,7 +453,7 @@ footer a:hover{color:var(--ind-l);}
           <div class="card-title">FIFA 2026 Hyper-Local Demand</div>
           <div class="card-meta">Host City Proximity · Team Affinity · Match Tier · Daypart</div>
         </div>
-        <p class="card-desc">Reallocated ~$50M of demand to hyper-local markets by decomposing a ~$200M national opportunity into 4 store-level drivers — rather than applying a blanket national uplift that would have placed inventory in the wrong stores and the wrong cities.</p>
+        <p class="card-desc">Reallocated ~$50M of demand to hyper-local markets using spatial-temporal decomposition — breaking a ~$200M national time series into 4 store-level demand drivers (host proximity, team affinity, match tier, daypart), then validating each against historical analog time series (Super Bowl food, prior tournaments). Used staged commitment to update assumptions as early-match actuals arrived.</p>
         <div class="metric-row">
           <div class="metric"><div class="m-val">~$50M</div><div class="m-lbl">Hyper-local reallocation</div></div>
           <div class="metric"><div class="m-val">4</div><div class="m-lbl">Store-level drivers</div></div>
@@ -468,7 +470,7 @@ footer a:hover{color:var(--ind-l);}
           <div class="card-title">SNAP Eligibility Monitor</div>
           <div class="card-meta">Wave-by-Wave Test/Control · 9,293 Products · "Do Nothing" Recommendation</div>
         </div>
-        <p class="card-desc">Prevented ~$50M/month in unnecessary inventory repositioning during a federal SNAP policy change — proving demand held flat across 9,293 affected products in 9 live states, and holding that position under executive pressure to act when the data said don't.</p>
+        <p class="card-desc">Prevented ~$50M/month in unnecessary repositioning using a time-series test-control design — comparing demand index trajectories between treated (policy-affected) and matched control stores across 7 deployment waves. Temporal autocorrelation of residuals confirmed no systematic signal; recommendation to hold baseline was maintained under executive pressure to act.</p>
         <div class="metric-row">
           <div class="metric"><div class="m-val">$50M/mo</div><div class="m-lbl">Repositioning avoided</div></div>
           <div class="metric"><div class="m-val">9,293</div><div class="m-lbl">Products monitored</div></div>
@@ -531,9 +533,9 @@ footer a:hover{color:var(--ind-l);}
         <div><span class="card-tag tag-whitepaper">📄 White Paper · ~7 min read</span></div>
         <div>
           <div class="card-title">ML Model Diagnosis at Scale</div>
-          <div class="card-meta">GBM Bias Detection · Store-Item Decomposition · MVP Scoping</div>
+          <div class="card-meta">Temporal Autocorrelation · GBM Residual Decomposition · MVP Scoping</div>
         </div>
-        <p class="card-desc">A practitioner's framework for diagnosing production ML model failures — from proving it's the model not the data, decomposing to the exact failure intersection (velocity decile × store cluster), to scoping a minimum viable fix Engineering can ship in weeks, not quarters.</p>
+        <p class="card-desc">How to prove a production ML model has systematic temporal bias — not just bad predictions. Uses autocorrelation analysis of forecast residuals to distinguish persistent bias (same stores underforecast week after week) from random error. Decomposes to the failure intersection (velocity decile × store cluster) and scopes the minimum viable fix Engineering can ship in weeks, not quarters.</p>
         <div class="card-actions">
           <a class="ca-primary ca-wp" href="https://asthaj12.github.io/ml-model-diagnosis/">📄 Read →</a>
         </div>
@@ -784,16 +786,16 @@ footer a:hover{color:var(--ind-l);}
       <a class="story-item sw" href="https://asthaj12.github.io/forecast-governance/">
         <span class="story-num">11</span>
         <div class="story-body">
-          <div class="story-title">FOM 2.0 Product Management</div>
-          <div class="story-metric">$155M demand restored · 49% win rate exposed · $3.1B portfolio</div>
+          <div class="story-title">Demand Correction Audit — Finding the Failure Inside the Success</div>
+          <div class="story-metric">$155M restored · 49% win rate exposed · temporal holdout analysis</div>
         </div>
         <span class="story-badge sb-dash">Dashboard</span>
       </a>
       <a class="story-item sw" href="https://asthaj12.github.io/fom-backtesting/">
         <span class="story-num">12</span>
         <div class="story-body">
-          <div class="story-title">FOM 3.0 Backtesting & Targeting</div>
-          <div class="story-metric">309 bps wMAPE · 42% misallocated fixed · ~$95M repositioned</div>
+          <div class="story-title">Intraweek Demand Signal Correction — Redesign & Backtesting</div>
+          <div class="story-metric">309 bps wMAPE · 42% unwinnable fixed · store × SKU × day grain</div>
         </div>
         <span class="story-badge sb-dash">Dashboard</span>
       </a>
@@ -904,6 +906,23 @@ footer a:hover{color:var(--ind-l);}
     <div class="section-title">Technical Skills</div>
   </div>
   <div class="skills-grid">
+    <div class="skill-card ts-featured">
+      <div class="sk-cat">Time Series Methods</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Seasonal Decomposition (STL)</span>
+        <span class="skill-pill">Event-Study Methodology</span>
+        <span class="skill-pill">Cold-Start Forecasting</span>
+        <span class="skill-pill">Intraweek Signal Correction</span>
+        <span class="skill-pill">Exogenous Variable Integration</span>
+        <span class="skill-pill">Temporal Holdout Backtesting</span>
+        <span class="skill-pill">Autocorrelation Analysis</span>
+        <span class="skill-pill">Analog Hierarchy Forecasting</span>
+        <span class="skill-pill">Demand Periodicity Modeling</span>
+        <span class="skill-pill">High-Frequency Bias Detection</span>
+        <span class="skill-pill">Spatial-Temporal Decomposition</span>
+        <span class="skill-pill">Multi-Horizon Scenario Forecasting</span>
+      </div>
+    </div>
     <div class="skill-card">
       <div class="sk-cat">Modeling & Analytics</div>
       <div class="skill-pills">
