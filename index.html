@@ -252,7 +252,7 @@ footer a:hover{color:var(--ind-l);}
         <div class="dropdown-section-label">Walmart US</div>
         <a class="dropdown-item" href="https://asthaj12.github.io/fom-backtesting/">
           <div class="di-icon" style="background:rgba(99,102,241,.14)">📊</div>
-          <div><div class="di-label">Intraweek Demand Correction</div><div class="di-sub">309 bps · 42% misallocated · $95M</div></div>
+          <div><div class="di-label">Demand Signal Backtesting & Targeting</div><div class="di-sub">309 bps · 42% unwinnable fixed · $95M</div></div>
         </a>
         <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-event-intelligence/">
           <div class="di-icon" style="background:rgba(99,102,241,.14)">🗓</div>
@@ -278,7 +278,7 @@ footer a:hover{color:var(--ind-l);}
         <div class="dropdown-section-label">Shopify Logistics</div>
         <a class="dropdown-item" href="https://asthaj12.github.io/shopify-demand-forecasting/">
           <div class="di-icon" style="background:rgba(27,175,122,.14)">📦</div>
-          <div><div class="di-label">Network Intelligence</div><div class="di-sub">RCA · BFCM · Drops · 85 warehouses</div></div>
+          <div><div class="di-label">Network Demand Forecasting & RCA</div><div class="di-sub">Misrouting · BFCM · Drops · 85 warehouses</div></div>
         </a>
         <div class="dropdown-divider"></div>
         <div class="dropdown-section-label">Logitech · NPI</div>
@@ -298,7 +298,7 @@ footer a:hover{color:var(--ind-l);}
         </a>
         <a class="dropdown-item" href="https://asthaj12.github.io/cummins-capacity-expansion/">
           <div class="di-icon" style="background:rgba(237,161,0,.14)">⚡</div>
-          <div><div class="di-label">Capacity Expansion</div><div class="di-sub">$12M/cycle · live commitment simulator</div></div>
+          <div><div class="di-label">Long-Range Capacity Planning Simulator</div><div class="di-sub">$12M/cycle · 12–24mo horizon · live simulator</div></div>
         </a>
       </div>
     </div>
@@ -310,11 +310,11 @@ footer a:hover{color:var(--ind-l);}
       <div class="dropdown-menu">
         <a class="dropdown-item" href="https://asthaj12.github.io/cold-start-playbook/">
           <div class="di-icon" style="background:rgba(235,104,52,.12)">📄</div>
-          <div><div class="di-label">The Cold-Start Playbook</div><div class="di-sub">Analog hierarchies · Import commitment logic</div></div>
+          <div><div class="di-label">Cold-Start Demand Forecasting Framework</div><div class="di-sub">Analog hierarchies · Zero-history NPI · Import logic</div></div>
         </a>
         <a class="dropdown-item" href="https://asthaj12.github.io/ml-model-diagnosis/">
           <div class="di-icon" style="background:rgba(235,104,52,.12)">📄</div>
-          <div><div class="di-label">ML Model Diagnosis at Scale</div><div class="di-sub">GBM bias · Decomposition · MVP scoping</div></div>
+          <div><div class="di-label">ML Forecast Diagnostics at Scale</div><div class="di-sub">Forecast residuals · Decomposition · MVP fix</div></div>
         </a>
         <a class="dropdown-item" href="https://asthaj12.github.io/sop-framework/">
           <div class="di-icon" style="background:rgba(235,104,52,.12)">📄</div>
@@ -406,8 +406,8 @@ footer a:hover{color:var(--ind-l);}
       <div class="project-card featured">
         <div class="card-body">
           <div style="margin-bottom:10px"><span class="card-tag tag-flagship">Flagship · Time Series · Quantitative</span></div>
-          <div class="card-title" style="font-size:18px">Intraweek Demand Signal Correction — Backtesting & Targeting Redesign</div>
-          <div class="card-meta">Temporal Bias Detection · Day-Level Targeting · wMAPE Improvement · Intervention Audit</div>
+          <div class="card-title" style="font-size:18px">Demand Signal Backtesting & Targeting</div>
+          <div class="card-meta">Intervention Audit · Day-Level Targeting · wMAPE Improvement · Temporal Bias Detection</div>
           <p class="card-desc" style="margin-top:10px">The base ML model operates at weekly grain — smoothing over predictable intraweek demand spikes driven by benefit-issuance cycles. Temporal autocorrelation of residuals confirmed the bias was persistent, not random. Redesigned targeting through store × SKU × day holdout backtesting — diagnosing that 42% of legacy corrections targeted timesteps where on-hand inventory was already sufficient (physically impossible to impact), and that Day-0 interventions drove almost all the value while Day-3+ were actively harmful. Result: 309 bps wMAPE improvement on the pilot population.</p>
           <p class="card-contrib"><em>My contribution:</em> Owned the business logic, temporal targeting criteria, and backtest design. DS/Engineering owned technical implementation. Turned the finding into the business case for a complete system redesign.</p>
           <div class="method-pills" style="margin-top:10px">
@@ -521,7 +521,7 @@ footer a:hover{color:var(--ind-l);}
       <div class="project-card whitepaper">
         <div><span class="card-tag tag-whitepaper">📄 White Paper · ~8 min read</span></div>
         <div>
-          <div class="card-title">The Cold-Start Playbook</div>
+          <div class="card-title">Cold-Start Demand Forecasting — Practitioner's Framework</div>
           <div class="card-meta">Analog Hierarchies · Shape vs. Magnitude · Irreversible Import Logic</div>
         </div>
         <p class="card-desc">Methodology behind driving ~$500M in first-year Bettergoods private-label sales with zero historical data — how to build analog hierarchies, separate demand shape from magnitude, and manage 26-week irreversible import commitments responsibly.</p>
@@ -532,8 +532,8 @@ footer a:hover{color:var(--ind-l);}
       <div class="project-card whitepaper">
         <div><span class="card-tag tag-whitepaper">📄 White Paper · ~7 min read</span></div>
         <div>
-          <div class="card-title">ML Model Diagnosis at Scale</div>
-          <div class="card-meta">Temporal Autocorrelation · GBM Residual Decomposition · MVP Scoping</div>
+          <div class="card-title">ML Forecast Diagnostics at Scale</div>
+          <div class="card-meta">Forecast Residual Decomposition · Temporal Autocorrelation · MVP Fix Scoping</div>
         </div>
         <p class="card-desc">How to prove a production ML model has systematic temporal bias — not just bad predictions. Uses autocorrelation analysis of forecast residuals to distinguish persistent bias (same stores underforecast week after week) from random error. Decomposes to the failure intersection (velocity decile × store cluster) and scopes the minimum viable fix Engineering can ship in weeks, not quarters.</p>
         <div class="card-actions">
@@ -561,8 +561,8 @@ footer a:hover{color:var(--ind-l);}
       <div class="project-card featured">
         <div class="card-body">
           <div style="margin-bottom:10px"><span class="card-tag tag-dashboard">Dashboard · 5 Tabs</span></div>
-          <div class="card-title" style="font-size:18px">Shopify Network Intelligence</div>
-          <div class="card-meta">Network RCA · BFCM Peak Execution · Merchant Drops · Forecast Automation</div>
+          <div class="card-title" style="font-size:18px">Network Demand Forecasting & RCA</div>
+          <div class="card-meta">Root Cause Analysis · BFCM Peak Execution · Merchant Drops · Forecast Automation</div>
           <p class="card-desc" style="margin-top:10px">Improved forecast accuracy by ~30% and reduced misrouting costs by ~$150K monthly by building automated RCA dashboards that traced every miss to its exact system failure point — unifying Warehouse Ops, Planning, and Carrier teams on a single causal chain. Captured ~$2M in BFCM incremental sales and ~$15M in merchant drop demand through scenario-based capacity frameworks and pre-defined velocity triggers.</p>
           <div class="method-pills" style="margin-top:10px">
             <span class="method-pill">Causal chain RCA</span>
@@ -680,7 +680,7 @@ footer a:hover{color:var(--ind-l);}
       <div class="project-card simulator">
         <div><span class="card-tag tag-simulator">⚡ Dashboard + Live Simulator</span></div>
         <div>
-          <div class="card-title">Cummins Capacity Expansion</div>
+          <div class="card-title">Long-Range Capacity Planning Simulator</div>
           <div class="card-meta">Long-Range Scenarios · Reversible vs. Irreversible · Commitment Simulator</div>
         </div>
         <p class="card-desc">Protected ~$12M+ per launch cycle across 15+ engine lines by developing long-range capital expansion models — tying irreversible tooling investments to demand scenarios 12–24 months ahead. Includes an interactive commitment simulator: adjust demand scenario sliders and see recommended reversible vs. irreversible capacity actions update live.</p>
@@ -794,7 +794,7 @@ footer a:hover{color:var(--ind-l);}
       <a class="story-item sw" href="https://asthaj12.github.io/fom-backtesting/">
         <span class="story-num">12</span>
         <div class="story-body">
-          <div class="story-title">Intraweek Demand Signal Correction — Redesign & Backtesting</div>
+          <div class="story-title">Demand Signal Backtesting & Targeting — Redesign</div>
           <div class="story-metric">309 bps wMAPE · 42% unwinnable fixed · store × SKU × day grain</div>
         </div>
         <span class="story-badge sb-dash">Dashboard</span>
@@ -888,8 +888,8 @@ footer a:hover{color:var(--ind-l);}
       <a class="story-item sc" href="https://asthaj12.github.io/cummins-capacity-expansion/">
         <span class="story-num">23</span>
         <div class="story-body">
-          <div class="story-title">Long-Range Capacity Expansion</div>
-          <div class="story-metric">$12M+/cycle · 15+ engine lines · live commitment simulator</div>
+          <div class="story-title">Long-Range Capacity Planning Simulator</div>
+          <div class="story-metric">$12M+/cycle · 15+ engine lines · 12–24mo horizon</div>
         </div>
         <span class="story-badge sb-sim">Simulator</span>
       </a>
@@ -934,9 +934,9 @@ footer a:hover{color:var(--ind-l);}
       <div class="sk-cat">Modeling & Analytics</div>
       <div class="skill-pills">
         <span class="skill-pill">Time Series Forecasting</span>
-        <span class="skill-pill">Cold-Start Demand Modeling</span>
+        <span class="skill-pill">Cold-Start Demand Forecasting</span>
         <span class="skill-pill">Event-Study Decomposition</span>
-        <span class="skill-pill">ML Model Diagnosis</span>
+        <span class="skill-pill">ML Forecast Diagnostics</span>
         <span class="skill-pill">Causal Inference</span>
         <span class="skill-pill">XGBoost / LightGBM</span>
         <span class="skill-pill">Hierarchical Reconciliation</span>
