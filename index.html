@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Astha Jain — Operations Planning & Product Strategy</title>
+<title>Astha Jain — Supply Chain Strategy & Analytics</title>
 <style>
 /* ── Tokens ─────────────────────────────────────────────────────── */
 :root {
@@ -24,513 +24,877 @@
   --t3:       #94a3b8;
   --t4:       #cbd5e1;
   --glow:     rgba(99,102,241,.08);
+  /* company colors */
+  --walmart:  #6366f1;
+  --shopify:  #1baf7a;
+  --logitech: #eb6834;
+  --cummins:  #eda100;
 }
-
-/* ── Reset ──────────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
 a{color:inherit;text-decoration:none;}
 
 /* ── Navbar ─────────────────────────────────────────────────────── */
-.navbar {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(255,255,255,.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 32px;
-  display: flex; align-items: center; gap: 8px;
-  height: 56px;
-}
-.nav-brand {
-  font-size: 15px; font-weight: 800; letter-spacing: -.02em;
-  color: var(--t1); margin-right: 24px; white-space: nowrap;
-}
-.nav-brand span { color: var(--ind); }
-.nav-items { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow: visible; }
-.nav-link {
-  padding: 6px 12px; border-radius: 6px;
-  font-size: 13px; font-weight: 500; color: var(--t2);
-  transition: color .15s, background .15s; white-space: nowrap;
-}
-.nav-link:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;gap:8px;height:56px;}
+.nav-brand{font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--t1);margin-right:24px;white-space:nowrap;}
+.nav-brand span{color:var(--ind);}
+.nav-items{display:flex;align-items:center;gap:4px;flex:1;min-width:0;overflow:visible;}
+.nav-link{padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;color:var(--t2);transition:color .15s,background .15s;white-space:nowrap;}
+.nav-link:hover{color:var(--t1);background:rgba(99,102,241,.06);}
 
 /* ── Dropdowns ──────────────────────────────────────────────────── */
-.dropdown { position: relative; }
-.dropdown-toggle {
-  display: flex; align-items: center; gap: 5px;
-  padding: 6px 12px; border-radius: 6px;
-  font-size: 13px; font-weight: 500; color: var(--t2);
-  cursor: pointer; transition: color .15s, background .15s;
-  user-select: none; white-space: nowrap;
-}
-.dropdown-toggle:hover { color: var(--t1); background: rgba(99,102,241,.06); }
-.dropdown-toggle svg { width:10px;height:10px;transition:transform .2s; }
-.dropdown:hover .dropdown-toggle svg { transform: rotate(180deg); }
-.dropdown-menu {
-  position: absolute; top: calc(100% + 8px); left: 0;
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 10px; padding: 6px;
-  min-width: 220px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.6);
-  opacity: 0; visibility: hidden; pointer-events: none;
-  transform: translateY(-6px);
-  transition: opacity .18s, transform .18s, visibility .18s;
-}
-.dropdown:hover .dropdown-menu {
-  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
-}
-.dropdown-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px; border-radius: 7px;
-  font-size: 12px; font-weight: 500; color: var(--t2);
-  transition: background .12s, color .12s;
-}
-.dropdown-item:hover { background: rgba(99,102,241,.12); color: var(--t1); }
-.dropdown-item .di-icon {
-  width: 28px; height: 28px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; flex-shrink: 0;
-}
-.dropdown-item .di-text .di-label { font-weight: 600; color: var(--t1); font-size: 12px; }
-.dropdown-item .di-text .di-sub { font-size: 10px; color: var(--t3); margin-top: 1px; }
-.dropdown-divider { height: 1px; background: var(--border); margin: 5px 2px; }
+.dropdown{position:relative;}
+.dropdown-toggle{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:color .15s,background .15s;user-select:none;white-space:nowrap;}
+.dropdown-toggle:hover{color:var(--t1);background:rgba(99,102,241,.06);}
+.dropdown-toggle svg{width:10px;height:10px;transition:transform .2s;}
+.dropdown:hover .dropdown-toggle svg{transform:rotate(180deg);}
+.dropdown-menu{position:absolute;top:calc(100% + 8px);left:0;background:#ffffff;border:1px solid var(--border);border-radius:10px;padding:6px;min-width:260px;box-shadow:0 20px 60px rgba(0,0,0,.14);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;}
+.dropdown:hover .dropdown-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
+.dropdown-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;font-size:12px;font-weight:500;color:var(--t2);transition:background .12s,color .12s;}
+.dropdown-item:hover{background:rgba(99,102,241,.10);color:var(--t1);}
+.di-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.di-label{font-weight:600;color:var(--t1);font-size:12px;}
+.di-sub{font-size:10px;color:var(--t3);margin-top:1px;}
+.dropdown-divider{height:1px;background:var(--border);margin:5px 2px;}
+.dropdown-section-label{padding:8px 12px 4px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);}
 
-.nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.nav-badge {
-  padding: 5px 14px; border-radius: 6px;
-  font-size: 12px; font-weight: 600;
-  border: 1px solid var(--border); color: var(--t2);
-  transition: background .15s, border-color .15s, color .15s;
-}
-.nav-badge:hover { background: #eef2ff; border-color: var(--ind); color: var(--ind); }
-.nav-cta {
-  padding: 5px 14px; border-radius: 6px;
-  font-size: 12px; font-weight: 600;
-  background: var(--ind); color: #fff;
-  transition: background .15s;
-}
-.nav-cta:hover { background: var(--ind-d); }
-
-/* ── Hero ───────────────────────────────────────────────────────── */
-.hero {
-  max-width: 1100px; margin: 0 auto;
-  padding: 64px 32px 56px;
-  display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
-}
-.hero-content { min-width: 0; }
-.hero-photo {
-  width: 160px; height: 160px; border-radius: 50%;
-  object-fit: cover; object-position: center top;
-  border: 3px solid var(--border-s);
-  box-shadow: 0 8px 32px rgba(99,102,241,.15);
-  flex-shrink: 0;
-}
-@media(max-width:640px){.hero{grid-template-columns:1fr;}.hero-photo{width:100px;height:100px;}}
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: #eef2ff; border: 1px solid var(--border-s);
-  border-radius: 999px; padding: 4px 14px;
-  font-size: 11px; font-weight: 700; color: var(--ind);
-  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
-}
-.hero-eyebrow::before { content:""; width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite; }
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero h1 {
-  font-size: clamp(36px, 5vw, 58px);
-  font-weight: 800; line-height: 1.08; letter-spacing: -.03em;
-  color: var(--t1); margin-bottom: 20px;
-}
-.hero h1 .accent { color: var(--ind); }
-.hero .tagline {
-  font-size: 17px; color: var(--t2); max-width: 600px;
-  line-height: 1.65; margin-bottom: 36px;
-}
-.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 10px 20px; border-radius: 8px;
-  font-size: 13px; font-weight: 600; transition: all .15s;
-}
-.btn-primary { background: var(--ind); color: #fff; }
-.btn-primary:hover { background: var(--ind-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
-.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-s); }
-.btn-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
-
-/* ── Stats bar ──────────────────────────────────────────────────── */
-.stats-bar {
-  display: flex; flex-wrap: wrap; gap: 0;
-  border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-  background: var(--surface);
-}
-.stat-item {
-  flex: 1; min-width: 140px; padding: 18px 24px;
-  border-right: 1px solid var(--border);
-}
-.stat-item:last-child { border-right: none; }
-.stat-val { font-size: 22px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
-.stat-lbl { font-size: 11px; color: var(--t3); margin-top: 3px; text-transform: uppercase; letter-spacing: .05em; }
-
-/* ── Section ────────────────────────────────────────────────────── */
-section { max-width: 1100px; margin: 0 auto; padding: 0 32px 80px; }
-.section-header { margin-bottom: 32px; }
-.section-label {
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
-  color: var(--ind); margin-bottom: 8px;
-}
-.section-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
-.section-sub { font-size: 14px; color: var(--t2); margin-top: 6px; }
-
-/* ── Project grid ───────────────────────────────────────────────── */
-.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.project-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 24px;
-  transition: border-color .2s, box-shadow .2s, transform .2s;
-  display: flex; flex-direction: column; gap: 16px;
-}
-.project-card:hover {
-  border-color: var(--border-s);
-  box-shadow: 0 0 0 1px rgba(99,102,241,.1), 0 24px 48px rgba(0,0,0,.4);
-  transform: translateY(-2px);
-}
-.project-card.featured { grid-column: 1 / -1; flex-direction: row; gap: 32px; }
-.project-card.featured .card-body { flex: 1; }
-.project-card.featured .card-sidebar {
-  width: 260px; flex-shrink: 0;
-  display: flex; flex-direction: column; gap: 10px;
-}
-
-.card-tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 3px 10px; border-radius: 999px;
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
-}
-.tag-ind { background: rgba(99,102,241,.12); color: var(--ind-l); }
-.tag-em  { background: rgba(16,185,129,.12); color: #34d399; }
-.tag-am  { background: rgba(245,158,11,.12); color: #fbbf24; }
-.tag-rose{ background: rgba(244,63,94,.12);  color: #fb7185; }
-
-.card-title { font-size: 16px; font-weight: 700; color: var(--t1); line-height: 1.3; }
-.card-meta  { font-size: 11px; color: var(--t3); margin-top: 4px; }
-.card-desc  { font-size: 13px; color: var(--t2); line-height: 1.6; }
-
-.method-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-.method-pill {
-  padding: 3px 9px; border-radius: 5px;
-  font-size: 10px; font-weight: 600; color: var(--t3);
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06);
-}
-
-.metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.metric {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 14px;
-  flex: 1; min-width: 90px;
-}
-.metric .m-val { font-size: 17px; font-weight: 800; color: var(--t1); }
-.metric .m-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
-
-.card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
-.ca-primary {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: 7px;
-  font-size: 11px; font-weight: 700;
-  background: var(--ind); color: #fff;
-  transition: background .15s, box-shadow .15s;
-}
-.ca-primary:hover { background: var(--ind-d); box-shadow: 0 4px 16px rgba(99,102,241,.4); }
-.ca-ghost {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 7px 14px; border-radius: 7px;
-  font-size: 11px; font-weight: 600; color: var(--t2);
-  border: 1px solid var(--border-s);
-  transition: border-color .15s, color .15s;
-}
-.ca-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
-
-/* ── Sidebar metrics (featured card) ────────────────────────────── */
-.sidebar-metric {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px 14px;
-}
-.sidebar-metric .sm-val { font-size: 22px; font-weight: 800; color: var(--t1); }
-.sidebar-metric .sm-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
-.sidebar-metric .sm-delta { font-size: 11px; font-weight: 600; color: var(--em); margin-top: 4px; }
-
-/* ── Skills section ─────────────────────────────────────────────── */
-.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-.skill-card {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 10px; padding: 16px 18px;
-}
-.skill-card .sk-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ind-l); margin-bottom: 8px; }
-.skill-pills { display: flex; flex-wrap: wrap; gap: 5px; }
-.skill-pill {
-  padding: 3px 8px; border-radius: 4px;
-  font-size: 11px; font-weight: 500; color: var(--t2);
-  background: rgba(255,255,255,.05);
-}
-
-/* ── Footer ─────────────────────────────────────────────────────── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 28px 32px; margin-top: 20px;
-  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-  font-size: 12px; color: var(--t3);
-  max-width: 1100px; margin: 20px auto 0;
-}
-footer a { color: var(--t2); transition: color .12s; }
-footer a:hover { color: var(--ind-l); }
-.footer-note { margin-left: auto; }
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nav-badge{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid var(--border);color:var(--t2);transition:background .15s,border-color .15s,color .15s;}
+.nav-badge:hover{background:#eef2ff;border-color:var(--ind);color:var(--ind);}
+.nav-cta{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;background:var(--ind);color:#fff;transition:background .15s;}
+.nav-cta:hover{background:var(--ind-d);}
 
 /* ── Confidentiality banner ─────────────────────────────────────── */
-.confidentiality-banner {
-  background: #f1f5f9;
-  border-bottom: 1px solid #cbd5e1;
-  padding: 10px 32px;
-  font-size: 11px;
-  color: #475569;
-  text-align: center;
-}
+.confidentiality-banner{background:#f1f5f9;border-bottom:1px solid #cbd5e1;padding:10px 32px;font-size:11px;color:#475569;text-align:center;}
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero{max-width:1100px;margin:0 auto;padding:64px 32px 56px;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;}
+.hero-content{min-width:0;}
+.hero-photo{width:160px;height:160px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid var(--border-s);box-shadow:0 8px 32px rgba(99,102,241,.15);flex-shrink:0;}
+@media(max-width:640px){.hero{grid-template-columns:1fr;}.hero-photo{width:100px;height:100px;}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:#eef2ff;border:1px solid var(--border-s);border-radius:999px;padding:4px 14px;font-size:11px;font-weight:700;color:var(--ind);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;}
+.hero-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(36px,5vw,58px);font-weight:800;line-height:1.08;letter-spacing:-.03em;color:var(--t1);margin-bottom:20px;}
+.hero h1 .accent{color:var(--ind);}
+.hero .tagline{font-size:17px;color:var(--t2);max-width:600px;line-height:1.65;margin-bottom:36px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;transition:all .15s;}
+.btn-primary{background:var(--ind);color:#fff;}
+.btn-primary:hover{background:var(--ind-d);transform:translateY(-1px);box-shadow:0 8px 24px rgba(99,102,241,.4);}
+.btn-ghost{background:transparent;color:var(--t2);border:1px solid var(--border-s);}
+.btn-ghost:hover{border-color:var(--ind);color:var(--ind-l);}
+
+/* ── Industry pills ─────────────────────────────────────────────── */
+.industry-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px;}
+.i-pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;}
+.i-walmart{background:rgba(99,102,241,.1);color:#4338ca;}
+.i-shopify{background:rgba(27,175,122,.1);color:#065f46;}
+.i-logitech{background:rgba(235,104,52,.1);color:#9a3412;}
+.i-cummins{background:rgba(237,161,0,.1);color:#92400e;}
+.i-mit{background:#f0fdf4;color:#166534;}
+.i-award{background:#f0f9ff;color:#0369a1;}
+
+/* ── Stats bar ──────────────────────────────────────────────────── */
+.stats-bar{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface);}
+.stat-item{flex:1;min-width:160px;padding:18px 24px;border-right:1px solid var(--border);}
+.stat-item:last-child{border-right:none;}
+.stat-val{font-size:18px;font-weight:800;color:var(--t1);letter-spacing:-.02em;line-height:1.2;}
+.stat-lbl{font-size:11px;color:var(--t3);margin-top:3px;text-transform:uppercase;letter-spacing:.05em;}
+
+/* ── Section ────────────────────────────────────────────────────── */
+section{max-width:1100px;margin:0 auto;padding:0 32px 80px;}
+.section-header{margin-bottom:32px;}
+.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ind);margin-bottom:8px;}
+.section-title{font-size:26px;font-weight:800;color:var(--t1);letter-spacing:-.02em;}
+.section-sub{font-size:14px;color:var(--t2);margin-top:6px;}
+
+/* ── Company sections ───────────────────────────────────────────── */
+.company-section{margin-bottom:56px;}
+.company-header{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;border-radius:10px;margin-bottom:20px;border:1px solid var(--border);}
+.company-header.walmart{background:rgba(99,102,241,.04);border-left:4px solid var(--walmart);}
+.company-header.shopify{background:rgba(27,175,122,.04);border-left:4px solid var(--shopify);}
+.company-header.logitech{background:rgba(235,104,52,.04);border-left:4px solid var(--logitech);}
+.company-header.cummins{background:rgba(237,161,0,.04);border-left:4px solid var(--cummins);}
+.co-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:5px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;flex-shrink:0;margin-top:2px;}
+.co-walmart{background:rgba(99,102,241,.15);color:#4338ca;}
+.co-shopify{background:rgba(27,175,122,.15);color:#065f46;}
+.co-logitech{background:rgba(235,104,52,.15);color:#9a3412;}
+.co-cummins{background:rgba(237,161,0,.15);color:#92400e;}
+.co-name{font-size:16px;font-weight:800;color:var(--t1);letter-spacing:-.01em;margin-bottom:3px;}
+.co-role{font-size:13px;font-weight:600;color:var(--t2);margin-bottom:2px;}
+.co-meta{font-size:11px;color:var(--t3);}
+.co-dates{margin-left:auto;text-align:right;flex-shrink:0;}
+.co-date-range{font-size:12px;font-weight:600;color:var(--t2);}
+.co-location{font-size:11px;color:var(--t3);margin-top:2px;}
+
+/* ── Project grid ───────────────────────────────────────────────── */
+.project-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .2s,box-shadow .2s,transform .2s;display:flex;flex-direction:column;gap:12px;}
+.project-card:hover{border-color:var(--border-s);box-shadow:0 0 0 1px rgba(99,102,241,.08),0 16px 40px rgba(0,0,0,.08);transform:translateY(-1px);}
+.project-card.featured{grid-column:1/-1;flex-direction:row;gap:28px;}
+.project-card.featured .card-body{flex:1;}
+.project-card.featured .card-sidebar{width:240px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;}
+.project-card.whitepaper{background:#fffcf8;border-color:rgba(235,104,52,.18);}
+.project-card.whitepaper:hover{border-color:rgba(235,104,52,.35);}
+.project-card.simulator{background:#f0fdf8;border-color:rgba(27,175,122,.2);}
+.project-card.simulator:hover{border-color:rgba(27,175,122,.4);}
+
+/* ── Card tags ──────────────────────────────────────────────────── */
+.card-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.tag-dashboard{background:rgba(99,102,241,.10);color:var(--ind-l);}
+.tag-flagship{background:rgba(99,102,241,.15);color:var(--ind-d);}
+.tag-whitepaper{background:rgba(235,104,52,.10);color:#c2410c;}
+.tag-simulator{background:rgba(27,175,122,.12);color:#065f46;}
+.tag-am{background:rgba(245,158,11,.12);color:#b45309;}
+.tag-rose{background:rgba(244,63,94,.10);color:#be123c;}
+
+.card-title{font-size:15px;font-weight:700;color:var(--t1);line-height:1.3;}
+.card-meta{font-size:11px;color:var(--t3);margin-top:3px;}
+.card-desc{font-size:12px;color:var(--t2);line-height:1.6;}
+.card-contrib{font-style:italic;font-size:11px;color:var(--t3);margin-top:4px;line-height:1.5;}
+
+.method-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.method-pill{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;color:var(--t3);background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);}
+
+.metric-row{display:flex;gap:8px;flex-wrap:wrap;}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:8px 12px;flex:1;min-width:80px;}
+.metric .m-val{font-size:15px;font-weight:800;color:var(--t1);}
+.metric .m-lbl{font-size:10px;color:var(--t3);margin-top:1px;text-transform:uppercase;letter-spacing:.04em;}
+
+.card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;}
+.ca-primary{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:6px;font-size:11px;font-weight:700;background:var(--ind);color:#fff;transition:background .15s,box-shadow .15s;}
+.ca-primary:hover{background:var(--ind-d);box-shadow:0 4px 14px rgba(99,102,241,.35);}
+.ca-wp{background:#c2410c;}
+.ca-wp:hover{background:#9a3412;box-shadow:0 4px 14px rgba(194,65,12,.35);}
+.ca-sim{background:#065f46;}
+.ca-sim:hover{background:#064e3b;box-shadow:0 4px 14px rgba(6,95,70,.35);}
+.ca-ghost{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:6px;font-size:11px;font-weight:600;color:var(--t2);border:1px solid var(--border-s);transition:border-color .15s,color .15s;}
+.ca-ghost:hover{border-color:var(--ind);color:var(--ind-l);}
+
+/* ── Sidebar metrics (featured card) ────────────────────────────── */
+.sidebar-metric{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:10px 12px;}
+.sidebar-metric .sm-val{font-size:20px;font-weight:800;color:var(--t1);}
+.sidebar-metric .sm-lbl{font-size:10px;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:.04em;}
+.sidebar-metric .sm-delta{font-size:11px;font-weight:600;color:var(--em);margin-top:3px;}
+
+/* ── White paper row ────────────────────────────────────────────── */
+.whitepaper-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+
+/* ── 23 Stories section ─────────────────────────────────────────── */
+.stories-section{margin-top:64px;padding-top:48px;border-top:1px solid var(--border);}
+.stories-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:24px;}
+.story-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:11px 14px;display:flex;align-items:flex-start;gap:10px;transition:box-shadow .15s,border-color .15s;cursor:pointer;text-decoration:none;}
+.story-item:hover{border-color:var(--border-s);box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.story-num{font-size:10px;font-weight:800;color:var(--t3);min-width:22px;padding-top:2px;font-variant-numeric:tabular-nums;}
+.story-body{flex:1;min-width:0;}
+.story-title{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:2px;line-height:1.3;}
+.story-metric{font-size:11px;color:var(--t2);}
+.story-badge{flex-shrink:0;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+.sb-dash{background:rgba(99,102,241,.1);color:var(--ind-l);}
+.sb-wp{background:rgba(235,104,52,.1);color:#c2410c;}
+.sb-sim{background:rgba(27,175,122,.1);color:#065f46;}
+
+/* company left borders on story items */
+.sw{border-left:3px solid var(--walmart);}
+.ss{border-left:3px solid var(--shopify);}
+.sl{border-left:3px solid var(--logitech);}
+.sc{border-left:3px solid var(--cummins);}
+
+/* ── Skills section ─────────────────────────────────────────────── */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+.skill-card .sk-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ind-l);margin-bottom:8px;}
+.skill-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.skill-pill{padding:3px 8px;border-radius:4px;font-size:11px;font-weight:500;color:var(--t2);background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer{border-top:1px solid var(--border);padding:28px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--t3);max-width:1100px;margin:20px auto 0;}
+footer a{color:var(--t2);transition:color .12s;}
+footer a:hover{color:var(--ind-l);}
+.footer-note{margin-left:auto;}
 
 /* ── Responsive ─────────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .project-grid { grid-template-columns: 1fr; }
-  .project-card.featured { flex-direction: column; }
-  .project-card.featured .card-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
-  .skills-grid { grid-template-columns: 1fr 1fr; }
-  .stats-bar { flex-direction: row; }
-  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+@media(max-width:900px){
+  .project-grid{grid-template-columns:1fr;}
+  .project-card.featured{flex-direction:column;}
+  .project-card.featured .card-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;}
+  .skills-grid{grid-template-columns:1fr 1fr;}
+  .stories-grid{grid-template-columns:1fr;}
+  .whitepaper-row{grid-template-columns:1fr;}
 }
-@media (max-width: 600px) {
-  .hero { padding: 48px 20px 40px; }
-  section { padding: 0 20px 60px; }
-  .navbar { padding: 0 16px; }
-  .skills-grid { grid-template-columns: 1fr; }
-  .nav-items .dropdown:not(:first-child) { display: none; }
+@media(max-width:600px){
+  .hero{padding:48px 20px 40px;}
+  section{padding:0 20px 60px;}
+  .navbar{padding:0 16px;}
+  .skills-grid{grid-template-columns:1fr;}
+  .stat-item{min-width:120px;}
 }
 </style>
 </head>
 <body>
 
 <div class="confidentiality-banner">
-  <strong>Independent portfolio case study.</strong> All data, company names, product identifiers, operating assumptions and results shown here are synthetic or materially transformed. This project does not reproduce any employer's data, systems, models or confidential business processes.
+  <strong>Independent portfolio case study.</strong> All data, company names, product identifiers, operating assumptions and results shown are synthetic or materially transformed. This does not reproduce any employer's data, systems, or confidential business processes.
 </div>
 
 <!-- ── Navbar ──────────────────────────────────────────────────── -->
 <nav class="navbar">
   <span class="nav-brand">AJ<span> · Portfolio</span></span>
-
   <div class="nav-items">
-    <!-- Dashboards dropdown -->
     <div class="dropdown">
-      <div class="dropdown-toggle">
-        Dashboards
+      <div class="dropdown-toggle">Dashboards
         <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
       </div>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="https://ajwalmart12.github.io/forecast-governance/">
-          <div class="di-icon" style="background:rgba(99,102,241,.15)">📊</div>
-          <div class="di-text">
-            <div class="di-label">Forecast Governance</div>
-            <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
-          </div>
+        <div class="dropdown-section-label">Walmart US</div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/fom-backtesting/">
+          <div class="di-icon" style="background:rgba(99,102,241,.14)">📊</div>
+          <div><div class="di-label">FOM 3.0 Backtesting</div><div class="di-sub">309 bps · 42% misallocated · $95M</div></div>
         </a>
-        <a class="dropdown-item" href="https://ajwalmart12.github.io/seasonal-planning/">
-          <div class="di-icon" style="background:rgba(245,158,11,.15)">📅</div>
-          <div class="di-text">
-            <div class="di-label">Scenario Planning</div>
-            <div class="di-sub">Scenario modeling · Inventory commitment · Event risk</div>
-          </div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-event-intelligence/">
+          <div class="di-icon" style="background:rgba(99,102,241,.14)">🗓</div>
+          <div><div class="di-label">Seasonal Event Intelligence</div><div class="di-sub">BTS · Cold/Flu · Easter · Major Events</div></div>
         </a>
-        <a class="dropdown-item" href="https://ajwalmart12.github.io/pricing-demand-response/">
-          <div class="di-icon" style="background:rgba(99,102,241,.15)">💹</div>
-          <div class="di-text">
-            <div class="di-label">Pricing & Demand Response</div>
-            <div class="di-sub">Elasticity modeling · Lift attribution · Demand response</div>
-          </div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/fifa-2026-demand/">
+          <div class="di-icon" style="background:rgba(99,102,241,.14)">🌍</div>
+          <div><div class="di-label">FIFA 2026 Hyper-Local Demand</div><div class="di-sub">$50M · 4 store-level drivers</div></div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/snap-monitoring/">
+          <div class="di-icon" style="background:rgba(99,102,241,.14)">📋</div>
+          <div><div class="di-label">SNAP Eligibility Monitor</div><div class="di-sub">$50M/mo avoided · 9,293 SKUs</div></div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/forecast-governance/">
+          <div class="di-icon" style="background:rgba(99,102,241,.14)">⚙️</div>
+          <div><div class="di-label">Forecast Governance</div><div class="di-sub">$155M restored · 49% win rate</div></div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/pricing-demand-response/">
+          <div class="di-icon" style="background:rgba(99,102,241,.14)">💹</div>
+          <div><div class="di-label">Pricing & Demand Response</div><div class="di-sub">Elasticity · Rollback lift</div></div>
         </a>
         <div class="dropdown-divider"></div>
+        <div class="dropdown-section-label">Shopify Logistics</div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+          <div class="di-icon" style="background:rgba(27,175,122,.14)">📦</div>
+          <div><div class="di-label">Network Intelligence</div><div class="di-sub">RCA · BFCM · Drops · 85 warehouses</div></div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-section-label">Logitech · NPI</div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/logitech-supply-planning/">
+          <div class="di-icon" style="background:rgba(235,104,52,.14)">🌐</div>
+          <div><div class="di-label">Global S&OP</div><div class="di-sub">7% growth · $1M E&O · $200K freight</div></div>
+        </a>
         <a class="dropdown-item" href="https://asthaj12.github.io/npi-launch-planning/">
-          <div class="di-icon" style="background:rgba(235,104,52,.15)">🚀</div>
-          <div class="di-text">
-            <div class="di-label">NPI Launch Planning</div>
-            <div class="di-sub">Program management · Fill rate · PIPO transition</div>
-          </div>
+          <div class="di-icon" style="background:rgba(235,104,52,.14)">🚀</div>
+          <div><div class="di-label">NPI Launch Planning</div><div class="di-sub">60→84% fill · PIPO · Cold-start</div></div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-section-label">Cummins</div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/cummins-capacity-risk/">
+          <div class="di-icon" style="background:rgba(237,161,0,.14)">⚙️</div>
+          <div><div class="di-label">Capacity Risk</div><div class="di-sub">800+ suppliers · 16→6 weeks recovery</div></div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/cummins-capacity-expansion/">
+          <div class="di-icon" style="background:rgba(237,161,0,.14)">⚡</div>
+          <div><div class="di-label">Capacity Expansion</div><div class="di-sub">$12M/cycle · live commitment simulator</div></div>
         </a>
       </div>
     </div>
 
-    <a class="nav-link" href="#projects">Projects</a>
+    <div class="dropdown">
+      <div class="dropdown-toggle">Articles
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://asthaj12.github.io/cold-start-playbook/">
+          <div class="di-icon" style="background:rgba(235,104,52,.12)">📄</div>
+          <div><div class="di-label">The Cold-Start Playbook</div><div class="di-sub">Analog hierarchies · Import commitment logic</div></div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/ml-model-diagnosis/">
+          <div class="di-icon" style="background:rgba(235,104,52,.12)">📄</div>
+          <div><div class="di-label">ML Model Diagnosis at Scale</div><div class="di-sub">GBM bias · Decomposition · MVP scoping</div></div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/sop-framework/">
+          <div class="di-icon" style="background:rgba(235,104,52,.12)">📄</div>
+          <div><div class="di-label">S&OP as a Decision Forum</div><div class="di-sub">Running a room that acts, not reports</div></div>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="#projects">Case Library</a>
+    <a class="nav-link" href="#stories">23 Stories</a>
     <a class="nav-link" href="#skills">Skills</a>
   </div>
 
   <div class="nav-right">
     <a class="nav-badge" href="https://linkedin.com/in/asthajain12" target="_blank">LinkedIn ↗</a>
-    <a class="nav-badge" href="https://github.com/ajwalmart12" target="_blank">GitHub ↗</a>
+    <a class="nav-badge" href="https://github.com/asthaj12" target="_blank">GitHub ↗</a>
   </div>
 </nav>
 
 <!-- ── Hero ────────────────────────────────────────────────────── -->
 <div class="hero">
   <div class="hero-content">
-  <div class="hero-eyebrow">Available for opportunities</div>
-  <h1>Astha Jain<br><span class="accent">Supply & Demand Planning | Product & Operations Strategy</span></h1>
-  <p class="tagline">Supply chain practitioner with experience across automotive, consumer electronics, logistics, and large-scale retail. Currently Sr. Manager II, Demand Planning @ Walmart US — open to product operations, decision science, supply chain strategy, and graduate programs.</p>
-  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;">
-    <span style="background:#eef2ff;color:#6366f1;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">Sr. Manager II @ Walmart</span>
-    <span style="background:#f0fdf4;color:#166534;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">MIT Supply Chain MicroMasters</span>
-    <span style="background:#fff7ed;color:#9a3412;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">Making a Difference Award</span>
-    <span style="background:#f0f9ff;color:#0369a1;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;">Penn State · B.S. Mech Eng</span>
+    <div class="hero-eyebrow">Available for opportunities</div>
+    <h1>Astha Jain<br><span class="accent">Supply & Demand Planning · Analytics · Program Strategy</span></h1>
+    <p class="tagline">Supply chain practitioner across automotive, consumer electronics, e-commerce logistics, and large-scale retail. 23 documented stories. 15 live portfolio artifacts. Currently Sr. Manager II, Demand Planning @ Walmart US.</p>
+    <div class="industry-pills">
+      <span class="i-pill i-walmart">Walmart US</span>
+      <span class="i-pill i-shopify">Shopify Logistics</span>
+      <span class="i-pill i-logitech">Logitech Inc.</span>
+      <span class="i-pill i-cummins">Cummins Inc.</span>
+      <span class="i-pill i-mit">MIT Supply Chain MicroMasters</span>
+      <span class="i-pill i-award">Making a Difference Award</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#projects">View Case Library →</a>
+      <a class="btn btn-ghost" href="resumes/resume-industry-senior-ic.html" target="_blank">Download Resume</a>
+    </div>
   </div>
-  <div class="hero-actions">
-    <a class="btn btn-primary" href="#projects">View Projects →</a>
-    <a class="btn btn-ghost" href="resumes/resume-industry-senior-ic.html" target="_blank">Download Resume</a>
-  </div>
-  </div><!-- end hero-content -->
   <img src="photo.jpg" alt="Astha Jain" class="hero-photo"/>
 </div>
 
-<div style="max-width:1100px;margin:0 auto;padding:0 32px 32px;">
+<!-- ── Stats bar ─────────────────────────────────────────────────── -->
+<div style="max-width:1100px;margin:0 auto;padding:0 32px 48px;">
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-val">Multi-B</div>
-      <div class="stat-lbl">Units / month scale</div>
+      <div class="stat-val">Automotive · Electronics · Logistics · Retail</div>
+      <div class="stat-lbl">Supply chain breadth across 4 industries</div>
     </div>
     <div class="stat-item">
-      <div class="stat-val">National</div>
-      <div class="stat-lbl">Multi-location network</div>
+      <div class="stat-val">Multi-B Unit Scale</div>
+      <div class="stat-lbl">Units across portfolio decisions</div>
     </div>
     <div class="stat-item">
-      <div class="stat-val">Tens of K</div>
-      <div class="stat-lbl">Weekly exceptions</div>
+      <div class="stat-val">Global: NA · EMEA · APAC</div>
+      <div class="stat-lbl">S&OP & operations scope</div>
     </div>
     <div class="stat-item">
-      <div class="stat-val">Nine-fig.</div>
-      <div class="stat-lbl">Inventory decisions</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-val">MIT</div>
-      <div class="stat-lbl">Supply Chain MicroMasters</div>
+      <div class="stat-val">MIT MicroMasters</div>
+      <div class="stat-lbl">Supply Chain Management</div>
     </div>
   </div>
-</div><!-- end stats wrapper -->
+</div>
 
-<!-- ── Projects ─────────────────────────────────────────────────── -->
+<!-- ── Case Library ───────────────────────────────────────────────── -->
 <section id="projects">
   <div class="section-header">
     <div class="section-label">Portfolio</div>
-    <div class="section-title">Selected Projects</div>
-    <div class="section-sub">Each is a live interactive dashboard with illustrative demo data — click to explore.</div>
+    <div class="section-title">Case Library</div>
+    <div class="section-sub">15 live artifacts across 4 companies — dashboards, white papers, and one interactive simulator. All data is illustrative.</div>
   </div>
 
-  <div class="project-grid">
-
-    <!-- Featured: Forecast Governance -->
-    <div class="project-card featured">
-      <div class="card-body">
-        <div style="margin-bottom:12px"><span class="card-tag tag-ind">Flagship Project</span></div>
-        <div class="card-title" style="font-size:20px">Forecast Governance & Decision Control</div>
-        <div class="card-meta">S&OP · Anomaly Detection · Bias Correction · Override Governance</div>
-        <p class="card-desc" style="margin-top:12px">Centralized anomaly governance framework for triaging tens of thousands of weekly forecast exceptions. Corrected structural under-forecasting from material underforecast toward neutral. Identified multimillion-dollar override exposure using a composite risk-scoring engine.</p>
-        <p style="font-style:italic;font-size:12px;color:var(--t3);margin-top:8px"><em>My contribution:</em> Defined the planning problem, designed the analytical framework, developed the synthetic prototype, selected the success metrics and translated model outputs into operating recommendations.</p>
-        <div class="method-pills" style="margin-top:12px">
-          <span class="method-pill">Multi-axis anomaly scoring</span>
-          <span class="method-pill">Daily bias monitoring pipeline</span>
-          <span class="method-pill">Override accountability framework</span>
-          <span class="method-pill">Priority-ranked triage queue</span>
-          <span class="method-pill">SQL · Python · BigQuery</span>
-        </div>
-        <div class="card-actions" style="margin-top:20px">
-          <a class="ca-primary" href="https://ajwalmart12.github.io/forecast-governance/">🖥 View Dashboard →</a>
-          <a class="ca-ghost" href="https://ajwalmart12.github.io/forecast-governance/rism_impact_tracker/">Safety Stock Monitor</a>
-          <a class="ca-ghost" href="https://ajwalmart12.github.io/forecast-governance/price_change_tracker/">Price Tracker</a>
-        </div>
-      </div>
-      <div class="card-sidebar">
-        <div class="sidebar-metric">
-          <div class="sm-val">Tens of K</div>
-          <div class="sm-lbl">Weekly exceptions triaged</div>
-        </div>
-        <div class="sidebar-metric">
-          <div class="sm-val">Material → ~0</div>
-          <div class="sm-lbl">Underforecast corrected</div>
-          <div class="sm-delta">↑ Structural fix</div>
-        </div>
-        <div class="sidebar-metric">
-          <div class="sm-val">Multi-M+</div>
-          <div class="sm-lbl">Override exposure flagged</div>
-        </div>
-        <div class="sidebar-metric">
-          <div class="sm-val">5 tabs</div>
-          <div class="sm-lbl">Interactive dashboard</div>
-          <div class="sm-delta">+ 2 sub-dashboards</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scenario Planning & Inventory Commitment -->
-    <div class="project-card">
-      <div><span class="card-tag tag-am">Event Forecasting</span></div>
+  <!-- ══ WALMART ══ -->
+  <div class="company-section">
+    <div class="company-header walmart">
+      <span class="co-badge co-walmart">Walmart US</span>
       <div>
-        <div class="card-title">Scenario Planning & Inventory Commitment</div>
-        <div class="card-meta">Scenario Modeling · Risk Framework · Pre-event Positioning</div>
+        <div class="co-name">Walmart US · Retail · Bentonville, AR</div>
+        <div class="co-role">Sr. Manager II, Demand Planning & Analytics</div>
+        <div class="co-meta">Grocery · General Merchandise · Private Label · Event Forecasting · ML Systems</div>
       </div>
-      <p class="card-desc">Bear/Base/Bull scenario framework for major retail events. Dynamic probability updates from leading indicators. Tiered risk escalation protocol with staged inventory commitment optionality.</p>
-      <p style="font-style:italic;font-size:12px;color:var(--t3);margin-top:8px"><em>My contribution:</em> Defined the planning problem, designed the analytical framework, developed the synthetic prototype, selected the success metrics and translated model outputs into operating recommendations.</p>
-      <div class="metric-row">
-        <div class="metric"><div class="m-val">Nine-fig.</div><div class="m-lbl">Forecast-error opportunity</div></div>
-        <div class="metric"><div class="m-val">3</div><div class="m-lbl">Scenarios</div></div>
-        <div class="metric"><div class="m-val">4 tabs</div><div class="m-lbl">Dashboard</div></div>
-      </div>
-      <div class="card-actions">
-        <a class="ca-primary" href="https://ajwalmart12.github.io/seasonal-planning/">🖥 View Dashboard →</a>
+      <div class="co-dates">
+        <div class="co-date-range">2023 – Present</div>
+        <div class="co-location">$18B+ weekly sales window</div>
       </div>
     </div>
 
-    <!-- NPI Launch Planning -->
-    <div class="project-card">
-      <div><span class="card-tag tag-am">Program Management</span></div>
-      <div>
-        <div class="card-title">NPI Launch Planning & Program Management</div>
-        <div class="card-meta">Phase Gate Tracking · Fill Rate Pacing · PIPO Transition · Cross-Functional Risk</div>
+    <div class="project-grid">
+      <!-- Featured: FOM 3.0 -->
+      <div class="project-card featured">
+        <div class="card-body">
+          <div style="margin-bottom:10px"><span class="card-tag tag-flagship">Flagship · Quantitative Analytics</span></div>
+          <div class="card-title" style="font-size:18px">FOM 3.0 Backtesting & Demand Correction Targeting</div>
+          <div class="card-meta">Intervention Audit · wMAPE Improvement · Store-Level Backtesting · Targeting Framework</div>
+          <p class="card-desc" style="margin-top:10px">Improved wMAPE by 309 bps on a $3.1B portfolio by redesigning the demand correction targeting framework through store×CID×day backtesting — after diagnosing that 42% of legacy interventions were misallocated to stores where on-hand inventory was already sufficient, making corrections physically irrelevant. Proved Day-0 interventions were highly valuable while Day-3+ were actively harmful.</p>
+          <p class="card-contrib"><em>My contribution:</em> Owned the business logic, targeting criteria, and backtest design. DS/Engineering owned technical implementation. Turned the finding into the business case for a complete system redesign.</p>
+          <div class="method-pills" style="margin-top:10px">
+            <span class="method-pill">Store × CID × Day backtesting</span>
+            <span class="method-pill">Intervention-level win rate tracking</span>
+            <span class="method-pill">SNAP benefit-cycle targeting</span>
+            <span class="method-pill">Day-of-intervention value curve</span>
+          </div>
+          <div class="card-actions" style="margin-top:16px">
+            <a class="ca-primary" href="https://asthaj12.github.io/fom-backtesting/">🖥 View Dashboard →</a>
+          </div>
+        </div>
+        <div class="card-sidebar">
+          <div class="sidebar-metric"><div class="sm-val">309 bps</div><div class="sm-lbl">wMAPE improvement</div><div class="sm-delta">↑ Real pilot result</div></div>
+          <div class="sidebar-metric"><div class="sm-val">42%</div><div class="sm-lbl">Legacy interventions misallocated</div></div>
+          <div class="sidebar-metric"><div class="sm-val">~$95M</div><div class="sm-lbl">Demand repositioned</div></div>
+          <div class="sidebar-metric"><div class="sm-val">$3.1B</div><div class="sm-lbl">Pilot portfolio scope</div></div>
+        </div>
       </div>
-      <p class="card-desc">Gate-based allocation model for hardware NPI with fixed-window launch constraints. Improved launch-week fill rate from ~61% to ~84%, protecting ~$50M in fixed sell-through revenue. Coordinated ODM, regional GTM, and DC Ops without direct authority. PIPO transition curve with cold-start demand model for zero-history SKUs.</p>
-      <p style="font-style:italic;font-size:12px;color:var(--t3);margin-top:8px"><em>My contribution:</em> Defined the program management framework, designed the gate-based allocation model, built the synthetic prototype, and translated supply chain constraints into operating recommendations across 6+ concurrent programs.</p>
-      <div class="metric-row">
-        <div class="metric"><div class="m-val">84%</div><div class="m-lbl">Launch fill rate</div></div>
-        <div class="metric"><div class="m-val">~$50M</div><div class="m-lbl">Revenue protected</div></div>
-        <div class="metric"><div class="m-val">5 tabs</div><div class="m-lbl">Dashboard</div></div>
+
+      <!-- Seasonal Intelligence -->
+      <div class="project-card">
+        <div><span class="card-tag tag-dashboard">Dashboard · 4 Seasons</span></div>
+        <div>
+          <div class="card-title">Seasonal Event Intelligence</div>
+          <div class="card-meta">BTS · Cold & Flu · Lent / Easter · Major Events</div>
+        </div>
+        <p class="card-desc">$316M in seasonal demand repositioned across 4 event types — shifting signals 3–6 months early for BTS, replacing LY benchmarks with severity clusters for Cold/Flu, applying event-study decomposition for Easter, and eliminating 1.5M false-positive units across 10+ major retail events.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">$160M</div><div class="m-lbl">BTS excess prevented</div></div>
+          <div class="metric"><div class="m-val">1.5M</div><div class="m-lbl">False positives eliminated</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/seasonal-event-intelligence/">🖥 View Dashboard →</a>
+        </div>
       </div>
-      <div class="card-actions">
-        <a class="ca-primary" href="https://asthaj12.github.io/npi-launch-planning/">🖥 View Dashboard →</a>
+
+      <!-- FIFA 2026 -->
+      <div class="project-card">
+        <div><span class="card-tag tag-dashboard">Dashboard · First-of-Kind</span></div>
+        <div>
+          <div class="card-title">FIFA 2026 Hyper-Local Demand</div>
+          <div class="card-meta">Host City Proximity · Team Affinity · Match Tier · Daypart</div>
+        </div>
+        <p class="card-desc">Reallocated ~$50M of demand to hyper-local markets by decomposing a ~$200M national opportunity into 4 store-level drivers — rather than applying a blanket national uplift that would have placed inventory in the wrong stores and the wrong cities.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">~$50M</div><div class="m-lbl">Hyper-local reallocation</div></div>
+          <div class="metric"><div class="m-val">4</div><div class="m-lbl">Store-level drivers</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/fifa-2026-demand/">🖥 View Dashboard →</a>
+        </div>
+      </div>
+
+      <!-- SNAP -->
+      <div class="project-card">
+        <div><span class="card-tag tag-dashboard">Dashboard · Test & Control</span></div>
+        <div>
+          <div class="card-title">SNAP Eligibility Monitor</div>
+          <div class="card-meta">Wave-by-Wave Test/Control · 9,293 Products · "Do Nothing" Recommendation</div>
+        </div>
+        <p class="card-desc">Prevented ~$50M/month in unnecessary inventory repositioning during a federal SNAP policy change — proving demand held flat across 9,293 affected products in 9 live states, and holding that position under executive pressure to act when the data said don't.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">$50M/mo</div><div class="m-lbl">Repositioning avoided</div></div>
+          <div class="metric"><div class="m-val">9,293</div><div class="m-lbl">Products monitored</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/snap-monitoring/">🖥 View Dashboard →</a>
+        </div>
+      </div>
+
+      <!-- Forecast Governance -->
+      <div class="project-card">
+        <div><span class="card-tag tag-dashboard">Dashboard · FOM 2.0</span></div>
+        <div>
+          <div class="card-title">Forecast Governance & Decision Control</div>
+          <div class="card-meta">Override Accountability · Anomaly Triage · Bias Correction</div>
+        </div>
+        <p class="card-desc">Exposed a 49% intervention win-rate hidden inside strong aggregate metrics on a $3.1B portfolio — after restoring $155M of missed demand — by building intervention-level tracking that turned every correction into evidence, becoming the business case for FOM 3.0.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">$155M</div><div class="m-lbl">Demand restored</div></div>
+          <div class="metric"><div class="m-val">49%</div><div class="m-lbl">Intervention win rate</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/forecast-governance/">🖥 View Dashboard →</a>
+          <a class="ca-ghost" href="https://asthaj12.github.io/forecast-governance/rism_impact_tracker/">Safety Stock →</a>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="project-card">
+        <div><span class="card-tag tag-am">Dashboard · Econometrics</span></div>
+        <div>
+          <div class="card-title">Pricing & Demand Response</div>
+          <div class="card-meta">Price Elasticity · Rollback Lift · Inventory Recommendations</div>
+        </div>
+        <p class="card-desc">Captured ~$500K in incremental sales from a fruit population during 6,000+ Walmart rollbacks — building an AI-enabled system that automatically converted elasticity signals into inventory recommendations bounded by lead time, shelf life, and days-of-supply constraints.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">~$500K</div><div class="m-lbl">Incremental sales</div></div>
+          <div class="metric"><div class="m-val">6,000+</div><div class="m-lbl">Rollbacks in scope</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/pricing-demand-response/">🖥 View Dashboard →</a>
+        </div>
       </div>
     </div>
 
-    <!-- Pricing & Demand Response -->
-    <div class="project-card">
-      <div><span class="card-tag tag-ind">Econometrics</span></div>
-      <div>
-        <div class="card-title">Pricing & Demand Response</div>
-        <div class="card-meta">Price Elasticity · Promotional Lift Attribution · Demand Analysis</div>
+    <!-- White Papers row -->
+    <div class="whitepaper-row">
+      <div class="project-card whitepaper">
+        <div><span class="card-tag tag-whitepaper">📄 White Paper · ~8 min read</span></div>
+        <div>
+          <div class="card-title">The Cold-Start Playbook</div>
+          <div class="card-meta">Analog Hierarchies · Shape vs. Magnitude · Irreversible Import Logic</div>
+        </div>
+        <p class="card-desc">Methodology behind driving ~$500M in first-year Bettergoods private-label sales with zero historical data — how to build analog hierarchies, separate demand shape from magnitude, and manage 26-week irreversible import commitments responsibly.</p>
+        <div class="card-actions">
+          <a class="ca-primary ca-wp" href="https://asthaj12.github.io/cold-start-playbook/">📄 Read →</a>
+        </div>
       </div>
-      <p class="card-desc">Observed demand response and elasticity estimation to isolate price-demand relationships. Decomposes promotional lift into price reduction, display, and visibility components. Informed nine-figure inventory decisions.</p>
-      <p style="font-style:italic;font-size:12px;color:var(--t3);margin-top:8px"><em>My contribution:</em> Defined the planning problem, designed the analytical framework, developed the synthetic prototype, selected the success metrics and translated model outputs into operating recommendations.</p>
-      <div class="metric-row">
-        <div class="metric"><div class="m-val">Nine-fig.</div><div class="m-lbl">Inventory guided</div></div>
-        <div class="metric"><div class="m-val">Elasticity</div><div class="m-lbl">Demand model</div></div>
-        <div class="metric"><div class="m-val">−1.42</div><div class="m-lbl">Avg elasticity</div></div>
-      </div>
-      <div class="card-actions">
-        <a class="ca-primary" href="https://ajwalmart12.github.io/pricing-demand-response/">🖥 View Dashboard →</a>
+      <div class="project-card whitepaper">
+        <div><span class="card-tag tag-whitepaper">📄 White Paper · ~7 min read</span></div>
+        <div>
+          <div class="card-title">ML Model Diagnosis at Scale</div>
+          <div class="card-meta">GBM Bias Detection · Store-Item Decomposition · MVP Scoping</div>
+        </div>
+        <p class="card-desc">A practitioner's framework for diagnosing production ML model failures — from proving it's the model not the data, decomposing to the exact failure intersection (velocity decile × store cluster), to scoping a minimum viable fix Engineering can ship in weeks, not quarters.</p>
+        <div class="card-actions">
+          <a class="ca-primary ca-wp" href="https://asthaj12.github.io/ml-model-diagnosis/">📄 Read →</a>
+        </div>
       </div>
     </div>
-
   </div>
+
+  <!-- ══ SHOPIFY ══ -->
+  <div class="company-section">
+    <div class="company-header shopify">
+      <span class="co-badge co-shopify">Shopify Logistics</span>
+      <div>
+        <div class="co-name">Shopify Logistics · E-Commerce · San Francisco, CA</div>
+        <div class="co-role">Senior Demand Planner — Network Forecasting & Capacity</div>
+        <div class="co-meta">1M+ Orders/Month · 85-Warehouse Network · BFCM · Merchant Drops</div>
+      </div>
+      <div class="co-dates">
+        <div class="co-date-range">2022 – 2023</div>
+        <div class="co-location">$3.5M/min peak GMV</div>
+      </div>
+    </div>
+    <div class="project-grid">
+      <div class="project-card featured">
+        <div class="card-body">
+          <div style="margin-bottom:10px"><span class="card-tag tag-dashboard">Dashboard · 5 Tabs</span></div>
+          <div class="card-title" style="font-size:18px">Shopify Network Intelligence</div>
+          <div class="card-meta">Network RCA · BFCM Peak Execution · Merchant Drops · Forecast Automation</div>
+          <p class="card-desc" style="margin-top:10px">Improved forecast accuracy by ~30% and reduced misrouting costs by ~$150K monthly by building automated RCA dashboards that traced every miss to its exact system failure point — unifying Warehouse Ops, Planning, and Carrier teams on a single causal chain. Captured ~$2M in BFCM incremental sales and ~$15M in merchant drop demand through scenario-based capacity frameworks and pre-defined velocity triggers.</p>
+          <div class="method-pills" style="margin-top:10px">
+            <span class="method-pill">Causal chain RCA</span>
+            <span class="method-pill">KNN similarity models</span>
+            <span class="method-pill">Scenario-based capacity</span>
+            <span class="method-pill">Velocity trigger automation</span>
+          </div>
+          <div class="card-actions" style="margin-top:16px">
+            <a class="ca-primary" href="https://asthaj12.github.io/shopify-demand-forecasting/">🖥 View Dashboard →</a>
+          </div>
+        </div>
+        <div class="card-sidebar">
+          <div class="sidebar-metric"><div class="sm-val">~30%</div><div class="sm-lbl">Forecast accuracy improvement</div><div class="sm-delta">↑ Real measured</div></div>
+          <div class="sidebar-metric"><div class="sm-val">$150K/mo</div><div class="sm-lbl">Misrouting cost saved</div></div>
+          <div class="sidebar-metric"><div class="sm-val">~$2M</div><div class="sm-lbl">BFCM incremental sales</div></div>
+          <div class="sidebar-metric"><div class="sm-val">~$15M</div><div class="sm-lbl">Merchant drop demand captured</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LOGITECH ══ -->
+  <div class="company-section">
+    <div class="company-header logitech">
+      <span class="co-badge co-logitech">Logitech Inc.</span>
+      <div>
+        <div class="co-name">Logitech Inc. · Consumer Electronics · Newark, CA</div>
+        <div class="co-role">Global Supply Planner — S&OP, MRP & NPI</div>
+        <div class="co-meta">~$400M Hardware Portfolio · NA / EMEA / APAC · ODM Partners · Weekly Global S&OP</div>
+      </div>
+      <div class="co-dates">
+        <div class="co-date-range">2020 – 2022</div>
+        <div class="co-location">3 global regions</div>
+      </div>
+    </div>
+    <div class="project-grid">
+      <div class="project-card">
+        <div><span class="card-tag tag-dashboard">Dashboard · Global S&OP</span></div>
+        <div>
+          <div class="card-title">Logitech Global S&OP Command</div>
+          <div class="card-meta">Gaming E&O · Supply Disruption · Decision Forum Design</div>
+        </div>
+        <p class="card-desc">Drove ~7% portfolio revenue growth while reducing E&O by ~$1M through a 17% Gaming demand decline — by running S&OP as a strict decision forum, connecting launch fill, E&O, and expedite costs in one shared view, and directing margin-weighted expediting during global transit disruptions.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">7%</div><div class="m-lbl">Revenue growth</div></div>
+          <div class="metric"><div class="m-val">$1M</div><div class="m-lbl">E&O reduced</div></div>
+          <div class="metric"><div class="m-val">$200K</div><div class="m-lbl">Freight saved</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/logitech-supply-planning/">🖥 View Dashboard →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div><span class="card-tag tag-dashboard">Dashboard · NPI · PIPO</span></div>
+        <div>
+          <div class="card-title">NPI Launch Planning</div>
+          <div class="card-meta">Phase Gates · Fill Rate · PIPO Transition · Cold-Start</div>
+        </div>
+        <p class="card-desc">Improved launch-week fill rate from ~60% to ~84% on a ~$400M hardware portfolio — directing external ODM manufacturing and regional GTM teams through material schedule mapping without direct authority. Also covers Bettergoods cold-start ($500M yr-1 private label) and PIPO transition modeling.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">60→84%</div><div class="m-lbl">Launch fill rate</div></div>
+          <div class="metric"><div class="m-val">~$50M</div><div class="m-lbl">Revenue protected</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/npi-launch-planning/">🖥 View Dashboard →</a>
+        </div>
+      </div>
+    </div>
+    <div class="whitepaper-row" style="margin-top:14px">
+      <div class="project-card whitepaper">
+        <div><span class="card-tag tag-whitepaper">📄 White Paper · ~7 min read</span></div>
+        <div>
+          <div class="card-title">S&OP as a Decision Forum</div>
+          <div class="card-meta">Operating Design · Decision vs. Status · Cross-Functional Alignment</div>
+        </div>
+        <p class="card-desc">How to run a room that acts instead of reports — the one rule that changes everything, what must be visible simultaneously (launch fill + E&O + expedite cost), and how to measure whether it's working. Built from running weekly global S&OP across NA, EMEA, and APAC.</p>
+        <div class="card-actions">
+          <a class="ca-primary ca-wp" href="https://asthaj12.github.io/sop-framework/">📄 Read →</a>
+        </div>
+      </div>
+      <div style="visibility:hidden" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- ══ CUMMINS ══ -->
+  <div class="company-section">
+    <div class="company-header cummins">
+      <span class="co-badge co-cummins">Cummins Inc.</span>
+      <div>
+        <div class="co-name">Cummins Inc. · Automotive · Columbus, IN</div>
+        <div class="co-role">Sourcing Engineer — Capacity Planning & Supplier Risk</div>
+        <div class="co-meta">800+ Global Suppliers · 15+ Engine Lines · 12–24 Month Planning Horizon</div>
+      </div>
+      <div class="co-dates">
+        <div class="co-date-range">2018 – 2020</div>
+        <div class="co-location">~$9B Engine segment</div>
+      </div>
+    </div>
+    <div class="project-grid">
+      <div class="project-card">
+        <div><span class="card-tag tag-dashboard">Dashboard · Supplier Risk</span></div>
+        <div>
+          <div class="card-title">Cummins Capacity Risk</div>
+          <div class="card-meta">Supplier Risk Scoring · Bottleneck Detection · Recovery Tracker</div>
+        </div>
+        <p class="card-desc">Averted ~$35M in production exposure by architecting a supplier risk-identification program across 800+ global suppliers — accelerating bottleneck detection by ~50% (day 16 → day 8) through automated daily scoring. Reduced supplier recovery time from 16 to 6 weeks by diagnosing the exact physical bottleneck before negotiating.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">$35M</div><div class="m-lbl">Exposure averted</div></div>
+          <div class="metric"><div class="m-val">16→6 wks</div><div class="m-lbl">Recovery time</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary" href="https://asthaj12.github.io/cummins-capacity-risk/">🖥 View Dashboard →</a>
+        </div>
+      </div>
+      <div class="project-card simulator">
+        <div><span class="card-tag tag-simulator">⚡ Dashboard + Live Simulator</span></div>
+        <div>
+          <div class="card-title">Cummins Capacity Expansion</div>
+          <div class="card-meta">Long-Range Scenarios · Reversible vs. Irreversible · Commitment Simulator</div>
+        </div>
+        <p class="card-desc">Protected ~$12M+ per launch cycle across 15+ engine lines by developing long-range capital expansion models — tying irreversible tooling investments to demand scenarios 12–24 months ahead. Includes an interactive commitment simulator: adjust demand scenario sliders and see recommended reversible vs. irreversible capacity actions update live.</p>
+        <div class="metric-row">
+          <div class="metric"><div class="m-val">$12M+</div><div class="m-lbl">Per launch cycle</div></div>
+          <div class="metric"><div class="m-val">15+</div><div class="m-lbl">Engine lines</div></div>
+        </div>
+        <div class="card-actions">
+          <a class="ca-primary ca-sim" href="https://asthaj12.github.io/cummins-capacity-expansion/">⚡ View Simulator →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 23 Stories at a Glance ══ -->
+  <div class="stories-section" id="stories">
+    <div class="section-label">Reference</div>
+    <div class="section-title">23 Stories at a Glance</div>
+    <p style="font-size:14px;color:var(--t2);margin-top:6px;margin-bottom:0">Every documented story with its headline metric and portfolio artifact. Click any to explore.</p>
+    <div class="stories-grid" style="margin-top:20px">
+
+      <!-- Walmart -->
+      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
+        <span class="story-num">01</span>
+        <div class="story-body">
+          <div class="story-title">Back-to-School Predictive Planning</div>
+          <div class="story-metric">$160M excess prevented · $8B portfolio · 3–6mo ahead of base forecast</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
+        <span class="story-num">02</span>
+        <div class="story-body">
+          <div class="story-title">Cold / Cough / Flu Demand</div>
+          <div class="story-metric">$36M repositioned · severity signals + substitution modeling</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
+        <span class="story-num">03</span>
+        <div class="story-body">
+          <div class="story-title">Lent & Easter Decomposition</div>
+          <div class="story-metric">$120M true event demand · event-study methodology</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/pricing-demand-response/">
+        <span class="story-num">04</span>
+        <div class="story-body">
+          <div class="story-title">Grocery Pricing & Rollbacks</div>
+          <div class="story-metric">$500K incremental · elasticity → inventory recommendations</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/forecast-governance/">
+        <span class="story-num">05</span>
+        <div class="story-body">
+          <div class="story-title">Promotions / FSS Governance</div>
+          <div class="story-metric">$7.6M override exposure surfaced · $1.75M rolled back</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/fifa-2026-demand/">
+        <span class="story-num">06</span>
+        <div class="story-body">
+          <div class="story-title">FIFA 2026 Hyper-Local Demand</div>
+          <div class="story-metric">$50M reallocated · host proximity + team affinity + match tier + daypart</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/npi-launch-planning/">
+        <span class="story-num">07</span>
+        <div class="story-body">
+          <div class="story-title">Bettergoods NPI + Import Commitments</div>
+          <div class="story-metric">$500M yr-1 sales · $50M irreversible imports · cold-start models</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
+        <span class="story-num">08</span>
+        <div class="story-body">
+          <div class="story-title">Major Retail Events Planning</div>
+          <div class="story-metric">1.5M false positives eliminated · $100M+ excess mitigated</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/snap-monitoring/">
+        <span class="story-num">09</span>
+        <div class="story-body">
+          <div class="story-title">SNAP Eligibility Policy Change</div>
+          <div class="story-metric">$50M/mo avoided · 9,293 products · recommended doing nothing</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/ml-model-diagnosis/">
+        <span class="story-num">10</span>
+        <div class="story-body">
+          <div class="story-title">Milk GBM Model Diagnosis</div>
+          <div class="story-metric">$17M repositioned · −10.2% bias · scoped fix in weeks not quarters</div>
+        </div>
+        <span class="story-badge sb-wp">White Paper</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/forecast-governance/">
+        <span class="story-num">11</span>
+        <div class="story-body">
+          <div class="story-title">FOM 2.0 Product Management</div>
+          <div class="story-metric">$155M demand restored · 49% win rate exposed · $3.1B portfolio</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sw" href="https://asthaj12.github.io/fom-backtesting/">
+        <span class="story-num">12</span>
+        <div class="story-body">
+          <div class="story-title">FOM 3.0 Backtesting & Targeting</div>
+          <div class="story-metric">309 bps wMAPE · 42% misallocated fixed · ~$95M repositioned</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+
+      <!-- Shopify -->
+      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+        <span class="story-num">13</span>
+        <div class="story-body">
+          <div class="story-title">Network Package Forecasting + RCA</div>
+          <div class="story-metric">30% accuracy improvement · $150K/mo saved · 1M+ orders</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+        <span class="story-num">14</span>
+        <div class="story-body">
+          <div class="story-title">BFCM Peak Network Planning</div>
+          <div class="story-metric">$2M incremental · 15% stockout reduction · 85 warehouses</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+        <span class="story-num">15</span>
+        <div class="story-body">
+          <div class="story-title">Merchant Drop Demand Planning</div>
+          <div class="story-metric">$15M captured · 15-min windows · KNN + velocity triggers</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+        <span class="story-num">16</span>
+        <div class="story-body">
+          <div class="story-title">Forecast Process Automation</div>
+          <div class="story-metric">50% cycle time reduction · standardize then automate</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+
+      <!-- Logitech -->
+      <a class="story-item sl" href="https://asthaj12.github.io/npi-launch-planning/">
+        <span class="story-num">17</span>
+        <div class="story-body">
+          <div class="story-title">Apple / iPad Peripheral NPI</div>
+          <div class="story-metric">60→84% fill rate · $50M revenue protected · without direct authority</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sl" href="https://asthaj12.github.io/logitech-supply-planning/">
+        <span class="story-num">18</span>
+        <div class="story-body">
+          <div class="story-title">Gaming S&OP + E&O Management</div>
+          <div class="story-metric">7% revenue growth · $1M E&O reduction · 17% Gaming decline absorbed</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sl" href="https://asthaj12.github.io/logitech-supply-planning/">
+        <span class="story-num">19</span>
+        <div class="story-body">
+          <div class="story-title">Supply Disruption & Premium Freight</div>
+          <div class="story-metric">$200K freight saved · margin-weighted expediting · global disruption</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sl" href="https://asthaj12.github.io/sop-framework/">
+        <span class="story-num">20</span>
+        <div class="story-body">
+          <div class="story-title">Weekly Global S&OP Cadence</div>
+          <div class="story-metric">Decision forum design · NA/EMEA/APAC · banned status updates</div>
+        </div>
+        <span class="story-badge sb-wp">White Paper</span>
+      </a>
+
+      <!-- Cummins -->
+      <a class="story-item sc" href="https://asthaj12.github.io/cummins-capacity-risk/">
+        <span class="story-num">21</span>
+        <div class="story-body">
+          <div class="story-title">Proactive Supplier Capacity Framework</div>
+          <div class="story-metric">$35M exposure averted · 800+ suppliers · 50% faster detection</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sc" href="https://asthaj12.github.io/cummins-capacity-risk/">
+        <span class="story-num">22</span>
+        <div class="story-body">
+          <div class="story-title">Reactive Supplier Recovery</div>
+          <div class="story-metric">16→6 week recovery · $8M annual continuity · physical bottleneck diagnosis</div>
+        </div>
+        <span class="story-badge sb-dash">Dashboard</span>
+      </a>
+      <a class="story-item sc" href="https://asthaj12.github.io/cummins-capacity-expansion/">
+        <span class="story-num">23</span>
+        <div class="story-body">
+          <div class="story-title">Long-Range Capacity Expansion</div>
+          <div class="story-metric">$12M+/cycle · 15+ engine lines · live commitment simulator</div>
+        </div>
+        <span class="story-badge sb-sim">Simulator</span>
+      </a>
+
+    </div>
+  </div>
+
 </section>
 
 <!-- ── Skills ────────────────────────────────────────────────────── -->
@@ -541,13 +905,17 @@ footer a:hover { color: var(--ind-l); }
   </div>
   <div class="skills-grid">
     <div class="skill-card">
-      <div class="sk-cat">Modeling & Statistics</div>
+      <div class="sk-cat">Modeling & Analytics</div>
       <div class="skill-pills">
         <span class="skill-pill">Time Series Forecasting</span>
+        <span class="skill-pill">Cold-Start Demand Modeling</span>
+        <span class="skill-pill">Event-Study Decomposition</span>
+        <span class="skill-pill">ML Model Diagnosis</span>
         <span class="skill-pill">Causal Inference</span>
         <span class="skill-pill">XGBoost / LightGBM</span>
         <span class="skill-pill">Hierarchical Reconciliation</span>
-        <span class="skill-pill">DiD / IV Methods</span>
+        <span class="skill-pill">Store-Level Backtesting</span>
+        <span class="skill-pill">Test & Control Design</span>
         <span class="skill-pill">Anomaly Detection</span>
       </div>
     </div>
@@ -561,17 +929,23 @@ footer a:hover { color: var(--ind-l); }
         <span class="skill-pill">dbt</span>
         <span class="skill-pill">Airflow</span>
         <span class="skill-pill">Looker</span>
+        <span class="skill-pill">GBM Production Systems</span>
+        <span class="skill-pill">MRP Systems</span>
       </div>
     </div>
     <div class="skill-card">
       <div class="sk-cat">Domain Expertise</div>
       <div class="skill-pills">
-        <span class="skill-pill">S&OP Governance</span>
+        <span class="skill-pill">S&OP Design</span>
+        <span class="skill-pill">NPI Program Management</span>
+        <span class="skill-pill">Capacity Planning</span>
+        <span class="skill-pill">Supplier Risk Management</span>
         <span class="skill-pill">Demand Planning</span>
         <span class="skill-pill">Replenishment</span>
         <span class="skill-pill">Inventory Optimization</span>
+        <span class="skill-pill">Import Commitment Planning</span>
+        <span class="skill-pill">Event Demand Planning</span>
         <span class="skill-pill">Price Elasticity</span>
-        <span class="skill-pill">Event Forecasting</span>
       </div>
     </div>
   </div>
@@ -583,10 +957,10 @@ footer a:hover { color: var(--ind-l); }
   <span>·</span>
   <a href="https://linkedin.com/in/asthajain12" target="_blank">LinkedIn</a>
   <span>·</span>
-  <a href="https://github.com/ajwalmart12" target="_blank">GitHub</a>
+  <a href="https://github.com/asthaj12" target="_blank">GitHub</a>
   <span>·</span>
   <a href="mailto:astha_jain@outlook.com">astha_jain@outlook.com</a>
-  <div class="footer-note">All dashboard data is illustrative. © 2026 Astha Jain</div>
+  <div class="footer-note">All portfolio data is illustrative. © 2026 Astha Jain</div>
 </footer>
 
 </body>
