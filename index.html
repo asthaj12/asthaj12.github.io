@@ -183,25 +183,7 @@ section{max-width:1100px;margin:0 auto;padding:0 32px 80px;}
 /* ── White paper row ────────────────────────────────────────────── */
 .whitepaper-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
 
-/* ── 23 Stories section ─────────────────────────────────────────── */
-.stories-section{margin-top:64px;padding-top:48px;border-top:1px solid var(--border);}
-.stories-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:24px;}
-.story-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:11px 14px;display:flex;align-items:flex-start;gap:10px;transition:box-shadow .15s,border-color .15s;cursor:pointer;text-decoration:none;}
-.story-item:hover{border-color:var(--border-s);box-shadow:0 4px 16px rgba(0,0,0,.06);}
-.story-num{font-size:10px;font-weight:800;color:var(--t3);min-width:22px;padding-top:2px;font-variant-numeric:tabular-nums;}
-.story-body{flex:1;min-width:0;}
-.story-title{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:2px;line-height:1.3;}
-.story-metric{font-size:11px;color:var(--t2);}
-.story-badge{flex-shrink:0;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
-.sb-dash{background:rgba(99,102,241,.1);color:var(--ind-l);}
-.sb-wp{background:rgba(235,104,52,.1);color:#c2410c;}
-.sb-sim{background:rgba(27,175,122,.1);color:#065f46;}
 
-/* company left borders on story items */
-.sw{border-left:3px solid var(--walmart);}
-.ss{border-left:3px solid var(--shopify);}
-.sl{border-left:3px solid var(--logitech);}
-.sc{border-left:3px solid var(--cummins);}
 
 /* ── Skills section ─────────────────────────────────────────────── */
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
@@ -241,7 +223,6 @@ footer a:hover{color:var(--ind-l);}
   .project-card.featured{flex-direction:column;}
   .project-card.featured .card-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;}
   .skills-grid{grid-template-columns:1fr 1fr;}
-  .stories-grid{grid-template-columns:1fr;}
   .whitepaper-row{grid-template-columns:1fr;}
 }
 @media(max-width:600px){
@@ -343,7 +324,6 @@ footer a:hover{color:var(--ind-l);}
     </div>
 
     <a class="nav-link" href="#projects">Case Library</a>
-    <a class="nav-link" href="#stories">23 Stories</a>
     <a class="nav-link" href="#skills">Skills</a>
     <a class="nav-link" href="#credentials">Credentials</a>
   </div>
@@ -359,7 +339,7 @@ footer a:hover{color:var(--ind-l);}
   <div class="hero-content">
     <div class="hero-eyebrow">Available for opportunities</div>
     <h1>Astha Jain<br><span class="accent">Supply & Demand Planning · Analytics · Program Strategy</span></h1>
-    <p class="tagline">Supply chain practitioner across automotive, consumer electronics, e-commerce logistics, and large-scale retail. 23 documented stories. 15 live portfolio artifacts. Currently Sr. Manager II, Demand Planning @ Walmart US.</p>
+    <p class="tagline">Supply chain practitioner across automotive, consumer electronics, e-commerce logistics, and large-scale retail. 15 live portfolio artifacts. Currently Sr. Manager II, Demand Planning @ Walmart US.</p>
     <div class="industry-pills">
       <span class="i-pill i-walmart">Walmart US</span>
       <span class="i-pill i-shopify">Shopify Logistics</span>
@@ -715,207 +695,7 @@ footer a:hover{color:var(--ind-l);}
     </div>
   </div>
 
-  <!-- ══ 23 Stories at a Glance ══ -->
-  <div class="stories-section" id="stories">
-    <div class="section-label">Reference</div>
-    <div class="section-title">23 Stories at a Glance</div>
-    <p style="font-size:14px;color:var(--t2);margin-top:6px;margin-bottom:0">Every documented story with its headline metric and portfolio artifact. Click any to explore.</p>
-    <div class="stories-grid" style="margin-top:20px">
-
-      <!-- Walmart -->
-      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
-        <span class="story-num">01</span>
-        <div class="story-body">
-          <div class="story-title">Back-to-School Predictive Planning</div>
-          <div class="story-metric">$160M excess prevented · $8B portfolio · 3–6mo ahead of base forecast</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
-        <span class="story-num">02</span>
-        <div class="story-body">
-          <div class="story-title">Cold / Cough / Flu Demand</div>
-          <div class="story-metric">$36M repositioned · severity signals + substitution modeling</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
-        <span class="story-num">03</span>
-        <div class="story-body">
-          <div class="story-title">Lent & Easter Decomposition</div>
-          <div class="story-metric">$120M true event demand · event-study methodology</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/pricing-demand-response/">
-        <span class="story-num">04</span>
-        <div class="story-body">
-          <div class="story-title">Grocery Pricing & Rollbacks</div>
-          <div class="story-metric">$500K incremental · elasticity → inventory recommendations</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/forecast-governance/">
-        <span class="story-num">05</span>
-        <div class="story-body">
-          <div class="story-title">Promotions / FSS Governance</div>
-          <div class="story-metric">$7.6M override exposure surfaced · $1.75M rolled back</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/fifa-2026-demand/">
-        <span class="story-num">06</span>
-        <div class="story-body">
-          <div class="story-title">Event Demand Localization — FIFA 2026</div>
-          <div class="story-metric">$50M store-level reallocation · 4 demand drivers decomposed</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/npi-launch-planning/">
-        <span class="story-num">07</span>
-        <div class="story-body">
-          <div class="story-title">Bettergoods NPI + Import Commitments</div>
-          <div class="story-metric">$500M yr-1 sales · $50M irreversible imports · cold-start models</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/seasonal-event-intelligence/">
-        <span class="story-num">08</span>
-        <div class="story-body">
-          <div class="story-title">Major Retail Events Planning</div>
-          <div class="story-metric">1.5M false positives eliminated · $100M+ excess mitigated</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/snap-monitoring/">
-        <span class="story-num">09</span>
-        <div class="story-body">
-          <div class="story-title">Policy Demand Impact — Test & Control Study</div>
-          <div class="story-metric">$50M/mo avoided · 9,293 products · data-backed "do nothing"</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/ml-model-diagnosis/">
-        <span class="story-num">10</span>
-        <div class="story-body">
-          <div class="story-title">Milk GBM Model Diagnosis</div>
-          <div class="story-metric">$17M repositioned · −10.2% bias · scoped fix in weeks not quarters</div>
-        </div>
-        <span class="story-badge sb-wp">White Paper</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/forecast-governance/">
-        <span class="story-num">11</span>
-        <div class="story-body">
-          <div class="story-title">Demand Correction Audit — Finding the Failure Inside the Success</div>
-          <div class="story-metric">$155M restored · 49% win rate exposed · temporal holdout analysis</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sw" href="https://asthaj12.github.io/fom-backtesting/">
-        <span class="story-num">12</span>
-        <div class="story-body">
-          <div class="story-title">Demand Signal Backtesting & Targeting — Redesign</div>
-          <div class="story-metric">309 bps wMAPE · 42% unwinnable fixed · store × SKU × day grain</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-
-      <!-- Shopify -->
-      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
-        <span class="story-num">13</span>
-        <div class="story-body">
-          <div class="story-title">Network Package Forecasting + RCA</div>
-          <div class="story-metric">30% accuracy improvement · $150K/mo saved · 1M+ orders</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
-        <span class="story-num">14</span>
-        <div class="story-body">
-          <div class="story-title">BFCM Peak Network Planning</div>
-          <div class="story-metric">$2M incremental · 15% stockout reduction · 85 warehouses</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
-        <span class="story-num">15</span>
-        <div class="story-body">
-          <div class="story-title">Merchant Drop Demand Planning</div>
-          <div class="story-metric">$15M captured · 15-min windows · KNN + velocity triggers</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item ss" href="https://asthaj12.github.io/shopify-demand-forecasting/">
-        <span class="story-num">16</span>
-        <div class="story-body">
-          <div class="story-title">Forecast Process Automation</div>
-          <div class="story-metric">50% cycle time reduction · standardize then automate</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-
-      <!-- Logitech -->
-      <a class="story-item sl" href="https://asthaj12.github.io/npi-launch-planning/">
-        <span class="story-num">17</span>
-        <div class="story-body">
-          <div class="story-title">Apple / iPad Peripheral NPI</div>
-          <div class="story-metric">60→84% fill rate · $50M revenue protected · without direct authority</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sl" href="https://asthaj12.github.io/logitech-supply-planning/">
-        <span class="story-num">18</span>
-        <div class="story-body">
-          <div class="story-title">Gaming S&OP + E&O Management</div>
-          <div class="story-metric">7% revenue growth · $1M E&O reduction · 17% Gaming decline absorbed</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sl" href="https://asthaj12.github.io/logitech-supply-planning/">
-        <span class="story-num">19</span>
-        <div class="story-body">
-          <div class="story-title">Supply Disruption & Premium Freight</div>
-          <div class="story-metric">$200K freight saved · margin-weighted expediting · global disruption</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sl" href="https://asthaj12.github.io/sop-framework/">
-        <span class="story-num">20</span>
-        <div class="story-body">
-          <div class="story-title">Weekly Global S&OP Cadence</div>
-          <div class="story-metric">Decision forum design · NA/EMEA/APAC · banned status updates</div>
-        </div>
-        <span class="story-badge sb-wp">White Paper</span>
-      </a>
-
-      <!-- Cummins -->
-      <a class="story-item sc" href="https://asthaj12.github.io/cummins-capacity-risk/">
-        <span class="story-num">21</span>
-        <div class="story-body">
-          <div class="story-title">Proactive Supplier Capacity Framework</div>
-          <div class="story-metric">$35M exposure averted · 800+ suppliers · 50% faster detection</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sc" href="https://asthaj12.github.io/cummins-capacity-risk/">
-        <span class="story-num">22</span>
-        <div class="story-body">
-          <div class="story-title">Reactive Supplier Recovery</div>
-          <div class="story-metric">16→6 week recovery · $8M annual continuity · physical bottleneck diagnosis</div>
-        </div>
-        <span class="story-badge sb-dash">Dashboard</span>
-      </a>
-      <a class="story-item sc" href="https://asthaj12.github.io/cummins-capacity-expansion/">
-        <span class="story-num">23</span>
-        <div class="story-body">
-          <div class="story-title">Long-Range Capacity Planning Simulator</div>
-          <div class="story-metric">$12M+/cycle · 15+ engine lines · 12–24mo horizon</div>
-        </div>
-        <span class="story-badge sb-sim">Simulator</span>
-      </a>
-
-    </div>
-  </div>
+  
 
 </section>
 
