@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Network &amp; Capacity Optimizer — Astha Jain</title>
+<meta name="description" content="Three supply chain decisions solved as optimization models in Python (PuLP) and Excel Solver: peak network allocation, long-lead capacity expansion, and constrained supply allocation.">
+<style>
+:root{--ink:#1f2937;--mute:#6b7280;--line:#e5e7eb;--blue:#2a78d6;--bg:#f8fafc}
+*{box-sizing:border-box;margin:0;padding:0} body{font-family:system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+header{background:#0f172a;color:#f8fafc;padding:48px 24px 40px} .wrap{max-width:980px;margin:0 auto}
+header a{color:#93c5fd;text-decoration:none;font-size:14px} h1{font-size:32px;margin:10px 0 8px;letter-spacing:-.01em}
+header p{color:#cbd5e1;max-width:760px} .chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:12px;border:1px solid #334155;border-radius:999px;padding:3px 10px;color:#e2e8f0}
+.note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:8px;padding:10px 14px;font-size:13px;margin:24px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px;margin:22px 0}
+.card h2{font-size:21px;margin-bottom:4px} .kicker{color:var(--blue);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0} .grid3 div{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:14px}
+.grid3 b{display:block;font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.kpis{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0} .kpi{border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:150px}
+.kpi span{display:block;font-size:22px;font-weight:800;color:var(--blue)} .kpi small{color:var(--mute);font-size:12px}
+.figs{display:grid;grid-template-columns:1fr 1fr;gap:14px} img{width:100%;border:1px solid var(--line);border-radius:10px;background:#fff}
+details{margin-top:12px;font-size:14px} summary{cursor:pointer;color:var(--blue);font-weight:600} details ul{margin:8px 0 0 18px}
+pre{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:14px;font-size:13px;overflow:auto;margin-top:10px}
+footer{color:var(--mute);font-size:13px;padding:30px 24px 50px;text-align:center}
+@media(max-width:760px){.grid3,.figs{grid-template-columns:1fr} h1{font-size:26px}}
+</style></head><body>
+<header><div class="wrap">
+<a href="https://asthaj12.github.io">&larr; Portfolio</a>
+<h1>Network &amp; Capacity Optimizer</h1>
+<p>Three decisions supply and capacity planners make under constraint, built as optimization models in Python (PuLP) and Excel Solver. Each one answers a planning question with a cost, a risk, and the value of one more unit of capacity.</p>
+<div class="chips"><span class="chip">Network &amp; Capacity Planning</span><span class="chip">Optimization Modeling</span><span class="chip">Python · PuLP · CBC / HiGHS</span><span class="chip">Excel Solver</span><span class="chip">Scenario Planning</span><span class="chip">Constrained Allocation</span></div>
+</div></header>
+<main class="wrap" style="padding:0 24px">
+<div class="note">Independent portfolio project. All data is synthetic. The problem shapes come from planning work I've done (fulfillment networks, contract-manufacturer allocation, supplier and line capacity), but no employer data, systems, or figures are used.</div>
+
+<section class="card" id="network">
+<div class="kicker">Model 1 · Mixed-integer program</div><h2>Peak network &amp; carrier allocation</h2>
+<div class="grid3"><div><b>What it decides</b>Which fulfillment node serves each region by which carrier, and where to open surge capacity for peak week.</div>
+<div><b>Why it matters</b>Peak capacity is booked weeks ahead. Too little means missed delivery promises and lost sales; too much is paid-for space that sits idle.</div>
+<div><b>What it found</b>Under stress demand, carrier capacity runs out before building capacity, so adding surge space alone cannot hold fill.</div></div>
+<div class="kpis"><div class="kpi"><span>100%</span><small>fill, base peak</small></div><div class="kpi"><span>91%</span><small>fill, stress peak (+38%)</small></div>
+<div class="kpi"><span>11</span><small>surge blocks opened, stress</small></div><div class="kpi"><span>$14</span><small>top value of +1 unit node capacity</small></div></div>
+<div class="figs"><img src="assets/m1_cost_by_scenario.png" alt="Peak-week cost by scenario split into shipping, surge capacity and lost margin, with fill rate"><img src="assets/m1_shadow_prices.png" alt="Value of one more unit of capacity at each fulfillment node in the stress scenario"></div>
+<details><summary>How it's modeled</summary><ul>
+<li><b>Decisions:</b> units shipped per node → region → carrier (continuous); surge blocks per node (integer, 0–3).</li>
+<li><b>Objective:</b> minimize shipping cost + surge cost ($30,000 per 4,000-unit block) + $22 lost margin per unmet unit.</li>
+<li><b>Constraints:</b> every region's demand is met or counted as unmet; node capacity plus surge; carrier capacity per node; only lanes that meet a 3-day delivery promise are allowed.</li>
+<li><b>Shadow prices:</b> re-solved as a linear program with surge fixed, to read what one more unit of capacity is worth at each node.</li></ul></details>
+</section>
+
+<section class="card" id="capacity">
+<div class="kicker">Model 2 · Stochastic mixed-integer program</div><h2>Long-lead capacity expansion</h2>
+<div class="grid3"><div><b>What it decides</b>How many capacity blocks to order each month when every order lands 9 months later, before you know which demand scenario will play out.</div>
+<div><b>Why it matters</b>Order too late and customers hit a capacity-out; order too early and capital sits stranded. One order plan has to work across low, base, and high growth.</div>
+<div><b>What it found</b>The first 9 months are already decided by past orders. A bigger buffer over the base forecast adds stranded capital but barely protects the high case, which argues for staged, cancellable commitments.</div></div>
+<div class="kpis"><div class="kpi"><span>9</span><small>blocks ordered, optimal plan</small></div><div class="kpi"><span>$32.4M</span><small>expected total cost</small></div>
+<div class="kpi"><span>0</span><small>capacity-out months, base case</small></div><div class="kpi"><span>15 → 12</span><small>high-case capacity-out months, 0% → 25% headroom</small></div></div>
+<div class="figs"><img src="assets/m2_capacity_vs_demand.png" alt="Capacity from the optimal order plan against low, base and high demand over 24 months"><img src="assets/m2_headroom_tradeoff.png" alt="Trade-off between required headroom, stranded capacity cost and high-case capacity-out months"></div>
+<details><summary>How it's modeled</summary><ul>
+<li><b>Decisions:</b> blocks ordered per month (integer); one plan for all scenarios, because orders are committed before demand is known.</li>
+<li><b>Objective:</b> minimize capital ($1.2M per 10-unit block) + probability-weighted idle cost ($12,000 per unit-month) + shortfall cost ($90,000 per unit-month).</li>
+<li><b>Constraints:</b> capacity in month t = installed + pipeline + orders placed 9+ months earlier; balance of capacity, demand, shortfall and idle per scenario; optional headroom policy over base demand.</li>
+<li><b>Scenarios:</b> low / base / high growth (25% / 50% / 25%), with a step ramp in month 12.</li></ul></details>
+</section>
+
+<section class="card" id="allocation">
+<div class="kicker">Model 3 · Linear program · also in Excel Solver</div><h2>Constrained supply allocation</h2>
+<div class="grid3"><div><b>What it decides</b>How to split supply that is 30% below demand across channels with different margins and contractual fill floors.</div>
+<div><b>Why it matters</b>Shortage calls usually end up as negotiations. A model makes the trade-off explicit, so each team can see what its commitment costs.</div>
+<div><b>What it found</b>One more unit of supply is worth $48. Honoring every fill floor costs $15,125 in margin, and the Education floor alone costs $18 per unit.</div></div>
+<div class="kpis"><div class="kpi"><span>$276,875</span><small>margin, all floors honored</small></div><div class="kpi"><span>$48</span><small>value of +1 unit of supply</small></div>
+<div class="kpi"><span>$24,000</span><small>value of +500 units</small></div><div class="kpi"><span>$15,125</span><small>cost of all fill floors</small></div></div>
+<div class="figs"><img src="assets/m3_allocation.png" alt="Demand, allocation and fill floor by channel"><div class="kpi" style="font-size:14px"><b>Excel version</b><br>Download <a href="excel/constrained_allocation_solver.xlsx">constrained_allocation_solver.xlsx</a>. The Solver dialog comes pre-loaded (objective, changing cells, constraints, Simplex LP): open it, go to Data &gt; Solver &gt; Solve, and compare with the PuLP answer in column I. Tick the Sensitivity report to see the same shadow prices.</div></div>
+</section>
+
+<section class="card"><div class="kicker">Run it</div><h2>Reproduce the results</h2>
+<pre>python -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install "pulp&gt;=2.9,&lt;3" highspy matplotlib openpyxl
+python run_all.py            # CBC solver (bundled with PuLP)
+python run_all.py --highs    # same models on HiGHS
+python excel/build_workbook.py</pre></section>
+</main>
+<footer>Astha Jain · <a href="https://asthaj12.github.io">asthaj12.github.io</a> · Synthetic data, independent project.</footer>
+</body></html>
