@@ -34,12 +34,14 @@ header{max-width:1100px;margin:0 auto;padding:40px 24px 20px}header h1{font-size
 .card h2{font-size:17px;font-weight:800;margin-bottom:12px;color:var(--accent)}.card h3{font-size:14px;font-weight:700;margin:14px 0 8px}
 .card p,.card li{font-size:13.5px;color:var(--t2)}.card ul{padding-left:18px}.card li{margin-bottom:4px}
 table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--t2)}tr:hover td{background:#f8fafc}
-.chart-wrap{position:relative;height:320px;margin:8px 0}
+.chart-wrap{position:relative;height:320px;margin:8px 0}.chart-wrap.short{height:280px}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center}.kpi .val{font-size:22px;font-weight:800}.kpi .lab{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
-.mc-controls{display:flex;gap:12px;align-items:center;margin:12px 0;flex-wrap:wrap}.mc-controls label{font-size:13px;font-weight:600}.mc-controls input,.mc-controls select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px}.mc-controls button{padding:8px 16px;border:0;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;font-size:13px;cursor:pointer}.mc-controls button:hover{opacity:.9}
+.mc-controls{display:flex;gap:12px;align-items:center;margin:12px 0;flex-wrap:wrap}.mc-controls label{font-size:13px;font-weight:600}.mc-controls input,.mc-controls select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px}.mc-controls input[type=range]{padding:0;width:180px;accent-color:var(--accent)}.mc-controls output{font-size:13px;font-weight:700;min-width:36px;color:var(--t1)}.mc-controls button{padding:8px 16px;border:0;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;font-size:13px;cursor:pointer}.mc-controls button:hover{opacity:.9}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:var(--t1);background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.limits li{font-size:13px}
 footer{max-width:1100px;margin:0 auto;padding:16px 24px 40px;font-size:12px;color:var(--t3);text-align:center}footer a{color:var(--blue);overflow-wrap:anywhere}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d39a28;outline-offset:3px;border-radius:4px}
-@media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr)}.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr)}.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}.mc-controls input[type=range]{width:140px}}
 </style>
 </head>
 <body>
@@ -47,12 +49,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 
 <header>
   <h1>GPU, Memory &amp; Storage Scenario Planner</h1>
-  <p>Balance uncertain demand, long lead times, supplier concentration and excess-and-obsolete exposure using newsvendor commit sizing and Monte Carlo risk quantification.</p>
+  <p>Balance uncertain demand, long lead times, supplier concentration and excess-and-obsolete exposure using newsvendor commit sizing and correlated Monte Carlo risk quantification.</p>
   <div class="tag-row">
     <span class="tag synthetic">Synthetic data</span>
     <span class="tag synthetic">Independent project</span>
     <span class="tag skill">Newsvendor model</span>
     <span class="tag skill">Monte Carlo simulation</span>
+    <span class="tag skill">Correlated demand</span>
     <span class="tag skill">Critical ratio</span>
     <span class="tag skill">Commodity planning</span>
     <span class="tag skill">Scenario analysis</span>
@@ -65,8 +68,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
     <div class="kpi-row">
       <div class="kpi"><div class="val" style="color:var(--accent)" id="kpi-commit">—</div><div class="lab">Optimal GPU commit</div></div>
       <div class="kpi"><div class="val" style="color:var(--green)" id="kpi-cr">—</div><div class="lab">Critical ratio</div></div>
-      <div class="kpi"><div class="val" style="color:var(--red)" id="kpi-risk">—</div><div class="lab">Tail risk (&gt;$15M)</div></div>
-      <div class="kpi"><div class="val" id="kpi-expected">—</div><div class="lab">Expected cost</div></div>
+      <div class="kpi"><div class="val" style="color:var(--red)" id="kpi-risk">—</div><div class="lab">P(cost &gt; budget)</div></div>
+      <div class="kpi"><div class="val" id="kpi-expected">—</div><div class="lab">CVaR 95% (worst 5% mean)</div></div>
     </div>
   </div>
 
@@ -81,6 +84,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
   <div class="card">
     <h2>Newsvendor Commit Sizing</h2>
     <p>The critical ratio determines optimal commit level: <strong>CR = Cu / (Cu + Co)</strong></p>
+    <p>Optimal commit: <strong>Q* = μ + σ · Φ⁻¹(CR)</strong>, with μ = base and σ = (upside − downside) ÷ 4.</p>
     <table id="nv-table">
       <thead><tr><th>Commodity</th><th>Cu (underage)</th><th>Co (overage)</th><th>CR</th><th>Optimal commit</th><th>vs. base</th></tr></thead>
       <tbody></tbody>
@@ -88,29 +92,70 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
   </div>
 
   <div class="card full">
-    <h2>Monte Carlo Simulation — Total Cost Distribution</h2>
-    <p>10,000 random demand futures across all commodities simultaneously. The histogram shows how often each cost outcome occurs.</p>
+    <h2>Monte Carlo Simulation — Correlated Mis-Commit Cost</h2>
+    <p>Demand futures for all commodities are drawn together with pairwise correlation ρ, from a seeded generator. Bars show the selected ρ. The line is the same draws with independent demand (ρ = 0). Red bars sit above the budget, set at the 95th percentile of the independent case.</p>
     <div class="mc-controls">
-      <label>Trials:</label><select id="mc-trials"><option value="1000">1,000</option><option value="5000">5,000</option><option value="10000" selected>10,000</option></select>
-      <button onclick="runMC()">Run simulation</button>
-      <span id="mc-status" style="font-size:12px;color:var(--t3)"></span>
+      <label for="mc-trials">Trials:</label><select id="mc-trials"><option value="1000">1,000</option><option value="5000">5,000</option><option value="10000" selected>10,000</option></select>
+      <label for="mc-rho">Correlation ρ:</label><input type="range" id="mc-rho" min="0" max="0.9" step="0.05" value="0.5" aria-label="Demand correlation rho"><output id="mc-rho-out" for="mc-rho">0.50</output>
+      <button type="button" onclick="runMC()">Run simulation</button>
     </div>
+    <p id="mc-status" style="font-size:12px;color:var(--t3)"></p>
     <div class="chart-wrap"><canvas id="mc-chart"></canvas></div>
+  </div>
+
+  <div class="card full">
+    <h2>Correlation Sweep — Same Draws, Different ρ</h2>
+    <p>Each row re-runs the same seeded draws at a different ρ. The mean stays close to flat. The tail rises with correlation.</p>
+    <table id="sweep-table">
+      <thead><tr><th>ρ (target)</th><th>ρ̂ (realized)</th><th>Mean cost</th><th>VaR 95%</th><th>CVaR 95%</th><th>P(cost &gt; budget)</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Tail vs. Correlation</h2>
+    <p>Exceedance of the independent-case budget and CVaR 95% by ρ.</p>
+    <div class="chart-wrap short"><canvas id="sweep-chart"></canvas></div>
   </div>
 
   <div class="card">
     <h2>Commit vs. Request Gap</h2>
     <p>Gap between optimal newsvendor commit and base-case request per commodity.</p>
-    <div class="chart-wrap"><canvas id="gap-chart"></canvas></div>
+    <div class="chart-wrap short"><canvas id="gap-chart"></canvas></div>
   </div>
 
-  <div class="card">
+  <div class="card full">
     <h2>Pull-In / Push-Out Actions</h2>
     <p>If early demand signals differ from base, which orders to accelerate or defer.</p>
     <table id="action-table">
       <thead><tr><th>Signal</th><th>Commodity</th><th>Action</th><th>Lead time impact</th></tr></thead>
       <tbody></tbody>
     </table>
+  </div>
+
+  <div class="card full">
+    <h2>Methodology: Formulas and Limits</h2>
+    <div class="formula">Critical ratio     CR = Cu ÷ (Cu + Co)                                  GPU: <span id="f-cr"></span>
+Demand spread      σ = (Upside − Downside) ÷ 4     (range rule: span = 4σ)         GPU: <span id="f-sigma"></span>
+Optimal commit     Q* = μ + σ · Φ⁻¹(CR)                                           GPU: <span id="f-q"></span></div>
+    <div class="formula">Correlation matrix   R = (1 − ρ)·I + ρ·J   (ρ off the diagonal)
+Cholesky           R = L · Lᵀ
+Correlated draws   G ~ N(0, I) from a seeded PRNG (mulberry32, seed 20261105)
+                   Z = L · G        so corr(Z_i, Z_j) = ρ for every pair
+Demand             D_i = max(0, μ_i + σ_i · Z_i)</div>
+    <div class="formula">Mis-commit cost     C = Σ_i [ Cu_i · max(0, D_i − Q_i) + Co_i · max(0, Q_i − D_i) ]     ($M per trial)
+Budget             B = 95th percentile of C at ρ = 0, same draws          B = <span id="f-budget"></span>
+Exceedance         P(C &gt; B) = #{trials with C &gt; B} ÷ N
+VaR 95%            C at rank ⌈0.95·N⌉ (sorted ascending)
+CVaR 95%           mean of the worst N − ⌊0.95·N⌋ trials of C
+Mean invariance    E[C] = Σ_i E[cost_i(D_i)] depends on each marginal only, so ρ moves the joint tail, not the mean</div>
+    <ul class="limits">
+      <li>Commit levels come from the independent newsvendor and are held fixed across ρ. A correlation-aware commit would change the tail.</li>
+      <li>One ρ for every pair is a simplification. Real commodity pairs differ in strength.</li>
+      <li>Spot price is shown for reference. Shortfall is costed at Cu, the same underage cost used in the critical ratio, so cost and CR share one set of penalties.</li>
+      <li>Demand is normal with the range rule for σ, truncated at zero. Budget is a planning reference set at the independent 95th percentile, not an approved company budget.</li>
+      <li>All inputs are synthetic.</li>
+    </ul>
   </div>
 
   <div class="card full">
@@ -132,57 +177,58 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 
 <script>
 (function(){
-// ── Commodities ─────────────────────────────────────────────────
+const SEED = 20261105;
+const SWEEP_RHOS = [0, 0.2, 0.4, 0.6, 0.8, 0.9];
 const commodities = [
   {name:'GPU (H100/H200)',lead:24,down:30000,base:40000,up:52000,commit:2.10,spot:4.80,Cu:850,Co:120},
   {name:'HBM3E Memory',  lead:18,down:250000,base:320000,up:416000,commit:0.45,spot:0.95,Cu:180,Co:40},
   {name:'NVMe SSD 4TB',  lead:8, down:18000,base:22000,up:28600,commit:0.80,spot:1.40,Cu:220,Co:90},
   {name:'NIC 400GbE',    lead:10,down:8000,base:10000,up:13000,commit:1.50,spot:3.20,Cu:400,Co:80},
 ];
+const n = commodities.length;
 
-// ── Normal inverse approximation ─────────────────────────────────
-function normInv(p,mu,sig){const a=[0,-3.969683e1,2.209461e2,-2.759285e2,1.383577e2,-3.066479e1,6.680131];const b=[0,-5.447609e1,1.615858e2,-1.556989e2,6.680131e1,-1.328068e1];const c=[0,-7.784894e-3,-3.223964e-1,-2.400758,-.3297202,-7.784894e-3];const d=[0,7.784695e-1,3.224671,2.445134,0];let q,r;if(p<.02425){q=Math.sqrt(-2*Math.log(p));r=(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}else if(p<=.97575){q=p-.5;r=q*q;r=(((((a[1]*r+a[2])*r+a[3])*r+a[4])*r+a[5])*r+a[6])*q/(((((b[1]*r+b[2])*r+b[3])*r+b[4])*r+b[5])*r+1)}else{q=Math.sqrt(-2*Math.log(1-p));r=-(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}return mu+sig*r}
-function normRand(mu,sig){let u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return mu+sig*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function normInv(p){const a=[0,-3.969683028665376e1,2.209460984245205e2,-2.759285104469687e2,1.383577518672690e2,-3.066479806614716e1,2.506628277459239];const b=[0,-5.447609879822406e1,1.615858368580409e2,-1.556989798598866e2,6.680131188771972e1,-1.328068155288572e1];const c=[0,-7.784894002430293e-3,-3.223964580411365e-1,-2.400758277161838,-2.549732539343734,4.374664141464968,2.938163982698783];const d=[0,7.784695709041462e-3,3.224671290700398e-1,2.445134137142996,3.754408661907416];let q,r;if(p<.02425){q=Math.sqrt(-2*Math.log(p));return (((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}if(p<=.97575){q=p-.5;r=q*q;return (((((a[1]*r+a[2])*r+a[3])*r+a[4])*r+a[5])*r+a[6])*q/(((((b[1]*r+b[2])*r+b[3])*r+b[4])*r+b[5])*r+1)}q=Math.sqrt(-2*Math.log(1-p));return -(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}
+function mulberry32(a){return function(){let t=(a+=0x6d2b79f5);t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
+function gauss(r){let u=0;while(u===0)u=r();const v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function cholesky(M){const m=M.length;const L=M.map(row=>row.map(()=>0));for(let i=0;i<m;i++){for(let j=0;j<=i;j++){let s=M[i][j];for(let k=0;k<j;k++)s-=L[i][k]*L[j][k];L[i][j]=i===j?Math.sqrt(s):s/L[j][j]}}return L}
+function equicorr(m,rho){return Array.from({length:m},(_,i)=>Array.from({length:m},(_,j)=>i===j?1:rho))}
 
-// ── Newsvendor ──────────────────────────────────────────────────
 commodities.forEach(c => {
   c.CR = c.Cu / (c.Cu + c.Co);
-  c.std = (c.up - c.down) / 4; // approximate std from range
-  c.optCommit = Math.round(normInv(c.CR, c.base, c.std));
+  c.std = (c.up - c.down) / 4;
+  c.optCommit = Math.round(c.base + c.std * normInv(c.CR));
   c.vsMean = c.optCommit - c.base;
 });
 
-// ── Scenario table ──────────────────────────────────────────────
 const scenTb = document.querySelector('#scenario-table tbody');
 commodities.forEach(c => {
   scenTb.innerHTML += '<tr><td><strong>'+c.name+'</strong></td><td>'+c.lead+'</td><td>'+c.down.toLocaleString()+'</td><td>'+c.base.toLocaleString()+'</td><td>'+c.up.toLocaleString()+'</td><td>$'+c.commit+'</td><td>$'+c.spot+'</td></tr>';
 });
 
-// ── Newsvendor table ────────────────────────────────────────────
 const nvTb = document.querySelector('#nv-table tbody');
 commodities.forEach(c => {
   nvTb.innerHTML += '<tr><td>'+c.name+'</td><td>$'+c.Cu+'</td><td>$'+c.Co+'</td><td>'+(c.CR*100).toFixed(1)+'%</td><td><strong>'+c.optCommit.toLocaleString()+'</strong></td><td>'+(c.vsMean>0?'+':'')+c.vsMean.toLocaleString()+'</td></tr>';
 });
 
-// ── KPIs ────────────────────────────────────────────────────────
 const gpu = commodities[0];
 document.getElementById('kpi-commit').textContent = gpu.optCommit.toLocaleString();
 document.getElementById('kpi-cr').textContent = (gpu.CR*100).toFixed(1)+'%';
+document.getElementById('f-cr').textContent = (gpu.CR*100).toFixed(1)+'%  (Cu $'+gpu.Cu+', Co $'+gpu.Co+')';
+document.getElementById('f-sigma').textContent = gpu.std.toLocaleString()+' units';
+document.getElementById('f-q').textContent = gpu.optCommit.toLocaleString()+' = '+gpu.base.toLocaleString()+' + '+normInv(gpu.CR).toFixed(3)+' × '+gpu.std.toLocaleString();
 
-// ── Gap chart ───────────────────────────────────────────────────
 new Chart(document.getElementById('gap-chart'), {
   type: 'bar',
   data: {
     labels: commodities.map(c => c.name),
     datasets: [
       {label:'Base demand', data:commodities.map(c=>c.base), backgroundColor:'#94a3b8', borderRadius:6},
-      {label:'Optimal commit', data:commodities.map(c=>c.optCommit), backgroundColor:'var(--accent)', borderRadius:6},
+      {label:'Optimal commit', data:commodities.map(c=>c.optCommit), backgroundColor:'#087d8b', borderRadius:6},
     ]
   },
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,grid:{color:'#f1f5f9'}},x:{grid:{display:false}}}}
 });
 
-// ── Pull-in / push-out actions ──────────────────────────────────
 const actTb = document.querySelector('#action-table tbody');
 [
   {sig:'Demand tracking >10% above base at T-12',com:'GPU',act:'Pull-in: accelerate 5,000 units from Q2 to Q1',lt:'+$1.2M expedite'},
@@ -193,81 +239,159 @@ const actTb = document.querySelector('#action-table tbody');
   actTb.innerHTML += '<tr><td>'+r.sig+'</td><td><strong>'+r.com+'</strong></td><td>'+r.act+'</td><td>'+r.lt+'</td></tr>';
 });
 
-// ── Monte Carlo ─────────────────────────────────────────────────
+function simulate(N, rho){
+  const r = mulberry32(SEED);
+  const L = cholesky(equicorr(n, rho));
+  const Z = new Float64Array(N * n);
+  const costs = new Float64Array(N);
+  const g = new Array(n);
+  for(let t = 0; t < N; t++){
+    for(let j = 0; j < n; j++) g[j] = gauss(r);
+    let total = 0;
+    for(let i = 0; i < n; i++){
+      let z = 0;
+      for(let j = 0; j <= i; j++) z += L[i][j] * g[j];
+      Z[t * n + i] = z;
+      const c = commodities[i];
+      const d = Math.max(0, c.base + c.std * z);
+      total += c.Cu * Math.max(0, d - c.optCommit) + c.Co * Math.max(0, c.optCommit - d);
+    }
+    costs[t] = total / 1e6;
+  }
+  return {costs, rhoHat: realizedRho(Z, N)};
+}
+
+function realizedRho(Z, N){
+  const means = new Array(n).fill(0);
+  for(let t = 0; t < N; t++) for(let i = 0; i < n; i++) means[i] += Z[t * n + i];
+  for(let i = 0; i < n; i++) means[i] /= N;
+  let sum = 0;
+  let cnt = 0;
+  for(let i = 0; i < n; i++) for(let j = i + 1; j < n; j++){
+    let cov = 0, vi = 0, vj = 0;
+    for(let t = 0; t < N; t++){
+      const a = Z[t * n + i] - means[i];
+      const b = Z[t * n + j] - means[j];
+      cov += a * b; vi += a * a; vj += b * b;
+    }
+    sum += cov / Math.sqrt(vi * vj);
+    cnt++;
+  }
+  return sum / cnt;
+}
+
+function summarize(costs, budget){
+  const s = Float64Array.from(costs).sort();
+  const N = s.length;
+  const k = Math.floor(0.95 * N);
+  let tail = 0, total = 0, exceed = 0;
+  for(let i = 0; i < N; i++){
+    total += s[i];
+    if(s[i] > budget) exceed++;
+    if(i >= k) tail += s[i];
+  }
+  return {mean: total / N, VaR: s[Math.ceil(0.95 * N) - 1], CVaR: tail / (N - k), pExceed: exceed / N};
+}
+
 let mcChart = null;
+let sweepChart = null;
 window.runMC = function(){
   const N = parseInt(document.getElementById('mc-trials').value);
+  const rho = parseFloat(document.getElementById('mc-rho').value);
+  document.getElementById('mc-rho-out').textContent = rho.toFixed(2);
   document.getElementById('mc-status').textContent = 'Running '+N.toLocaleString()+' trials...';
   setTimeout(function(){
-    const costs = [];
-    for(let t=0;t<N;t++){
-      let totalCost = 0;
-      commodities.forEach(c => {
-        const demand = Math.max(0, normRand(c.base, c.std));
-        const committed = c.optCommit;
-        if(demand > committed){
-          const spot = demand - committed;
-          totalCost += committed * c.commit + spot * c.spot;
-        } else {
-          const excess = committed - demand;
-          totalCost += committed * c.commit + excess * c.Co * 0.001; // carrying
-        }
-      });
-      costs.push(totalCost / 1e6); // in $M
-    }
-    costs.sort((a,b) => a - b);
+    const base = simulate(N, 0);
+    const budget = summarize(base.costs, 0).VaR;
+    const cur = rho === 0 ? base : simulate(N, rho);
+    const s = summarize(cur.costs, budget);
+    const sweep = SWEEP_RHOS.map(function(r){
+      const sim = r === 0 ? base : simulate(N, r);
+      const st = summarize(sim.costs, budget);
+      return {rho: r, rhoHat: sim.rhoHat, mean: st.mean, VaR: st.VaR, CVaR: st.CVaR, pExceed: st.pExceed};
+    });
 
-    // Build histogram
-    const minC = Math.floor(costs[0]);
-    const maxC = Math.ceil(costs[costs.length-1]);
+    document.getElementById('kpi-risk').textContent = (s.pExceed * 100).toFixed(1)+'%';
+    document.getElementById('kpi-expected').textContent = '$'+s.CVaR.toFixed(2)+'M';
+    document.getElementById('f-budget').textContent = '$'+budget.toFixed(2)+'M';
+    document.getElementById('mc-status').textContent = 'ρ = '+rho.toFixed(2)+' (realized '+cur.rhoHat.toFixed(3)+') · mean $'+s.mean.toFixed(2)+'M · VaR 95% $'+s.VaR.toFixed(2)+'M · CVaR 95% $'+s.CVaR.toFixed(2)+'M · budget $'+budget.toFixed(2)+'M · '+N.toLocaleString()+' trials · seed '+SEED;
+
+    let lo = Infinity, hi = -Infinity;
+    for(let t = 0; t < N; t++){
+      lo = Math.min(lo, cur.costs[t], base.costs[t]);
+      hi = Math.max(hi, cur.costs[t], base.costs[t]);
+    }
     const bins = 30;
-    const binWidth = (maxC - minC) / bins;
-    const labels = []; const counts = [];
-    for(let i=0;i<bins;i++){
-      const lo = minC + i*binWidth;
-      labels.push('$'+lo.toFixed(1)+'M');
-      counts.push(costs.filter(c => c >= lo && c < lo+binWidth).length);
+    lo = Math.floor(lo * 10) / 10;
+    hi = Math.ceil(hi * 10) / 10;
+    const bw = (hi - lo) / bins;
+    const curCounts = new Array(bins).fill(0);
+    const baseCounts = new Array(bins).fill(0);
+    for(let t = 0; t < N; t++){
+      curCounts[Math.min(bins - 1, Math.floor((cur.costs[t] - lo) / bw))]++;
+      baseCounts[Math.min(bins - 1, Math.floor((base.costs[t] - lo) / bw))]++;
     }
-
-    const p50 = costs[Math.floor(N*0.5)];
-    const p95 = costs[Math.floor(N*0.95)];
-    const tail = costs.filter(c => c > 15).length / N * 100;
-    const expected = (costs.reduce((a,b)=>a+b,0)/N);
-
-    document.getElementById('kpi-risk').textContent = tail.toFixed(1)+'%';
-    document.getElementById('kpi-expected').textContent = '$'+expected.toFixed(1)+'M';
-    document.getElementById('mc-status').textContent = 'P50: $'+p50.toFixed(1)+'M · P95: $'+p95.toFixed(1)+'M · '+N.toLocaleString()+' trials';
+    const labels = [];
+    const barColors = [];
+    for(let i = 0; i < bins; i++){
+      const edge = lo + i * bw;
+      labels.push('$'+edge.toFixed(2)+'M');
+      barColors.push(edge + bw / 2 > budget ? 'rgba(220,38,38,0.6)' : 'rgba(8,125,139,0.6)');
+    }
 
     if(mcChart) mcChart.destroy();
     mcChart = new Chart(document.getElementById('mc-chart'), {
       type: 'bar',
       data: {
         labels: labels,
-        datasets: [{
-          label: 'Frequency',
-          data: counts,
-          backgroundColor: counts.map((_,i) => {
-            const val = minC + i*binWidth;
-            return val > 15 ? '#dc262680' : val > 12 ? '#d9770680' : '#087d8b80';
-          }),
-          borderRadius: 3,
-        }]
+        datasets: [
+          {label: 'Selected ρ = '+rho.toFixed(2), data: curCounts, backgroundColor: barColors, borderRadius: 3, order: 2},
+          {type: 'line', label: 'Independent demand (ρ = 0)', data: baseCounts, borderColor: '#334155', borderDash: [5, 3], borderWidth: 2, pointRadius: 0, tension: 0.3, order: 1},
+        ]
       },
       options: {
-        responsive:true, maintainAspectRatio:false,
-        plugins:{
-          legend:{display:false},
-          tooltip:{callbacks:{label:ctx=>ctx.parsed.y+' trials'}},
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: {position: 'bottom'},
+          tooltip: {callbacks: {label: ctx => ctx.dataset.label+': '+Math.round(ctx.parsed.y)+' trials'}},
         },
-        scales:{
-          y:{beginAtZero:true,title:{display:true,text:'Trials',font:{weight:'bold'}},grid:{color:'#f1f5f9'}},
-          x:{title:{display:true,text:'Total cost',font:{weight:'bold'}},grid:{display:false},ticks:{maxTicksLimit:10,font:{size:10}}}
+        scales: {
+          y: {beginAtZero: true, title: {display: true, text: 'Trials', font: {weight: 'bold'}}, grid: {color: '#f1f5f9'}},
+          x: {title: {display: true, text: 'Mis-commit cost per trial', font: {weight: 'bold'}}, grid: {display: false}, ticks: {maxTicksLimit: 10, font: {size: 10}}}
+        }
+      }
+    });
+
+    document.querySelector('#sweep-table tbody').innerHTML = sweep.map(function(r){
+      return '<tr><td><strong>'+r.rho.toFixed(1)+'</strong></td><td>'+r.rhoHat.toFixed(3)+'</td><td>$'+r.mean.toFixed(2)+'M</td><td>$'+r.VaR.toFixed(2)+'M</td><td>$'+r.CVaR.toFixed(2)+'M</td><td>'+(r.pExceed * 100).toFixed(1)+'%</td></tr>';
+    }).join('');
+
+    if(sweepChart) sweepChart.destroy();
+    sweepChart = new Chart(document.getElementById('sweep-chart'), {
+      type: 'line',
+      data: {
+        labels: SWEEP_RHOS.map(r => 'ρ '+r.toFixed(1)),
+        datasets: [
+          {label: 'P(cost > budget), %', data: sweep.map(r => +(r.pExceed * 100).toFixed(2)), borderColor: '#dc2626', backgroundColor: '#dc2626', tension: 0.3, yAxisID: 'y'},
+          {label: 'CVaR 95%, $M', data: sweep.map(r => +r.CVaR.toFixed(3)), borderColor: '#087d8b', backgroundColor: '#087d8b', tension: 0.3, yAxisID: 'y1'},
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: {mode: 'index', intersect: false},
+        plugins: {legend: {position: 'bottom'}},
+        scales: {
+          y: {beginAtZero: true, title: {display: true, text: '% of trials', font: {weight: 'bold'}}, grid: {color: '#f1f5f9'}},
+          y1: {position: 'right', title: {display: true, text: '$M', font: {weight: 'bold'}}, grid: {drawOnChartArea: false}},
+          x: {grid: {display: false}}
         }
       }
     });
   }, 50);
 };
-// Auto-run on load
+
+document.getElementById('mc-rho').addEventListener('input', window.runMC);
+document.getElementById('mc-trials').addEventListener('change', window.runMC);
 runMC();
 })();
 </script>

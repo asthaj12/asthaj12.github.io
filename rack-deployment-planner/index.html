@@ -33,16 +33,22 @@ header{max-width:1100px;margin:0 auto;padding:40px 24px 20px}header h1{font-size
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:0 4px 16px rgba(15,23,42,.04);min-width:0;overflow-x:auto}.card.full{grid-column:1/-1}
 .card h2{font-size:17px;font-weight:800;margin-bottom:12px;color:var(--accent)}.card h3{font-size:14px;font-weight:700;margin:14px 0 8px}
 .card p,.card li{font-size:13.5px;color:var(--t2)}.card ul{padding-left:18px}.card li{margin-bottom:4px}
-table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--t2)}tr:hover td{background:#f8fafc}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--t2);vertical-align:top}tr:hover td{background:#f8fafc}
 .status{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.status.green{background:var(--green)}.status.amber{background:var(--amber)}.status.red{background:var(--red)}.status.crit{background:var(--crit)}
 .chart-wrap{position:relative;height:320px;margin:8px 0}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center}.kpi .val{font-size:22px;font-weight:800}.kpi .lab{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
-.gantt{overflow-x:auto;margin:12px 0}.gantt-row{display:flex;align-items:center;margin-bottom:6px}.gantt-label{width:180px;flex-shrink:0;font-size:12px;font-weight:600;text-align:right;padding-right:12px}.gantt-track{flex:1;height:28px;position:relative;background:#f1f5f9;border-radius:6px;overflow:hidden}.gantt-bar{position:absolute;height:100%;border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:700;color:#fff;white-space:nowrap}
-.gantt-scale{display:flex;margin-left:180px;margin-bottom:8px}.gantt-scale span{flex:1;font-size:10px;color:var(--t3);text-align:center}
-.legend{display:flex;gap:14px;margin:10px 0;font-size:12px;color:var(--t2)}.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:middle;margin-right:4px}
+.gantt{overflow-x:auto;margin:12px 0}.gantt-inner{min-width:680px}.gantt-row{display:flex;align-items:center;margin-bottom:6px}.gantt-label{width:200px;flex-shrink:0;font-size:12px;font-weight:600;text-align:right;padding-right:12px}.gantt-track{flex:1;height:28px;position:relative;background:#f1f5f9;border-radius:6px}
+.gantt-bar{position:absolute;top:4px;bottom:4px;border-radius:5px}.gantt-float{position:absolute;top:11px;height:6px;border-radius:3px;background:repeating-linear-gradient(90deg,#94a3b8 0 4px,transparent 4px 7px)}.gantt-mark{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed #0f172a;opacity:.5}
+.gantt-scale{display:flex;margin-left:200px;margin-bottom:8px}.gantt-scale span{flex:1;font-size:10px;color:var(--t3);text-align:center}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0;font-size:12px;color:var(--t2)}.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:middle;margin-right:4px}
+.mc-controls{display:flex;gap:12px;align-items:center;margin:12px 0;flex-wrap:wrap}.mc-controls label{font-size:13px;font-weight:600}.mc-controls select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px}
+.btn{padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--t2);font-weight:700;font-size:12px;cursor:pointer}.btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.crit-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#ede9fe;color:#5b21b6}.near-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#fef3c7;color:#92400e}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:var(--t1);background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.limits li{font-size:13px}
 footer{max-width:1100px;margin:0 auto;padding:16px 24px 40px;font-size:12px;color:var(--t3);text-align:center}footer a{color:var(--blue);overflow-wrap:anywhere}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d39a28;outline-offset:3px;border-radius:4px}
-@media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr)}.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}.gantt-label{width:120px}}
+@media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr)}.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -50,15 +56,15 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 
 <header>
   <h1>Rack Deployment &amp; Time-to-Capacity Planner</h1>
-  <p>Sequence component arrival, assembly, rack landing, power, cabling and burn-in dependencies — identify the critical path and the blocker owner for each capacity-ready date.</p>
+  <p>Sequence component arrival, assembly, rack landing, power, cabling and burn-in dependencies — compute the critical path and total float from the task network, and see the capacity-ready date move when a task slips.</p>
   <div class="tag-row">
     <span class="tag synthetic">Synthetic data</span>
     <span class="tag synthetic">Independent project</span>
-    <span class="tag skill">Critical path</span>
+    <span class="tag skill">Critical path method</span>
+    <span class="tag skill">Total float</span>
     <span class="tag skill">Dependency management</span>
     <span class="tag skill">Phase gates</span>
     <span class="tag skill">Risk closure</span>
-    <span class="tag skill">Program management</span>
   </div>
 </header>
 
@@ -66,23 +72,39 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
   <div class="card full">
     <h2>Deployment Summary</h2>
     <div class="kpi-row">
-      <div class="kpi"><div class="val" style="color:var(--accent)">48</div><div class="lab">Racks planned</div></div>
-      <div class="kpi"><div class="val" style="color:var(--green)">32</div><div class="lab">On track</div></div>
-      <div class="kpi"><div class="val" style="color:var(--red)">16</div><div class="lab">At risk</div></div>
-      <div class="kpi"><div class="val" style="color:var(--crit)">GPU supply</div><div class="lab">Critical path blocker</div></div>
+      <div class="kpi"><div class="val" style="color:var(--accent)" id="kpi-racks">—</div><div class="lab">Racks planned</div></div>
+      <div class="kpi"><div class="val" style="color:var(--green)" id="kpi-ontrack">—</div><div class="lab">On track by W<span id="kpi-commit-wk">—</span> commit</div></div>
+      <div class="kpi"><div class="val" style="color:var(--red)" id="kpi-atrisk">—</div><div class="lab">At risk (no float to commit)</div></div>
+      <div class="kpi"><div class="val" style="color:var(--crit)" id="kpi-blocker">—</div><div class="lab">Critical path blocker</div></div>
     </div>
+    <p id="summary-note" style="font-size:12.5px;color:var(--t3)"></p>
   </div>
 
   <div class="card full">
-    <h2>Deployment Gantt — Critical Path</h2>
-    <p>Each phase must complete before the next begins. The critical path (purple) is the longest chain — any delay on it delays capacity-ready date.</p>
+    <h2>Deployment Gantt — Computed Schedule</h2>
+    <p>Bars come from the forward pass (early start and finish) and the backward pass (late start and finish). Purple bars have zero total float and form the critical path. The grey band runs from early finish to late finish and shows the slack each task can absorb.</p>
+    <div class="mc-controls">
+      <button type="button" class="btn" id="view-base" aria-pressed="true">Base plan</button>
+      <button type="button" class="btn" id="view-slip" aria-pressed="false">Scenario</button>
+    </div>
     <div class="legend">
-      <span><i style="background:var(--accent)"></i>Critical path</span>
-      <span><i style="background:var(--blue)"></i>On track</span>
-      <span><i style="background:var(--amber)"></i>At risk</span>
-      <span><i style="background:#94a3b8"></i>Float (slack)</span>
+      <span><i style="background:var(--crit)"></i>Critical (float = 0)</span>
+      <span><i style="background:var(--amber)"></i>Near-critical (float under 1 wk)</span>
+      <span><i style="background:var(--blue)"></i>Non-critical (float ≥ 1 wk)</span>
+      <span><i style="background:repeating-linear-gradient(90deg,#94a3b8 0 4px,transparent 4px 7px)"></i>Total float</span>
+      <span><i style="background:transparent;border-left:2px dashed #0f172a;width:0"></i>Commit line (end of W<span id="legend-commit">—</span>)</span>
     </div>
     <div class="gantt" id="gantt"></div>
+  </div>
+
+  <div class="card full">
+    <h2>Schedule Table — Forward and Backward Pass</h2>
+    <p>Computed from the task list. ES = max(EF of predecessors). EF = ES + duration. LF = min(LS of successors). LS = LF − duration. Total float = LS − ES. A task is critical when its float is zero.</p>
+    <table id="cpm-table">
+      <thead><tr><th>ID</th><th>Task</th><th>Owner</th><th>Dur (wks)</th><th>Predecessors</th><th>ES</th><th>EF</th><th>LS</th><th>LF</th><th>Float</th><th>Status</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p id="cp-text" style="margin-top:10px"></p>
   </div>
 
   <div class="card">
@@ -104,8 +126,39 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
   </div>
 
   <div class="card full">
-    <h2>Scenario: What If GPU Supply Slips 4 Weeks?</h2>
+    <h2>Scenario: What If a Task Slips 4 Weeks?</h2>
+    <p>Choose a task. Its duration rises by 4 weeks, both passes are recomputed, and the project finish, critical path and rack ramp update together. The commit date does not move.</p>
+    <div class="mc-controls">
+      <label for="slip-task">Task to slip by 4 weeks:</label>
+      <select id="slip-task"></select>
+    </div>
+    <table id="scn-table">
+      <thead><tr><th>Measure</th><th>Base plan</th><th>Scenario</th></tr></thead>
+      <tbody></tbody>
+    </table>
     <div class="chart-wrap"><canvas id="scenario-chart"></canvas></div>
+  </div>
+
+  <div class="card full">
+    <h2>Methodology: Formulas and Limits</h2>
+    <div class="formula">Forward pass     ES_i = max over predecessors p of EF_p      (0 if no predecessor)
+                EF_i = ES_i + d_i
+Project finish T = max_i EF_i
+Backward pass  LF_i = min over successors s of LS_s      (T if no successor)
+                LS_i = LF_i − d_i
+Total float    TF_i = LS_i − ES_i = LF_i − EF_i
+Critical       TF_i = 0.   Critical path = every chain of critical tasks where EF_p = ES_s, from a start to a finish at T.</div>
+    <div class="formula">Slip scenario  d_k → d_k + 4 for the selected task k, then rerun both passes.
+             ΔT = T_scenario − T_base
+Capacity       racks live at end of week w = min(48, 16 × (w − ⌈T⌉ + 1))
+               commit week = ⌈T_base⌉ + 1 (fixed; a slip does not move it)
+               on track = racks live at commit week; at risk = 48 − on track</div>
+    <ul class="limits">
+      <li>Durations are deterministic and the network is a single finish-to-start chain. Lags, resource leveling and calendar gaps are not modeled.</li>
+      <li>One task slips at a time. Float is total float, not free float, so a slip on a near-critical task can move the finish by only the part of its float it exceeds.</li>
+      <li>Gate and risk tables are status records. They are not linked to the computed dates.</li>
+      <li>All tasks, durations and owners are synthetic.</li>
+    </ul>
   </div>
 
   <div class="card full">
@@ -127,34 +180,125 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 
 <script>
 (function(){
-// ── Deployment phases ───────────────────────────────────────────
-const TOTAL_WEEKS = 30;
-const phases = [
-  {name:'Component orders',       start:0,  dur:2,  critical:true,  owner:'Procurement'},
-  {name:'GPU manufacturing',      start:2,  dur:12, critical:true,  owner:'GPU vendor / ODM'},
-  {name:'CPU + memory delivery',  start:2,  dur:8,  critical:false, owner:'CPU vendor / memory vendor'},
-  {name:'Storage + NIC delivery', start:2,  dur:6,  critical:false, owner:'Memory vendor / networking vendor'},
-  {name:'Server assembly (ODM)',  start:14, dur:4,  critical:true,  owner:'ODM partners'},
-  {name:'Shipping + customs',     start:18, dur:2,  critical:true,  owner:'Logistics'},
-  {name:'Rack landing',           start:20, dur:2,  critical:true,  owner:'DC Ops'},
-  {name:'Power + cooling hookup', start:22, dur:2,  critical:true,  owner:'Facilities'},
-  {name:'Network cabling',        start:22, dur:1.5,critical:false, owner:'Network Eng'},
-  {name:'Burn-in + validation',   start:24, dur:3,  critical:true,  owner:'Infra Eng'},
-  {name:'Capacity live',          start:27, dur:1,  critical:true,  owner:'Capacity Planning'},
+const TASKS = [
+  {id:'A', name:'Component orders',       dur:2,   preds:[],           owner:'Procurement'},
+  {id:'B', name:'GPU manufacturing',      dur:12,  preds:['A'],        owner:'GPU vendor / ODM'},
+  {id:'C', name:'CPU + memory delivery',  dur:8,   preds:['A'],        owner:'CPU vendor / memory vendor'},
+  {id:'D', name:'Storage + NIC delivery', dur:6,   preds:['A'],        owner:'Memory vendor / networking vendor'},
+  {id:'E', name:'Server assembly (ODM)',  dur:4,   preds:['B','C','D'], owner:'ODM partners'},
+  {id:'F', name:'Shipping + customs',     dur:2,   preds:['E'],        owner:'Logistics'},
+  {id:'G', name:'Rack landing',           dur:2,   preds:['F'],        owner:'DC Ops'},
+  {id:'H', name:'Power + cooling hookup', dur:2,   preds:['G'],        owner:'Facilities'},
+  {id:'I', name:'Network cabling',        dur:1.5, preds:['G'],        owner:'Network Eng'},
+  {id:'J', name:'Burn-in + validation',   dur:3,   preds:['H','I'],    owner:'Infra Eng'},
+  {id:'K', name:'Capacity live',          dur:1,   preds:['J'],        owner:'Capacity Planning'},
 ];
+const SLIP = 4;
+const RACKS = 48;
+const RACKS_PER_WEEK = 16;
+const BUFFER = 1;
+const EPS = 1e-9;
 
-// ── Gantt ────────────────────────────────────────────────────────
-const ganttEl = document.getElementById('gantt');
-const scaleHtml = '<div class="gantt-scale">' + Array.from({length:TOTAL_WEEKS}, (_,i) => '<span>W'+(i+1)+'</span>').join('') + '</div>';
-ganttEl.innerHTML = scaleHtml;
-phases.forEach(p => {
-  const left = (p.start / TOTAL_WEEKS * 100).toFixed(1);
-  const width = (p.dur / TOTAL_WEEKS * 100).toFixed(1);
-  const color = p.critical ? 'var(--accent)' : 'var(--blue)';
-  ganttEl.innerHTML += '<div class="gantt-row"><div class="gantt-label">'+p.name+'</div><div class="gantt-track"><div class="gantt-bar" style="left:'+left+'%;width:'+width+'%;background:'+color+'">W'+(p.start+1)+'–W'+(p.start+p.dur)+'</div></div></div>';
-});
+const fmt = x => { const v = Math.round(x * 10) / 10; return Number.isInteger(v) ? String(v) : v.toFixed(1); };
+const critLabel = tf => tf < EPS ? '<span class="crit-tag">Critical</span>' : tf < 1 ? '<span class="near-tag">Near-critical</span>' : 'Non-critical';
 
-// ── Gates table ─────────────────────────────────────────────────
+function criticalPaths(rows, finish){
+  const by = Object.fromEntries(rows.map(r => [r.id, r]));
+  const critical = rows.filter(r => r.tf < EPS);
+  const tight = (p, s) => by[s].tf < EPS && by[p].tf < EPS && Math.abs(by[s].es - by[p].ef) < EPS;
+  const next = id => by[id].succ.filter(s => tight(id, s));
+  const hasTightPred = id => critical.some(p => next(p.id).includes(id));
+  const paths = [];
+  const walk = (id, trail) => {
+    const n = next(id);
+    if(n.length === 0){
+      if(Math.abs(by[id].ef - finish) < EPS) paths.push(trail);
+      return;
+    }
+    n.forEach(s => walk(s, [...trail, s]));
+  };
+  critical.filter(r => !hasTightPred(r.id)).forEach(r => walk(r.id, [r.id]));
+  return paths;
+}
+
+function schedule(durs){
+  const byId = Object.fromEntries(TASKS.map(t => [t.id, t]));
+  const es = {}, ef = {};
+  const fwd = id => {
+    if(id in ef) return ef[id];
+    const t = byId[id];
+    es[id] = t.preds.length ? Math.max(...t.preds.map(fwd)) : 0;
+    ef[id] = es[id] + durs[id];
+    return ef[id];
+  };
+  TASKS.forEach(t => fwd(t.id));
+  const finish = Math.max(...TASKS.map(t => ef[t.id]));
+  const succ = {};
+  TASKS.forEach(t => succ[t.id] = []);
+  TASKS.forEach(t => t.preds.forEach(p => succ[p].push(t.id)));
+  const lf = {}, ls = {};
+  const bwd = id => {
+    if(id in ls) return ls[id];
+    lf[id] = succ[id].length ? Math.min(...succ[id].map(bwd)) : finish;
+    ls[id] = lf[id] - durs[id];
+    return ls[id];
+  };
+  TASKS.forEach(t => bwd(t.id));
+  const rows = TASKS.map(t => ({id: t.id, name: t.name, owner: t.owner, preds: t.preds, succ: succ[t.id], dur: durs[t.id], es: es[t.id], ef: ef[t.id], ls: ls[t.id], lf: lf[t.id], tf: Math.round((ls[t.id] - es[t.id]) * 1e6) / 1e6}));
+  return {rows, byId: Object.fromEntries(rows.map(r => [r.id, r])), finish, paths: criticalPaths(rows, finish).map(p => p.join(' → '))};
+}
+
+const baseDurs = Object.fromEntries(TASKS.map(t => [t.id, t.dur]));
+const base = schedule(baseDurs);
+let slipId = 'B';
+let scn = null;
+let ganttView = 'base';
+const commitWeek = Math.ceil(base.finish) + BUFFER;
+const rackLive = (w, F) => Math.min(RACKS, RACKS_PER_WEEK * Math.max(0, w - Math.ceil(F - EPS) + 1));
+const onTrack = F => rackLive(commitWeek, F);
+const blocker = [...base.rows.filter(r => r.tf < EPS)].sort((a, b) => b.dur - a.dur)[0];
+
+function setScenario(id){
+  slipId = id;
+  const d = {...baseDurs};
+  d[id] += SLIP;
+  scn = schedule(d);
+}
+setScenario(slipId);
+
+document.getElementById('kpi-racks').textContent = RACKS;
+document.getElementById('kpi-ontrack').textContent = onTrack(base.finish);
+document.getElementById('kpi-atrisk').textContent = RACKS - onTrack(base.finish);
+document.getElementById('kpi-blocker').textContent = blocker.name;
+document.getElementById('kpi-commit-wk').textContent = commitWeek;
+document.getElementById('legend-commit').textContent = commitWeek;
+document.getElementById('summary-note').textContent = 'Base plan: project finish at week ' + fmt(base.finish) + ', critical path ' + base.paths.join('; ') + '. Racks come live 16 per week from week ' + Math.ceil(base.finish) + '.';
+
+function renderGantt(){
+  const res = ganttView === 'base' ? base : scn;
+  const T = Math.ceil(Math.max(base.finish, scn.finish)) + 2;
+  const pct = x => (x / T * 100).toFixed(3) + '%';
+  let html = '<div class="gantt-inner"><div class="gantt-scale">' + Array.from({length: T}, (_, i) => '<span>' + (i + 1) + '</span>').join('') + '</div>';
+  res.rows.forEach(r => {
+    const color = r.tf < EPS ? 'var(--crit)' : r.tf < 1 ? 'var(--amber)' : 'var(--blue)';
+    const wk = 'W' + (Math.floor(r.es) + 1) + '–W' + Math.ceil(r.ef);
+    html += '<div class="gantt-row"><div class="gantt-label">' + r.id + ' · ' + r.name + ' (' + wk + ')</div><div class="gantt-track">'
+      + '<div class="gantt-float" style="left:' + pct(r.ef) + ';width:' + pct(r.lf - r.ef) + '"></div>'
+      + '<div class="gantt-bar" style="left:' + pct(r.es) + ';width:' + pct(r.dur) + ';background:' + color + '"></div>'
+      + '<i class="gantt-mark" style="left:' + pct(commitWeek) + '"></i></div></div>';
+  });
+  html += '</div>';
+  document.getElementById('gantt').innerHTML = html;
+  document.getElementById('view-base').setAttribute('aria-pressed', String(ganttView === 'base'));
+  document.getElementById('view-slip').setAttribute('aria-pressed', String(ganttView === 'slip'));
+  document.getElementById('view-slip').textContent = 'Scenario: ' + TASKS.find(t => t.id === slipId).name + ' +4 wks';
+}
+
+document.querySelector('#cpm-table tbody').innerHTML = base.rows.map(r =>
+  '<tr><td><strong>' + r.id + '</strong></td><td>' + r.name + '</td><td>' + r.owner + '</td><td>' + fmt(r.dur) + '</td><td>' + (r.preds.join(', ') || '—') + '</td><td>' + fmt(r.es) + '</td><td>' + fmt(r.ef) + '</td><td>' + fmt(r.ls) + '</td><td>' + fmt(r.lf) + '</td><td>' + fmt(r.tf) + '</td><td>' + critLabel(r.tf) + '</td></tr>'
+).join('');
+document.getElementById('cp-text').innerHTML = '<strong>Critical path (derived):</strong> ' + base.paths.join(' ; ') + '. Project finish week ' + fmt(base.finish) + '. Blocker owner: ' + blocker.owner + '.';
+
 const gatesTb = document.querySelector('#gates-table tbody');
 [
   {g:'G1: Orders placed',       o:'Procurement',      c:'All component POs confirmed',           s:'green'},
@@ -169,7 +313,6 @@ const gatesTb = document.querySelector('#gates-table tbody');
   gatesTb.innerHTML += '<tr><td><strong>'+r.g+'</strong></td><td>'+r.o+'</td><td>'+r.c+'</td><td><span class="status '+r.s+'"></span>'+icon+'</td></tr>';
 });
 
-// ── Risk table ──────────────────────────────────────────────────
 const riskTb = document.querySelector('#risk-table tbody');
 [
   {r:'GPU allocation cut by supplier',     i:'Critical', o:'Procurement',     m:'Qualify alternate; pull-in from other program',    s:'red'},
@@ -181,28 +324,56 @@ const riskTb = document.querySelector('#risk-table tbody');
   riskTb.innerHTML += '<tr><td>'+r.r+'</td><td><strong>'+r.i+'</strong></td><td>'+r.o+'</td><td>'+r.m+'</td><td><span class="status '+r.s+'"></span></td></tr>';
 });
 
-// ── Scenario chart ──────────────────────────────────────────────
-const weeks = Array.from({length:TOTAL_WEEKS+4}, (_,i) => 'W'+(i+1));
-const baseCapacity = weeks.map((_,i) => i < 27 ? 0 : Math.min(48, (i-26)*16));
-const slipCapacity = weeks.map((_,i) => i < 31 ? 0 : Math.min(48, (i-30)*16));
-const target = weeks.map(() => 48);
+const slipSel = document.getElementById('slip-task');
+slipSel.innerHTML = TASKS.map(t => '<option value="' + t.id + '"' + (t.id === slipId ? ' selected' : '') + '>' + t.id + ' · ' + t.name + ' (' + fmt(t.dur) + ' wks)</option>').join('');
 
-new Chart(document.getElementById('scenario-chart'), {
-  type: 'line',
-  data: {
-    labels: weeks,
-    datasets: [
-      {label:'Target (48 racks)', data:target, borderColor:'#94a3b8', borderDash:[5,3], borderWidth:1.5, pointRadius:0},
-      {label:'Base plan', data:baseCapacity, borderColor:'var(--green)', borderWidth:2.5, pointRadius:0, fill:{target:'origin',above:'rgba(22,163,74,.08)'}},
-      {label:'GPU slip +4 weeks', data:slipCapacity, borderColor:'var(--red)', borderWidth:2.5, borderDash:[6,3], pointRadius:0, fill:{target:'origin',above:'rgba(220,38,38,.06)'}},
-    ]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom',labels:{font:{size:12}}},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y+' racks'}}},
-    scales:{y:{beginAtZero:true,max:55,title:{display:true,text:'Racks live',font:{weight:'bold'}},grid:{color:'#f1f5f9'}},x:{grid:{display:false}}}
-  }
+let scnChart = null;
+function renderScenario(){
+  const name = TASKS.find(t => t.id === slipId).name;
+  const newly = scn.rows.filter(r => r.tf < EPS && !(base.byId[r.id].tf < EPS)).map(r => r.id + ' ' + r.name);
+  const dropped = base.rows.filter(r => r.tf < EPS && !(scn.byId[r.id].tf < EPS)).map(r => r.id + ' ' + r.name);
+  const rows = [
+    ['Project finish (week)', 'Week ' + fmt(base.finish), 'Week ' + fmt(scn.finish) + ' (+' + fmt(scn.finish - base.finish) + ' wks)'],
+    ['Critical path', base.paths.join(' ; '), scn.paths.join(' ; ')],
+    ['Total float of ' + name + ' (wks)', fmt(base.byId[slipId].tf), fmt(scn.byId[slipId].tf) + (scn.byId[slipId].tf < EPS ? ' (critical)' : '')],
+    ['Newly critical', '—', newly.join(', ') || 'none'],
+    ['No longer critical', '—', dropped.join(', ') || 'none'],
+    ['Racks live at W' + commitWeek + ' commit', onTrack(base.finish) + ' of ' + RACKS, onTrack(scn.finish) + ' of ' + RACKS],
+    ['Racks at risk', String(RACKS - onTrack(base.finish)), String(RACKS - onTrack(scn.finish))],
+  ];
+  document.querySelector('#scn-table tbody').innerHTML = rows.map(r => '<tr><td><strong>' + r[0] + '</strong></td><td>' + r[1] + '</td><td>' + r[2] + '</td></tr>').join('');
+
+  const T = Math.ceil(scn.finish) + 4;
+  const weeks = Array.from({length: T}, (_, i) => 'W' + (i + 1));
+  if(scnChart) scnChart.destroy();
+  scnChart = new Chart(document.getElementById('scenario-chart'), {
+    type: 'line',
+    data: {
+      labels: weeks,
+      datasets: [
+        {label:'Target (48 racks)', data: weeks.map(() => RACKS), borderColor:'#94a3b8', borderDash:[5,3], borderWidth:1.5, pointRadius:0},
+        {label:'Base plan', data: weeks.map((_, i) => rackLive(i + 1, base.finish)), borderColor:'#16a34a', borderWidth:2.5, pointRadius:0, fill:{target:'origin',above:'rgba(22,163,74,.08)'}},
+        {label:'Scenario: ' + name + ' +4 wks', data: weeks.map((_, i) => rackLive(i + 1, scn.finish)), borderColor:'#dc2626', borderWidth:2.5, borderDash:[6,3], pointRadius:0, fill:{target:'origin',above:'rgba(220,38,38,.06)'}},
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:12}}},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y+' racks'}}},
+      scales:{y:{beginAtZero:true,max:55,title:{display:true,text:'Racks live',font:{weight:'bold'}},grid:{color:'#f1f5f9'}},x:{grid:{display:false}}}
+    }
+  });
+}
+
+slipSel.addEventListener('change', function(){
+  setScenario(slipSel.value);
+  renderGantt();
+  renderScenario();
 });
+document.getElementById('view-base').addEventListener('click', function(){ ganttView = 'base'; renderGantt(); });
+document.getElementById('view-slip').addEventListener('click', function(){ ganttView = 'slip'; renderGantt(); });
+
+renderGantt();
+renderScenario();
 })();
 </script>
 </body>

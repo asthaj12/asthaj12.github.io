@@ -38,7 +38,9 @@ td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--t2)}tr:hover
 .status{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.status.green{background:var(--green)}.status.amber{background:var(--amber)}.status.red{background:var(--red)}
 .chart-wrap{position:relative;height:300px;margin:8px 0}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center}.kpi .val{font-size:22px;font-weight:800;color:var(--t1)}.kpi .lab{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
-.waterfall{display:flex;align-items:flex-end;gap:3px;height:200px;margin:12px 0}.wf-bar{flex:1;border-radius:4px 4px 0 0;position:relative;min-width:30px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:10px;font-weight:700;color:#fff;padding-bottom:4px}.wf-label{position:absolute;bottom:-20px;font-size:10px;color:var(--t3);white-space:nowrap;transform:rotate(-30deg);transform-origin:top left}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:var(--t1);background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.limits li{font-size:13px}
+.sub{font-size:11px;color:var(--t3)}.pos{color:var(--green);font-weight:700}.neg{color:var(--red);font-weight:700}
 footer{max-width:1100px;margin:0 auto;padding:16px 24px 40px;font-size:12px;color:var(--t3);text-align:center}footer a{color:var(--blue);overflow-wrap:anywhere}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d39a28;outline-offset:3px;border-radius:4px}
 @media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr)}.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -92,7 +94,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 
   <div class="card full">
     <h2>Shortage Waterfall — What Limits Completed Systems?</h2>
-    <p>Starting from total demand, each component's constraint chips away at buildable servers. The first bar to hit zero is the binding constraint.</p>
+    <p>Each component caps buildable servers at ⌊committed ÷ per-server quantity⌋. Buildable is the minimum across parts, capped at demand. The part with the lowest cap is the binding constraint.</p>
     <div class="chart-wrap"><canvas id="waterfall-chart"></canvas></div>
   </div>
 
@@ -104,17 +106,43 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 
   <div class="card">
     <h2>Alternate-Part Scenario</h2>
-    <p>What if we qualify a second supplier for the binding component?</p>
+    <p>Each scenario changes one part's commit and recomputes the minimum across all parts. Relieving a non-binding part leaves buildable unchanged.</p>
     <table id="alt-table">
-      <thead><tr><th>Scenario</th><th>Buildable</th><th>Attainment</th><th>Lead time</th></tr></thead>
+      <thead><tr><th>Scenario</th><th>Buildable</th><th>Binding → next constraint</th><th>Attainment</th></tr></thead>
       <tbody></tbody>
     </table>
-    <h3>Newsvendor Sizing</h3>
-    <p>Given overage cost (excess component inventory carrying) and underage cost (missed server builds → lost revenue), the critical ratio determines the optimal commit level for the long-lead component.</p>
+  </div>
+
+  <div class="card full">
+    <h2>Newsvendor Commit Sizing by Component</h2>
+    <p>Underage cost <strong>Cu</strong> is margin lost per unit of component short. Overage cost <strong>Co</strong> is carrying cost per unit left over. The critical ratio sets the quantile of each component's demand distribution, and that quantile is the commit to place before server demand is known.</p>
     <table id="newsvendor-table">
-      <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+      <thead><tr><th>Component</th><th>μ (units)</th><th>σ (units)</th><th>Cu</th><th>Co</th><th>CR</th><th>z = Φ⁻¹(CR)</th><th>Q* (commit)</th><th>Committed</th><th>Action</th></tr></thead>
       <tbody></tbody>
     </table>
+  </div>
+
+  <div class="card full">
+    <h2>Methodology: Formulas and Limits</h2>
+    <div class="formula">Requirement           R_i = q_i × D,          D = 5,000 servers (mean demand)
+Attainment            A_i = C_i ÷ R_i
+Per-part buildable    B_i = ⌊C_i ÷ q_i⌋
+Supply limit          S = min_i B_i,          binding part = argmin_i B_i
+Buildable             Buildable = min(D, S),  commit attainment = Buildable ÷ D
+Alternate part        change one C_k, recompute S with the same min rule
+                      non-binding part k: S and Buildable do not move (+0)
+Next constraint       min over the other parts once the binding part is relieved</div>
+    <div class="formula">Demand for parts       μ_i = q_i × 5,000,       σ_i = q_i × 750  (server demand σ = 750)
+Critical ratio        CR_i = Cu_i ÷ (Cu_i + Co_i)
+Commit quantile       Q_i* = μ_i + σ_i · Φ⁻¹(CR_i)
+Linked scenario       committing the GPU to Q* feeds back into the supply limit above</div>
+    <p id="nv-example" style="font-size:13px;color:var(--t2);margin-top:8px"></p>
+    <ul class="limits">
+      <li>Single-level BOM with no yield, lead-time offsets or multi-level assemblies. Timing is shown as a schedule, not solved.</li>
+      <li>All parts scale with one server-demand driver. Their shortfalls are perfectly correlated, so each Q* is sized on its own marginal and not jointly.</li>
+      <li>Cu and Co are synthetic per-unit penalties. They are not quoted costs.</li>
+      <li>Attainment uses mean demand. The newsvendor uses the demand distribution.</li>
+    </ul>
   </div>
 
   <div class="card full">
@@ -136,51 +164,71 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 
 <script>
 (function(){
-// ── Synthetic BOM data ──────────────────────────────────────────
-const DEMAND = 5000; // servers demanded
+const DEMAND = 5000;
+const DEMAND_SIGMA = 750;
 const BOM = [
-  {name:'GPU accelerator',       per:8, lead:24, suppliers:['GPU vendor'],        committed:36000, note:'Long-lead, single source'},
-  {name:'Server CPU',  per:2, lead:12, suppliers:['CPU vendor'],           committed:11000, note:'Dual-source possible'},
-  {name:'HBM3E Memory',    per:8, lead:18, suppliers:['Memory vendor A','Memory vendor B'], committed:42000, note:'Tight allocation'},
-  {name:'NVMe SSD 4TB',    per:4, lead:8,  suppliers:['Storage vendor A','Storage vendor B'],   committed:22000, note:'Available'},
-  {name:'NIC 400GbE',      per:2, lead:10, suppliers:['Networking vendor'],     committed:10500, note:'Moderate lead'},
-  {name:'Power Supply 3kW',per:2, lead:6,  suppliers:['PSU vendor A','PSU vendor B'],     committed:11000, note:'Available'},
-  {name:'Chassis/Backplane',per:1,lead:10, suppliers:['ODM'],        committed:5200,  note:'ODM assembled'},
+  {name:'GPU accelerator',       per:8, lead:24, suppliers:['GPU vendor'],        committed:36000, note:'Long-lead, single source', Cu:850, Co:120},
+  {name:'Server CPU',  per:2, lead:12, suppliers:['CPU vendor'],           committed:11000, note:'Dual-source possible', Cu:300, Co:90},
+  {name:'HBM3E Memory',    per:8, lead:18, suppliers:['Memory vendor A','Memory vendor B'], committed:42000, note:'Tight allocation', Cu:420, Co:300},
+  {name:'NVMe SSD 4TB',    per:4, lead:8,  suppliers:['Storage vendor A','Storage vendor B'],   committed:22000, note:'Available', Cu:60, Co:40},
+  {name:'NIC 400GbE',      per:2, lead:10, suppliers:['Networking vendor'],     committed:10500, note:'Moderate lead', Cu:150, Co:60},
+  {name:'Power Supply 3kW',per:2, lead:6,  suppliers:['PSU vendor A','PSU vendor B'],     committed:11000, note:'Available', Cu:120, Co:50},
+  {name:'Chassis/Backplane',per:1,lead:10, suppliers:['ODM'],        committed:5200,  note:'ODM assembled', Cu:500, Co:150},
 ];
+const GPU = BOM[0].name;
+const HBM = BOM[2].name;
 
-// ── Compute requirements and gaps ───────────────────────────────
+function normInv(p){const a=[0,-3.969683028665376e1,2.209460984245205e2,-2.759285104469687e2,1.383577518672690e2,-3.066479806614716e1,2.506628277459239];const b=[0,-5.447609879822406e1,1.615858368580409e2,-1.556989798598866e2,6.680131188771972e1,-1.328068155288572e1];const c=[0,-7.784894002430293e-3,-3.223964580411365e-1,-2.400758277161838,-2.549732539343734,4.374664141464968,2.938163982698783];const d=[0,7.784695709041462e-3,3.224671290700398e-1,2.445134137142996,3.754408661907416];let q,r;if(p<.02425){q=Math.sqrt(-2*Math.log(p));return (((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}if(p<=.97575){q=p-.5;r=q*q;return (((((a[1]*r+a[2])*r+a[3])*r+a[4])*r+a[5])*r+a[6])*q/(((((b[1]*r+b[2])*r+b[3])*r+b[4])*r+b[5])*r+1)}q=Math.sqrt(-2*Math.log(1-p));return -(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}
+
+const S0 = Math.min(...BOM.map(c => Math.floor(c.committed / c.per)));
 const rows = BOM.map(c => {
   const required = c.per * DEMAND;
   const gap = required - c.committed;
   const buildable = Math.floor(c.committed / c.per);
   const attainment = (c.committed / required * 100).toFixed(1);
-  const status = gap <= 0 ? 'green' : gap < required * 0.15 ? 'amber' : 'red';
-  return {...c, required, gap, buildable, attainment, status};
+  const status = gap <= 0 ? 'green' : buildable === S0 && S0 < DEMAND ? 'red' : gap < required * 0.15 ? 'amber' : 'red';
+  const mu = required;
+  const sigma = c.per * DEMAND_SIGMA;
+  const CR = c.Cu / (c.Cu + c.Co);
+  const z = normInv(CR);
+  const Q = Math.round(mu + sigma * z);
+  return {...c, required, gap, buildable, attainment, status, mu, sigma, CR, z, Q, dQ: Q - c.committed};
 });
 
-const limiting = rows.reduce((a, b) => a.buildable < b.buildable ? a : b);
-const buildable = limiting.buildable;
-const overallAttainment = (buildable / DEMAND * 100).toFixed(1);
+function evaluate(commit){
+  const parts = BOM.map(c => ({name: c.name, b: Math.floor(commit[c.name] / c.per)}));
+  const minB = Math.min(...parts.map(p => p.b));
+  const binding = parts.filter(p => p.b === minB);
+  const others = parts.filter(p => p.b !== minB);
+  const nextB = Math.min(...others.map(p => p.b));
+  const nextNames = others.filter(p => p.b === nextB).map(p => p.name);
+  return {supply: minB, buildable: Math.min(DEMAND, minB), binding: binding.map(p => p.name), nextB, nextNames, attainment: Math.min(DEMAND, minB) / DEMAND * 100};
+}
 
-// ── KPIs ────────────────────────────────────────────────────────
+const base = Object.fromEntries(BOM.map(c => [c.name, c.committed]));
+const scenarios = [
+  {s:'Current (single-source GPU)', lead:BOM[0].lead, commit:{...base}},
+  {s:'Add 2nd GPU source, +4,000 units', lead:20, commit:{...base, [GPU]: base[GPU] + 4000}},
+  {s:'Commit GPU to newsvendor Q* (' + rows[0].Q.toLocaleString() + ' units)', lead:BOM[0].lead, commit:{...base, [GPU]: rows[0].Q}},
+  {s:'Qualify alternate HBM3E, +6,000 units', lead:BOM[2].lead, commit:{...base, [HBM]: base[HBM] + 6000}},
+];
+const current = evaluate(scenarios[0].commit);
+
 document.getElementById('kpi-servers').textContent = DEMAND.toLocaleString();
-document.getElementById('kpi-buildable').textContent = buildable.toLocaleString();
-document.getElementById('kpi-limiting').textContent = limiting.name;
-document.getElementById('kpi-attainment').textContent = overallAttainment + '%';
+document.getElementById('kpi-buildable').textContent = current.buildable.toLocaleString();
+document.getElementById('kpi-limiting').textContent = current.binding.join(' / ');
+document.getElementById('kpi-attainment').textContent = current.attainment.toFixed(1) + '%';
 
-// ── BOM table ───────────────────────────────────────────────────
 const bomTb = document.querySelector('#bom-table tbody');
 BOM.forEach(c => {
   bomTb.innerHTML += '<tr><td><strong>'+c.name+'</strong><br><span style="font-size:11px;color:#64748b">'+c.note+'</span></td><td>'+c.per+'</td><td>'+c.lead+'</td><td>'+c.suppliers.join(', ')+'</td></tr>';
 });
 
-// ── Commit table ────────────────────────────────────────────────
 const commitTb = document.querySelector('#commit-table tbody');
 rows.forEach(r => {
   commitTb.innerHTML += '<tr><td>'+r.name+'</td><td>'+r.required.toLocaleString()+'</td><td>'+r.committed.toLocaleString()+'</td><td>'+(r.gap > 0 ? '<span style="color:#dc2626;font-weight:700">−'+r.gap.toLocaleString()+'</span>' : '<span style="color:#16a34a">+'+Math.abs(r.gap).toLocaleString()+'</span>')+'</td><td><span class="status '+r.status+'"></span>'+r.attainment+'%</td></tr>';
 });
 
-// ── Waterfall chart ─────────────────────────────────────────────
 const sorted = [...rows].sort((a,b) => a.buildable - b.buildable);
 new Chart(document.getElementById('waterfall-chart'), {
   type: 'bar',
@@ -191,7 +239,7 @@ new Chart(document.getElementById('waterfall-chart'), {
       data: [DEMAND, ...sorted.map(r => r.buildable)],
       backgroundColor: [
         '#1d5fd1',
-        ...sorted.map(r => r.buildable === buildable ? '#dc2626' : r.status === 'amber' ? '#d97706' : '#16a34a')
+        ...sorted.map(r => current.binding.includes(r.name) ? '#dc2626' : r.status === 'amber' ? '#d97706' : '#16a34a')
       ],
       borderRadius: 6,
     }]
@@ -206,7 +254,6 @@ new Chart(document.getElementById('waterfall-chart'), {
   }
 });
 
-// ── Timeline chart ──────────────────────────────────────────────
 const weeks = Array.from({length:26}, (_,i) => 'W'+(i+1));
 const gpuDelivery = weeks.map((_,i) => Math.min(36000, Math.floor(36000 * Math.min(1, (i-8)/16 * 1.1))));
 const gpuRequired = weeks.map((_,i) => Math.floor(40000 * (i+1)/26));
@@ -226,36 +273,25 @@ new Chart(document.getElementById('timeline-chart'), {
   }
 });
 
-// ── Alt-part scenario table ─────────────────────────────────────
 const altTb = document.querySelector('#alt-table tbody');
-[
-  {s:'Current (single source)',b:buildable,a:overallAttainment+'%',l:'24 weeks'},
-  {s:'Add 2nd GPU supplier (+4,000 units)',b:Math.min(DEMAND, buildable+500),a:Math.min(100,(buildable+500)/DEMAND*100).toFixed(1)+'%',l:'20 weeks'},
-  {s:'Qualify alternate HBM3E (+6,000)',b:Math.min(DEMAND, buildable+250),a:Math.min(100,(buildable+250)/DEMAND*100).toFixed(1)+'%',l:'18 weeks'},
-].forEach(r => {
-  altTb.innerHTML += '<tr><td>'+r.s+'</td><td><strong>'+r.b.toLocaleString()+'</strong></td><td>'+r.a+'</td><td>'+r.l+'</td></tr>';
+scenarios.forEach(sc => {
+  const e = evaluate(sc.commit);
+  const delta = e.buildable - current.buildable;
+  const deltaTxt = delta === 0 ? '+0' : (delta > 0 ? '+' : '') + delta.toLocaleString();
+  const constraint = e.supply >= DEMAND
+    ? 'None. Demand covered; lowest part cap '+e.supply.toLocaleString()+' ('+e.binding.join(' / ')+')'
+    : e.binding.join(' / ')+' → '+e.nextNames.join(' / ')+' ('+e.nextB.toLocaleString()+')';
+  altTb.innerHTML += '<tr><td>'+sc.s+'<br><span class="sub">lead '+sc.lead+' wks</span></td><td><strong>'+e.buildable.toLocaleString()+'</strong> <span class="'+(delta>0?'pos':'')+'">'+deltaTxt+'</span></td><td>'+constraint+'</td><td>'+e.attainment.toFixed(1)+'%</td></tr>';
 });
 
-// ── Newsvendor table ────────────────────────────────────────────
-const Cu = 850; // underage: lost server revenue per GPU not committed
-const Co = 120; // overage: carrying cost per excess GPU
-const CR = Cu / (Cu + Co);
-const mean = 40000; const std = 6000;
-// NORM.INV approximation
-function normInv(p,mu,sig){const a=[0,-3.969683e1,2.209461e2,-2.759285e2,1.383577e2,-3.066479e1,6.680131];const b=[0,-5.447609e1,1.615858e2,-1.556989e2,6.680131e1,-1.328068e1];const c=[0,-7.784894e-3,-3.223964e-1,-2.400758,-.3297202,-7.784894e-3];const d=[0,7.784695e-1,3.224671,2.445134,0];let q,r;if(p<.02425){q=Math.sqrt(-2*Math.log(p));r=(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}else if(p<=.97575){q=p-.5;r=q*q;r=(((((a[1]*r+a[2])*r+a[3])*r+a[4])*r+a[5])*r+a[6])*q/(((((b[1]*r+b[2])*r+b[3])*r+b[4])*r+b[5])*r+1)}else{q=Math.sqrt(-2*Math.log(1-p));r=-(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1)}return mu+sig*r;}
-const optimalCommit = Math.round(normInv(CR, mean, std));
 const nvTb = document.querySelector('#newsvendor-table tbody');
-[
-  {p:'Underage cost (Cu)',v:'$'+Cu+' / GPU — lost server revenue if short'},
-  {p:'Overage cost (Co)',v:'$'+Co+' / GPU — carrying cost if excess'},
-  {p:'Critical ratio',v:(CR*100).toFixed(1)+'% — commit enough to cover this % of demand outcomes'},
-  {p:'Demand mean',v:mean.toLocaleString()+' GPUs'},
-  {p:'Demand std dev',v:std.toLocaleString()+' GPUs'},
-  {p:'Optimal GPU commit',v:'<strong>'+optimalCommit.toLocaleString()+'</strong> GPUs (NORM.INV at CR)'},
-  {p:'vs. mean',v:'+'+(optimalCommit-mean).toLocaleString()+' above average — because being short costs '+Math.round(Cu/Co)+'× more than being long'},
-].forEach(r => {
-  nvTb.innerHTML += '<tr><td>'+r.p+'</td><td>'+r.v+'</td></tr>';
+rows.forEach(r => {
+  const action = r.dQ > 0 ? '<span class="neg">Raise commit by '+r.dQ.toLocaleString()+'</span>' : '<span class="pos">Covered, buffer '+(-r.dQ).toLocaleString()+'</span>';
+  nvTb.innerHTML += '<tr><td><strong>'+r.name+'</strong></td><td>'+r.mu.toLocaleString()+'</td><td>'+r.sigma.toLocaleString()+'</td><td>$'+r.Cu+'</td><td>$'+r.Co+'</td><td>'+(r.CR*100).toFixed(1)+'%</td><td>'+r.z.toFixed(3)+'</td><td><strong>'+r.Q.toLocaleString()+'</strong></td><td>'+r.committed.toLocaleString()+'</td><td>'+action+'</td></tr>';
 });
+
+const g = rows[0];
+document.getElementById('nv-example').textContent = 'Worked example, GPU: μ = 8 × 5,000 = '+g.mu.toLocaleString()+', σ = 8 × 750 = '+g.sigma.toLocaleString()+', CR = '+g.Cu+' ÷ ('+g.Cu+' + '+g.Co+') = '+(g.CR*100).toFixed(1)+'%, z = '+g.z.toFixed(3)+', Q* = '+g.mu.toLocaleString()+' + '+g.z.toFixed(3)+' × '+g.sigma.toLocaleString()+' = '+g.Q.toLocaleString()+' GPUs, which is '+g.dQ.toLocaleString()+' above the committed '+g.committed.toLocaleString()+'.';
 })();
 </script>
 </body>

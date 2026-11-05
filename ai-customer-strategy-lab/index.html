@@ -722,7 +722,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dd.open){dd
       <div class="slider-group"><div class="slider-label"><span>Tenant count</span><span class="slider-val" id="v-cn">200</span></div><input type="range" id="s-cn" data-k="cn" min="10" max="1000" step="10" value="200" aria-label="Number of tenants"><div class="slider-hint">Pooling works on the first N tenants in a fixed random draw.</div></div>
       <div class="slider-group"><div class="slider-label"><span>Burstiness (lognormal σ)</span><span class="slider-val" id="v-csigma">0.9</span></div><input type="range" id="s-csigma" data-k="csigma" min="0.2" max="1.5" step="0.1" value="0.9" aria-label="Burstiness sigma"><div class="slider-hint">Higher means rarer, larger bursts within the active hours.</div></div>
       <div class="slider-group"><div class="slider-label"><span>Activity: share of hours active</span><span class="slider-val" id="v-cq">15%</span></div><input type="range" id="s-cq" data-k="cq" min="5" max="50" step="1" value="15" aria-label="Share of hours active percent"><div class="slider-hint">Median active model is idle 96% of hours [V, arXiv 2605.19481].</div></div>
-      <div class="slider-group"><div class="slider-label"><span>Correlation across tenants</span><span class="slider-val" id="v-crho">30%</span></div><input type="range" id="s-crho" data-k="crho" min="0" max="100" step="5" value="30" aria-label="Correlation across tenants percent"><div class="slider-hint">Shared calendar shocks such as tax, payroll and month-end [A]. Measure before sizing.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Pairwise correlation across tenants (ρ)</span><span class="slider-val" id="v-crho">30%</span></div><input type="range" id="s-crho" data-k="crho" min="0" max="100" step="5" value="30" aria-label="Pairwise correlation across tenants percent"><div class="slider-hint">Pairwise correlation of tenants' latent activity scores, from a shared hourly shock such as tax, payroll and month-end [A]. Measure before sizing.</div></div>
 
       <div class="grp-h">Tiers and sizing</div>
       <div class="slider-group"><div class="slider-label"><span>Committed share of tenants (dedicated)</span><span class="slider-val" id="v-ccom">10%</span></div><input type="range" id="s-ccom" data-k="ccom" min="0" max="30" step="1" value="10" aria-label="Committed share of tenants percent"><div class="slider-hint">Largest tenants get reserved throughput.</div></div>
@@ -813,7 +813,8 @@ Churn (monthly)    m = min(0.90, m0 × (1 + 0.03 × max(0, TTFW − 3)))</div>
     <h4>Capacity and demand (Tab 5)</h4>
     <div class="formula">Tenant scale       s_i = exp(0.5·g_i − 0.125),  g_i ~ N(0,1)            (mean 1)
 Daily shape        d_t = 1 + 0.6·cos(2π·(hour_t − 14)/24)                  (mean 1 per day)
-Active hour        x < min(0.95, q × d_t), x = common draw w_t with prob. ρ, else own draw u_it
+Latent score       a_it = √ρ · c_t + √(1 − ρ) · e_it,  c_t, e_it ~ N(0,1)     (corr(a_i, a_j) = ρ)
+Active hour        a_it < Φ⁻¹(min(0.95, q × d_t))                       (P(active) = min(0.95, q × d_t))
 Raw demand         X_it = s_i × exp(σ·z_it − σ²/2) ÷ q  when active, else 0
 Capped demand      min(X_it, cap × s_i)
 Committed set      largest round(c × N) tenants by s_i  (dedicated)
@@ -826,7 +827,7 @@ Single pool        Q_p(Σ_i X_i)
 Tiered capacity    C_shared + C_prov
 Peak-to-mean       Q_0.95(series) ÷ mean(series)
 Tier-1 light pools (tiered capacity × 2,000 TPM) ÷ 2,000,000 TPM                 2K TPM per average tenant [A]</div>
-    <p>Why pooling works and where it stops. Independent bursts average out, so the pooled peak-to-mean falls toward 1. Correlation (ρ) keeps shared shocks in the sum, so the pool floors above 1. Async smoothing assumes 80% of the flexible load can move into troughs. Real async tiers have longer latency and higher throttling [V, async-tier docs], so 80% is an upper-bound assumption.</p>
+    <p>Why pooling works and where it stops. Independent bursts average out, so the pooled peak-to-mean falls toward 1. Correlation (ρ) keeps shared shocks in the sum, so the pool floors above 1. ρ is the pairwise correlation of the latent activity scores in a one-factor model: a shared hourly shock with weight √ρ plus an own shock with weight √(1 − ρ). Activity is a threshold on that score, so the correlation of the 0/1 activity flags is smaller than ρ, and the threshold keeps each tenant's activity share at min(0.95, q × d_t). Async smoothing assumes 80% of the flexible load can move into troughs. Real async tiers have longer latency and higher throttling [V, async-tier docs], so 80% is an upper-bound assumption.</p>
 
     <h4>Sensitivity, constrained search and brief logic</h4>
     <p>Sensitivity moves each lever by ±20% alone and recomputes NPV(36). The constrained search tries channel weights in 5% steps and keeps the mix with the highest NPV(36) that satisfies: self-serve share at least 20%, partner share between 20% and 50%, marketplace share at most 30%, and credits at most 25% of the budget. Brief logic is rule-based. If payback is 12 months or less and LTV/CAC is 3x or more, the recommendation is to scale. If activation is under 25%, fix activation first. If payback is over 12 months, shift the mix and cap credits. Otherwise, fund with checkpoints. Flip conditions are the activation and credit-to-paid values at which payback first reaches 12 months, found by scanning each in 1-point steps.</p>
@@ -840,7 +841,7 @@ Tier-1 light pools (tiered capacity × 2,000 TPM) ÷ 2,000,000 TPM              
       <li>Discount rate 12% a year for NPV [A].</li>
       <li>Segment firm counts, spend, readiness and reachability are synthetic [A]. Chamber, Census and survey figures are cited in Sources [V or S].</li>
       <li>Task mix and routing shares are illustrative [A]. Dedicated capacity is sized at the same percentile as shared capacity [A].</li>
-      <li>Tenant correlation is an assumption. Measure it on pilot logs before sizing a pool [A].</li>
+      <li>Tenant correlation ρ is an assumption; it sets the pairwise correlation of latent activity scores (one-factor model). Measure it on pilot logs before sizing a pool [A].</li>
     </ul>
 
     <h4>Limits</h4>
@@ -916,24 +917,42 @@ function gauss(r) {
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 }
 
+function normInv(p) {
+  const a = [0, -3.969683028665376e1, 2.209460984245205e2, -2.759285104469687e2, 1.383577518672690e2, -3.066479806614716e1, 2.506628277459239];
+  const b = [0, -5.447609879822406e1, 1.615858368580409e2, -1.556989798598866e2, 6.680131188771972e1, -1.328068155288572e1];
+  const c = [0, -7.784894002430293e-3, -3.223964580411365e-1, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783];
+  const d = [0, 7.784695709041462e-3, 3.224671290700398e-1, 2.445134137142996, 3.754408661907416];
+  let q;
+  let r;
+  if (p < 0.02425) {
+    q = Math.sqrt(-2 * Math.log(p));
+    return (((((c[1] * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) * q + c[6]) / ((((d[1] * q + d[2]) * q + d[3]) * q + d[4]) * q + 1);
+  }
+  if (p <= 0.97575) {
+    q = p - 0.5;
+    r = q * q;
+    return (((((a[1] * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * r + a[6]) * q / (((((b[1] * r + b[2]) * r + b[3]) * r + b[4]) * r + b[5]) * r + 1);
+  }
+  q = Math.sqrt(-2 * Math.log(1 - p));
+  return -(((((c[1] * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) * q + c[6]) / ((((d[1] * q + d[2]) * q + d[3]) * q + d[4]) * q + 1);
+}
+
 function buildRandomness(seed) {
   const r = mulberry32(seed);
   const n = MAX_TENANTS * HOURS;
-  const uSel = new Float32Array(n);
-  const uAct = new Float32Array(n);
+  const eAct = new Float32Array(n);
   const nB = new Float32Array(n);
   for (let k = 0; k < n; k++) {
-    uSel[k] = r();
-    uAct[k] = r();
+    eAct[k] = gauss(r);
     nB[k] = gauss(r);
   }
   const g = new Float32Array(MAX_TENANTS);
   for (let i = 0; i < MAX_TENANTS; i++) g[i] = gauss(r);
-  const w = new Float32Array(HOURS);
-  for (let t = 0; t < HOURS; t++) w[t] = r();
+  const cAct = new Float32Array(HOURS);
+  for (let t = 0; t < HOURS; t++) cAct[t] = gauss(r);
   const day = new Float64Array(HOURS);
   for (let t = 0; t < HOURS; t++) day[t] = 1 + 0.6 * Math.cos((2 * Math.PI * ((t % 24) - 14)) / 24);
-  return { uSel, uAct, nB, g, w, day };
+  return { eAct, nB, g, cAct, day };
 }
 
 function quantile(arr, pct) {
@@ -1022,6 +1041,10 @@ function buildTenants(R, p) {
   const scale = new Float64Array(MAX_TENANTS);
   const rawBy = new Float64Array(MAX_TENANTS);
   const capBy = new Float64Array(MAX_TENANTS);
+  const thr = new Float64Array(HOURS);
+  for (let t = 0; t < HOURS; t++) thr[t] = normInv(Math.min(0.95, p.q * R.day[t]));
+  const sRho = Math.sqrt(p.rho);
+  const sIdio = Math.sqrt(1 - p.rho);
   let indSum = 0;
   for (let i = 0; i < MAX_TENANTS; i++) {
     const s = Math.exp(0.5 * R.g[i] - 0.125);
@@ -1030,8 +1053,8 @@ function buildTenants(R, p) {
     let cs = 0;
     for (let t = 0; t < HOURS; t++) {
       const k = i * HOURS + t;
-      const x = R.uSel[k] < p.rho ? R.w[t] : R.uAct[k];
-      const act = x < Math.min(0.95, p.q * R.day[t]);
+      const latent = sRho * R.cAct[t] + sIdio * R.eAct[k];
+      const act = latent < thr[t];
       const raw = act ? (s * Math.exp(p.sigma * R.nB[k] - 0.5 * p.sigma * p.sigma)) / p.q : 0;
       const capped = Math.min(raw, p.cap * s);
       X[k] = capped;
