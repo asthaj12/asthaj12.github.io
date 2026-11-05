@@ -113,11 +113,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
     <table>
       <thead><tr><th>This model</th><th>Real infrastructure role</th><th>Astha's proven experience</th></tr></thead>
       <tbody>
-        <tr><td>Critical path through deployment phases</td><td>Oracle/Google/Amazon: rack landing critical path</td><td>Logitech: NPI phase gates through launch with ODMs, factories and regional GTM</td></tr>
-        <tr><td>Phase gate checklist with named owners</td><td>Each deployment milestone has an accountable owner</td><td>Logitech: launch readiness gates — material, capacity, allocation, product transition</td></tr>
-        <tr><td>Risk register with closure dates</td><td>Track and close deployment risks before capacity-ready date</td><td>Cummins: supplier risk framework — daily risk scoring, physical bottleneck diagnosis</td></tr>
-        <tr><td>Scenario-based recovery plan</td><td>"If GPU supply slips 4 weeks, what's the new capacity-ready date?"</td><td>Cummins: recovery cut from 16 to 6 weeks by diagnosing bottleneck before escalating</td></tr>
-        <tr><td>Dependency sequencing</td><td>Components → assembly → rack → power → network → burn-in → live</td><td>Shopify: peak capacity triggers across 85 warehouses with pre-defined escalation</td></tr>
+        <tr><td>Critical path through deployment phases</td><td>Hyperscale cloud providers: rack landing critical path</td><td>Consumer hardware: NPI phase gates through launch with ODMs, factories and regional GTM</td></tr>
+        <tr><td>Phase gate checklist with named owners</td><td>Each deployment milestone has an accountable owner</td><td>Consumer hardware: launch readiness gates — material, capacity, allocation, product transition</td></tr>
+        <tr><td>Risk register with closure dates</td><td>Track and close deployment risks before capacity-ready date</td><td>Engine manufacturer: supplier risk framework — daily risk scoring, physical bottleneck diagnosis</td></tr>
+        <tr><td>Scenario-based recovery plan</td><td>"If GPU supply slips 4 weeks, what's the new capacity-ready date?"</td><td>Engine manufacturer: recovery cut from 16 to 6 weeks by diagnosing bottleneck before escalating</td></tr>
+        <tr><td>Dependency sequencing</td><td>Components → assembly → rack → power → network → burn-in → live</td><td>E-commerce logistics: peak capacity triggers across 85 warehouses with pre-defined escalation</td></tr>
       </tbody>
     </table>
   </div>
@@ -131,10 +131,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 const TOTAL_WEEKS = 30;
 const phases = [
   {name:'Component orders',       start:0,  dur:2,  critical:true,  owner:'Procurement'},
-  {name:'GPU manufacturing',      start:2,  dur:12, critical:true,  owner:'NVIDIA / ODM'},
-  {name:'CPU + memory delivery',  start:2,  dur:8,  critical:false, owner:'AMD / SK Hynix'},
-  {name:'Storage + NIC delivery', start:2,  dur:6,  critical:false, owner:'Samsung / Mellanox'},
-  {name:'Server assembly (ODM)',  start:14, dur:4,  critical:true,  owner:'Quanta / Foxconn'},
+  {name:'GPU manufacturing',      start:2,  dur:12, critical:true,  owner:'GPU vendor / ODM'},
+  {name:'CPU + memory delivery',  start:2,  dur:8,  critical:false, owner:'CPU vendor / memory vendor'},
+  {name:'Storage + NIC delivery', start:2,  dur:6,  critical:false, owner:'Memory vendor / networking vendor'},
+  {name:'Server assembly (ODM)',  start:14, dur:4,  critical:true,  owner:'ODM partners'},
   {name:'Shipping + customs',     start:18, dur:2,  critical:true,  owner:'Logistics'},
   {name:'Rack landing',           start:20, dur:2,  critical:true,  owner:'DC Ops'},
   {name:'Power + cooling hookup', start:22, dur:2,  critical:true,  owner:'Facilities'},

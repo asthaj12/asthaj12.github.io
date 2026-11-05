@@ -122,11 +122,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
     <table>
       <thead><tr><th>This model</th><th>Real infrastructure role</th><th>Astha's proven experience</th></tr></thead>
       <tbody>
-        <tr><td>Server BOM explosion</td><td>Oracle/Google: convert server demand into component POs</td><td>Logitech: BOM explosion for 400+ SKU hardware portfolio via Kinaxis MRP</td></tr>
-        <tr><td>Shortage waterfall</td><td>Identify which component limits total buildable capacity</td><td>Logitech: constrained allocation under 30% component shortage</td></tr>
-        <tr><td>Supplier commit attainment</td><td>Track supplier delivery vs. purchase order</td><td>Cummins: supplier capacity risk framework across 800+ suppliers</td></tr>
-        <tr><td>Alternate-part qualification</td><td>Second-source long-lead components to reduce single-supplier risk</td><td>Cummins: identified physical bottleneck before negotiating recovery</td></tr>
-        <tr><td>Newsvendor commit sizing</td><td>How much to commit on long-lead parts before demand is certain</td><td>Logitech: stochastic safety stock. Walmart: newsvendor on irreversible imports</td></tr>
+        <tr><td>Server BOM explosion</td><td>Hyperscale cloud providers: convert server demand into component POs</td><td>Consumer hardware: BOM explosion for 400+ SKU hardware portfolio via supply-planning MRP</td></tr>
+        <tr><td>Shortage waterfall</td><td>Identify which component limits total buildable capacity</td><td>Consumer hardware: constrained allocation under 30% component shortage</td></tr>
+        <tr><td>Supplier commit attainment</td><td>Track supplier delivery vs. purchase order</td><td>Engine manufacturer: supplier capacity risk framework across 800+ suppliers</td></tr>
+        <tr><td>Alternate-part qualification</td><td>Second-source long-lead components to reduce single-supplier risk</td><td>Engine manufacturer: identified physical bottleneck before negotiating recovery</td></tr>
+        <tr><td>Newsvendor commit sizing</td><td>How much to commit on long-lead parts before demand is certain</td><td>Consumer hardware: stochastic safety stock. Retailer: newsvendor on irreversible imports</td></tr>
       </tbody>
     </table>
   </div>
@@ -139,13 +139,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d3
 // ── Synthetic BOM data ──────────────────────────────────────────
 const DEMAND = 5000; // servers demanded
 const BOM = [
-  {name:'GPU (H100)',       per:8, lead:24, suppliers:['NVIDIA'],        committed:36000, note:'Long-lead, single source'},
-  {name:'CPU (EPYC 9004)',  per:2, lead:12, suppliers:['AMD'],           committed:11000, note:'Dual-source possible'},
-  {name:'HBM3E Memory',    per:8, lead:18, suppliers:['SK Hynix','Samsung'], committed:42000, note:'Tight allocation'},
-  {name:'NVMe SSD 4TB',    per:4, lead:8,  suppliers:['Samsung','Micron'],   committed:22000, note:'Available'},
-  {name:'NIC 400GbE',      per:2, lead:10, suppliers:['Mellanox/NVIDIA'],     committed:10500, note:'Moderate lead'},
-  {name:'Power Supply 3kW',per:2, lead:6,  suppliers:['Delta','Lite-On'],     committed:11000, note:'Available'},
-  {name:'Chassis/Backplane',per:1,lead:10, suppliers:['ODM (Quanta)'],        committed:5200,  note:'ODM assembled'},
+  {name:'GPU accelerator',       per:8, lead:24, suppliers:['GPU vendor'],        committed:36000, note:'Long-lead, single source'},
+  {name:'Server CPU',  per:2, lead:12, suppliers:['CPU vendor'],           committed:11000, note:'Dual-source possible'},
+  {name:'HBM3E Memory',    per:8, lead:18, suppliers:['Memory vendor A','Memory vendor B'], committed:42000, note:'Tight allocation'},
+  {name:'NVMe SSD 4TB',    per:4, lead:8,  suppliers:['Storage vendor A','Storage vendor B'],   committed:22000, note:'Available'},
+  {name:'NIC 400GbE',      per:2, lead:10, suppliers:['Networking vendor'],     committed:10500, note:'Moderate lead'},
+  {name:'Power Supply 3kW',per:2, lead:6,  suppliers:['PSU vendor A','PSU vendor B'],     committed:11000, note:'Available'},
+  {name:'Chassis/Backplane',per:1,lead:10, suppliers:['ODM'],        committed:5200,  note:'ODM assembled'},
 ];
 
 // ── Compute requirements and gaps ───────────────────────────────
