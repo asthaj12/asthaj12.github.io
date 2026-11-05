@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="The Next 10,000 AI Customers: an independent Cloud AI strategy simulation on acquiring, activating and retaining long-tail SMB and entrepreneur AI customers. Synthetic data, illustrative assumptions, public sources."/>
+<link rel="canonical" href="https://asthaj12.github.io/ai-customer-strategy-lab/"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='system-ui,Arial,sans-serif' font-size='26' font-weight='800' fill='%23818cf8'%3EAJ%3C/text%3E%3C/svg%3E"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="The Next 10,000 AI Customers — Cloud AI Strategy Lab"/>
+<meta property="og:description" content="Independent Cloud AI strategy simulation: unit economics, activation, routing, capacity pooling and a dynamic decision brief. Synthetic data, illustrative assumptions."/>
+<meta property="og:url" content="https://asthaj12.github.io/ai-customer-strategy-lab/"/>
+<meta property="og:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="The Next 10,000 AI Customers — Cloud AI Strategy Lab"/>
+<meta name="twitter:description" content="Independent Cloud AI strategy simulation: unit economics, activation, routing, capacity pooling and a dynamic decision brief. Synthetic data, illustrative assumptions."/>
+<meta name="twitter:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<title>The Next 10,000 AI Customers — Cloud AI Strategy Lab</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --s0:#f9f9f7;--s1:#fcfcfb;--ink:#0b0b0b;--sec:#52514e;--muted:#898781;
+  --grid:#e1e0d9;--border:rgba(11,11,11,.10);
+  --blue:#6366f1;--orange:#eb6834;--aqua:#1baf7a;--yellow:#eda100;
+  --pink:#e87ba4;--violet:#4a3aa7;
+  --good:#0ca30c;--warn:#fab219;--crit:#d03b3b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:13px;background:var(--s0);color:var(--ink);}
+.conf-banner{background:#fff8e1;border-bottom:2px solid var(--yellow);padding:10px 20px;font-size:11px;color:#7c5700;line-height:1.6;}
+.demo-banner{background:#fffbeb;border-bottom:1px solid #f59e0b;padding:7px 20px;font-size:11px;font-weight:600;color:#92400e;line-height:1.5;}
+.hero{max-width:1300px;margin:0 auto;padding:22px 20px 6px;}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);}
+.hero h1{font-size:27px;line-height:1.15;font-weight:800;margin:6px 0 6px;letter-spacing:-.01em;}
+.hero .tagline{font-size:13px;color:var(--sec);line-height:1.6;max-width:820px;}
+.thesis{max-width:1300px;margin:14px auto 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.thesis .th{background:var(--s1);border:1px solid var(--border);border-top:3px solid var(--blue);border-radius:8px;padding:12px 14px;}
+.thesis .th b{display:block;font-size:12px;color:var(--ink);margin-bottom:4px;}
+.thesis .th span{font-size:11px;color:var(--sec);line-height:1.55;}
+.tab-bar{display:flex;padding:0 20px;border-bottom:1px solid var(--grid);background:var(--s0);position:sticky;top:var(--nav-h,48px);z-index:190;overflow-x:auto;scrollbar-width:none;margin-top:18px;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{padding:10px 16px;border:none;background:none;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s,border-color .15s;flex-shrink:0;font-family:inherit;}
+.tab-btn .tn{display:inline-block;width:18px;color:var(--blue);font-weight:800;}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab-btn:hover:not(.active){color:var(--ink);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+main{padding:20px;max-width:1300px;margin:0 auto;min-width:0;}
+.qbar{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:12px 16px;margin-bottom:16px;}
+.qbar .q{font-size:13px;font-weight:700;color:#312e81;line-height:1.5;min-width:0;}
+.qbar .q small{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:2px;font-weight:700;}
+.qbar .nx{font-size:11px;color:var(--sec);white-space:normal;min-width:0;}
+.qbar .nx b{color:var(--blue);}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:16px;}
+.kpi{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:14px 16px;min-width:0;}
+.kpi .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+.kpi .val{font-size:21px;font-weight:700;margin:4px 0 2px;color:var(--ink);overflow-wrap:anywhere;}
+.kpi .sub{font-size:11px;color:var(--sec);line-height:1.45;}
+.kpi.bl{border-left:3px solid var(--blue);}
+.kpi.or{border-left:3px solid var(--orange);}
+.kpi.gd{border-left:3px solid var(--good);}
+.kpi.yw{border-left:3px solid var(--yellow);}
+.kpi.aq{border-left:3px solid var(--aqua);}
+.kpi.vt{border-left:3px solid var(--violet);}
+.kpi.pk{border-left:3px solid var(--pink);}
+.kpi.crit .val{color:var(--crit);}
+.kpi.good .val{color:#15803d;}
+.chart-grid{display:grid;gap:16px;margin-bottom:16px;}
+.cols2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.cols3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.cols4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:16px;min-width:0;}
+.card .ttl{font-size:12px;font-weight:700;margin-bottom:3px;color:var(--ink);}
+.card .sub2{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.card p{font-size:12px;color:var(--sec);line-height:1.65;}
+.cw{position:relative;height:230px;width:100%;}
+.cw-tall{position:relative;height:290px;width:100%;}
+.cw-sm{position:relative;height:190px;width:100%;}
+.tbl-wrap{overflow-x:auto;margin-top:4px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{padding:8px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--grid);background:var(--s0);}
+td{padding:8px 10px;border-bottom:1px solid var(--grid);color:var(--sec);vertical-align:top;line-height:1.5;}
+tr:last-child td{border-bottom:none;}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;}
+.b-crit{background:#fee2e2;color:var(--crit);}
+.b-warn{background:#fef9c3;color:#92400e;}
+.b-good{background:#dcfce7;color:#166534;}
+.b-info{background:#ede9fe;color:var(--violet);}
+.b-blue{background:#eef2ff;color:var(--blue);}
+.b-muted{background:#f3f4f6;color:#374151;}
+.b-orange{background:#fff3ed;color:#c2410c;}
+.tag-syn{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:999px;background:#fef3c7;color:#92400e;}
+.decision-block{background:var(--s1);border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:8px;padding:16px 18px;margin-top:16px;}
+.decision-block .db-ttl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px;}
+.decision-block p{font-size:12.5px;color:var(--sec);line-height:1.7;}
+.decision-block p + p{margin-top:6px;}
+.assumptions{background:#f8f7f4;border:1px solid var(--grid);border-radius:8px;padding:14px 16px;margin-top:16px;}
+.assumptions .a-ttl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:8px;}
+.assumptions ul{font-size:11.5px;color:var(--sec);line-height:1.75;padding-left:16px;}
+.sim-layout{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:20px;margin-bottom:16px;align-items:start;}
+.sim-controls{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:18px;}
+.sim-controls .ttl{font-size:12px;font-weight:700;margin-bottom:4px;color:var(--ink);}
+.sim-controls .sub2{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.preset-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:6px;}
+.preset-btn,.ghost-btn,.solid-btn{font-family:inherit;font-size:11px;font-weight:700;border-radius:6px;cursor:pointer;min-height:36px;padding:6px 8px;transition:background .12s,color .12s,border-color .12s;}
+.preset-btn{background:var(--s0);border:1px solid var(--border);color:var(--sec);}
+.preset-btn:hover{border-color:var(--blue);color:var(--blue);}
+.preset-btn.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+.ghost-btn{background:#fff;border:1px solid var(--border);color:var(--sec);}
+.ghost-btn:hover{border-color:var(--ink);color:var(--ink);}
+.solid-btn{background:var(--ink);border:1px solid var(--ink);color:#fff;}
+.solid-btn:hover{background:#1e293b;}
+.btn-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.grp-h{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#4338ca;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--grid);}
+.slider-group{margin-bottom:12px;}
+.slider-label{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px;}
+.slider-label span:first-child{font-size:11px;font-weight:600;color:var(--sec);line-height:1.35;}
+.slider-val{font-size:13px;font-weight:700;color:var(--blue);min-width:44px;text-align:right;white-space:nowrap;}
+.slider-hint{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.4;}
+input[type=range]{width:100%;height:24px;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer;margin:0;}
+input[type=range]::-webkit-slider-runnable-track{height:6px;background:var(--grid);border-radius:3px;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--blue);margin-top:-6px;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+input[type=range]::-moz-range-track{height:6px;background:var(--grid);border-radius:3px;}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--blue);border:none;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+input[type=range]:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px;}
+.mix-note{font-size:10.5px;color:var(--sec);background:var(--s0);border:1px solid var(--border);border-radius:6px;padding:6px 8px;margin-top:4px;line-height:1.5;}
+.out-panel{min-width:0;}
+.out-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+.out{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px 14px;min-width:0;}
+.out .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;line-height:1.35;}
+.out .val{font-size:20px;font-weight:700;margin:4px 0 2px;color:var(--ink);overflow-wrap:anywhere;font-variant-numeric:tabular-nums;}
+.out .sub{font-size:10.5px;color:var(--sec);line-height:1.4;}
+.out.hi{border-color:var(--blue);background:#eef2ff;}
+.out.hi .val{color:var(--blue);}
+.out.bad{border-color:var(--crit);background:#fef2f2;}
+.out.bad .val{color:var(--crit);}
+.out.ok{border-color:var(--good);background:#f0fdf4;}
+.out.ok .val{color:#15803d;}
+.verdict{display:flex;gap:10px;align-items:flex-start;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:12px;line-height:1.6;color:var(--sec);border:1px solid var(--border);background:var(--s1);}
+.verdict b{color:var(--ink);}
+.verdict.ok{border-left:4px solid var(--good);}
+.verdict.bad{border-left:4px solid var(--crit);}
+.verdict.mid{border-left:4px solid var(--warn);}
+.seg-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+.seg-btn{text-align:left;font-family:inherit;background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;min-width:0;transition:border-color .12s,background .12s;}
+.seg-btn:hover{border-color:var(--blue);}
+.seg-btn.on{border:2px solid var(--blue);background:#eef2ff;padding:11px 13px;}
+.seg-btn .sn{font-size:12px;font-weight:700;color:var(--ink);line-height:1.3;}
+.seg-btn .ss{font-size:10.5px;color:var(--sec);margin-top:4px;line-height:1.4;}
+.funnel{display:grid;gap:8px;}
+.fun-row{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:12px;}
+.fun-row .fl{font-weight:700;color:var(--ink);line-height:1.3;}
+.fun-row .fb{height:26px;border-radius:5px;background:var(--blue);min-width:4px;transition:width .3s ease;}
+.fun-row .fv{font-weight:700;color:var(--sec);white-space:nowrap;font-variant-numeric:tabular-nums;}
+.fun-row.s2 .fb{background:#818cf8;}
+.fun-row.s3 .fb{background:#1baf7a;}
+.fun-row.s4 .fb{background:#eb6834;}
+.vs-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;}
+.vs-col{border-radius:8px;padding:16px;border:1px solid var(--border);background:var(--s1);min-width:0;}
+.vs-col.ent{border-top:3px solid var(--muted);}
+.vs-col.lt{border-top:3px solid var(--blue);}
+.vs-col h3{font-size:12px;font-weight:700;margin-bottom:8px;}
+.vs-col ul{font-size:11.5px;color:var(--sec);line-height:1.7;padding-left:16px;}
+.chal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.chal .c{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:14px 16px;min-width:0;}
+.chal .c .n{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;}
+.chal .c h4{font-size:13px;margin:4px 0 6px;line-height:1.3;}
+.chal .c p{font-size:11.5px;color:var(--sec);line-height:1.65;}
+.chal .c .pin{margin-top:8px;font-size:11px;color:#312e81;background:#eef2ff;border-radius:6px;padding:6px 8px;line-height:1.5;}
+.rej{display:grid;gap:8px;}
+.rej .r{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--s1);}
+.rej .r .no{font-size:12px;color:var(--crit);font-weight:700;line-height:1.4;}
+.rej .r .no::before{content:"\2717  ";}
+.rej .r .yes{font-size:11.5px;color:#166534;line-height:1.55;}
+.rej .r .yes::before{content:"\2713  ";font-weight:700;}
+.ladder{display:grid;gap:8px;}
+.rung{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:12px;align-items:center;background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+.rung .step{width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.rung:nth-child(2) .step{background:#818cf8;}
+.rung:nth-child(3) .step{background:#4338ca;}
+.rung b{font-size:12.5px;display:block;margin-bottom:2px;}
+.rung span{font-size:11.5px;color:var(--sec);line-height:1.5;}
+.check{list-style:none;padding:0;display:grid;gap:7px;}
+.check li{font-size:11.5px;color:var(--sec);line-height:1.55;padding:8px 10px 8px 30px;position:relative;background:var(--s1);border:1px solid var(--border);border-radius:6px;}
+.check li::before{content:"\2713";position:absolute;left:10px;top:7px;color:#15803d;font-weight:800;}
+.check li b{color:var(--ink);}
+.cap-note{font-size:11px;color:var(--sec);line-height:1.6;background:#f8f7f4;border:1px solid var(--grid);border-radius:8px;padding:10px 12px;margin-top:10px;}
+details.method{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:0;margin-top:16px;}
+details.method summary{list-style:none;cursor:pointer;padding:14px 18px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+details.method summary::-webkit-details-marker{display:none;}
+details.method summary::after{content:"+";font-size:18px;color:var(--blue);font-weight:700;}
+details.method[open] summary::after{content:"−";}
+details.method .mbody{padding:0 18px 18px;border-top:1px solid var(--grid);}
+details.method .mbody h4{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:16px 0 6px;}
+details.method .mbody p,details.method .mbody li{font-size:11.5px;color:var(--sec);line-height:1.7;}
+details.method .mbody ul,details.method .mbody ol{padding-left:18px;}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;background:var(--s0);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin:6px 0;color:var(--ink);overflow-x:auto;white-space:pre-wrap;word-break:break-word;}
+.src li{margin-bottom:4px;}
+.src a{color:var(--blue);word-break:break-all;}
+.brief-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;padding:26px 28px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.brief-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:16px;}
+.brief-head h3{font-size:19px;line-height:1.2;}
+.brief-head .meta{font-size:11px;color:var(--muted);line-height:1.5;}
+.brief-rec{background:#eef2ff;border-left:4px solid var(--blue);border-radius:6px;padding:12px 14px;margin-bottom:16px;}
+.brief-rec .k{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);}
+.brief-rec .v{font-size:14px;font-weight:700;color:var(--ink);margin-top:4px;line-height:1.45;}
+.brief-rec .why{font-size:11.5px;color:var(--sec);margin-top:6px;line-height:1.6;}
+.brief-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;}
+.brief-sec{min-width:0;}
+.brief-sec h5{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.brief-sec p,.brief-sec li{font-size:11.5px;color:var(--ink);line-height:1.6;}
+.brief-sec ul{padding-left:16px;}
+.brief-sec table{font-size:11px;}
+.brief-sec td,.brief-sec th{padding:5px 6px;}
+.brief-full{grid-column:1 / -1;}
+.brief-foot{margin-top:14px;padding-top:10px;border-top:1px solid var(--grid);font-size:10px;color:var(--muted);line-height:1.6;}
+.pilot-tbl td{font-size:11px;}
+.segcmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.sens-tbl td.neg{color:var(--crit);font-weight:700;}
+.sens-tbl td.pos{color:#15803d;font-weight:700;}
+footer{margin-top:32px;padding:16px 20px;border-top:1px solid var(--grid);font-size:11px;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+footer a{color:var(--blue);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+.only-print{display:none;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+@media(max-width:1040px){
+  .cols4{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .sim-layout{grid-template-columns:minmax(0,1fr);}
+  .out-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .thesis{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:900px){
+  .cols2,.cols3{grid-template-columns:minmax(0,1fr);}
+  .vs-grid,.chal,.brief-grid,.segcmp{grid-template-columns:minmax(0,1fr);}
+  .seg-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:480px){
+  .kpi-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+  main{padding:14px;}
+  .hero{padding:16px 14px 4px;}
+  .hero h1{font-size:22px;}
+  .thesis{grid-template-columns:minmax(0,1fr);padding:0;}
+  .out-grid{grid-template-columns:minmax(0,1fr);}
+  .preset-row{grid-template-columns:minmax(0,1fr);}
+  .seg-row{grid-template-columns:minmax(0,1fr);}
+  .fun-row{grid-template-columns:minmax(0,1fr);gap:4px;}
+  .fun-row .fv{justify-self:start;}
+  .brief-wrap{padding:18px 16px;}
+  .cw,.cw-tall,.cw-sm{height:220px;}
+  .tab-bar,.tab-nav{padding-left:12px;padding-right:12px;}
+  .tab-btn{min-height:40px;}
+  .slider-label span:first-child{font-size:12px;}
+  input[type=range]{height:30px;}
+  input[type=range]::-webkit-slider-thumb{width:22px;height:22px;margin-top:-8px;}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;}
+  .sim-controls{padding:14px;}
+  .chal .c{padding:12px 12px;}
+}
+@media print{
+  body{background:#fff;font-size:11px;}
+  .snav,.tab-bar,.demo-banner,.conf-banner,.no-print,footer,details.method:not([open]),.sim-controls,.hero .tagline{display:none !important;}
+  .tab-pane{display:none !important;}
+  .tab-pane.active{display:none !important;}
+  #t6{display:block !important;}
+  main{padding:0;max-width:none;}
+  .brief-wrap{border:none;box-shadow:none;padding:0;}
+  .brief-rec{break-inside:avoid;}
+  .card,.out,.kpi,.brief-sec{break-inside:avoid;}
+  .only-print{display:block;}
+  details.method[open]{display:block;}
+  details.method summary{display:none;}
+}
+:root{--nav-h:48px;}
+.snav{position:sticky;top:0;z-index:200;background:rgba(249,249,247,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:6px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;min-height:48px;}
+.snav ul{list-style:none;margin:0;padding:0;}
+.snav-brand{font-size:13px;font-weight:800;color:#0f172a;text-decoration:none;margin-right:16px;white-space:nowrap;}
+.snav-brand span{color:var(--blue);}
+.snav-menu,.snav-items,.snav-right{display:flex;align-items:center;gap:2px;}
+.snav-items{flex:1;min-width:0;}
+.snav-right{margin-left:auto;gap:6px;flex-shrink:0;}
+.snav-link,#snDrop>summary{display:flex;align-items:center;min-height:32px;padding:5px 10px;border-radius:5px;font-size:12px;font-weight:500;color:#475569;text-decoration:none;white-space:nowrap;transition:background .12s,color .12s;}
+.sndrop{position:relative;}
+#snDrop>summary{cursor:pointer;user-select:none;gap:4px;list-style:none;}
+#snDrop>summary::-webkit-details-marker{display:none;}
+.snav-link:hover,#snDrop>summary:hover,#snDrop[open]>summary{background:rgba(99,102,241,.07);color:#0f172a;}
+#snDrop>summary svg{width:9px;height:9px;flex-shrink:0;transition:transform .18s;}
+#snDrop[open]>summary svg{transform:rotate(180deg);}
+.sndrop-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:210;width:300px;max-width:calc(100vw - 24px);max-height:min(70vh,520px);overflow-y:auto;overscroll-behavior:contain;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:5px;box-shadow:0 12px 40px rgba(0,0,0,.14);}
+.sndrop-gh{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;padding:8px 10px 3px;}
+.sndrop-grp+.sndrop-grp{margin-top:4px;border-top:1px solid #e2e8f0;}
+.sndrop-item{display:flex;align-items:center;gap:8px;min-height:40px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:500;color:#475569;text-decoration:none;transition:background .1s,color .1s;}
+.sndrop-item:hover,.sndrop-item[aria-current]{background:rgba(99,102,241,.09);color:#0f172a;}
+.sndrop-icon{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.sndrop-lbl{font-weight:600;color:#0f172a;font-size:11px;}
+.sndrop-sub{font-size:10px;color:#94a3b8;margin-top:1px;}
+.snav-badge{display:flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:5px;font-size:11px;font-weight:600;border:1px solid #e2e8f0;color:#475569;text-decoration:none;white-space:nowrap;transition:border-color .12s,color .12s,background .12s;}
+.snav-badge:hover{background:#eef2ff;border-color:#6366f1;color:#6366f1;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.tab-bar,.tab-nav{position:sticky;top:var(--nav-h,48px);z-index:190;}
+main,.tab-pane,.card{min-width:0;}
+@media (max-width:600px){
+:root{--nav-h:96px;}
+.snav{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 8px;padding:6px 12px;}
+.snav-brand{grid-column:1;grid-row:1;justify-self:start;margin:0;display:flex;align-items:center;min-height:40px;}
+.snav-menu{grid-column:2;grid-row:1;justify-self:end;}
+.sndrop{position:static;}
+.sndrop-menu{left:12px;right:12px;width:auto;max-width:none;}
+.snav-items{grid-column:1;grid-row:2;justify-self:start;flex:none;}
+.snav-right{grid-column:2;grid-row:2;justify-self:end;margin-left:0;}
+.snav-link,#snDrop>summary,.snav-badge,.tab-btn{min-height:40px;}
+.tab-bar,.tab-nav{padding-left:12px;padding-right:12px;}
+main{padding:14px;}
+}
+</style>
+</head>
+<body>
+<nav class="snav" aria-label="Portfolio and dashboard navigation">
+  <a href="https://asthaj12.github.io/" class="snav-brand">AJ<span> · Portfolio</span></a>
+  <ul class="snav-menu">
+    <li class="sndrop">
+      <details id="snDrop">
+        <summary>Dashboards<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M2 3.5l3 3 3-3"/></svg></summary>
+        <div class="sndrop-menu">
+          <div class="sndrop-grp">
+            <p class="sndrop-gh">Capacity &amp; Supply</p>
+            <ul>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/ai-customer-strategy-lab/" aria-current="page"><div class="sndrop-icon" style="background:rgba(99,102,241,.12)">🧭</div><div><div class="sndrop-lbl">Cloud AI Strategy Lab</div><div class="sndrop-sub">Long-tail AI customers · Unit economics · Capacity pooling</div></div></a></li>
+            <li><a class="sndrop-item" href="https://asthaj12.github.io/ai-customer-strategy-lab/"><div class="sndrop-icon" style="background:rgba(99,102,241,.12)">🧭</div><div><div class="sndrop-lbl">Cloud AI Strategy Lab</div><div class="sndrop-sub">Long-tail AI customers · Unit economics · Capacity pooling</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/cummins-capacity-expansion/"><div class="sndrop-icon" style="background:rgba(99,102,241,.12)">📈</div><div><div class="sndrop-lbl">Long-Range Capacity Planning</div><div class="sndrop-sub">Long-range planning · $12M protected · 15+ lines</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/cummins-capacity-risk/"><div class="sndrop-icon" style="background:rgba(235,104,52,.13)">🏭</div><div><div class="sndrop-lbl">Cummins Capacity &amp; Risk</div><div class="sndrop-sub">Supplier risk · Recovery · $35M averted</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/npi-launch-planning/"><div class="sndrop-icon" style="background:rgba(235,104,52,.13)">🚀</div><div><div class="sndrop-lbl">NPI Launch Planning</div><div class="sndrop-sub">New product intro · Supply readiness</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/replenishment-risk/"><div class="sndrop-icon" style="background:rgba(237,161,0,.12)">📦</div><div><div class="sndrop-lbl">Safety Stock Monitor</div><div class="sndrop-sub">Violation monitor · Risk items</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/logitech-supply-planning/"><div class="sndrop-icon" style="background:rgba(235,104,52,.13)">🌐</div><div><div class="sndrop-lbl">Global S&amp;OP</div><div class="sndrop-sub">Gaming E&amp;O · Supply disruption · Decision forum</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/shopify-demand-forecasting/"><div class="sndrop-icon" style="background:rgba(99,102,241,.12)">🔀</div><div><div class="sndrop-lbl">Network Demand Planning</div><div class="sndrop-sub">Network overview · Forecast RCA · BFCM peak</div></div></a></li>
+            </ul>
+          </div>
+          <div class="sndrop-grp">
+            <p class="sndrop-gh">Forecasting &amp; Decisions</p>
+            <ul>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/forecast-governance/"><div class="sndrop-icon" style="background:rgba(99,102,241,.12)">📊</div><div><div class="sndrop-lbl">Forecast Governance</div><div class="sndrop-sub">Anomaly triage · Bias correction</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/fom-backtesting/"><div class="sndrop-icon" style="background:rgba(27,175,122,.12)">🧪</div><div><div class="sndrop-lbl">FOM Backtesting</div><div class="sndrop-sub">Model validation · Historical accuracy</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/forecast-accuracy/"><div class="sndrop-icon" style="background:rgba(27,175,122,.12)">📉</div><div><div class="sndrop-lbl">Forecast Accuracy</div><div class="sndrop-sub">Period recap · Bias by category · Planner adjustments</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/seasonal-event-intelligence/"><div class="sndrop-icon" style="background:rgba(237,161,0,.12)">🎯</div><div><div class="sndrop-lbl">Seasonal Event Intelligence</div><div class="sndrop-sub">Event lift · Demand signals</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/seasonal-planning/"><div class="sndrop-icon" style="background:rgba(99,102,241,.12)">📅</div><div><div class="sndrop-lbl">Scenario Planning</div><div class="sndrop-sub">Scenario dashboard · Planning calendar · Risk flags</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/pricing-demand-response/"><div class="sndrop-icon" style="background:rgba(232,123,164,.14)">💲</div><div><div class="sndrop-lbl">Pricing &amp; Demand Response</div><div class="sndrop-sub">Elasticity &amp; lift · Price event tracking</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/fifa-2026-demand/"><div class="sndrop-icon" style="background:rgba(27,175,122,.12)">⚽</div><div><div class="sndrop-lbl">FIFA Demand</div><div class="sndrop-sub">Host city proximity · Team affinity · Staged commitment</div></div></a></li>
+              <li><a class="sndrop-item" href="https://asthaj12.github.io/snap-monitoring/"><div class="sndrop-icon" style="background:rgba(99,102,241,.12)">📜</div><div><div class="sndrop-lbl">Policy Demand Signals</div><div class="sndrop-sub">Test &amp; control · Demand signal · Hypothesis testing</div></div></a></li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </li>
+  </ul>
+  <ul class="snav-items">
+    <li><a class="snav-link" href="https://asthaj12.github.io/#projects">Projects</a></li>
+    <li><a class="snav-link" href="https://asthaj12.github.io/#skills">Skills</a></li>
+  </ul>
+  <ul class="snav-right">
+    <li><a class="snav-badge" href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+    <li><a class="snav-badge" href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub ↗</a></li>
+  </ul>
+</nav>
+<script>
+(function(){
+var nav=document.querySelector('.snav');
+var dd=document.getElementById('snDrop');
+function setNavH(){document.documentElement.style.setProperty('--nav-h',nav.offsetHeight+'px');}
+if(window.ResizeObserver){new ResizeObserver(setNavH).observe(nav);}else{setNavH();window.addEventListener('resize',setNavH);}
+dd.addEventListener('focusout',function(e){if(e.relatedTarget&&!dd.contains(e.relatedTarget)){dd.open=false;}});
+document.addEventListener('pointerdown',function(e){if(dd.open&&!dd.contains(e.target)){dd.open=false;}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dd.open){dd.open=false;dd.querySelector('summary').focus();}});
+})();
+</script>
+<div class="conf-banner">
+  <strong>Confidentiality notice:</strong> No internal data is used. Public facts are cited in Sources with links. Every customer, spend, funnel and capacity figure is synthetic or an illustrative assumption, labeled where it appears. This page does not use, imply access to, or represent Google Cloud internal data or employment.
+</div>
+<div class="demo-banner">⚠ DEMO — Independent strategy simulation built by Astha Jain. Synthetic customers, spend, capacity and funnel numbers. Not Google data, not Google employment, not affiliated with or endorsed by Google.</div>
+
+<header class="hero">
+  <div class="eyebrow">Cloud AI Strategy Lab · Independent simulation · Synthetic data</div>
+  <h1>The Next 10,000 AI Customers</h1>
+  <p class="tagline">How would you invest $5 million to acquire and scale the next 10,000 paying AI customers among small businesses and entrepreneurs? Each tab answers one business question, shows the numbers behind it, and ends with the decision it sets up.</p>
+  <div class="thesis" aria-label="Strategy thesis">
+    <div class="th"><b>Distribution and activation, not price</b><span>Existing accounts already reach small firms. The binding constraint is a first win inside the account, in week one.</span></div>
+    <div class="th"><b>Governance before capability</b><span>Connectors, permissions, approval gates and spend caps come first. Route each task to the cheapest model that can do it.</span></div>
+    <div class="th"><b>Pool capacity by tier</b><span>Long-tail demand is bursty and idle most hours. Shared pool for the tail, Flex for async work, Provisioned only for committed accounts.</span></div>
+    <div class="th"><b>Measure outcomes, not signups</b><span>Credits are CAC. Judge credit-to-paid conversion, 90-day retention and the time or revenue each business gains.</span></div>
+  </div>
+</header>
+
+<div class="tab-bar" id="tabBar" role="tablist" aria-label="Strategy lab sections">
+  <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="t1"><span class="tn">1</span>The Opportunity</button>
+  <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="t2"><span class="tn">2</span>Why It&rsquo;s Hard</button>
+  <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="t3"><span class="tn">3</span>Unit Economics</button>
+  <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="t4"><span class="tn">4</span>How Technical</button>
+  <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="t5"><span class="tn">5</span>Capacity &amp; Demand</button>
+  <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="t6"><span class="tn">6</span>Decision Brief</button>
+</div>
+
+<main>
+<section class="tab-pane active" id="t1" role="tabpanel">
+  <div class="qbar">
+    <div class="q"><small>Business question</small>How would you invest $5M to acquire and scale the next 10,000 AI customers, and which customers should they be?</div>
+    <div class="nx">Next decision → <b>Why is serving them hard? (Tab 2)</b></div>
+  </div>
+
+  <div class="chart-grid cols2">
+    <div class="card">
+      <div class="ttl">Small-business generative AI use is rising</div>
+      <div class="sub2">Share of small businesses using generative AI, 2023–2025 · Chamber of Commerce figures via Harvard Business School · independent, no sample size given</div>
+      <div class="cw-sm"><canvas id="c-adopt" role="img" aria-label="Bar chart: small-business generative AI use 23 percent in 2023, 40 percent in 2024, 58 percent in 2025"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ttl">Smaller firms adopt AI more slowly</div>
+      <div class="sub2">Share of firms using AI by employee count · Minneapolis Fed, April 2026 supplement · different collection from the Chamber series</div>
+      <div class="cw-sm"><canvas id="c-size" role="img" aria-label="Bar chart: 17 percent of firms with fewer than 20 employees use AI versus 30 percent of firms with 250 or more"></canvas></div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <p><strong>What the data says.</strong> Adoption is broad but shallow. The Babson survey of Goldman Sachs small-business program graduates found 86% use AI, but only 15% are fully integrated, and 73% of AI users spend under $100 a month. That sample is program alumni, so it is not representative. The Census Bureau's Business Trends and Outlook Survey put AI use at 19.8% of all firms as of May 3, 2026, and it reports that the question changed in November 2025, so readings before and after are not directly comparable.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="ttl">Who is in the long tail: four hypothetical segments</div>
+    <div class="sub2">Select a segment. Its monthly ARPU becomes the default in the Unit Economics simulator. All segment values are synthetic assumptions [A], not sourced market data.</div>
+    <div class="seg-row" role="group" aria-label="Focus segment">
+      <button class="seg-btn on" type="button" data-seg="digital"><div class="sn">Digital startups</div><div class="ss">AI-native apps, founder-led, fast to try tools</div></button>
+      <button class="seg-btn" type="button" data-seg="mid"><div class="sn">Midmarket software</div><div class="ss">Product teams that embed AI into their own product</div></button>
+      <button class="seg-btn" type="button" data-seg="smb"><div class="sn">Traditional small business</div><div class="ss">Bookkeeping, invoicing, inventory on existing tools</div></button>
+      <button class="seg-btn" type="button" data-seg="svc"><div class="sn">Specialized service firms</div><div class="ss">Clinics, agencies, trades with domain workflows</div></button>
+    </div>
+    <div class="tbl-wrap">
+      <table id="segTable">
+        <thead><tr>
+          <th>Segment</th><th class="num">Firms (M)</th><th class="num">AI readiness (1–5)</th><th class="num">Annual spend</th><th class="num">Monthly ARPU</th><th class="num">Reference CAC per paid</th><th class="num">Reference gross margin</th><th class="num">Reachable via channels</th>
+        </tr></thead>
+        <tbody>
+          <tr data-row="digital"><td>Digital startups</td><td class="num">1.2</td><td class="num">4.2</td><td class="num">$960</td><td class="num">$80</td><td class="num">$35</td><td class="num">58%</td><td class="num">60%</td></tr>
+          <tr data-row="mid"><td>Midmarket software</td><td class="num">0.2</td><td class="num">4.5</td><td class="num">$1,800</td><td class="num">$150</td><td class="num">$180</td><td class="num">65%</td><td class="num">40%</td></tr>
+          <tr data-row="smb"><td>Traditional small business</td><td class="num">6.5</td><td class="num">2.5</td><td class="num">$540</td><td class="num">$45</td><td class="num">$60</td><td class="num">48%</td><td class="num">20%</td></tr>
+          <tr data-row="svc"><td>Specialized service firms</td><td class="num">1.1</td><td class="num">3.2</td><td class="num">$1,200</td><td class="num">$100</td><td class="num">$95</td><td class="num">55%</td><td class="num">25%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:10.5px;color:var(--muted);margin-top:8px;line-height:1.5">Reference gross margin and CAC describe each segment on its own. The simulator uses its own gross margin and CAC sliders, so these columns do not feed it.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="ttl">TAM, SAM and SOM: how big is the prize?</div>
+    <div class="sub2">Formulas run on the segment table above. SOM is linked to the simulator: paid customers in the current Unit Economics scenario, times annual ARPU. Leads and signups are not counted.</div>
+    <div class="funnel" id="tamFunnel">
+      <div class="fun-row"><div class="fl">TAM<br><span style="font-weight:400;color:var(--muted);font-size:10px">firms × annual spend</span></div><div><div class="fb" id="fb-tam" style="width:100%"></div></div><div class="fv" id="v-tam">—</div></div>
+      <div class="fun-row s2"><div class="fl">SAM<br><span style="font-weight:400;color:var(--muted);font-size:10px">× reachable share × readiness ÷ 5</span></div><div><div class="fb" id="fb-sam" style="width:20%"></div></div><div class="fv" id="v-sam">—</div></div>
+      <div class="fun-row s3"><div class="fl">SOM<br><span style="font-weight:400;color:var(--muted);font-size:10px">paid customers × ARPU × 12</span></div><div><div class="fb" id="fb-som" style="width:1%"></div></div><div class="fv" id="v-som">—</div></div>
+    </div>
+    <div class="cap-note" id="somNote">SOM uses the current simulator scenario. Share of SAM: —.</div>
+  </div>
+
+  <div class="decision-block">
+    <div class="db-ttl">Decision this sets up</div>
+    <p>The prize is large in aggregate, but the reachable part is spread across millions of small firms with low spend. A $5M budget should therefore buy distribution through partners and marketplaces, not enterprise-style direct sales. The question becomes why these customers do not convert, which is the next tab.</p>
+  </div>
+</section>
+<section class="tab-pane" id="t2" role="tabpanel">
+  <div class="qbar">
+    <div class="q"><small>Business question</small>Why does each small customer cost more to win and serve than an enterprise customer, and which of those costs can we actually change?</div>
+    <div class="nx">Next decision → <b>Which economics clear a 12-month payback? (Tab 3)</b></div>
+  </div>
+
+  <div class="chal" style="margin-bottom:16px">
+    <div class="c">
+      <div class="n">Challenge 1 · Fragmented demand</div>
+      <h4>Demand is spread across millions of firms with a few workflows each</h4>
+      <p>Each firm runs a handful of tasks on its own tools, so there is no single large use case to sell. The long tail is a finite set of workflows and connectors, not an infinite list of edge cases.</p>
+      <div class="pin">Anthropic's small-business launch packaged 7 connectors, 15 workflows and 15 skills [V]. Package templates; do not build a bespoke agent per firm.</div>
+    </div>
+    <div class="c">
+      <div class="n">Challenge 2 · Low initial spend</div>
+      <h4>Most paying owners spend less than $100 a month</h4>
+      <p>ARPU sets how much acquisition cost a customer can carry. A $5M budget that buys paying customers at a few hundred dollars each can only pay back if those customers stay and expand.</p>
+      <div class="pin">73% of AI-using Goldman program alumni spend under $100 a month, and 16% use only free tools [V, NBC and Fortune; alumni sample, not representative].</div>
+    </div>
+    <div class="c">
+      <div class="n">Challenge 3 · Technical and trust barriers</div>
+      <h4>Owners hold back where errors and privacy matter most</h4>
+      <p>Owners who have not handed bookkeeping or financial planning to AI cite privacy and accuracy. Most want training before they go deeper, so activation depends on guided first wins rather than a blank prompt box.</p>
+      <div class="pin">Harvard Business School cites privacy and accuracy as the holdbacks [V]. 77% of alumni want more training [V]. Trust gates depth, so governance comes before capability.</div>
+    </div>
+    <div class="c">
+      <div class="n">Challenge 4 · High cost to serve</div>
+      <h4>Support load comes from quota confusion and trust, not ticket volume</h4>
+      <p>Owners do not know why a request failed. Google's own documentation says a 429 error can hit shared-pool traffic inside its tier limits, and that it is not a fixed-quota signal [V]. Clear explanations and a degrade path cut support load more than extra staff do.</p>
+      <div class="pin">Explain the cause, retry or degrade automatically, and show the owner their tier headroom before adding support headcount.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="ttl">Enterprise versus long tail: what changes in the strategy</div>
+    <div class="sub2">Enterprise column describes a typical large-account motion for comparison. Long-tail column is the working model in this lab. Both are illustrative [A] except where a source is cited.</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Enterprise AI customer</th><th>Long-tail SMB and entrepreneur</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Entry deal</strong></td><td>Multi-year commitment, procurement-led</td><td>Self-serve or partner-led, $45–$150 a month [A]</td></tr>
+          <tr><td><strong>Binding constraint</strong></td><td>Sales capacity and security review</td><td>Activation: first win inside an existing account</td></tr>
+          <tr><td><strong>Demand shape</strong></td><td>Steady, forecastable, concentrated</td><td>Bursty and mostly idle: the median active model is idle 96% of observed hours [V, arXiv 2605.19481]</td></tr>
+          <tr><td><strong>Capacity class</strong></td><td>Provisioned Throughput, fixed-term</td><td>Shared pool with tiers; Provisioned only for committed accounts [A]</td></tr>
+          <tr><td><strong>Support driver</strong></td><td>Escalations and integration projects</td><td>Quota confusion and trust questions [V, Google docs on 429s]</td></tr>
+          <tr><td><strong>Trust requirement</strong></td><td>Contract, audit and data residency</td><td>Approval before any send, post or payment [V, Anthropic pattern]</td></tr>
+          <tr><td><strong>Success measure</strong></td><td>Platform spend and expansion</td><td>Time to first win, 90-day retention, hours or revenue saved</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="ttl">Weaker framings we reject, and what replaces them</div>
+    <div class="sub2">Each framing was tested against the evidence. The replacement is the position this lab takes.</div>
+    <div class="rej">
+      <div class="r"><div class="no">“Cheaper tokens solve the long tail.”</div><div class="yes">Per-token prices fall about 13x a year for fixed capability [V, Epoch AI]. Cost per task and default model choice decide margin, so plan on routing and capacity class, not on price declines.</div></div>
+      <div class="r"><div class="no">“Build lightweight agents for every edge case.”</div><div class="yes">The long tail is a finite set of workflows and connectors. Package vertical templates on connectors. Google's own SMB examples are roles, such as bookkeeper and inventory manager [V].</div></div>
+      <div class="r"><div class="no">“Micro-token spend guardrails.”</div><div class="yes">Say per-business budget with a degrade path. Cloud Billing offers project-level spend caps [V]. Route to a cheaper model, then Flex or Batch, then hard-stop.</div></div>
+      <div class="r"><div class="no">“Credits drive growth.”</div><div class="yes">Credits are an acquisition cost. Measure credit-to-paid conversion and 90-day retention. Credit resale by gray-market proxies is reported [S, Okta via GBHackers].</div></div>
+      <div class="r"><div class="no">“Lower prices fix the long tail.”</div><div class="yes">Distribution and activation do. Price cannot lift ARPU above what a small owner spends, and most AI-using owners spend under $100 a month [V].</div></div>
+    </div>
+  </div>
+
+  <div class="decision-block">
+    <div class="db-ttl">Decision this sets up</div>
+    <p>Fix the economics that the team controls: which channel brings a customer, how fast the customer gets a first win, whether the first win converts to paid, and what a credit costs. Those four levers decide payback. The next tab lets you test them against the $5M budget.</p>
+  </div>
+</section>
+<section class="tab-pane" id="t3" role="tabpanel">
+  <div class="qbar">
+    <div class="q"><small>Business question</small>With a fixed $5M, which mix of channels, activation, credits and routing buys paying customers who pay back within 12 months?</div>
+    <div class="nx">Next decision → <b>Can the stack keep cost per task low? (Tab 4)</b></div>
+  </div>
+
+  <div class="sim-layout">
+    <aside class="sim-controls" aria-label="Unit economics controls">
+      <div class="ttl">Scenario presets</div>
+      <div class="sub2">Presets set every lever below. Move any slider to test your own case. Only paid customers count toward the 10,000 target.</div>
+      <div class="preset-row" role="group" aria-label="Scenario presets">
+        <button class="preset-btn" type="button" data-preset="conservative">Conservative</button>
+        <button class="preset-btn on" type="button" data-preset="base" aria-pressed="true">Base</button>
+        <button class="preset-btn" type="button" data-preset="aggressive">Aggressive</button>
+      </div>
+      <div class="btn-row"><button class="ghost-btn" type="button" id="resetBtn">Reset to Base</button></div>
+
+      <div class="grp-h">Channel mix (weights, normalized to 100%)</div>
+      <div class="slider-group"><div class="slider-label"><span>Self-serve weight</span><span class="slider-val" id="v-mself">45</span></div><input type="range" id="s-mself" data-k="mself" min="0" max="100" step="5" value="45" aria-label="Self-serve channel weight"><div class="slider-hint">Cheapest media per signup, no partner or marketplace fee.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Partner weight</span><span class="slider-val" id="v-mpartner">35</span></div><input type="range" id="s-mpartner" data-k="mpartner" min="0" max="100" step="5" value="35" aria-label="Partner channel weight"><div class="slider-hint">Half the self-serve cost per signup; 15% revenue share.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Marketplace weight</span><span class="slider-val" id="v-mmarket">20</span></div><input type="range" id="s-mmarket" data-k="mmarket" min="0" max="100" step="5" value="20" aria-label="Marketplace channel weight"><div class="slider-hint">About a third of self-serve cost per signup; 20% platform fee.</div></div>
+      <div class="mix-note" id="mixNote">Effective shares: —</div>
+
+      <div class="grp-h">Acquisition cost</div>
+      <div class="slider-group"><div class="slider-label"><span>Self-serve CAC per signup</span><span class="slider-val" id="v-cac">$25</span></div><input type="range" id="s-cac" data-k="cac" min="5" max="60" step="1" value="25" aria-label="Self-serve CAC per signup in dollars"><div class="slider-hint">Paid media and onboarding cost per signup on the self-serve channel.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Credit grant per signup</span><span class="slider-val" id="v-credit">$15</span></div><input type="range" id="s-credit" data-k="credit" min="0" max="60" step="1" value="15" aria-label="Credit grant per signup in dollars"><div class="slider-hint">60% redeemed at the cost of usage, so credits count inside the $5M.</div></div>
+
+      <div class="grp-h">Activation and conversion</div>
+      <div class="slider-group"><div class="slider-label"><span>Activation: first win within 7 days</span><span class="slider-val" id="v-act">32%</span></div><input type="range" id="s-act" data-k="act" min="10" max="60" step="1" value="32" aria-label="Activation rate percent"><div class="slider-hint">Share of signups who complete one workflow on a connected tool.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Time to first win</span><span class="slider-val" id="v-ttfw">5 d</span></div><input type="range" id="s-ttfw" data-k="ttfw" min="1" max="30" step="1" value="5" aria-label="Time to first win in days"><div class="slider-hint">Above 3 days, monthly churn rises 3% for each extra day.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Credit-to-paid conversion</span><span class="slider-val" id="v-cp">15%</span></div><input type="range" id="s-cp" data-k="cp" min="5" max="35" step="1" value="15" aria-label="Credit-to-paid conversion percent"><div class="slider-hint">Share of activated businesses that pay when credits run out.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Base monthly churn</span><span class="slider-val" id="v-churn">3.5%</span></div><input type="range" id="s-churn" data-k="churn" min="1" max="12" step="0.5" value="3.5" aria-label="Base monthly churn percent"><div class="slider-hint">Before the time-to-first-win penalty.</div></div>
+
+      <div class="grp-h">Economics and routing</div>
+      <div class="slider-group"><div class="slider-label"><span>ARPU per paying business</span><span class="slider-val" id="v-arpu">$60/mo</span></div><input type="range" id="s-arpu" data-k="arpu" min="10" max="150" step="1" value="60" aria-label="ARPU per paying business per month in dollars"><div class="slider-hint">Set by the focus segment in Tab 1 and editable here.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Gross margin, all-premium routing</span><span class="slider-val" id="v-gm0">38%</span></div><input type="range" id="s-gm0" data-k="gm0" min="20" max="60" step="1" value="38" aria-label="Gross margin at all-premium routing percent"><div class="slider-hint">Margin if every token goes to the premium model.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Tokens routed to cheaper tier</span><span class="slider-val" id="v-route">40%</span></div><input type="range" id="s-route" data-k="route" min="0" max="90" step="5" value="40" aria-label="Share of tokens routed to cheaper model percent"><div class="slider-hint">Cheaper tier costs 35% of premium per token [A]. See Tab 4 for routing rules.</div></div>
+    </aside>
+
+    <div class="out-panel">
+      <div class="verdict mid" id="verdict"><div><b>Loading scenario.</b></div></div>
+
+      <div class="out-grid">
+        <div class="out" id="tile-signups"><div class="lbl">Customers reached (signups)</div><div class="val" id="o-signups">—</div><div class="sub">Leads, not customers. Not counted toward the target.</div></div>
+        <div class="out" id="tile-activated"><div class="lbl">Activated businesses</div><div class="val" id="o-activated">—</div><div class="sub" id="os-activated"></div></div>
+        <div class="out hi" id="tile-paid"><div class="lbl">Paid customers acquired</div><div class="val" id="o-paid">—</div><div class="sub" id="os-paid"></div></div>
+        <div class="out" id="tile-cacpaid"><div class="lbl">CAC per paid customer</div><div class="val" id="o-cacpaid">—</div><div class="sub">$5M ÷ paid customers, credits included</div></div>
+        <div class="out" id="tile-payback"><div class="lbl">CAC payback (churn-adjusted)</div><div class="val" id="o-payback">—</div><div class="sub">Target: 12 months or less</div></div>
+        <div class="out" id="tile-ltvcac"><div class="lbl">LTV / CAC (36 months)</div><div class="val" id="o-ltvcac">—</div><div class="sub" id="os-ltvcac">Target: 3x or more</div></div>
+        <div class="out" id="tile-net12"><div class="lbl">12-month contribution, net of budget</div><div class="val" id="o-net12">—</div><div class="sub">Cohort contribution minus $5M</div></div>
+        <div class="out" id="tile-net24"><div class="lbl">24-month contribution, net of budget</div><div class="val" id="o-net24">—</div><div class="sub">Same cohort, two years</div></div>
+        <div class="out" id="tile-npv"><div class="lbl">3-year NPV at 12% a year</div><div class="val" id="o-npv">—</div><div class="sub">Discounted monthly contribution minus $5M</div></div>
+        <div class="out" id="tile-ret"><div class="lbl">90-day retention</div><div class="val" id="o-ret">—</div><div class="sub">Survival of a paid cohort after 3 months</div></div>
+        <div class="out" id="tile-progress"><div class="lbl">Progress to 10,000 paid customers</div><div class="val" id="o-progress">—</div><div class="sub" id="os-progress"></div></div>
+        <div class="out" id="tile-cm"><div class="lbl">Contribution per paid customer</div><div class="val" id="o-cm">—</div><div class="sub" id="os-cm"></div></div>
+      </div>
+
+      <div class="chart-grid cols2">
+        <div class="card">
+          <div class="ttl">CAC payback by channel (months)</div>
+          <div class="sub2">Same activation, credits and churn; each channel's own CAC and fee. Bars capped at 60 months; "no payback" shown as 60.</div>
+          <div class="cw-sm"><canvas id="c-channel" role="img" aria-label="Bar chart of CAC payback months by channel"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="ttl">Where the $5M goes</div>
+          <div class="sub2">Media by channel plus credits. Allocation sums to the $5M budget.</div>
+          <div class="cw-sm"><canvas id="c-alloc" role="img" aria-label="Doughnut chart of budget allocation by channel and credits"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="ttl">Cumulative contribution net of the $5M, first 36 months</div>
+        <div class="sub2">Paid cohort contribution minus the budget. Crossing zero is the break-even month. The curve only shows the cohort acquired at month 0.</div>
+        <div class="cw"><canvas id="c-cum" role="img" aria-label="Line chart of cumulative net contribution over 36 months"></canvas></div>
+      </div>
+
+      <div class="chart-grid cols2">
+        <div class="card">
+          <div class="ttl">Sensitivity: 3-year NPV when one lever moves 20%</div>
+          <div class="sub2">Each lever moved alone from the current scenario.</div>
+          <div class="tbl-wrap">
+            <table class="sens-tbl">
+              <thead><tr><th>Lever</th><th class="num">NPV at −20%</th><th class="num">NPV at +20%</th></tr></thead>
+              <tbody id="sensBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ttl">Constrained mix search</div>
+          <div class="sub2">Grid search over channel weights in 5% steps. Maximizes 3-year NPV subject to: self-serve share at least 20%, partner share between 20% and 50%, marketplace share at most 30%, and credits at most 25% of the budget.</div>
+          <div id="optText" style="font-size:12px;color:var(--sec);line-height:1.65">Running search.</div>
+          <div class="btn-row"><button class="solid-btn" type="button" id="applyOpt">Apply best mix to the sliders</button></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="ttl">How to read the verdict</div>
+        <p>Payback is churn-adjusted: the first month when cumulative contribution from one paid cohort covers its CAC. LTV uses 36 months and no discounting. NPV discounts monthly contribution at 12% a year and subtracts the full $5M at month 0. Customers reached counts signups; only paid customers count toward the 10,000 target. Formulas are in the Methodology section at the bottom of the page.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="decision-block">
+    <div class="db-ttl">Decision this sets up</div>
+    <p>The base case clears the 10,000-customer target but not the 12-month payback. The sensitivity table shows which lever closes the gap. The decision is to fund the mix that moves activation and credit-to-paid conversion first, with a stop rule if the 90-day checkpoint misses.</p>
+  </div>
+</section>
+<section class="tab-pane" id="t4" role="tabpanel">
+  <div class="qbar">
+    <div class="q"><small>Business question</small>What is the lowest-risk technical path that keeps cost per task and trust under control for a business with no IT team?</div>
+    <div class="nx">Next decision → <b>Can capacity be pooled without outages? (Tab 5)</b></div>
+  </div>
+
+  <div class="cols2 chart-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+    <div class="card">
+      <div class="ttl">Decision ladder: start with the least powerful option that works</div>
+      <div class="sub2">Each owner moves up only when the step below has a passing eval and a clear first win.</div>
+      <div class="ladder">
+        <div class="rung"><div class="step">1</div><div><b>No-code templates on connected tools</b><span>Certified workflows for invoices, reorder alerts and weekly summaries. Lowest trust risk and fastest first win. Target: first win within 5 days.</span></div></div>
+        <div class="rung"><div class="step">2</div><div><b>Agent builder with connectors and approvals</b><span>Owner-defined steps. The agent asks for approval before it sends, posts or pays, and inherits the owner's existing permissions [V, Anthropic pattern].</span></div></div>
+        <div class="rung"><div class="step">3</div><div><b>API and custom build</b><span>For specialized service firms and midmarket software teams with evals and monitoring. Reserved for the committed top tier that also gets Provisioned capacity.</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ttl">Governance controls before any capability release</div>
+      <div class="sub2">Controls are design requirements for this strategy, not claims about any vendor's product.</div>
+      <ul class="check">
+        <li><b>Inherited permissions.</b> Connectors act with the owner's existing scopes and nothing broader.</li>
+        <li><b>Approval gate.</b> Nothing is sent, posted or paid without owner approval.</li>
+        <li><b>Per-business budget with a degrade path.</b> Route to a cheaper model, then to Flex or Batch, then hard-stop. Project-level spend caps exist in Cloud Billing [V].</li>
+        <li><b>Evals gate each template.</b> A failing eval blocks release of that template.</li>
+        <li><b>Traffic and model logging.</b> Log the traffic class and model per request, so downgrades and throttles are visible [V, Flex docs].</li>
+        <li><b>Owner-level explanations.</b> Every failed request says why and what happens next, so support load falls.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="ttl">Model routing: cost per task by task type</div>
+    <div class="sub2">Google's SMB guidance: “Matching the model to the work raises accuracy on the difficult jobs and lowers cost on the simple ones” [V]. Task mix and per-task routing are illustrative [A]. Cheaper tier cost index is 0.35 of premium [A].</div>
+    <div class="cw-sm" style="height:230px"><canvas id="c-task" role="img" aria-label="Bar chart of cost index per task type: all premium, routed by rule, and all cheap"></canvas></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Task type</th><th class="num">Share of tasks [A]</th><th>Routing rule</th><th class="num">Premium index</th><th class="num">Routed index</th><th>Quality risk if routed</th></tr></thead>
+        <tbody>
+          <tr><td>Invoice and receipt categorization</td><td class="num">35%</td><td>Cheaper tier, sample-audited</td><td class="num">1.00</td><td class="num">0.35</td><td>Low: structured output with eval</td></tr>
+          <tr><td>Customer reply drafts</td><td class="num">25%</td><td>Cheaper tier, owner approves before send</td><td class="num">1.00</td><td class="num">0.35</td><td>Low: approval gate applies</td></tr>
+          <tr><td>Weekly bookkeeping summary</td><td class="num">15%</td><td>Cheaper tier, escalate on anomaly</td><td class="num">1.00</td><td class="num">0.35</td><td>Medium: escalation threshold needed</td></tr>
+          <tr><td>Inventory reorder reasoning</td><td class="num">15%</td><td>Premium tier</td><td class="num">1.00</td><td class="num">1.00</td><td>High if routed</td></tr>
+          <tr><td>Tax or contract judgment</td><td class="num">10%</td><td>Premium tier with human sign-off</td><td class="num">1.00</td><td class="num">1.00</td><td>High if routed</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cap-note" id="routeNote">Simulator setting: — of tokens routed to the cheaper tier. Blended cost index = 1 − routed share × (1 − 0.35). Gross margin in Tab 3 uses the same cost factor.</div>
+  </div>
+
+  <div class="chart-grid cols3">
+    <div class="card">
+      <div class="ttl">Per-token prices fall; per-task cost is the planning variable</div>
+      <p>Epoch AI estimates the cost of a fixed level of performance has fallen about 47% per quarter since 2023, roughly 13x a year [V]. The authors caveat that the window is short and assume users always pick the cheapest capable model. A business's cost per task depends on its default model, so routing acts now rather than waiting for price declines.</p>
+    </div>
+    <div class="card">
+      <div class="ttl">Newest models may not be on the cheap tier yet</div>
+      <p>Google's Flex documentation lists Flash models but not Gemini 4 Argon or Carbon at the time of research [V]. Routing rules should name a fallback model per task, and the rule must be re-checked whenever the supported list changes.</p>
+    </div>
+    <div class="card">
+      <div class="ttl">Trust gates depth</div>
+      <p>Anthropic's small-business launch asks for approval before it sends, posts or pays, and it inherits the owner's permissions [V]. We treat that as the minimum design, because owners who hold back cite privacy and accuracy [V, HBS].</p>
+    </div>
+  </div>
+
+  <div class="decision-block">
+    <div class="db-ttl">Decision this sets up</div>
+    <p>Fund governance-first templates and a routing rule with a degrade path before adding capability. Set the routed share as a measured target and watch quality by task type. The next tab checks whether capacity can be pooled across these tenants without outages.</p>
+  </div>
+</section>
+<section class="tab-pane" id="t5" role="tabpanel">
+  <div class="qbar">
+    <div class="q"><small>Business question</small>How much capacity does a long tail of small, bursty tenants need, and how should it be split across shared, Flex and Provisioned tiers?</div>
+    <div class="nx">Next decision → <b>What goes in the brief? (Tab 6)</b></div>
+  </div>
+
+  <div class="sim-layout">
+    <aside class="sim-controls" aria-label="Capacity controls">
+      <div class="ttl">Synthetic long-tail demand</div>
+      <div class="sub2">Synthetic tenants with heavy-tailed hourly bursts over 30 days. Demand is in average-tenant units: 1.0 equals one average tenant's mean load.</div>
+
+      <div class="grp-h">Tenants and burstiness</div>
+      <div class="slider-group"><div class="slider-label"><span>Tenant count</span><span class="slider-val" id="v-cn">200</span></div><input type="range" id="s-cn" data-k="cn" min="10" max="1000" step="10" value="200" aria-label="Number of tenants"><div class="slider-hint">Pooling works on the first N tenants in a fixed random draw.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Burstiness (lognormal σ)</span><span class="slider-val" id="v-csigma">0.9</span></div><input type="range" id="s-csigma" data-k="csigma" min="0.2" max="1.5" step="0.1" value="0.9" aria-label="Burstiness sigma"><div class="slider-hint">Higher means rarer, larger bursts within the active hours.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Activity: share of hours active</span><span class="slider-val" id="v-cq">15%</span></div><input type="range" id="s-cq" data-k="cq" min="5" max="50" step="1" value="15" aria-label="Share of hours active percent"><div class="slider-hint">Median active model is idle 96% of hours [V, arXiv 2605.19481].</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Correlation across tenants</span><span class="slider-val" id="v-crho">30%</span></div><input type="range" id="s-crho" data-k="crho" min="0" max="100" step="5" value="30" aria-label="Correlation across tenants percent"><div class="slider-hint">Shared calendar shocks such as tax, payroll and month-end [A]. Measure before sizing.</div></div>
+
+      <div class="grp-h">Tiers and sizing</div>
+      <div class="slider-group"><div class="slider-label"><span>Committed share of tenants (Provisioned)</span><span class="slider-val" id="v-ccom">10%</span></div><input type="range" id="s-ccom" data-k="ccom" min="0" max="30" step="1" value="10" aria-label="Committed share of tenants percent"><div class="slider-hint">Largest tenants get reserved throughput.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Flex-eligible share of shared demand</span><span class="slider-val" id="v-cflex">30%</span></div><input type="range" id="s-cflex" data-k="cflex" min="0" max="60" step="5" value="30" aria-label="Flex-eligible share percent"><div class="slider-hint">Async work scheduled toward off-peak hours.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Sizing percentile</span><span class="slider-val" id="v-cpct">95%</span></div><input type="range" id="s-cpct" data-k="cpct" min="90" max="99.5" step="0.5" value="95" aria-label="Capacity sizing percentile"><div class="slider-hint">Higher percentile means less overflow and more capacity.</div></div>
+      <div class="slider-group"><div class="slider-label"><span>Per-tenant burst cap</span><span class="slider-val" id="v-ccap">20×</span></div><input type="range" id="s-ccap" data-k="ccap" min="5" max="40" step="1" value="20" aria-label="Per-tenant burst cap multiple"><div class="slider-hint">Cap on any tenant's hour, in multiples of its own mean.</div></div>
+    </aside>
+
+    <div class="out-panel">
+      <div class="verdict mid" id="capVerdict"><div><b>Loading demand model.</b></div></div>
+      <div class="out-grid">
+        <div class="out" id="tile-pim"><div class="lbl">Peak-to-mean, one tenant</div><div class="val" id="o-pim">—</div><div class="sub">95th percentile ÷ mean, average tenant</div></div>
+        <div class="out hi" id="tile-ppool"><div class="lbl">Peak-to-mean, pooled</div><div class="val" id="o-ppool">—</div><div class="sub" id="os-ppool"></div></div>
+        <div class="out" id="tile-naive"><div class="lbl">Capacity if each tenant is sized alone</div><div class="val" id="o-naive">—</div><div class="sub">Sum of per-tenant peaks, average-tenant units</div></div>
+        <div class="out hi" id="tile-tier"><div class="lbl">Capacity with tiers</div><div class="val" id="o-tier">—</div><div class="sub" id="os-tier"></div></div>
+        <div class="out ok" id="tile-save"><div class="lbl">Saving vs sizing each tenant alone</div><div class="val" id="o-save">—</div><div class="sub">Pooling and tiers together</div></div>
+        <div class="out" id="tile-util"><div class="lbl">Shared pool utilization</div><div class="val" id="o-util">—</div><div class="sub" id="os-util"></div></div>
+        <div class="out" id="tile-ovf"><div class="lbl">Demand above capacity (overflow)</div><div class="val" id="o-ovf">—</div><div class="sub">Must degrade or queue. Target: under 2%</div></div>
+        <div class="out" id="tile-clip"><div class="lbl">Demand clipped by tenant caps</div><div class="val" id="o-clip">—</div><div class="sub">Burst above the cap, shown to owners as a degrade event</div></div>
+        <div class="out" id="tile-pools"><div class="lbl">Tier-1 Flash pools equivalent</div><div class="val" id="o-pools">—</div><div class="sub" id="os-pools"></div></div>
+        <div class="out" id="tile-split"><div class="lbl">Demand split: shared / Flex / committed</div><div class="val" id="o-split">—</div><div class="sub">Share of average demand by tier</div></div>
+      </div>
+
+      <div class="chart-grid cols2">
+        <div class="card">
+          <div class="ttl">Pooling effect: peak-to-mean vs tenant count</div>
+          <div class="sub2">One tenant alone against the pooled 95th percentile, same draw. Pooling falls fast, then flattens at the correlation floor.</div>
+          <div class="cw-sm"><canvas id="c-pool" role="img" aria-label="Line chart of pooled peak-to-mean ratio by tenant count versus single tenant"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="ttl">Capacity needed: three sizing strategies</div>
+          <div class="sub2">Average-tenant units at the sizing percentile. Tiers sit below a single pool because Flex work is smoothed and Provisioned is reserved only for committed accounts.</div>
+          <div class="cw-sm"><canvas id="c-tiers" role="img" aria-label="Bar chart of capacity: each tenant sized alone, single pool, and tiered"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="ttl">One week of pooled demand by tier</div>
+        <div class="sub2">First 168 hours of the same draw. Shared and Flex stack on the shared pool; committed demand has its own reservation. Line marks shared capacity plus committed reservation.</div>
+        <div class="cw"><canvas id="c-stack" role="img" aria-label="Stacked area chart of hourly demand by tier over one week with capacity line"></canvas></div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="ttl">Quota and throttle guardrails</div>
+        <ul class="check" id="guardList"></ul>
+        <div class="cap-note">Tier thresholds from Google's shared-pool documentation [V]: Tier 1 is $10–$250 of spend over 30 days, with 500K Pro and 2M Flash TPM. A Flash pool at Tier 1 gives four times the TPM of Pro, so model routing sets the headroom an SMB has. Supply context: Alphabet's Q3 2026 capital expenditure was $51.4B [V, SEC 8-K], so plan with scenario bands and lead times, not point forecasts.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="decision-block">
+    <div class="db-ttl">Decision this sets up</div>
+    <p>Pool the long tail on a shared tier, reserve Provisioned capacity only for committed accounts, and move async work to Flex. Set the sizing percentile and per-tenant cap together, so that overflow and degrade events stay inside a target the owners can see. Measure cross-tenant correlation on pilot logs before committing to a pool size.</p>
+  </div>
+</section>
+<section class="tab-pane" id="t6" role="tabpanel">
+  <div class="qbar no-print">
+    <div class="q"><small>Business question</small>What should an executive approve, under which assumptions, and what would change the recommendation?</div>
+    <div class="nx">The brief regenerates from the current sliders.</div>
+  </div>
+  <div class="btn-row no-print" style="margin:0 0 12px">
+    <button class="solid-btn" type="button" id="printBtn">Print or save as PDF</button>
+    <button class="ghost-btn" type="button" id="txtBtn">Download brief as .txt</button>
+    <span style="font-size:11px;color:var(--muted);align-self:center" id="briefStatus"></span>
+  </div>
+  <article class="brief-wrap" id="brief" aria-live="polite"></article>
+</section>
+<details class="method" id="methodology">
+  <summary>Methodology: formulas, assumptions and limits</summary>
+  <div class="mbody">
+    <h4>Scope and labels</h4>
+    <p>This is an independent strategy simulation. Public facts are marked [V] (verified against the cited page) and cited in Sources. Reported secondary figures are marked [S] and cited as reported. Assumptions and illustrative inputs are marked [A] and are model inputs, not forecasts. Customers, spend, funnel and capacity draws are synthetic. Nothing here uses Google data or reflects Google employment.</p>
+
+    <h4>Unit economics (Tab 3)</h4>
+    <div class="formula">Channel shares      s_c = w_c ÷ (w_self + w_partner + w_market),  w = slider weights
+Media per signup   M = CAC × (1.00·s_self + 0.50·s_partner + 0.35·s_market)   [A] multipliers
+Gross margin       GM = 1 − (1 − GM0) × [(1 − r) + r × 0.35]                  r = routed share [A] index
+Credit per signup  C = Grant × 0.60 × (1 − GM)                                 0.60 redemption [A]
+Signups            N = B ÷ (M + C),  B = $5,000,000
+Activated          A = N × act
+Paid customers     P = A × cp
+Take rate          T = 0.15·s_partner + 0.20·s_market                          [A] fees
+Contribution/mo    cm = ARPU × (GM − T)
+Churn (monthly)    m = min(0.90, m0 × (1 + 0.03 × max(0, TTFW − 3)))</div>
+    <p>Outputs. CAC per paid customer = B ÷ P. Churn-adjusted payback is the first month t where the sum of cm × (1 − m)^(j−1) for j = 1..t reaches CAC per paid. LTV(36) = cm × (1 − (1 − m)^36) ÷ m, and LTV/CAC = LTV(36) ÷ CAC per paid. Contribution over H months = P × cm × (1 − (1 − m)^H) ÷ m, and net of budget = contribution − B. NPV(36) = P × Σ(t=1..36) cm × (1 − m)^(t−1) ÷ 1.12^(t/12) − B. 90-day retention = (1 − m)^3. SOM (Tab 1) = P × ARPU × 12.</p>
+    <p>Budget check. Allocation is media per channel, s_c × N × CAC × mult_c, plus credits, N × C. These add to exactly $5M, and the page checks this on every update. Acquisition cost counts credits inside the $5M, so credits are CAC, not a separate giveaway.</p>
+    <p>Consistency rules. Only paid customers count toward the 10,000 target. Signups are reached customers, not customers. Platform take rates reduce contribution and are not in the budget. A cohort pays its acquisition once, at month 0.</p>
+
+    <h4>Capacity and demand (Tab 5)</h4>
+    <div class="formula">Tenant scale       s_i = exp(0.5·g_i − 0.125),  g_i ~ N(0,1)            (mean 1)
+Daily shape        d_t = 1 + 0.6·cos(2π·(hour_t − 14)/24)                  (mean 1 per day)
+Active hour        x < min(0.95, q × d_t), x = common draw w_t with prob. ρ, else own draw u_it
+Raw demand         X_it = s_i × exp(σ·z_it − σ²/2) ÷ q  when active, else 0
+Capped demand      min(X_it, cap × s_i)
+Committed set      largest round(c × N) tenants by s_i  (Provisioned)
+Flex smoothing     F_t = f × (0.8 × mean(Y_n) + 0.2 × Y_n,t)                 f = flex share, γ = 0.8 [A]
+Shared load        Sh_t = (1 − f) × Y_n,t + F_t
+Sizing             C_shared = Q_p(Sh),  C_prov = Q_p(Y_c)                     Q_p = nearest-rank percentile
+Overflow           Σ max(0, Sh − C_shared) + max(0, Y_c − C_prov)  ÷  Σ (Sh + Y_c)
+Naive capacity     Σ_i Q_p(X_i)                 (each tenant sized alone)
+Single pool        Q_p(Σ_i X_i)
+Tiered capacity    C_shared + C_prov
+Peak-to-mean       Q_0.95(series) ÷ mean(series)
+Tier-1 Flash pools (tiered capacity × 2,000 TPM) ÷ 2,000,000 TPM                 2K TPM per average tenant [A]</div>
+    <p>Why pooling works and where it stops. Independent bursts average out, so the pooled peak-to-mean falls toward 1. Correlation (ρ) keeps shared shocks in the sum, so the pool floors above 1. Flex smoothing assumes 80% of the flexible load can move into troughs. Real Flex has longer latency and higher throttling [V, Flex docs], so 80% is an upper-bound assumption.</p>
+
+    <h4>Sensitivity, constrained search and brief logic</h4>
+    <p>Sensitivity moves each lever by ±20% alone and recomputes NPV(36). The constrained search tries channel weights in 5% steps and keeps the mix with the highest NPV(36) that satisfies: self-serve share at least 20%, partner share between 20% and 50%, marketplace share at most 30%, and credits at most 25% of the budget. Brief logic is rule-based. If payback is 12 months or less and LTV/CAC is 3x or more, the recommendation is to scale. If activation is under 25%, fix activation first. If payback is over 12 months, shift the mix and cap credits. Otherwise, fund with checkpoints. Flip conditions are the activation and credit-to-paid values at which payback first reaches 12 months, found by scanning each in 1-point steps.</p>
+
+    <h4>Key assumptions and their status</h4>
+    <ul>
+      <li>Self-serve CAC $25 per signup, partner 0.50x, marketplace 0.35x of self-serve [A].</li>
+      <li>Credit redemption 60%; cheaper tier 0.35 of premium cost per token [A].</li>
+      <li>Partner revenue share 15%; marketplace platform fee 20% [A].</li>
+      <li>Time-to-first-win penalty: churn rises 3% per day beyond 3 days [A].</li>
+      <li>Discount rate 12% a year for NPV [A].</li>
+      <li>Segment firm counts, spend, readiness and reachability are synthetic [A]. Chamber, Census and Babson figures are cited in Sources [V or S].</li>
+      <li>Task mix and routing shares are illustrative [A]. Provisioned capacity is sized at the same percentile as shared capacity [A].</li>
+      <li>Tenant correlation is an assumption. Measure it on pilot logs before sizing a pool [A].</li>
+    </ul>
+
+    <h4>Limits</h4>
+    <ul>
+      <li>Synthetic demand. The model cannot predict a real firm's workload, and the burst shape is a stylized choice.</li>
+      <li>Babson figures come from Goldman program alumni and are not representative of small businesses.</li>
+      <li>Google pricing and tier thresholds are as documented at research time, and they change. Re-check before quoting.</li>
+      <li>Credit resale and free-tier tightening are reported secondary items [S] and are not modeled.</li>
+    </ul>
+  </div>
+</details>
+
+<details class="method" id="sources">
+  <summary>Sources</summary>
+  <div class="mbody">
+    <p style="margin-top:12px">Verified [V] items were checked against the cited page during research. Reported [S] items come from secondary coverage and are cited cautiously.</p>
+    <ol class="src" style="margin-top:8px">
+      <li>[V] NBC News, Oct 22, 2026, on the Small Business AI Institute and Babson alumni survey: <a href="https://www.nbcnews.com/business/ceo-interviews/goldman-sachs-small-business-ai-institute-rcna604621" target="_blank" rel="noopener">nbcnews.com/business/ceo-interviews/goldman-sachs-small-business-ai-institute-rcna604621</a></li>
+      <li>[V] Fortune, Oct 23, 2026, on frontier models and small business: <a href="https://fortune.com/2026/10/23/david-solomon-frontier-models-not-needed-small-business/" target="_blank" rel="noopener">fortune.com/2026/10/23/david-solomon-frontier-models-not-needed-small-business/</a></li>
+      <li>[V] Google Cloud Blog, Oct 8, 2026, on SMB Gemini strategy (vendor source): <a href="https://cloud.google.com/blog/topics/startups/how-to-grow-your-small-business-using-google-gemini" target="_blank" rel="noopener">cloud.google.com/blog/topics/startups/how-to-grow-your-small-business-using-google-gemini</a></li>
+      <li>[V] Harvard Business School, Institute for Business in Global Society, on small-business AI adoption: <a href="https://www.hbs.edu/bigs/small-business-adopting-ai" target="_blank" rel="noopener">hbs.edu/bigs/small-business-adopting-ai</a></li>
+      <li>[V] U.S. Census Bureau, Business Trends and Outlook Survey, May 2026: <a href="https://www.census.gov/library/stories/2026/05/ai-use-businesses.html" target="_blank" rel="noopener">census.gov/library/stories/2026/05/ai-use-businesses.html</a></li>
+      <li>[V] Federal Reserve Bank of Minneapolis, May 29, 2026, on AI adoption by firm size: <a href="https://www.minneapolisfed.org/article/2026/ai-adoption-in-business-grows-steadily-but-unevenly" target="_blank" rel="noopener">minneapolisfed.org/article/2026/ai-adoption-in-business-grows-steadily-but-unevenly</a></li>
+      <li>[V] Anthropic, May 13, 2026, Claude for Small Business: <a href="https://www.anthropic.com/news/claude-for-small-business" target="_blank" rel="noopener">anthropic.com/news/claude-for-small-business</a></li>
+      <li>[V] Epoch AI, Sept 22, 2026, "The plunging price of thought": <a href="https://epoch.ai/publications/the-plunging-price-of-thought" target="_blank" rel="noopener">epoch.ai/publications/the-plunging-price-of-thought</a></li>
+      <li>[V] Google Cloud documentation, dynamic shared quota and tier thresholds: <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/dynamic-shared-quota" target="_blank" rel="noopener">docs.cloud.google.com/vertex-ai/generative-ai/docs/dynamic-shared-quota</a></li>
+      <li>[V] Google Cloud documentation, Flex PayGo: <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/flex-paygo" target="_blank" rel="noopener">docs.cloud.google.com/vertex-ai/generative-ai/docs/flex-paygo</a></li>
+      <li>[V] arXiv 2605.19481, cloud model-utilization trace study (idle-hours figures): <a href="https://arxiv.org/html/2605.19481v1" target="_blank" rel="noopener">arxiv.org/html/2605.19481v1</a></li>
+      <li>[V] Alphabet Q3 2026 earnings exhibit (SEC Form 8-K, capital expenditure): <a href="https://www.sec.gov/Archives/edgar/data/0001652044/000165204426000080/googexhibit991q32026.htm" target="_blank" rel="noopener">sec.gov/Archives/edgar/data/0001652044/000165204426000080/googexhibit991q32026.htm</a></li>
+      <li>[S, reported] Okta Threat Intelligence on resale of cloud startup credits, via GBHackers: <a href="https://gbhackers.com/hackers-abuse-cloud-startup-credits/" target="_blank" rel="noopener">gbhackers.com/hackers-abuse-cloud-startup-credits/</a></li>
+      <li>[S, reported] Intuit 2026 AI Impact Report (vendor research; trust ranked above cost as a barrier): <a href="https://quickbooks.intuit.com/r/small-business-data/ai-impact-report/" target="_blank" rel="noopener">quickbooks.intuit.com/r/small-business-data/ai-impact-report/</a></li>
+    </ol>
+  </div>
+</details>
+</main>
+
+<footer>
+  <span>Built by <strong>Astha Jain</strong></span>
+  <a href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn ↗</a>
+  <a href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub ↗</a>
+  <a href="https://asthaj12.github.io/" target="_blank" rel="noopener">Portfolio ↗</a>
+  <a href="mailto:asthajain.sc@gmail.com">Email</a>
+  <span style="margin-left:auto;color:var(--muted)">Independent simulation · Synthetic data · Cloud AI Strategy Lab</span>
+</footer>
+<script>
+const B_TOTAL = 5000000;
+const TARGET_PAID = 10000;
+const CHANNELS = ["self", "partner", "market"];
+const CH_MULT = { self: 1, partner: 0.5, market: 0.35 };
+const CH_TAKE = { self: 0, partner: 0.15, market: 0.2 };
+const CRED_REDEEM = 0.6;
+const CHEAP_IDX = 0.35;
+const DISC_RATE = 0.12;
+const HOURS = 720;
+const MAX_TENANTS = 1000;
+const FLEX_SMOOTH = 0.8;
+const MEAN_TENANT_TPM = 2000;
+const TIER1_FLASH_TPM = 2000000;
+
+function mulberry32(a) {
+  return function () {
+    let t = (a += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function gauss(r) {
+  let u = 0;
+  while (u === 0) u = r();
+  const v = r();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+function buildRandomness(seed) {
+  const r = mulberry32(seed);
+  const n = MAX_TENANTS * HOURS;
+  const uSel = new Float32Array(n);
+  const uAct = new Float32Array(n);
+  const nB = new Float32Array(n);
+  for (let k = 0; k < n; k++) {
+    uSel[k] = r();
+    uAct[k] = r();
+    nB[k] = gauss(r);
+  }
+  const g = new Float32Array(MAX_TENANTS);
+  for (let i = 0; i < MAX_TENANTS; i++) g[i] = gauss(r);
+  const w = new Float32Array(HOURS);
+  for (let t = 0; t < HOURS; t++) w[t] = r();
+  const day = new Float64Array(HOURS);
+  for (let t = 0; t < HOURS; t++) day[t] = 1 + 0.6 * Math.cos((2 * Math.PI * ((t % 24) - 14)) / 24);
+  return { uSel, uAct, nB, g, w, day };
+}
+
+function quantile(arr, pct) {
+  const a = Float64Array.from(arr).sort();
+  const idx = Math.min(a.length - 1, Math.max(0, Math.ceil(pct * a.length) - 1));
+  return a[idx];
+}
+
+function meanOf(arr) {
+  let s = 0;
+  for (let i = 0; i < arr.length; i++) s += arr[i];
+  return s / arr.length;
+}
+
+function paybackMonths(cacPaid, cm, m) {
+  if (cm <= 0) return Infinity;
+  let cum = 0;
+  for (let t = 1; t <= 240; t++) {
+    cum += cm * Math.pow(1 - m, t - 1);
+    if (cum >= cacPaid) return t;
+  }
+  return Infinity;
+}
+
+function ltvHorizon(cm, m, H) {
+  if (m <= 0) return cm * H;
+  return (cm * (1 - Math.pow(1 - m, H))) / m;
+}
+
+function unitEcon(p) {
+  const raw = {};
+  let rawSum = 0;
+  CHANNELS.forEach((c) => {
+    raw[c] = Math.max(0, p.mix[c]);
+    rawSum += raw[c];
+  });
+  if (rawSum <= 0) rawSum = 1;
+  const share = {};
+  CHANNELS.forEach((c) => (share[c] = raw[c] / rawSum));
+  const mediaPerSignup = p.cac * CHANNELS.reduce((s, c) => s + share[c] * CH_MULT[c], 0);
+  const gm = 1 - (1 - p.gm0) * ((1 - p.route) + p.route * CHEAP_IDX);
+  const creditPerSignup = p.credit * CRED_REDEEM * (1 - gm);
+  const costPerSignup = mediaPerSignup + creditPerSignup;
+  const signups = B_TOTAL / costPerSignup;
+  const activated = signups * p.act;
+  const paid = activated * p.cp;
+  const takeBlend = CHANNELS.reduce((s, c) => s + share[c] * CH_TAKE[c], 0);
+  const cm = p.arpu * (gm - takeBlend);
+  const churn = Math.min(0.9, p.churn * (1 + 0.03 * Math.max(0, p.ttfw - 3)));
+  const cacPaid = paid > 0 ? B_TOTAL / paid : Infinity;
+  const payback = paybackMonths(cacPaid, cm, churn);
+  const ltv36 = ltvHorizon(cm, churn, 36);
+  const ltvCac = cacPaid > 0 ? ltv36 / cacPaid : 0;
+  const pvt = (m, H) => {
+    let s = 0;
+    for (let t = 1; t <= H; t++) s += cm * Math.pow(1 - churn, t - 1) / Math.pow(1 + DISC_RATE, t / 12);
+    return s;
+  };
+  const contrib12 = paid * ltvHorizon(cm, churn, 12);
+  const contrib24 = paid * ltvHorizon(cm, churn, 24);
+  const npv36 = paid * pvt(churn, 36) - B_TOTAL;
+  const alloc = {};
+  CHANNELS.forEach((c) => (alloc[c] = signups * share[c] * p.cac * CH_MULT[c]));
+  alloc.credits = signups * creditPerSignup;
+  const channelPayback = {};
+  CHANNELS.forEach((c) => {
+    const cpc = (p.cac * CH_MULT[c] + creditPerSignup) / (p.act * p.cp);
+    const cmc = p.arpu * (gm - CH_TAKE[c]);
+    channelPayback[c] = { cacPaid: cpc, cm: cmc, payback: paybackMonths(cpc, cmc, churn) };
+  });
+  return {
+    share, gm, mediaPerSignup, creditPerSignup, costPerSignup, signups, activated, paid,
+    takeBlend, cm, churn, cacPaid, payback, ltv36, ltvCac, contrib12, contrib24,
+    net12: contrib12 - B_TOTAL, net24: contrib24 - B_TOTAL, npv36,
+    ret90: Math.pow(1 - churn, 3), progress: paid / TARGET_PAID, alloc, channelPayback
+  };
+}
+
+function scenarioCheck(e) {
+  const allocSum = Object.values(e.alloc).reduce((a, b) => a + b, 0);
+  return Math.abs(allocSum - B_TOTAL) < 1;
+}
+
+function buildTenants(R, p) {
+  const X = new Float64Array(MAX_TENANTS * HOURS);
+  const scale = new Float64Array(MAX_TENANTS);
+  const rawBy = new Float64Array(MAX_TENANTS);
+  const capBy = new Float64Array(MAX_TENANTS);
+  let indSum = 0;
+  for (let i = 0; i < MAX_TENANTS; i++) {
+    const s = Math.exp(0.5 * R.g[i] - 0.125);
+    scale[i] = s;
+    let rs = 0;
+    let cs = 0;
+    for (let t = 0; t < HOURS; t++) {
+      const k = i * HOURS + t;
+      const x = R.uSel[k] < p.rho ? R.w[t] : R.uAct[k];
+      const act = x < Math.min(0.95, p.q * R.day[t]);
+      const raw = act ? (s * Math.exp(p.sigma * R.nB[k] - 0.5 * p.sigma * p.sigma)) / p.q : 0;
+      const capped = Math.min(raw, p.cap * s);
+      X[k] = capped;
+      rs += raw;
+      cs += capped;
+    }
+    rawBy[i] = rs;
+    capBy[i] = cs;
+    if (i < 200) {
+      const tenant = X.subarray(i * HOURS, (i + 1) * HOURS);
+      const mu = meanOf(tenant);
+      indSum += mu > 0 ? quantile(tenant, 0.95) / mu : 0;
+    }
+  }
+  return { X, scale, rawBy, capBy, indP2M: indSum / 200 };
+}
+
+function capacityModel(T, p) {
+  const N = p.N;
+  const { X, scale, rawBy, capBy } = T;
+  const order = Array.from({ length: N }, (_, i) => i).sort((a, b) => scale[b] - scale[a]);
+  const k = Math.round(p.committed * N);
+  const isC = new Uint8Array(N);
+  for (let j = 0; j < k; j++) isC[order[j]] = 1;
+  const Y = new Float64Array(HOURS);
+  const Yc = new Float64Array(HOURS);
+  const tenant = new Float64Array(HOURS);
+  let naive = 0;
+  let rawSum = 0;
+  let cappedSum = 0;
+  for (let i = 0; i < N; i++) {
+    for (let t = 0; t < HOURS; t++) {
+      const v = X[i * HOURS + t];
+      tenant[t] = v;
+      Y[t] += v;
+      if (isC[i]) Yc[t] += v;
+    }
+    naive += quantile(tenant, p.pct);
+    rawSum += rawBy[i];
+    cappedSum += capBy[i];
+  }
+  const Yn = new Float64Array(HOURS);
+  for (let t = 0; t < HOURS; t++) Yn[t] = Y[t] - Yc[t];
+  const meanN = meanOf(Yn);
+  const Sh = new Float64Array(HOURS);
+  const Fl = new Float64Array(HOURS);
+  const Dr = new Float64Array(HOURS);
+  for (let t = 0; t < HOURS; t++) {
+    Dr[t] = (1 - p.flex) * Yn[t];
+    Fl[t] = p.flex * (FLEX_SMOOTH * meanN + (1 - FLEX_SMOOTH) * Yn[t]);
+    Sh[t] = Dr[t] + Fl[t];
+  }
+  const Cs = quantile(Sh, p.pct);
+  const Cp = k > 0 ? quantile(Yc, p.pct) : 0;
+  const Cpool = quantile(Y, p.pct);
+  let overflowSum = 0;
+  let demandSum = 0;
+  for (let t = 0; t < HOURS; t++) {
+    overflowSum += Math.max(0, Sh[t] - Cs) + Math.max(0, Yc[t] - Cp);
+    demandSum += Sh[t] + Yc[t];
+  }
+  const meanY = meanOf(Y);
+  const meanSh = meanOf(Sh);
+  const meanYc = meanOf(Yc);
+  const tierTotal = Cs + Cp;
+  const capTPM = tierTotal * MEAN_TENANT_TPM;
+  return {
+    N, k, naive, Cpool, Cs, Cp, tierTotal,
+    pooledP2M: meanY > 0 ? quantile(Y, 0.95) / meanY : 0,
+    savings: naive > 0 ? 1 - tierTotal / naive : 0,
+    utilShared: Cs > 0 ? meanSh / Cs : 0,
+    utilTotal: tierTotal > 0 ? (meanSh + meanYc) / tierTotal : 0,
+    overflow: demandSum > 0 ? overflowSum / demandSum : 0,
+    capClip: rawSum > 0 ? 1 - cappedSum / rawSum : 0,
+    shareCommitted: meanY > 0 ? meanYc / meanY : 0,
+    shareFlex: meanY > 0 ? meanOf(Fl) / meanY : 0,
+    shareDirect: meanY > 0 ? meanOf(Dr) / meanY : 0,
+    capTPM,
+    tier1Pools: capTPM / TIER1_FLASH_TPM,
+    series: { Dr: Array.from(Dr.slice(0, 168)), Fl: Array.from(Fl.slice(0, 168)), Yc: Array.from(Yc.slice(0, 168)), Cs, Cp }
+  };
+}
+
+function poolingCurve(T, ns) {
+  const pts = [];
+  const Y = new Float64Array(HOURS);
+  const ordered = ns.slice().sort((a, b) => a - b);
+  let j = 0;
+  const last = ordered[ordered.length - 1];
+  for (let i = 0; i < last; i++) {
+    for (let t = 0; t < HOURS; t++) Y[t] += T.X[i * HOURS + t];
+    if (ordered[j] === i + 1) {
+      const mu = meanOf(Y);
+      pts.push({ n: i + 1, p2m: mu > 0 ? quantile(Y, 0.95) / mu : 0 });
+      j++;
+    }
+  }
+  return pts;
+}
+(function () {
+const SEG = {
+  digital: { name: "Digital startups", firms: 1.2, ready: 4.2, spend: 960, arpu: 80, cac: 35, gm: 58, reach: 0.6, desc: "AI-native apps and founder-led startups that adopt tools quickly" },
+  mid: { name: "Midmarket software companies", firms: 0.2, ready: 4.5, spend: 1800, arpu: 150, cac: 180, gm: 65, reach: 0.4, desc: "Product teams embedding AI into their own software" },
+  smb: { name: "Traditional small businesses", firms: 6.5, ready: 2.5, spend: 540, arpu: 45, cac: 60, gm: 48, reach: 0.2, desc: "Bookkeeping, invoicing and inventory on tools they already use" },
+  svc: { name: "Specialized service firms", firms: 1.1, ready: 3.2, spend: 1200, arpu: 100, cac: 95, gm: 55, reach: 0.25, desc: "Clinics, agencies and trades with domain-specific workflows" }
+};
+const PRESETS = {
+  conservative: { mself: 55, mpartner: 30, mmarket: 15, cac: 26, credit: 12, act: 28, ttfw: 7, cp: 13, arpu: 58, gm0: 37, route: 30, churn: 3.5 },
+  base: { mself: 45, mpartner: 35, mmarket: 20, cac: 25, credit: 15, act: 32, ttfw: 5, cp: 15, arpu: 60, gm0: 38, route: 40, churn: 3.5 },
+  aggressive: { mself: 30, mpartner: 40, mmarket: 30, cac: 22, credit: 18, act: 40, ttfw: 3, cp: 18, arpu: 75, gm0: 42, route: 55, churn: 3.5 }
+};
+const PRESET_LABEL = { conservative: "Conservative", base: "Base", aggressive: "Aggressive" };
+const ECON_KEYS = ["mself", "mpartner", "mmarket", "cac", "credit", "act", "ttfw", "cp", "arpu", "gm0", "route", "churn"];
+const CAP_KEYS = ["cn", "csigma", "cq", "crho", "ccom", "cflex", "cpct", "ccap"];
+const POOL_NS = [1, 2, 5, 10, 25, 50, 100, 200, 500, 1000];
+const charts = {};
+let activeSeg = "digital";
+let activeTab = "t1";
+
+const $ = (id) => document.getElementById(id);
+const fmtNum = (x) => (isFinite(x) ? Math.round(x).toLocaleString("en-US") : "—");
+const fmtPct = (x, d) => (isFinite(x) ? (x * 100).toFixed(d || 0) + "%" : "—");
+const fmtMonths = (x) => (isFinite(x) ? x + " mo" : "No payback");
+function fmtMoney(x) {
+  if (!isFinite(x)) return "—";
+  const sign = x < 0 ? "−" : "";
+  const a = Math.abs(x);
+  let s;
+  if (a >= 1e9) s = (a / 1e9).toFixed(2) + "B";
+  else if (a >= 1e6) s = (a / 1e6).toFixed(2) + "M";
+  else if (a >= 1e4) s = (a / 1e3).toFixed(0) + "K";
+  else s = Math.round(a).toLocaleString("en-US");
+  return sign + "$" + s;
+}
+const fmtSigned = (x) => (x >= 0 ? "+" : "") + fmtMoney(x);
+
+function sliderText(k, v) {
+  switch (k) {
+    case "cac": case "credit": return "$" + v;
+    case "act": case "cp": case "gm0": case "route": case "churn": case "cq": case "crho": case "ccom": case "cflex": case "cpct": return v + "%";
+    case "ttfw": return v + " d";
+    case "arpu": return "$" + v + "/mo";
+    case "csigma": return Number(v).toFixed(1);
+    case "ccap": return v + "×";
+    default: return String(v);
+  }
+}
+function readSlider(k) { return +$("s-" + k).value; }
+function refreshSliderText(k) { $("v-" + k).textContent = sliderText(k, readSlider(k)); }
+function setSlider(k, v) {
+  $("s-" + k).value = v;
+  refreshSliderText(k);
+}
+
+function econParams() {
+  return {
+    mix: { self: readSlider("mself"), partner: readSlider("mpartner"), market: readSlider("mmarket") },
+    cac: readSlider("cac"), credit: readSlider("credit"), act: readSlider("act") / 100,
+    ttfw: readSlider("ttfw"), cp: readSlider("cp") / 100, arpu: readSlider("arpu"),
+    gm0: readSlider("gm0") / 100, route: readSlider("route") / 100, churn: readSlider("churn") / 100
+  };
+}
+function capParams() {
+  return {
+    N: readSlider("cn"), sigma: readSlider("csigma"), q: readSlider("cq") / 100, rho: readSlider("crho") / 100,
+    committed: readSlider("ccom") / 100, flex: readSlider("cflex") / 100, pct: readSlider("cpct") / 100, cap: readSlider("ccap")
+  };
+}
+function presetMatch() {
+  const names = Object.keys(PRESETS);
+  for (const n of names) {
+    if (ECON_KEYS.every((k) => readSlider(k) === PRESETS[n][k])) return n;
+  }
+  return null;
+}
+function highlightPresets() {
+  const m = presetMatch();
+  document.querySelectorAll(".preset-btn").forEach((b) => {
+    const on = b.dataset.preset === m;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+}
+function applyPreset(name) {
+  ECON_KEYS.forEach((k) => setSlider(k, PRESETS[name][k]));
+  highlightPresets();
+  scheduleRender();
+}
+
+let pending = false;
+function scheduleRender() {
+  if (pending) return;
+  pending = true;
+  requestAnimationFrame(() => {
+    pending = false;
+    render();
+  });
+}
+
+function marketSizes() {
+  let tam = 0;
+  let sam = 0;
+  Object.values(SEG).forEach((s) => {
+    const t = s.firms * s.spend;
+    tam += t;
+    sam += t * s.reach * (s.ready / 5);
+  });
+  return { tam: tam * 1e6, sam: sam * 1e6 };
+}
+
+function tierColor(v) {
+  return v <= 12 ? "#1baf7a" : "#818cf8";
+}
+
+function renderEcon() {
+  const p = econParams();
+  const e = unitEcon(p);
+  window.__lastEcon = e;
+  $("o-signups").textContent = fmtNum(e.signups);
+  $("o-activated").textContent = fmtNum(e.activated);
+  $("os-activated").textContent = "Activation " + fmtPct(p.act) + " of signups";
+  $("o-paid").textContent = fmtNum(e.paid);
+  $("os-paid").textContent = "Credit-to-paid " + fmtPct(p.cp) + " of activated";
+  $("o-cacpaid").textContent = fmtMoney(e.cacPaid);
+  $("o-payback").textContent = fmtMonths(e.payback);
+  $("tile-payback").className = "out " + (e.payback <= 12 ? "ok" : "bad");
+  $("o-ltvcac").textContent = e.ltvCac.toFixed(1) + "x";
+  $("os-ltvcac").textContent = "LTV(36) " + fmtMoney(e.ltv36) + " per paid customer · target 3x";
+  $("tile-ltvcac").className = "out " + (e.ltvCac >= 3 ? "ok" : "bad");
+  $("o-net12").textContent = fmtSigned(e.net12);
+  $("tile-net12").className = "out " + (e.net12 >= 0 ? "ok" : "bad");
+  $("o-net24").textContent = fmtSigned(e.net24);
+  $("tile-net24").className = "out " + (e.net24 >= 0 ? "ok" : "bad");
+  $("o-npv").textContent = fmtSigned(e.npv36);
+  $("tile-npv").className = "out " + (e.npv36 >= 0 ? "ok" : "bad");
+  $("o-ret").textContent = fmtPct(e.ret90);
+  $("o-progress").textContent = fmtPct(e.progress);
+  $("os-progress").textContent = fmtNum(e.paid) + " paid of 10,000 target";
+  $("o-cm").textContent = "$" + e.cm.toFixed(2) + "/mo";
+  $("os-cm").textContent = "Gross margin " + fmtPct(e.gm) + " · channel take " + fmtPct(e.takeBlend, 1);
+  $("mixNote").textContent = "Effective shares: self-serve " + fmtPct(e.share.self) + " · partner " + fmtPct(e.share.partner) + " · marketplace " + fmtPct(e.share.market) + ". Weights are normalized, so they need not sum to 100.";
+
+  const hit = e.paid >= 10000;
+  const pbOk = e.payback <= 12;
+  const ltvOk = e.ltvCac >= 3;
+  const cls = hit && pbOk && ltvOk ? "ok" : e.npv36 < 0 ? "bad" : "mid";
+  const scen = presetMatch();
+  const name = scen ? PRESET_LABEL[scen] : "Custom";
+  $("verdict").className = "verdict " + cls;
+  $("verdict").innerHTML = "<div><b>" + name + " scenario:</b> it " +
+    (hit ? "reaches " + fmtNum(e.paid) + " paid customers, meeting the 10,000 target" : "reaches " + fmtNum(e.paid) + " paid customers, short of the 10,000 target") +
+    ", " + (isFinite(e.payback) ? "pays back in " + e.payback + " months (target 12)" : "does not pay back at this churn") +
+    ", and LTV/CAC is " + e.ltvCac.toFixed(1) + "x (target 3x). Three-year NPV is " + fmtSigned(e.npv36) + ".</div>";
+
+  const raw = ["self", "partner", "market"].map((c) => e.channelPayback[c].payback);
+  charts.channel.data.datasets[0].data = raw.map((v) => (isFinite(v) ? Math.min(60, v) : 60));
+  charts.channel.data.datasets[0].backgroundColor = raw.map(tierColor);
+  charts.channel.$raw = raw;
+  charts.channel.update("none");
+
+  charts.alloc.data.datasets[0].data = [e.alloc.self / 1e6, e.alloc.partner / 1e6, e.alloc.market / 1e6, e.alloc.credits / 1e6];
+  charts.alloc.update("none");
+
+  const cum = [];
+  for (let t = 0; t <= 36; t++) {
+    cum.push((e.paid * e.cm * (1 - Math.pow(1 - e.churn, t)) / e.churn - 5e6) / 1e6);
+  }
+  charts.cum.data.datasets[0].data = cum;
+  charts.cum.update("none");
+
+  renderSens(p, e);
+}
+
+function renderSens(p, e) {
+  const rows = [
+    ["Activation rate", "act", p.act, fmtPct],
+    ["Credit-to-paid conversion", "cp", p.cp, fmtPct],
+    ["Self-serve CAC per signup", "cac", p.cac, (v) => "$" + v.toFixed(0)],
+    ["ARPU per month", "arpu", p.arpu, (v) => "$" + v.toFixed(0)],
+    ["Gross margin, all-premium", "gm0", p.gm0, fmtPct],
+    ["Base monthly churn", "churn", p.churn, (v) => fmtPct(v, 1)]
+  ];
+  let html = "";
+  rows.forEach((r) => {
+    const base = r[2];
+    const lo = unitEcon({ ...p, [r[1]]: base * 0.8 }).npv36;
+    const hi = unitEcon({ ...p, [r[1]]: base * 1.2 }).npv36;
+    const cls = (v) => (v > e.npv36 ? "pos" : v < e.npv36 ? "neg" : "");
+    html += "<tr><td>" + r[0] + "<br><span style='font-size:10px;color:var(--muted)'>" + r[3](base * 0.8) + " / " + r[3](base * 1.2) + "</span></td>" +
+      "<td class='num " + cls(lo) + "'>" + fmtSigned(lo) + "</td><td class='num " + cls(hi) + "'>" + fmtSigned(hi) + "</td></tr>";
+  });
+  $("sensBody").innerHTML = html;
+  renderOptimizer(p, e);
+}
+
+function bestMix(p) {
+  let best = null;
+  for (let s = 0; s <= 100; s += 5) {
+    for (let q = 0; q <= 100 - s; q += 5) {
+      const m = 100 - s - q;
+      const e = unitEcon({ ...p, mix: { self: s, partner: q, market: m } });
+      const feasible = s / 100 >= 0.2 - 1e-9 && q / 100 >= 0.2 - 1e-9 && q / 100 <= 0.5 + 1e-9 && m / 100 <= 0.3 + 1e-9 && e.alloc.credits / 5e6 <= 0.25 + 1e-9;
+      if (feasible && (!best || e.npv36 > best.npv)) best = { s, q, m, npv: e.npv36, paid: e.paid };
+    }
+  }
+  return best;
+}
+function renderOptimizer(p, e) {
+  const best = bestMix(p);
+  window.__bestMix = best;
+  if (!best) {
+    $("optText").textContent = "No feasible mix at the current credit grant. Lower the credit grant to search again.";
+    return;
+  }
+  const same = best.s === readSlider("mself") && best.q === readSlider("mpartner") && best.m === readSlider("mmarket");
+  if (same || best.npv <= e.npv36 + 1) {
+    $("optText").innerHTML = "The current mix is already the best feasible mix, with three-year NPV of " + fmtSigned(e.npv36) + ".";
+  } else {
+    $("optText").innerHTML = "Best feasible mix: self-serve <b>" + best.s + "%</b>, partner <b>" + best.q + "%</b>, marketplace <b>" + best.m + "%</b>. Three-year NPV " + fmtSigned(best.npv) + " versus " + fmtSigned(e.npv36) + " now (" + fmtSigned(best.npv - e.npv36) + "). Paid customers " + fmtNum(best.paid) + " versus " + fmtNum(e.paid) + ".";
+  }
+}
+
+function renderTab1(p) {
+  const { tam, sam } = marketSizes();
+  const e = window.__lastEcon;
+  const som = e.paid * p.arpu * 12;
+  $("v-tam").textContent = fmtMoney(tam);
+  $("v-sam").textContent = fmtMoney(sam);
+  $("v-som").textContent = fmtMoney(som);
+  $("fb-tam").style.width = "100%";
+  $("fb-sam").style.width = Math.max(2, (sam / tam) * 100).toFixed(1) + "%";
+  $("fb-som").style.width = Math.max(0.6, (som / tam) * 100).toFixed(2) + "%";
+  $("somNote").textContent = "SOM = " + fmtNum(e.paid) + " paid customers × $" + p.arpu + " × 12 = " + fmtMoney(som) + ". That is " + fmtPct(som / sam, 2) + " of SAM. Signups are excluded because they are not customers.";
+  document.querySelectorAll(".seg-btn").forEach((b) => b.classList.toggle("on", b.dataset.seg === activeSeg));
+  document.querySelectorAll("#segTable tbody tr").forEach((r) => (r.style.background = r.dataset.row === activeSeg ? "#eef2ff" : ""));
+}
+
+function renderTab4(p) {
+  const r = p.route;
+  const idx = 1 - r * (1 - 0.35);
+  $("routeNote").textContent = "Simulator setting: " + fmtPct(r) + " of tokens routed to the cheaper tier. Blended cost index = 1 − " + r.toFixed(2) + " × 0.65 = " + idx.toFixed(2) + ", which is " + fmtPct(1 - idx) + " below all-premium. Gross margin in Tab 3 uses the same cost factor.";
+}
+
+function showTab(id) {
+  activeTab = id;
+  document.querySelectorAll(".tab-btn").forEach((b) => {
+    const on = b.dataset.tab === id;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  document.querySelectorAll(".tab-pane").forEach((pn) => pn.classList.toggle("active", pn.id === id));
+  render();
+}
+
+function barChart(id, labels, datasets, opts) {
+  const el = $(id);
+  if (!el || !window.Chart) return null;
+  return new Chart(el, {
+    type: "bar",
+    data: { labels, datasets },
+    options: Object.assign({
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { grid: { color: "#e1e0d9" }, ticks: { font: { size: 10 } } } }
+    }, opts || {})
+  });
+}
+
+function initCharts() {
+  if (!window.Chart) return;
+  Chart.defaults.font.size = 10;
+  Chart.defaults.color = "#52514e";
+  charts.adopt = barChart("c-adopt", ["2023", "2024", "2025"], [{ label: "Small businesses using generative AI (%)", data: [23, 40, 58], backgroundColor: ["#c7d2fe", "#818cf8", "#6366f1"], borderRadius: 4 }], {
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.raw + "%" } } },
+    scales: { y: { beginAtZero: true, max: 70, grid: { color: "#e1e0d9" }, ticks: { callback: (v) => v + "%", font: { size: 10 } } }, x: { grid: { display: false } } }
+  });
+  charts.size = barChart("c-size", ["Fewer than 20 employees", "250 or more"], [{ label: "Firms using AI (%)", data: [17, 30], backgroundColor: ["#94a3b8", "#6366f1"], borderRadius: 4 }], {
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.raw + "%" } } },
+    scales: { y: { beginAtZero: true, max: 40, grid: { color: "#e1e0d9" }, ticks: { callback: (v) => v + "%", font: { size: 10 } } }, x: { grid: { display: false } } }
+  });
+  charts.channel = barChart("c-channel", ["Self-serve", "Partner", "Marketplace"], [{ label: "Payback (months)", data: [60, 60, 60], backgroundColor: ["#818cf8", "#818cf8", "#818cf8"], borderRadius: 4 }], {
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: (c) => (charts.channel.$raw && isFinite(charts.channel.$raw[c.dataIndex]) ? charts.channel.$raw[c.dataIndex] + " months" : "No payback within 20 years") } }
+    },
+    scales: { y: { beginAtZero: true, max: 60, title: { display: true, text: "Months (60 = no payback)", font: { size: 10 } }, grid: { color: "#e1e0d9" } }, x: { grid: { display: false } } }
+  });
+  charts.alloc = new Chart($("c-alloc"), {
+    type: "doughnut",
+    data: { labels: ["Self-serve media", "Partner media", "Marketplace media", "Credits"], datasets: [{ data: [0, 0, 0, 0], backgroundColor: ["#6366f1", "#1baf7a", "#eb6834", "#eda100"], borderWidth: 0 }] },
+    options: { responsive: true, maintainAspectRatio: false, cutout: "58%", plugins: { legend: { position: "right", labels: { boxWidth: 10, font: { size: 10 } } }, tooltip: { callbacks: { label: (c) => c.label + ": $" + c.raw.toFixed(2) + "M" } } } }
+  });
+  charts.cum = new Chart($("c-cum"), {
+    type: "line",
+    data: { labels: Array.from({ length: 37 }, (_, i) => i), datasets: [{ label: "Cumulative net contribution ($M)", data: [], borderColor: "#6366f1", backgroundColor: "rgba(99,102,241,.12)", fill: true, pointRadius: 0, borderWidth: 2, tension: 0.2 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => "$" + c.raw.toFixed(2) + "M net at month " + c.label } } },
+      scales: {
+        x: { title: { display: true, text: "Months after acquisition", font: { size: 10 } }, ticks: { maxTicksLimit: 12, font: { size: 10 } }, grid: { display: false } },
+        y: { title: { display: true, text: "$M, net of $5M", font: { size: 10 } }, grid: { color: "#e1e0d9" }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+  charts.task = barChart("c-task", ["Invoices", "Replies", "Bookkeeping", "Inventory", "Tax/contract"], [
+    { label: "All premium", data: [1, 1, 1, 1, 1], backgroundColor: "#94a3b8", borderRadius: 4 },
+    { label: "Routed by rule", data: [0.35, 0.35, 0.35, 1, 1], backgroundColor: "#1baf7a", borderRadius: 4 },
+    { label: "All cheap (quality risk)", data: [0.35, 0.35, 0.35, 0.35, 0.35], backgroundColor: "#fca5a5", borderRadius: 4 }
+  ], {
+    scales: { y: { beginAtZero: true, max: 1.1, title: { display: true, text: "Cost index per task (premium = 1.00)", font: { size: 10 } }, grid: { color: "#e1e0d9" } }, x: { grid: { display: false } } }
+  });
+}
+
+function bindInputs() {
+  document.querySelectorAll("input[type=range][data-k]").forEach((el) => {
+    el.addEventListener("input", () => {
+      const k = el.dataset.k;
+      refreshSliderText(k);
+      if (ECON_KEYS.indexOf(k) > -1) highlightPresets();
+      scheduleRender();
+    });
+  });
+  document.querySelectorAll(".preset-btn").forEach((b) => b.addEventListener("click", () => applyPreset(b.dataset.preset)));
+  $("resetBtn").addEventListener("click", () => applyPreset("base"));
+  document.querySelectorAll(".seg-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      activeSeg = b.dataset.seg;
+      setSlider("arpu", SEG[activeSeg].arpu);
+      highlightPresets();
+      scheduleRender();
+    });
+  });
+  document.querySelectorAll(".tab-btn").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
+  $("applyOpt").addEventListener("click", () => {
+    const b = window.__bestMix;
+    if (!b) return;
+    setSlider("mself", b.s);
+    setSlider("mpartner", b.q);
+    setSlider("mmarket", b.m);
+    highlightPresets();
+    scheduleRender();
+  });
+}
+let RAND = null;
+const tenantCache = { key: null, T: null, curve: null };
+function getRandomness() {
+  if (!RAND) RAND = buildRandomness(20261105);
+  return RAND;
+}
+function getTenants(cp) {
+  const key = [cp.sigma, cp.q, cp.rho, cp.cap].join("|");
+  if (tenantCache.key !== key) {
+    tenantCache.T = buildTenants(getRandomness(), cp);
+    tenantCache.curve = null;
+    tenantCache.key = key;
+  }
+  return tenantCache.T;
+}
+function getCurve(T) {
+  if (!tenantCache.curve) tenantCache.curve = poolingCurve(T, POOL_NS);
+  return tenantCache.curve;
+}
+
+function initCapCharts() {
+  if (!window.Chart) return;
+  charts.pool = new Chart($("c-pool"), {
+    type: "line",
+    data: {
+      labels: POOL_NS.map(String),
+      datasets: [
+        { label: "Pooled, 95th percentile ÷ mean", data: [], borderColor: "#6366f1", backgroundColor: "#6366f1", tension: 0.25, pointRadius: 3, borderWidth: 2 },
+        { label: "One tenant alone", data: [], borderColor: "#eb6834", borderDash: [6, 4], pointRadius: 0, borderWidth: 2 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } }, tooltip: { callbacks: { label: (c) => c.dataset.label + ": " + c.raw.toFixed(2) + "×" } } },
+      scales: {
+        x: { title: { display: true, text: "Tenants pooled", font: { size: 10 } }, grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { beginAtZero: true, title: { display: true, text: "Peak-to-mean ratio", font: { size: 10 } }, grid: { color: "#e1e0d9" }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+  charts.tiers = new Chart($("c-tiers"), {
+    type: "bar",
+    data: {
+      labels: ["Each tenant alone", "Single shared pool", "Tiered"],
+      datasets: [{ label: "Capacity (average-tenant units)", data: [0, 0, 0], backgroundColor: ["#94a3b8", "#818cf8", "#1baf7a"], borderRadius: 4 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.raw.toFixed(0) + " units" } } },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: "Average-tenant units", font: { size: 10 } }, grid: { color: "#e1e0d9" }, ticks: { font: { size: 10 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+  const hours = Array.from({ length: 168 }, (_, i) => (i % 24 === 0 ? "D" + (i / 24 + 1) : ""));
+  charts.stack = new Chart($("c-stack"), {
+    type: "line",
+    data: {
+      labels: hours,
+      datasets: [
+        { label: "Shared, direct", data: [], stack: "dem", fill: true, backgroundColor: "rgba(99,102,241,.55)", borderColor: "#6366f1", pointRadius: 0, borderWidth: 1 },
+        { label: "Flex (smoothed)", data: [], stack: "dem", fill: true, backgroundColor: "rgba(27,175,122,.55)", borderColor: "#1baf7a", pointRadius: 0, borderWidth: 1 },
+        { label: "Committed (Provisioned)", data: [], stack: "dem", fill: true, backgroundColor: "rgba(235,104,52,.45)", borderColor: "#eb6834", pointRadius: 0, borderWidth: 1 },
+        { label: "Shared capacity", data: [], stack: "capS", borderColor: "#0b0b0b", borderDash: [5, 4], pointRadius: 0, borderWidth: 1.5, fill: false },
+        { label: "Shared + committed reservation", data: [], stack: "capT", borderColor: "#4a3aa7", borderDash: [2, 3], pointRadius: 0, borderWidth: 1.5, fill: false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, autoSkip: false, maxRotation: 0 } },
+        y: { stacked: true, beginAtZero: true, title: { display: true, text: "Load, average-tenant units per hour", font: { size: 10 } }, grid: { color: "#e1e0d9" }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+function renderCap() {
+  const cp = capParams();
+  const T = getTenants(cp);
+  const res = capacityModel(T, cp);
+  const curve = getCurve(T);
+  window.__cap = { cp, res, T };
+  $("o-pim").textContent = T.indP2M.toFixed(1) + "×";
+  $("o-ppool").textContent = res.pooledP2M.toFixed(2) + "×";
+  $("os-ppool").textContent = "Pooled across " + res.N + " tenants";
+  $("o-naive").textContent = fmtNum(res.naive);
+  $("o-tier").textContent = fmtNum(res.tierTotal);
+  $("os-tier").textContent = "Shared " + fmtNum(res.Cs) + " + committed " + fmtNum(res.Cp);
+  $("o-save").textContent = fmtPct(res.savings);
+  $("o-util").textContent = fmtPct(res.utilShared);
+  $("os-util").textContent = "Incl. committed reservation: " + fmtPct(res.utilTotal);
+  $("o-ovf").textContent = (res.overflow * 100).toFixed(1) + "%";
+  $("tile-ovf").className = "out " + (res.overflow <= 0.02 ? "ok" : res.overflow <= 0.05 ? "" : "bad");
+  $("o-clip").textContent = fmtPct(res.capClip, 1);
+  $("o-pools").textContent = res.tier1Pools.toFixed(2);
+  $("os-pools").textContent = "Each Tier-1 Flash pool gives 2M TPM; at 2K TPM per average tenant [A]";
+  $("o-split").textContent = fmtPct(res.shareDirect) + " / " + fmtPct(res.shareFlex) + " / " + fmtPct(res.shareCommitted);
+
+  const cls = res.overflow > 0.05 ? "bad" : res.overflow <= 0.02 && res.savings >= 0.4 ? "ok" : "mid";
+  $("capVerdict").className = "verdict " + cls;
+  $("capVerdict").innerHTML = "<div><b>At " + cp.N + " tenants,</b> pooling cuts peak-to-mean from " + T.indP2M.toFixed(1) + "× for one tenant to " + res.pooledP2M.toFixed(2) +
+    "×. Tiered capacity is " + fmtNum(res.tierTotal) + " average-tenant units, " + fmtPct(res.savings) + " below sizing each tenant alone. Overflow is " + (res.overflow * 100).toFixed(1) +
+    "% at the " + (cp.pct * 100).toFixed(1) + " percentile, and " + fmtPct(res.capClip, 1) + " of burst demand hits the " + cp.cap + "× cap.</div>";
+
+  charts.pool.data.datasets[0].data = curve.map((x) => x.p2m);
+  charts.pool.data.datasets[1].data = curve.map(() => T.indP2M);
+  charts.pool.update("none");
+  charts.tiers.data.datasets[0].data = [res.naive, res.Cpool, res.tierTotal];
+  charts.tiers.update("none");
+  const s = res.series;
+  const n = s.Dr.length;
+  charts.stack.data.datasets[0].data = s.Dr;
+  charts.stack.data.datasets[1].data = s.Fl;
+  charts.stack.data.datasets[2].data = s.Yc;
+  charts.stack.data.datasets[3].data = new Array(n).fill(res.Cs);
+  charts.stack.data.datasets[4].data = new Array(n).fill(res.Cs + res.Cp);
+  charts.stack.update("none");
+
+  $("guardList").innerHTML =
+    "<li><b>Per-tenant cap at " + cp.cap + "× average.</b> The cap clips " + fmtPct(res.capClip, 1) + " of burst demand. Each clipped request is logged as a degrade event the owner can see, not a silent failure.</li>" +
+    "<li><b>Degrade before fail.</b> Over budget or capped: route to a cheaper model, then to Flex or Batch, then queue. A hard stop applies only at the owner's own budget.</li>" +
+    "<li><b>Shared pool sized at the " + (cp.pct * 100).toFixed(1) + " percentile.</b> Overflow is " + (res.overflow * 100).toFixed(1) + "% of demand. Target: 2% or less.</li>" +
+    "<li><b>Explain the 429.</b> Owners see that a rejected request can come from shared-pool load even inside their tier, and when a retry will work [V, Google docs].</li>" +
+    "<li><b>Tier-up path.</b> Show each owner the 30-day spend that moves them up a tier, and the headroom routing to Flash gives them [V].</li>" +
+    "<li><b>Provisioned only for committed accounts.</b> Fixed-term reservations are sized from the committed set's own load: " + fmtNum(res.Cp) + " units at " + (cp.committed * 100).toFixed(0) + "% of tenants.</li>";
+}
+
+function firstValue(p, key, values, pred) {
+  for (let i = 0; i < values.length; i++) {
+    const v = values[i];
+    if (pred(unitEcon({ ...p, [key]: v }))) return v;
+  }
+  return null;
+}
+function rangeVals(lo, hi, step) {
+  const out = [];
+  for (let v = lo; v <= hi + 1e-9; v += step) out.push(Math.round(v * 1e6) / 1e6);
+  return out;
+}
+
+function renderBrief() {
+  const p = econParams();
+  const e = unitEcon(p);
+  const cp = capParams();
+  const T = getTenants(cp);
+  const res = capacityModel(T, cp);
+  const scen = presetMatch();
+  const scenName = scen ? PRESET_LABEL[scen] : "Custom";
+  const seg = SEG[activeSeg];
+  const pbOk = (x) => x.payback <= 12;
+
+  const actNeed = firstValue(p, "act", rangeVals(0.1, 0.6, 0.01), pbOk);
+  const cpNeed = firstValue(p, "cp", rangeVals(0.05, 0.35, 0.01), pbOk);
+  const arpuNeed = firstValue(p, "arpu", rangeVals(10, 150, 1), pbOk);
+  let churnMax = null;
+  rangeVals(0.01, 0.12, 0.005).forEach((v) => {
+    if (unitEcon({ ...p, churn: v }).ltvCac >= 3) churnMax = v;
+  });
+
+  let rec;
+  let why;
+  if (e.payback <= 12 && e.ltvCac >= 3) {
+    rec = "Scale: fund this mix now, with 90-day checkpoints.";
+  } else if (e.npv36 < 0 && !isFinite(e.payback)) {
+    rec = "Do not fund at this scale until activation or credit-to-paid conversion moves.";
+  } else if (p.act < 0.25) {
+    rec = "Fix activation before buying more signups.";
+  } else if (e.payback > 12) {
+    rec = "Shift the mix toward partners and marketplaces, and cap credits, until payback is under 12 months.";
+  } else {
+    rec = "Fund with checkpoints: payback meets 12 months, but LTV/CAC is under 3x.";
+  }
+  why = "Payback " + fmtMonths(e.payback) + " (target 12), LTV/CAC " + e.ltvCac.toFixed(1) + "x (target 3x), three-year NPV " + fmtSigned(e.npv36) + ", " + fmtNum(e.paid) + " paid customers (target 10,000).";
+
+  const chKeys = ["self", "partner", "market"];
+  const chName = { self: "Self-serve", partner: "Partner-led", market: "Marketplace" };
+  let bestCh = null;
+  chKeys.forEach((c) => {
+    const pb = e.channelPayback[c].payback;
+    if (isFinite(pb) && (!bestCh || pb < e.channelPayback[bestCh].payback)) bestCh = c;
+  });
+  const chLine = bestCh
+    ? "<b>" + chName[bestCh] + "</b> has the lowest churn-adjusted payback, at " + e.channelPayback[bestCh].payback + " months. Self-serve " + fmtMonths(e.channelPayback.self.payback) + ", partner " + fmtMonths(e.channelPayback.partner.payback) + ", marketplace " + fmtMonths(e.channelPayback.market.payback) + ". Partner and marketplace fees (15% and 20% of revenue) reduce contribution, so pay for activated businesses rather than signups."
+    : "No channel pays back at this setting. Fix activation or credit-to-paid conversion before choosing a channel.";
+
+  const alloc = [
+    ["Self-serve media", e.alloc.self],
+    ["Partner media", e.alloc.partner],
+    ["Marketplace media", e.alloc.market],
+    ["Credits (counted as CAC)", e.alloc.credits]
+  ];
+  let allocRows = "";
+  alloc.forEach((a) => {
+    allocRows += "<tr><td>" + a[0] + "</td><td class='num'>" + fmtMoney(a[1]) + "</td><td class='num'>" + fmtPct(a[1] / 5e6, 1) + "</td></tr>";
+  });
+  allocRows += "<tr><td><b>Total budget</b></td><td class='num'><b>" + fmtMoney(5e6) + "</b></td><td class='num'><b>100%</b></td></tr>";
+
+  const som = e.paid * p.arpu * 12;
+  const outRows = [
+    ["Customers reached (signups, not customers)", fmtNum(e.signups)],
+    ["Activated businesses", fmtNum(e.activated)],
+    ["Paid customers acquired", fmtNum(e.paid)],
+    ["CAC per paid customer (credits included)", fmtMoney(e.cacPaid)],
+    ["CAC payback, churn-adjusted", fmtMonths(e.payback)],
+    ["LTV / CAC, 36 months", e.ltvCac.toFixed(1) + "x"],
+    ["Net contribution at 12 months", fmtSigned(e.net12)],
+    ["Net contribution at 24 months", fmtSigned(e.net24)],
+    ["Three-year NPV at 12% a year", fmtSigned(e.npv36)],
+    ["90-day retention of paid cohort", fmtPct(e.ret90)],
+    ["Annual revenue run-rate from paid customers (SOM)", fmtMoney(som)]
+  ];
+  let outHtml = "";
+  outRows.forEach((r) => (outHtml += "<tr><td>" + r[0] + "</td><td class='num'>" + r[1] + "</td></tr>"));
+
+  const pilotSignups = (0.05 * 5e6) / e.costPerSignup;
+  const pilotRows = [
+    ["Activation within 7 days", "at least " + fmtPct(p.act), "Binding constraint (Tab 2)"],
+    ["Time to first win", "at most " + p.ttfw + " days", "Each day beyond 3 raises churn 3% [A]"],
+    ["Credit-to-paid conversion", "at least " + fmtPct(p.cp), "Turns activated businesses into payers"],
+    ["CAC per paid customer", "at most " + fmtMoney(e.cacPaid), "Budget gate for scaling"],
+    ["90-day retention", "at least " + fmtPct(e.ret90), "Retention decides LTV"],
+    ["CAC payback, churn-adjusted", "at most 12 months", "Go or no-go for scale-up"]
+  ];
+  let pilotHtml = "";
+  pilotRows.forEach((r) => (pilotHtml += "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td></tr>"));
+
+  const flips = [
+    actNeed !== null ? "Payback reaches 12 months only if activation is at least " + fmtPct(actNeed) + " (now " + fmtPct(p.act) + ")." : "Payback does not reach 12 months anywhere in the 10–60% activation range.",
+    cpNeed !== null ? "Payback reaches 12 months if credit-to-paid conversion is at least " + fmtPct(cpNeed) + " (now " + fmtPct(p.cp) + ")." : "Credit-to-paid conversion alone cannot reach 12 months in the 5–35% range.",
+    arpuNeed !== null ? "Payback reaches 12 months if ARPU is at least $" + arpuNeed + " a month (now $" + p.arpu + ")." : "ARPU alone cannot reach 12 months within $10–$150 a month.",
+    churnMax !== null ? "LTV/CAC stays at 3x or more only while monthly churn is at most " + fmtPct(churnMax, 1) + " (now " + fmtPct(p.churn, 1) + " before the time-to-first-win penalty)." : "LTV/CAC is below 3x even at 1% monthly churn."
+  ];
+  let flipHtml = "";
+  flips.forEach((f) => (flipHtml += "<li>" + f + "</li>"));
+
+  const capLine = "At " + res.N + " tenants, the pooled peak-to-mean is " + res.pooledP2M.toFixed(2) + "× versus " + T.indP2M.toFixed(1) + "× for one tenant. Tiered capacity needs " + fmtNum(res.tierTotal) + " average-tenant units (" + res.tier1Pools.toFixed(2) + " Tier-1 Flash pools at 2K TPM per average tenant [A]), " + fmtPct(res.savings) + " below sizing each tenant alone. Overflow is " + (res.overflow * 100).toFixed(1) + "% at the " + (cp.pct * 100).toFixed(1) + " percentile; " + fmtPct(res.capClip, 1) + " of burst demand hits the " + cp.cap + "× cap and degrades.";
+
+  $("brief").innerHTML =
+    "<div class='brief-head'><div><div class='eyebrow'>Executive decision brief · generated from the live inputs</div><h3>The Next 10,000 AI Customers</h3></div>" +
+    "<div class='meta'>Scenario: " + scenName + " · Focus segment: " + seg.name + "<br>Research date Nov 5, 2026 · Synthetic inputs, illustrative assumptions<br>Independent simulation. Not Google data; not affiliated with or endorsed by Google.</div></div>" +
+    "<div class='brief-rec'><div class='k'>Recommendation</div><div class='v'>" + rec + "</div><div class='why'>" + why + "</div></div>" +
+    "<div class='brief-grid'>" +
+    "<div class='brief-sec'><h5>1 · Target customer segment</h5><p><b>" + seg.name + "</b>: " + seg.desc + ". About " + seg.firms + "M firms, AI readiness " + seg.ready + " of 5, reference ARPU $" + seg.arpu + " a month. The simulator currently uses $" + p.arpu + " a month. Long-tail case: entrepreneurs and small firms that already run one workflow on connected tools.</p></div>" +
+    "<div class='brief-sec'><h5>2 · Recommended distribution channel</h5><p>" + chLine + "</p></div>" +
+    "<div class='brief-sec brief-full'><h5>3 · Investment allocation of $5.0M</h5><table><thead><tr><th>Line</th><th class='num'>Amount</th><th class='num'>Share</th></tr></thead><tbody>" + allocRows + "</tbody></table><p style='margin-top:6px;font-size:10.5px;color:var(--muted)'>Credits and media are CAC and sit inside the $5M. Partner and marketplace fees are paid from revenue, not from the budget.</p></div>" +
+    "<div class='brief-sec brief-full'><h5>4 · Expected financial outcomes</h5><table><tbody>" + outHtml + "</tbody></table></div>" +
+    "<div class='brief-sec'><h5>5 · Three bets</h5><ol><li><b>Partners and marketplaces, paid for activation.</b> Pay on activated businesses, not signups. Target mix: partner " + readSlider("mpartner") + "%, marketplace " + readSlider("mmarket") + "%.</li><li><b>Activation inside existing accounts.</b> Templates and connectors to a first win in " + Math.min(3, p.ttfw) + " days (now " + p.ttfw + "). Activation of " + fmtPct(p.act) + " must rise to " + (actNeed !== null ? fmtPct(actNeed) : "a level outside this range") + " for a 12-month payback.</li><li><b>Governed routing and tiered capacity.</b> Route " + readSlider("route") + "% of tokens to the cheaper tier with a degrade path. Pool shared capacity at the " + (cp.pct * 100).toFixed(1) + " percentile. Reserve Provisioned capacity only for the top " + (cp.committed * 100).toFixed(0) + "% of tenants.</li></ol></div>" +
+    "<div class='brief-sec'><h5>6 · North star and metric tree</h5><p><b>North star:</b> paying businesses that reach a measured outcome (hours or revenue saved) within 90 days.</p><p style='margin-top:6px'>Signups × activation " + fmtPct(p.act) + " × credit-to-paid " + fmtPct(p.cp) + " = " + fmtNum(e.paid) + " paid customers × 90-day retention " + fmtPct(e.ret90) + " = surviving paying businesses × measured outcome per business (set in the pilot, not assumed).</p></div>" +
+    "<div class='brief-sec'><h5>7 · Capacity plan</h5><p>" + capLine + "</p></div>" +
+    "<div class='brief-sec'><h5>8 · Key risks and assumptions</h5><ul><li><b>Trust and privacy holdbacks.</b> Owners who have not handed bookkeeping to AI cite privacy and accuracy [V, HBS]. Intuit reports trust now outranks cost [S, reported].</li><li><b>ARPU ceiling.</b> 73% of AI-using program alumni spend under $100 a month [V]. This case uses $" + p.arpu + " a month.</li><li><b>Correlated demand.</b> Correlation of " + fmtPct(cp.rho) + " keeps the pooled floor at " + res.pooledP2M.toFixed(2) + "×. Measure it before sizing the pool.</li><li><b>Newest models may be off the cheap tier.</b> Flex did not list Gemini 4 Argon at research time [V].</li><li><b>Credit resale and fraud.</b> Gray-market resale of trial and startup credits is reported [S]. Use identity checks and per-account caps.</li><li><b>Assumptions [A].</b> Self-serve CAC $" + p.cac + ", credit redemption 60%, cheaper-tier index 0.35, partner fee 15%, marketplace fee 20%, discount rate 12%.</li></ul></div>" +
+    "<div class='brief-sec brief-full'><h5>9 · Pilot design and success metrics</h5><p>Test two channels (partner-led vs marketplace) against two onboarding variants (template-led vs self-serve). Pilot budget is 5% of $5M, about $250K, buying about " + fmtNum(pilotSignups) + " signups. Read out at day 90 against the thresholds below.</p><div class='tbl-wrap'><table class='pilot-tbl'><thead><tr><th>Metric</th><th>Pass threshold (this scenario)</th><th>Why it matters</th></tr></thead><tbody>" + pilotHtml + "</tbody></table></div></div>" +
+    "<div class='brief-sec'><h5>10 · 90-day plan</h5><ul><li><b>Days 0–30.</b> Connect three templates (invoices, reorder alerts, weekly summary). Build eval gates and the degrade path. Set per-business budget caps. Log traffic class and model for each request.</li><li><b>Days 31–60.</b> Launch the 2×2 pilot. Track activation and time to first win daily. Stop rule: if activation is under 25% at day 60, pause media and fix onboarding.</li><li><b>Days 61–90.</b> Read out against the thresholds. Decide to scale, hold or stop. Re-run this model with observed inputs and update the brief.</li></ul></div>" +
+    "<div class='brief-sec'><h5>11 · What would change this recommendation</h5><ul>" + flipHtml + "</ul></div>" +
+    "</div>" +
+    "<div class='brief-foot'>Generated from the Tab 3 and Tab 5 inputs in this session. Public facts are cited in Methodology and Sources. Synthetic customers, spend and capacity; illustrative assumptions are marked [A]. Independent strategy simulation by Astha Jain.</div>";
+  $("briefStatus").textContent = "Updated from " + scenName.toLowerCase() + " scenario inputs.";
+}
+
+function render() {
+  renderEcon();
+  const p = econParams();
+  renderTab1(p);
+  renderTab4(p);
+  if (activeTab === "t5") renderCap();
+  if (activeTab === "t6") renderBrief();
+}
+
+function init() {
+  initCharts();
+  initCapCharts();
+  bindInputs();
+  ECON_KEYS.forEach(refreshSliderText);
+  CAP_KEYS.forEach(refreshSliderText);
+  $("printBtn").addEventListener("click", () => {
+    showTab("t6");
+    renderBrief();
+    window.print();
+  });
+  $("txtBtn").addEventListener("click", () => {
+    renderBrief();
+    const txt = $("brief").innerText;
+    const blob = new Blob([txt], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "cloud-ai-strategy-brief.txt";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 0);
+    $("briefStatus").textContent = "Downloaded cloud-ai-strategy-brief.txt";
+  });
+  highlightPresets();
+  render();
+}
+init();
+})();
+</script>
+</body>
+</html>

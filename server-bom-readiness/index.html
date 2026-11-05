@@ -4,6 +4,23 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Server BOM Readiness &amp; Shortage Propagation — Astha Jain</title>
+<meta name="description" content="Independent synthetic-data project. Converts server demand into component requirements, reconciles supplier commits and identifies the part that limits completed systems."/>
+<link rel="canonical" href="https://asthaj12.github.io/server-bom-readiness/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='42' font-family='Arial,Helvetica,sans-serif' font-size='27' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EAJ%3C/text%3E%3C/svg%3E"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Astha Jain"/>
+<meta property="og:title" content="Server BOM Readiness &amp; Shortage Propagation — Astha Jain"/>
+<meta property="og:description" content="Independent synthetic-data project. Converts server demand into component requirements, reconciles supplier commits and identifies the part that limits completed systems."/>
+<meta property="og:url" content="https://asthaj12.github.io/server-bom-readiness/"/>
+<meta property="og:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Server BOM Readiness &amp; Shortage Propagation — Astha Jain"/>
+<meta name="twitter:description" content="Independent synthetic-data project. Converts server demand into component requirements, reconciles supplier commits and identifies the part that limits completed systems."/>
+<meta name="twitter:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta name="twitter:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
 <meta name="robots" content="noindex, nofollow"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
@@ -12,8 +29,8 @@
 .banner{background:#fffbeb;border-bottom:1px solid #fcd34d;padding:10px 24px;font-size:12px;color:#92400e;text-align:center}.banner strong{font-weight:700}
 header{max-width:1100px;margin:0 auto;padding:40px 24px 20px}header h1{font-size:28px;font-weight:800;margin-bottom:6px}header p{color:var(--t2);font-size:15px;max-width:720px}
 .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid}.tag.synthetic{background:#f5f3ff;color:#5b21b6;border-color:#ddd6fe}.tag.skill{background:#f0fdf4;color:#166534;border-color:#bbf7d0}
-.grid{max-width:1100px;margin:0 auto;padding:0 24px 48px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:0 4px 16px rgba(15,23,42,.04)}
+.grid{max-width:1100px;margin:0 auto;padding:0 24px 48px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:0 4px 16px rgba(15,23,42,.04);min-width:0;overflow-x:auto}
 .card.full{grid-column:1/-1}.card h2{font-size:17px;font-weight:800;margin-bottom:12px;color:var(--accent)}.card h3{font-size:14px;font-weight:700;margin:14px 0 8px;color:var(--t1)}
 .card p,.card li{font-size:13.5px;color:var(--t2)}.card ul{padding-left:18px}.card li{margin-bottom:4px}
 table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
@@ -22,8 +39,9 @@ td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--t2)}tr:hover
 .chart-wrap{position:relative;height:300px;margin:8px 0}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center}.kpi .val{font-size:22px;font-weight:800;color:var(--t1)}.kpi .lab{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
 .waterfall{display:flex;align-items:flex-end;gap:3px;height:200px;margin:12px 0}.wf-bar{flex:1;border-radius:4px 4px 0 0;position:relative;min-width:30px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:10px;font-weight:700;color:#fff;padding-bottom:4px}.wf-label{position:absolute;bottom:-20px;font-size:10px;color:var(--t3);white-space:nowrap;transform:rotate(-30deg);transform-origin:top left}
-footer{max-width:1100px;margin:0 auto;padding:16px 24px 40px;font-size:12px;color:var(--t3);text-align:center}footer a{color:var(--blue)}
-@media(max-width:768px){.grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
+footer{max-width:1100px;margin:0 auto;padding:16px 24px 40px;font-size:12px;color:var(--t3);text-align:center}footer a{color:var(--blue);overflow-wrap:anywhere}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #d39a28;outline-offset:3px;border-radius:4px}
+@media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr)}.kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -114,7 +132,7 @@ footer{max-width:1100px;margin:0 auto;padding:16px 24px 40px;font-size:12px;colo
   </div>
 </div>
 
-<footer><a href="../index.html#projects">← Back to portfolio</a> · Independent project by Astha Jain · Synthetic data only</footer>
+<footer><a href="../index.html#projects">← Back to portfolio</a> · Independent project by Astha Jain · <a href="mailto:asthajain.sc@gmail.com">asthajain.sc@gmail.com</a> · Synthetic data only</footer>
 
 <script>
 (function(){
