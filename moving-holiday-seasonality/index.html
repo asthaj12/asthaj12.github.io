@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Moving-Holiday Seasonality Model — Astha Jain</title>
+<meta name="description" content="Case study: re-indexing holiday demand history to the holiday instead of the calendar, and separating timing from real growth before committing long-lead buys at Walmart US Food &amp; Grocery."/>
+<link rel="canonical" href="https://asthaj12.github.io/moving-holiday-seasonality/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='42' font-family='Arial,Helvetica,sans-serif' font-size='27' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EAJ%3C/text%3E%3C/svg%3E"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Astha Jain"/>
+<meta property="og:title" content="Moving-Holiday Seasonality Model — Astha Jain"/>
+<meta property="og:description" content="Case study: re-indexing holiday demand history to the holiday instead of the calendar, and separating timing from real growth before committing long-lead buys at Walmart US Food &amp; Grocery."/>
+<meta property="og:url" content="https://asthaj12.github.io/moving-holiday-seasonality/"/>
+<meta property="og:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Moving-Holiday Seasonality Model — Astha Jain"/>
+<meta name="twitter:description" content="Case study: re-indexing holiday demand history to the holiday instead of the calendar, and separating timing from real growth before committing long-lead buys at Walmart US Food &amp; Grocery."/>
+<meta name="twitter:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta name="twitter:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<style>
+/* ── Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg:       #f8fafc;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --border:   #e2e8f0;
+  --border-s: #c7d2fe;
+  --ind:      #6366f1;
+  --ind-l:    #4f46e5;
+  --ind-d:    #3730a3;
+  --em:       #059669;
+  --am:       #d97706;
+  --rose:     #e11d48;
+  --t1:       #0f172a;
+  --t2:       #475569;
+  --t3:       #64748b;
+  --t4:       #cbd5e1;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #d39a28; outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -60px; z-index: 200;
+  background: var(--ind-l); color: #fff;
+  padding: 8px 14px; border-radius: 6px;
+  font-size: 13px; font-weight: 600; transition: top .15s;
+}
+.skip-link:focus { top: 12px; }
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 8px;
+  height: 56px;
+}
+.nav-brand {
+  font-size: 15px; font-weight: 800; letter-spacing: -.02em;
+  color: var(--t1); margin-right: 24px; white-space: nowrap;
+}
+.nav-brand span { color: var(--ind); }
+.nav-items { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow: visible; }
+.nav-link {
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  transition: color .15s, background .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.nav-link.active { color: var(--ind-l); background: rgba(99,102,241,.08); font-weight: 600; }
+
+/* ── Dropdowns ──────────────────────────────────────────────────── */
+.dropdown { position: relative; }
+.dropdown-toggle {
+  display: flex; align-items: center; gap: 5px;
+  border: 0; background: none; font-family: inherit;
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  cursor: pointer; transition: color .15s, background .15s;
+  user-select: none; white-space: nowrap;
+}
+.dropdown-toggle:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.dropdown-toggle svg { width:10px;height:10px;transition:transform .2s; }
+.dropdown:hover .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px;
+  min-width: 220px;
+  box-shadow: 0 20px 60px rgba(15,23,42,.12);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .18s, transform .18s, visibility .18s;
+}
+.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+}
+.dropdown:focus-within .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--t2);
+  transition: background .12s, color .12s;
+}
+.dropdown-item:hover { background: rgba(99,102,241,.12); color: var(--t1); }
+.dropdown-item .di-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.dropdown-item .di-text .di-label { font-weight: 600; color: var(--t1); font-size: 12px; }
+.dropdown-item .di-text .di-sub { font-size: 10px; color: var(--t3); margin-top: 1px; }
+.dropdown-divider { height: 1px; background: var(--border); margin: 5px 2px; }
+
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nav-badge {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--t2);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.nav-badge:hover { background: #eef2ff; border-color: var(--ind); color: var(--ind); }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero { max-width: 1100px; margin: 0 auto; padding: 56px 32px 40px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #eef2ff; border: 1px solid var(--border-s);
+  border-radius: 999px; padding: 4px 14px;
+  font-size: 11px; font-weight: 700; color: var(--ind-l);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-eyebrow::before { content:""; width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1 {
+  font-size: clamp(30px, 4.2vw, 46px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -.03em;
+  color: var(--t1); margin-bottom: 20px;
+}
+.hero h1 .accent { color: var(--ind); }
+.hero .tagline {
+  font-size: 16px; color: var(--t2); max-width: 780px;
+  line-height: 1.65; margin-bottom: 28px;
+}
+.role-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.role-pill { padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--ind); color: #fff; }
+.btn-primary:hover { background: var(--ind-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
+.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-s); }
+.btn-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── KPI tiles ──────────────────────────────────────────────────── */
+.kpi-wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px 40px; }
+.kpi-row {
+  list-style: none;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  background: var(--surface);
+}
+.kpi { padding: 20px 24px; border-right: 1px solid var(--border); }
+.kpi:last-child { border-right: none; }
+.kpi-val { font-size: 28px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; line-height: 1.15; }
+.kpi-val .unit { font-size: 14px; font-weight: 700; color: var(--t2); margin-left: 4px; }
+.kpi-lbl { font-size: 11px; color: var(--t3); margin-top: 6px; text-transform: uppercase; letter-spacing: .05em; }
+.data-note { font-size: 11px; color: var(--t3); margin-top: 10px; }
+
+/* ── Section ────────────────────────────────────────────────────── */
+section { max-width: 1100px; margin: 0 auto; padding: 0 32px 72px; }
+.section-header { margin-bottom: 32px; }
+.section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind-l); margin-bottom: 8px;
+}
+.section-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; line-height: 1.25; }
+.section-sub { font-size: 14px; color: var(--t2); margin-top: 6px; max-width: 760px; }
+.sub-head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--t3); margin: 36px 0 12px; }
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.two-up { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.three-up { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.project-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.project-card:hover { border-color: var(--border-s); box-shadow: 0 0 0 1px rgba(99,102,241,.1), 0 16px 32px rgba(15,23,42,.06); }
+.card-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-ind { background: rgba(99,102,241,.12); color: var(--ind-l); }
+.tag-em  { background: rgba(16,185,129,.12); color: #047857; }
+.tag-am  { background: rgba(245,158,11,.12); color: #b45309; }
+.tag-rose{ background: rgba(244,63,94,.12);  color: #be123c; }
+.card-title { font-size: 16px; font-weight: 700; color: var(--t1); line-height: 1.3; }
+.card-desc  { font-size: 13px; color: var(--t2); line-height: 1.65; }
+.card-desc + .card-desc { margin-top: 0; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.chip {
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 11px; font-weight: 600; color: var(--t2);
+  background: #f8fafc; border: 1px solid var(--border);
+}
+.chip.hi { color: var(--ind-l); background: #eef2ff; border-color: var(--border-s); }
+
+/* Decision cards */
+.decide-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.dc-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--t3); margin-bottom: 6px; }
+.dc-block p { font-size: 13px; color: var(--t2); line-height: 1.65; }
+.opt-stack { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start;
+  padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+  font-size: 13px; color: var(--t2); line-height: 1.55;
+}
+.opt strong { color: var(--t1); }
+.opt-mark {
+  width: 24px; height: 24px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 13px;
+}
+.opt.no  { background: #fff5f7; border-color: #fecdd3; }
+.opt.no .opt-mark  { background: #ffe4e6; color: #be123c; }
+.opt.yes { background: #f0fdf4; border-color: #bbf7d0; }
+.opt.yes .opt-mark { background: #dcfce7; color: #047857; }
+.dc-foot {
+  margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding-top: 14px; border-top: 1px dashed var(--border);
+  font-size: 12px; color: var(--t3);
+}
+.pin {
+  font-size: 12px; font-weight: 700; color: #047857;
+  background: rgba(16,185,129,.1); border-radius: 999px; padding: 4px 12px;
+}
+
+/* Skill / method cards */
+.skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.sk-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ind-l); margin-bottom: 8px; }
+.sk-head { font-size: 14px; font-weight: 700; color: var(--t1); margin-bottom: 6px; }
+.sk-body { font-size: 13px; color: var(--t2); line-height: 1.6; }
+
+/* Callout */
+.callout {
+  background: #f1f5ff; border: 1px solid var(--border-s);
+  border-left: 3px solid var(--ind);
+  border-radius: 10px; padding: 16px 18px;
+  font-size: 13px; color: var(--t2); line-height: 1.65;
+}
+.callout .co-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind-l); margin-bottom: 6px;
+}
+.callout strong { color: var(--t1); }
+
+/* Formula */
+.formula {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px; line-height: 1.85; color: var(--t1);
+  background: #f8fafc; border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; overflow-x: auto;
+}
+.formula .f-lbl { color: var(--t3); display: inline-block; width: 150px; }
+.formula .f-eq { color: var(--ind-l); font-weight: 700; }
+
+/* Figures and charts */
+.figure {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px 22px 18px; margin: 0;
+}
+.figure-hd { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.figure-title { font-size: 15px; font-weight: 700; color: var(--t1); }
+.svg-scroll { overflow-x: auto; }
+.svg-scroll svg { display: block; width: 100%; height: auto; }
+.svg-ttl  { font-size: 12px; font-weight: 700; fill: var(--t1); }
+.svg-sub  { font-size: 11px; fill: var(--t3); }
+.svg-tick { font-size: 10px; fill: var(--t3); }
+.svg-ax   { font-size: 10.5px; fill: var(--t2); }
+.svg-lbl  { font-size: 12px; fill: var(--t2); }
+.svg-lbl-b{ font-size: 12px; font-weight: 700; fill: var(--t1); }
+.svg-seg  { font-size: 12px; font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--t2); margin-top: 12px; }
+.legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.sw-line { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.sw-box { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.figure figcaption { font-size: 12px; color: var(--t3); margin-top: 12px; line-height: 1.6; }
+
+/* Metric row */
+.metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+  flex: 1; min-width: 160px;
+}
+.metric .m-val { font-size: 18px; font-weight: 800; color: var(--t1); }
+.metric .m-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* Note block */
+.data-foot { font-size: 11px; color: var(--t3); margin-top: 16px; }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  font-size: 12px; color: var(--t3);
+  max-width: 1100px; margin: 20px auto 0;
+}
+footer a { color: var(--t2); transition: color .12s; overflow-wrap: anywhere; }
+footer a:hover { color: var(--ind-l); }
+.footer-note { margin-left: auto; }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .two-up, .three-up { grid-template-columns: minmax(0, 1fr); }
+  .kpi-row { grid-template-columns: minmax(0, 1fr); }
+  .kpi { border-right: none; border-bottom: 1px solid var(--border); }
+  .kpi:last-child { border-bottom: none; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 40px 20px 32px; }
+  section { padding: 0 20px 56px; }
+  .kpi-wrap { padding: 0 20px 32px; }
+  .navbar { height: auto; flex-wrap: wrap; row-gap: 6px; padding: 10px 16px; }
+  .nav-brand { margin-right: 0; }
+  .nav-right { order: 2; }
+  .nav-items { order: 3; flex: 1 0 100%; flex-wrap: wrap; }
+  .nav-link { padding: 6px 8px; font-size: 12px; }
+  .svg-scroll svg { min-width: 540px; }
+  .footer-note { margin-left: 0; }
+  footer { padding: 24px 20px; }
+  .figure { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-eyebrow::before { animation: none; }
+  * { transition: none !important; }
+}
+
+/* ── Print ──────────────────────────────────────────────────────── */
+@media print {
+  @page { margin: 14mm; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; font-size: 11px; }
+  .navbar, .hero-actions, .nav-right, .skip-link { display: none !important; }
+  .hero { padding: 16px 0 12px; }
+  .hero h1 { font-size: 24px; }
+  .hero .tagline { font-size: 12px; }
+  section { padding: 0 0 22px; }
+  .section-title { font-size: 17px; }
+  .project-card, .decide-card, .skill-card, .figure, .kpi-row, .callout, .metric, .formula {
+    box-shadow: none !important; break-inside: avoid; page-break-inside: avoid;
+  }
+  .two-up, .three-up { grid-template-columns: 1fr 1fr; }
+  .three-up { grid-template-columns: repeat(3, 1fr); }
+  a { color: inherit !important; text-decoration: none !important; }
+  footer { margin-top: 8px; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ── Navbar ──────────────────────────────────────────────────── -->
+<nav class="navbar" aria-label="Site">
+  <a class="nav-brand" href="../index.html">AJ<span> · Portfolio</span></a>
+
+  <div class="nav-items">
+    <!-- Dashboards dropdown -->
+    <div class="dropdown">
+      <button type="button" class="dropdown-toggle" aria-haspopup="true">
+        Dashboards
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://asthaj12.github.io/forecast-governance/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">📊</div>
+          <div class="di-text">
+            <div class="di-label">Forecast Governance</div>
+            <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">📅</div>
+          <div class="di-text">
+            <div class="di-label">Scenario Planning</div>
+            <div class="di-sub">Scenario modeling · Inventory commitment · Event risk</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/pricing-demand-response/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">💹</div>
+          <div class="di-text">
+            <div class="di-label">Pricing &amp; Demand Response</div>
+            <div class="di-sub">Elasticity modeling · Lift attribution · Demand response</div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+          <div class="di-icon" style="background:rgba(16,185,129,.15)">🚚</div>
+          <div class="di-text">
+            <div class="di-label">Transportation Forecasting</div>
+            <div class="di-sub">SKU velocity · Peak planning · Carrier allocation</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/logitech-supply-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">🏭</div>
+          <div class="di-text">
+            <div class="di-label">Global Supply Planning</div>
+            <div class="di-sub">Safety stock · S&amp;OP · NPI launch</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/npi-launch-planning/">
+          <div class="di-icon" style="background:rgba(139,92,246,.15)">🚀</div>
+          <div class="di-text">
+            <div class="di-label">NPI Launch Planning</div>
+            <div class="di-sub">CTB readiness · EOL wind-down · Material readiness</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="../index.html">← Portfolio</a>
+    <a class="nav-link" href="../index.html#projects">Projects</a>
+    <a class="nav-link active" href="#problem">This Case Study</a>
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-badge" href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a class="nav-badge" href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Case Study · Seasonal &amp; Holiday Demand Planning</div>
+  <h1>Moving-Holiday<br><span class="accent">Seasonality Model</span></h1>
+  <p class="tagline">Holiday timing was being read as growth. Re-indexing history to the holiday, and separating timing from real growth before committing long-lead buys, cut seasonal plan error from 6 points to 0.4 points at Walmart US Food &amp; Grocery.</p>
+
+  <div class="role-strip">
+    <span class="role-pill" style="background:#eef2ff;color:#4f46e5;">Walmart US</span>
+    <span class="role-pill" style="background:#f0fdf4;color:#166534;">Food &amp; Grocery</span>
+    <span class="role-pill" style="background:#fff7ed;color:#9a3412;">Lent &amp; Easter</span>
+    <span class="role-pill" style="background:#f0f9ff;color:#0369a1;">Q4 holiday peak</span>
+  </div>
+
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#problem">Read the case study →</a>
+    <a class="btn btn-ghost" href="../index.html">← Back to portfolio</a>
+  </div>
+</div>
+
+<div class="kpi-wrap">
+  <ul class="kpi-row" aria-label="Headline results">
+    <li class="kpi">
+      <div class="kpi-val">6 → 0.4 <span class="unit">pts</span></div>
+      <div class="kpi-lbl">Seasonal plan error, Lent &amp; Easter</div>
+    </li>
+    <li class="kpi">
+      <div class="kpi-val">~$240M</div>
+      <div class="kpi-lbl">Phantom post-Easter stock avoided</div>
+    </li>
+    <li class="kpi">
+      <div class="kpi-val">~$339M</div>
+      <div class="kpi-lbl">Unneeded Q4 buys avoided</div>
+    </li>
+  </ul>
+  <p class="data-note">Figures rounded; data illustrative.</p>
+</div>
+
+<!-- ── 01 · Problem ─────────────────────────────────────────────── -->
+<section id="problem" aria-labelledby="problem-title">
+  <div class="section-header">
+    <div class="section-label">01 · Problem</div>
+    <h2 class="section-title" id="problem-title">Two holiday-timing effects that looked like growth</h2>
+    <p class="section-sub">Both moved with the holiday, not with the season. Calendar-week planning read the move as demand.</p>
+  </div>
+
+  <div class="two-up">
+    <article class="project-card">
+      <div><span class="card-tag tag-am">Problem A · Lent &amp; Easter</span></div>
+      <h3 class="card-title">Easter moves up to five weeks from year to year</h3>
+      <p class="card-desc">Indexed on calendar weeks, spring demand looked 9% higher. Six of those nine points were timing, not growth: Easter landing earlier pulled demand into the window. Only the rest was real growth.</p>
+      <p class="card-desc">Planning on calendar weeks would have built phantom post-Easter stock, inventory sized for a lift that was mostly the holiday moving.</p>
+      <div class="chip-row">
+        <span class="chip hi">+9% apparent spring lift</span>
+        <span class="chip">6 of 9 pts timing</span>
+        <span class="chip">Easter shifts up to 5 wks</span>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div><span class="card-tag tag-am">Problem B · Thanksgiving to Christmas</span></div>
+      <h3 class="card-title">Half of a 6% Q4 beat was pull-forward</h3>
+      <p class="card-desc">Q4 holiday demand beat forecast by 6%. Half of that beat was pull-forward: demand that arrived earlier than the forecast expected. Only the other half was real growth.</p>
+      <p class="card-desc">The reflex, raising every under-forecast item, would treat that timing as growth and overbuy wherever the beat was only early.</p>
+      <div class="chip-row">
+        <span class="chip hi">6% beat vs forecast</span>
+        <span class="chip">3 pts pull-forward</span>
+        <span class="chip">3 pts real growth</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 02 · Decision ────────────────────────────────────────────── -->
+<section id="decision" aria-labelledby="decision-title">
+  <div class="section-header">
+    <div class="section-label">02 · Decision</div>
+    <h2 class="section-title" id="decision-title">What changed in the plan, and who approved it</h2>
+    <p class="section-sub">Each decision changed the question before any buy was placed.</p>
+  </div>
+
+  <div class="two-up">
+    <article class="decide-card">
+      <div><span class="card-tag tag-ind">Decision A · Lent &amp; Easter</span></div>
+      <h3 class="card-title">Re-index history to weeks before Easter</h3>
+      <div class="dc-block">
+        <div class="dc-lbl">Diagnose</div>
+        <p>Astha diagnosed the calendar-timing effect. The spring lift followed Easter's date, not the season: six of the nine points were timing, so calendar-week history was measuring where the holiday fell.</p>
+      </div>
+      <div class="dc-block">
+        <div class="dc-lbl">Decide</div>
+        <div class="opt-stack">
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> plan on calendar weeks. Keeps the +9% signal, including six points of timing.</span>
+          </div>
+          <div class="opt yes">
+            <span class="opt-mark" aria-hidden="true">✓</span>
+            <span><strong>Picked:</strong> re-index to weeks before Easter. Years line up on the holiday, so only real growth carries into the plan.</span>
+          </div>
+        </div>
+      </div>
+      <div class="dc-foot">
+        <span>Senior leadership signed off</span>
+        <span class="pin">Plan error 6 → 0.4 pts</span>
+      </div>
+    </article>
+
+    <article class="decide-card">
+      <div><span class="card-tag tag-ind">Decision B · Q4 holiday peak</span></div>
+      <h3 class="card-title">Raise only items with a real days-of-supply gap</h3>
+      <div class="dc-block">
+        <div class="dc-lbl">Diagnose</div>
+        <p>Half of the 6% beat was pull-forward. Raising the forecast by the full beat would add timing and call it growth.</p>
+      </div>
+      <div class="dc-block">
+        <div class="dc-lbl">Decide</div>
+        <div class="opt-stack">
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> raise every under-forecast item. Overbuys every item whose beat was only early.</span>
+          </div>
+          <div class="opt yes">
+            <span class="opt-mark" aria-hidden="true">✓</span>
+            <span><strong>Picked:</strong> raise only items with a real days-of-supply gap. The extra buy goes only where stock is actually short.</span>
+          </div>
+        </div>
+      </div>
+      <div class="dc-foot">
+        <span>Astha recommended; senior leadership approved</span>
+        <span class="pin">~$339M unneeded buys avoided</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 03 · Method ──────────────────────────────────────────────── -->
+<section id="method" aria-labelledby="method-title">
+  <div class="section-header">
+    <div class="section-label">03 · Method</div>
+    <h2 class="section-title" id="method-title">How the model separates timing from growth</h2>
+    <p class="section-sub">Three effects sit inside every holiday week. Name each one before setting a buy.</p>
+  </div>
+
+  <div class="callout">
+    <div class="co-label">Plain-words version</div>
+    <p><strong>Event-relative indexing</strong> lines each year up on the holiday instead of the calendar. Ask what happened in the weeks before Easter, not what happened in calendar week 14. A moved holiday then lands in the same place every year, so the gap that remains between years is real growth.</p>
+  </div>
+
+  <div class="three-up" style="margin-top:14px;">
+    <div class="skill-card">
+      <div class="sk-cat">Effect 01</div>
+      <div class="sk-head">Timing shift</div>
+      <div class="sk-body">The holiday moved, so its demand moved with it. It looks like growth on calendar weeks and disappears once the years are aligned on the holiday.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Effect 02</div>
+      <div class="sk-head">Pull-forward</div>
+      <div class="sk-body">Demand that arrived earlier than the forecast expected. It is real, but it was going to happen anyway, so it does not raise the run-rate.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Effect 03</div>
+      <div class="sk-head">Structural run-rate growth</div>
+      <div class="sk-body">The underlying trend that should carry into next year's plan. Only this part should size a long-lead commitment.</div>
+    </div>
+  </div>
+
+  <div class="formula" style="margin-top:14px;" aria-label="Decomposition of the two signals">
+    <div><span class="f-lbl">Lent &amp; Easter</span>+9 pts observed <span class="f-eq">=</span> 6 pts timing <span class="f-eq">+</span> 3 pts structural growth</div>
+    <div><span class="f-lbl">Q4 holiday peak</span>+6% beat <span class="f-eq">=</span> 3 pts pull-forward <span class="f-eq">+</span> 3 pts structural growth</div>
+  </div>
+
+  <h3 class="sub-head">Chart 1 · Same two years, two alignments</h3>
+  <figure class="figure" aria-labelledby="fig1-title">
+    <div class="figure-hd">
+      <div class="figure-title" id="fig1-title">Weekly demand on calendar weeks vs weeks before Easter</div>
+      <span class="card-tag tag-ind">Illustrative</span>
+    </div>
+    <div class="svg-scroll">
+      <svg viewBox="0 0 640 262" role="img" aria-labelledby="fig1-svg-t fig1-svg-d">
+        <title id="fig1-svg-t">Two years of weekly demand, calendar-week view and Easter-aligned view</title>
+        <desc id="fig1-svg-d">Left panel: on calendar weeks, the Easter demand bump for Year 1 sits about five weeks earlier on the calendar than the bump for Year 2. Right panel: aligned on weeks relative to Easter, both bumps sit at the same position, and the small gap that remains between the two lines is the run-rate difference. Synthetic, illustrative data.</desc>
+
+        <!-- Panel A: calendar weeks -->
+        <text class="svg-ttl" x="52" y="20">A · Calendar weeks</text>
+        <text class="svg-sub" x="52" y="36">Bumps land in different weeks</text>
+        <line x1="52" y1="84.8" x2="288" y2="84.8" stroke="#e2e8f0"/>
+        <line x1="52" y1="142.4" x2="288" y2="142.4" stroke="#e2e8f0"/>
+        <line x1="52" y1="200" x2="288" y2="200" stroke="#cbd5e1"/>
+        <text class="svg-tick" x="46" y="88.8" text-anchor="end">130</text>
+        <text class="svg-tick" x="46" y="146.4" text-anchor="end">110</text>
+        <text class="svg-tick" x="46" y="204" text-anchor="end">90</text>
+        <line x1="146.4" y1="56" x2="146.4" y2="200" stroke="#64748b" stroke-width="1" stroke-dasharray="2 3"/>
+        <line x1="225.1" y1="56" x2="225.1" y2="200" stroke="#4f46e5" stroke-width="1" stroke-dasharray="2 3"/>
+        <text class="svg-tick" x="146.4" y="52" text-anchor="middle" style="fill:#64748b">Y1 Easter</text>
+        <text class="svg-tick" x="225.1" y="52" text-anchor="middle" style="fill:#4f46e5">Y2 Easter</text>
+        <polyline points="52.0,170.6 67.7,165.4 83.5,156.8 99.2,136.6 114.9,105.2 130.7,87.1 146.4,100.6 162.1,132.3 177.9,157.7 193.6,170.6 209.3,174.4" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round"/>
+        <polyline points="130.7,159.1 146.4,157.4 162.1,151.6 177.9,130.3 193.6,95.7 209.3,74.7 225.1,90.0 240.8,125.1 256.5,152.8 272.3,163.4 288.0,163.4" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round"/>
+        <text class="svg-tick" x="52" y="216" text-anchor="middle">Wk 6</text>
+        <text class="svg-tick" x="130.7" y="216" text-anchor="middle">Wk 11</text>
+        <text class="svg-tick" x="209.3" y="216" text-anchor="middle">Wk 16</text>
+        <text class="svg-tick" x="288" y="216" text-anchor="middle">Wk 21</text>
+        <text class="svg-ax" x="170" y="234" text-anchor="middle">Calendar week</text>
+
+        <!-- Panel B: aligned on Easter -->
+        <text class="svg-ttl" x="392" y="20">B · Weeks before Easter</text>
+        <text class="svg-sub" x="392" y="36">Bumps line up on the holiday</text>
+        <line x1="392" y1="84.8" x2="628" y2="84.8" stroke="#e2e8f0"/>
+        <line x1="392" y1="142.4" x2="628" y2="142.4" stroke="#e2e8f0"/>
+        <line x1="392" y1="200" x2="628" y2="200" stroke="#cbd5e1"/>
+        <text class="svg-tick" x="386" y="88.8" text-anchor="end">130</text>
+        <text class="svg-tick" x="386" y="146.4" text-anchor="end">110</text>
+        <text class="svg-tick" x="386" y="204" text-anchor="end">90</text>
+        <line x1="533.6" y1="56" x2="533.6" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 3"/>
+        <text class="svg-tick" x="533.6" y="52" text-anchor="middle">Easter</text>
+        <polyline points="392.0,170.6 415.6,165.4 439.2,156.8 462.8,136.6 486.4,105.2 510.0,87.1 533.6,100.6 557.2,132.3 580.8,157.7 604.4,170.6 628.0,174.4" fill="none" stroke="#64748b" stroke-width="2" stroke-linejoin="round"/>
+        <polyline points="392.0,159.1 415.6,157.4 439.2,151.6 462.8,130.3 486.4,95.7 510.0,74.7 533.6,90.0 557.2,125.1 580.8,152.8 604.4,163.4 628.0,163.4" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round"/>
+        <text class="svg-tick" x="392" y="216" text-anchor="middle">-6</text>
+        <text class="svg-tick" x="462.8" y="216" text-anchor="middle">-3</text>
+        <text class="svg-tick" x="533.6" y="216" text-anchor="middle">0</text>
+        <text class="svg-tick" x="628" y="216" text-anchor="middle">+4</text>
+        <text class="svg-ax" x="510" y="234" text-anchor="middle">Weeks relative to Easter</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="sw-line" style="background:#64748b" aria-hidden="true"></span>Year 1 (Easter earlier)</span>
+      <span class="legend-item"><span class="sw-line" style="background:#4f46e5" aria-hidden="true"></span>Year 2 (Easter five weeks later)</span>
+    </div>
+    <figcaption>Synthetic, illustrative demand index. Left: the same weeks indexed on the calendar, where the holiday bump lands in different weeks. Right: the same weeks re-indexed to weeks relative to Easter, where the bumps overlap. The small gap left between the lines on the right is the run-rate difference, which is the part that carries forward.</figcaption>
+  </figure>
+
+  <h3 class="sub-head">Chart 2 · Decomposing the Q4 beat, and the raise rule</h3>
+  <figure class="figure" aria-labelledby="fig2-title">
+    <div class="figure-hd">
+      <div class="figure-title" id="fig2-title">A 6% beat splits into timing and growth; only real gaps get raised</div>
+      <span class="card-tag tag-ind">Illustrative</span>
+    </div>
+    <div class="svg-scroll">
+      <svg viewBox="0 0 640 256" role="img" aria-labelledby="fig2-svg-t fig2-svg-d">
+        <title id="fig2-svg-t">Q4 beat decomposition and the raise-only-real-gaps rule</title>
+        <desc id="fig2-svg-d">Top bar: a 6 point beat versus forecast splits into 3 points of pull-forward and 3 points of real growth. Middle bar: raising every under-forecast item adds all 6 points, including the 3 points of timing. Bottom bar: raising only items with a real days-of-supply gap adds the 3 points of real growth, and the 3 points of timing are not bought. Illustrative bar lengths.</desc>
+
+        <!-- Row 1: the beat -->
+        <text class="svg-lbl-b" x="12" y="44">Q4 beat vs forecast</text>
+        <text class="svg-lbl" x="12" y="60">6% total</text>
+        <rect x="200" y="30" width="200" height="34" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <text class="svg-seg" x="300" y="51" text-anchor="middle" fill="#92400e">Pull-forward · 3 pts</text>
+        <rect x="400" y="30" width="200" height="34" rx="4" fill="#6366f1"/>
+        <text class="svg-seg" x="500" y="51" text-anchor="middle" fill="#ffffff">Real growth · 3 pts</text>
+
+        <!-- Row 2: raise every under-forecast item -->
+        <text class="svg-lbl-b" x="12" y="112">Raise every</text>
+        <text class="svg-lbl-b" x="12" y="127">under-forecast item</text>
+        <rect x="200" y="98" width="200" height="34" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <text class="svg-seg" x="300" y="119" text-anchor="middle" fill="#92400e">Overbought timing · 3 pts</text>
+        <rect x="400" y="98" width="200" height="34" rx="4" fill="#6366f1"/>
+        <text class="svg-seg" x="500" y="119" text-anchor="middle" fill="#ffffff">Real growth · 3 pts</text>
+
+        <!-- Row 3: raise only real days-of-supply gaps -->
+        <text class="svg-lbl-b" x="12" y="180">Raise only items with</text>
+        <text class="svg-lbl-b" x="12" y="195">a real days-of-supply gap</text>
+        <rect x="200" y="166" width="200" height="34" rx="4" fill="#6366f1"/>
+        <text class="svg-seg" x="300" y="187" text-anchor="middle" fill="#ffffff">Bought · real growth</text>
+        <rect x="400" y="166" width="200" height="34" rx="4" fill="none" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text class="svg-seg" x="500" y="187" text-anchor="middle" fill="#be123c">Not bought · 3 pts</text>
+
+        <!-- Axis -->
+        <line x1="200" y1="218" x2="600" y2="218" stroke="#cbd5e1"/>
+        <line x1="200" y1="218" x2="200" y2="223" stroke="#cbd5e1"/>
+        <line x1="400" y1="218" x2="400" y2="223" stroke="#cbd5e1"/>
+        <line x1="600" y1="218" x2="600" y2="223" stroke="#cbd5e1"/>
+        <text class="svg-tick" x="200" y="236" text-anchor="middle">0</text>
+        <text class="svg-tick" x="400" y="236" text-anchor="middle">3 pts</text>
+        <text class="svg-tick" x="600" y="236" text-anchor="middle">6 pts</text>
+        <text class="svg-ax" x="400" y="252" text-anchor="middle">Points of Q4 forecast beat</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="sw-box" style="background:#fef3c7;border:1px solid #d97706" aria-hidden="true"></span>Pull-forward (timing)</span>
+      <span class="legend-item"><span class="sw-box" style="background:#6366f1" aria-hidden="true"></span>Real growth</span>
+      <span class="legend-item"><span class="sw-box" style="background:#fff;border:1.5px dashed #e11d48" aria-hidden="true"></span>Buy avoided</span>
+    </div>
+    <figcaption>Synthetic, illustrative bar lengths that show the mechanism, not the measured Q4 buy. Raising every under-forecast item adds the full 6 points, timing included. Raising only the items with a real days-of-supply gap adds only the real-growth share.</figcaption>
+  </figure>
+</section>
+
+<!-- ── 04 · Results ─────────────────────────────────────────────── -->
+<section id="results" aria-labelledby="results-title">
+  <div class="section-header">
+    <div class="section-label">04 · Results</div>
+    <h2 class="section-title" id="results-title">What the two decisions changed</h2>
+    <p class="section-sub">Two holiday windows, two measured outcomes. Figures rounded.</p>
+  </div>
+
+  <div class="metric-row" style="margin-bottom:20px;">
+    <div class="metric">
+      <div class="m-val">6 → 0.4 pts</div>
+      <div class="m-lbl">Seasonal plan error, Lent &amp; Easter</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">~$240M</div>
+      <div class="m-lbl">Phantom post-Easter stock avoided</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">~$120M</div>
+      <div class="m-lbl">Real seasonal lift kept</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">~$339M</div>
+      <div class="m-lbl">Unneeded Q4 buys avoided</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">91.0% → 92.5%</div>
+      <div class="m-lbl">In-stock, Q4 holiday peak</div>
+    </div>
+  </div>
+
+  <div class="two-up">
+    <article class="project-card">
+      <div><span class="card-tag tag-em">Lent &amp; Easter</span></div>
+      <h3 class="card-title">Plan error cut from 6 points to 0.4 points</h3>
+      <p class="card-desc">Re-indexing to weeks before Easter took the timing out of the spring signal. About $240M of phantom post-Easter stock was avoided, and the roughly $120M of real seasonal lift stayed in the plan.</p>
+    </article>
+
+    <article class="project-card">
+      <div><span class="card-tag tag-em">Q4 holiday peak</span></div>
+      <h3 class="card-title">About $339M of unneeded buys avoided; in-stock up from 91.0% to 92.5%</h3>
+      <p class="card-desc">Only items with a real days-of-supply gap were raised. Stock went up where it was short, and the extra buy did not extend to items whose beat was pull-forward.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ── 05 · Transfer ────────────────────────────────────────────── -->
+<section id="transfer" aria-labelledby="transfer-title" style="padding-bottom:64px;">
+  <div class="section-header">
+    <div class="section-label">05 · Transfer</div>
+    <h2 class="section-title" id="transfer-title">Why it matters for long-lead planning</h2>
+    <p class="section-sub">Seasonal and timing effects distort the demand signal. The same separation applies to any commitment made before demand is known.</p>
+  </div>
+
+  <div class="callout">
+    <div class="co-label">The principle</div>
+    <p>Long-lead supply, whether inventory, production capacity, or a supplier commitment, is locked in before the season's real shape is visible. If the signal mixes timing and pull-forward with real growth, the commitment is sized to demand that will not repeat, and the result is stranded inventory or idle capacity. Separating timing from real growth first keeps the commitment on the part of the signal that repeats.</p>
+  </div>
+
+  <div class="three-up" style="margin-top:14px;">
+    <div class="skill-card">
+      <div class="sk-cat">Practice 01</div>
+      <div class="sk-head">Index on the driver</div>
+      <div class="sk-body">Any demand that moves with a date, such as holidays, school calendars, or weather windows, is aligned on that driver before years are compared.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Practice 02</div>
+      <div class="sk-head">Split before you size</div>
+      <div class="sk-body">Timing shift, pull-forward, and structural growth are separate numbers. Only the structural part should size a long-lead buy or capacity reservation.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Practice 03</div>
+      <div class="sk-head">Act on gaps, not beats</div>
+      <div class="sk-body">A beat against forecast is a question to answer. Days of supply shows which items are actually short and which were only early.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong style="color:var(--t1)">Astha Jain</strong>
+  <span>·</span>
+  <a href="../index.html">Portfolio</a>
+  <span>·</span>
+  <a href="../planning-command-center.html">Planning Command Center</a>
+  <span>·</span>
+  <a href="../npi-launch-program.html">NPI Launch Program</a>
+  <span>·</span>
+  <a href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn</a>
+  <span>·</span>
+  <a href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub</a>
+  <span>·</span>
+  <a href="mailto:asthajain.sc@gmail.com">asthajain.sc@gmail.com</a>
+  <div class="footer-note">Figures rounded; data illustrative. © 2026 Astha Jain</div>
+</footer>
+
+</body>
+</html>

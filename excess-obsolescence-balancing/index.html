@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Excess &amp; Obsolescence Balancing — Astha Jain</title>
+<link rel="canonical" href="https://asthaj12.github.io/excess-obsolescence-balancing/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='42' font-family='Arial,Helvetica,sans-serif' font-size='27' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EAJ%3C/text%3E%3C/svg%3E"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Astha Jain"/>
+<meta property="og:title" content="Excess &amp; Obsolescence Balancing — Astha Jain"/>
+<meta property="og:description" content="Case study: how excess and obsolescence were prevented at Logitech and Walmart US by checking demand, product transitions, design changes and events before inventory is committed."/>
+<meta property="og:url" content="https://asthaj12.github.io/excess-obsolescence-balancing/"/>
+<meta property="og:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Excess &amp; Obsolescence Balancing — Astha Jain"/>
+<meta name="twitter:description" content="Case study: how excess and obsolescence were prevented at Logitech and Walmart US by checking demand, product transitions, design changes and events before inventory is committed."/>
+<meta name="twitter:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta name="twitter:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<meta name="description" content="Case study: how excess and obsolescence were prevented at Logitech and Walmart US by checking demand, product transitions, design changes and events before inventory is committed."/>
+<style>
+/* ── Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg:       #f8fafc;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --card-h:   #f1f5ff;
+  --border:   #e2e8f0;
+  --border-s: #c7d2fe;
+  --ind:      #6366f1;
+  --ind-l:    #4f46e5;
+  --ind-d:    #3730a3;
+  --em:       #059669;
+  --em-d:     #047857;
+  --rose:     #e11d48;
+  --rose-d:   #be123c;
+  --t1:       #0f172a;
+  --t2:       #475569;
+  --t3:       #64748b;
+  --t4:       #cbd5e1;
+  --glow:     rgba(99,102,241,.08);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+.skip-link{position:absolute;left:-9999px;top:8px;z-index:300;background:var(--ind);color:#fff;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;}
+.skip-link:focus{left:12px;}
+
+/* ── Confidentiality banner ─────────────────────────────────────── */
+.confidentiality-banner {
+  background: #f1f5f9; border-bottom: 1px solid #cbd5e1;
+  padding: 10px 32px; font-size: 11px; color: var(--t2); text-align: center;
+}
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 8px;
+  height: 56px;
+}
+.nav-brand {
+  font-size: 15px; font-weight: 800; letter-spacing: -.02em;
+  color: var(--t1); margin-right: 24px; white-space: nowrap;
+}
+.nav-brand span { color: var(--ind); }
+.nav-items { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow: visible; }
+.nav-link {
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  transition: color .15s, background .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.nav-link.active { color: var(--ind-l); background: rgba(99,102,241,.08); font-weight: 600; }
+
+/* ── Dropdowns ──────────────────────────────────────────────────── */
+.dropdown { position: relative; }
+.dropdown-toggle {
+  display: flex; align-items: center; gap: 5px;
+  border: 0; background: none; font-family: inherit;
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  cursor: pointer; transition: color .15s, background .15s;
+  user-select: none; white-space: nowrap;
+}
+.dropdown-toggle:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.dropdown-toggle svg { width:10px;height:10px;transition:transform .2s; }
+.dropdown:hover .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px;
+  min-width: 220px;
+  box-shadow: 0 20px 60px rgba(15,23,42,.14);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .18s, transform .18s, visibility .18s;
+}
+.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+}
+.dropdown:focus-within .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--t2);
+  transition: background .12s, color .12s;
+}
+.dropdown-item:hover { background: rgba(99,102,241,.12); color: var(--t1); }
+.dropdown-item .di-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.dropdown-item .di-text .di-label { font-weight: 600; color: var(--t1); font-size: 12px; }
+.dropdown-item .di-text .di-sub { font-size: 10px; color: var(--t3); margin-top: 1px; }
+.dropdown-divider { height: 1px; background: var(--border); margin: 5px 2px; }
+
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nav-badge {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--t2);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.nav-badge:hover { background: #eef2ff; border-color: var(--ind); color: var(--ind); }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero { max-width: 1100px; margin: 0 auto; padding: 56px 32px 40px; }
+.hero-content { min-width: 0; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #eef2ff; border: 1px solid var(--border-s);
+  border-radius: 999px; padding: 4px 14px;
+  font-size: 11px; font-weight: 700; color: var(--ind);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-eyebrow::before { content:""; width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1 {
+  font-size: clamp(30px, 4.2vw, 46px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -.03em;
+  color: var(--t1); margin-bottom: 20px;
+}
+.hero h1 .accent { color: var(--ind); }
+.hero .tagline {
+  font-size: 16px; color: var(--t2); max-width: 780px;
+  line-height: 1.65; margin-bottom: 28px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--ind); color: #fff; }
+.btn-primary:hover { background: var(--ind-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.35); }
+.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-s); }
+.btn-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── Role meta strip ────────────────────────────────────────────── */
+.role-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.role-pill { padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+
+/* ── KPI bar ────────────────────────────────────────────────────── */
+.kpi-wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px 40px; }
+.stats-bar {
+  display: flex; flex-wrap: wrap; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  background: var(--surface);
+}
+.stat-item { flex: 1; min-width: 180px; padding: 18px 24px; border-right: 1px solid var(--border); }
+.stat-item:last-child { border-right: none; }
+.stat-val { font-size: 22px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; white-space: nowrap; }
+.stat-lbl { font-size: 11px; color: var(--t2); margin-top: 3px; text-transform: uppercase; letter-spacing: .05em; }
+.kpi-note { font-size: 12px; color: var(--t3); margin-top: 10px; }
+
+/* ── Section ────────────────────────────────────────────────────── */
+main { display: block; }
+section { max-width: 1100px; margin: 0 auto; padding: 0 32px 72px; }
+.section-header { margin-bottom: 32px; }
+.section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind); margin-bottom: 8px;
+}
+.section-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; }
+.section-sub { font-size: 14px; color: var(--t2); margin-top: 6px; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.project-card + .project-card { margin-top: 16px; }
+.card-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-ind  { background: rgba(99,102,241,.12); color: var(--ind-l); }
+.tag-em   { background: rgba(16,185,129,.12); color: var(--em-d); }
+.tag-rose { background: rgba(244,63,94,.12);  color: var(--rose-d); }
+.card-title { font-size: 16px; font-weight: 700; color: var(--t1); line-height: 1.3; }
+.card-meta  { font-size: 12px; color: var(--t3); margin-top: 4px; }
+.card-desc  { font-size: 13px; color: var(--t2); line-height: 1.6; }
+.card-desc + .card-desc { margin-top: 12px; }
+
+.metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px; flex: 1; min-width: 90px;
+}
+
+/* ── Problem: phase rail ────────────────────────────────────────── */
+.phase-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.phase-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  border-top: 3px solid var(--ind);
+}
+.phase-card .ph-idx { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ind); }
+.phase-card .ph-name { font-size: 15px; font-weight: 800; color: var(--t1); margin: 4px 0 8px; letter-spacing: -.01em; }
+.phase-card .ph-body { font-size: 12.5px; color: var(--t2); line-height: 1.6; }
+.phase-card .ph-out { font-size: 11px; color: var(--t2); margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+.phase-card .ph-out strong { color: var(--rose-d); font-weight: 700; }
+
+/* ── Cases ──────────────────────────────────────────────────────── */
+.case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.case-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.case-card:hover { border-color: var(--border-s); box-shadow: 0 0 0 1px rgba(99,102,241,.1), 0 12px 32px rgba(15,23,42,.06); }
+.case-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.case-num { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ind); }
+.case-title { font-size: 17px; font-weight: 700; color: var(--t1); line-height: 1.3; }
+.case-situation { font-size: 13px; color: var(--t2); line-height: 1.6; }
+.opt { border-radius: 10px; padding: 12px 14px; font-size: 13px; line-height: 1.55; color: var(--t2); border: 1px solid; }
+.opt .opt-lbl { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+.opt.rej { background: #fff1f2; border-color: #fecdd3; }
+.opt.rej .opt-lbl { color: var(--rose-d); }
+.opt.pick { background: #ecfdf5; border-color: #a7f3d0; }
+.opt.pick .opt-lbl { color: var(--em-d); }
+.pin { margin-top: auto; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 3px solid var(--em); border-radius: 10px; padding: 12px 14px; }
+.pin .pin-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--em-d); margin-bottom: 2px; }
+.pin .pin-val { font-size: 20px; font-weight: 800; color: var(--t1); letter-spacing: -.01em; }
+.pin .pin-note { font-size: 12px; color: var(--t2); margin-top: 2px; }
+
+/* ── Method: checklist flow ─────────────────────────────────────── */
+.flow { display: grid; grid-template-columns: minmax(170px,1fr) 24px minmax(220px,1.6fr) 24px minmax(190px,1.1fr); gap: 10px; align-items: stretch; }
+.flow-h { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ind); padding: 0 2px; }
+.flow-box { border: 1px solid var(--border); background: var(--card); border-radius: 10px; padding: 12px 14px; font-size: 13px; color: var(--t2); line-height: 1.5; }
+.flow-box strong { display: block; color: var(--t1); font-size: 13px; margin-bottom: 2px; }
+.flow-entry { border-left: 3px solid var(--rose); }
+.flow-check { background: #eef2ff; border-color: var(--border-s); }
+.flow-gate  { background: #f0fdf4; border-color: #bbf7d0; border-left: 3px solid var(--em); }
+.flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--t3); font-size: 16px; }
+.flow-final {
+  margin-top: 4px; border: 1px dashed var(--ind); border-radius: 10px;
+  padding: 12px 16px; text-align: center;
+  font-size: 13px; font-weight: 700; color: var(--ind-d); background: var(--surface);
+}
+.method-text { font-size: 13px; color: var(--t2); line-height: 1.6; }
+
+/* ── Charts ─────────────────────────────────────────────────────── */
+.chart-wrap { width: 100%; }
+.chart-wrap svg { width: 100%; height: auto; display: block; }
+.cv-title { font-size: 12px; font-weight: 700; fill: var(--t1); }
+.cv-sub   { font-size: 10px; fill: var(--t3); }
+.cv-tick  { font-size: 10px; fill: var(--t3); }
+.cv-lbl   { font-size: 10px; fill: var(--t2); }
+.cv-val   { font-size: 12px; font-weight: 800; fill: var(--t1); }
+.cv-warn  { font-size: 10px; font-weight: 600; fill: var(--rose-d); }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--t2); }
+.chart-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.sw-line { width: 26px; height: 0; border-top: 3px solid; display: inline-block; }
+.sw-dash { border-color: var(--rose); border-top-style: dashed; }
+.sw-solid { border-color: var(--em); }
+.sw-box { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.chart-cap { font-size: 12px; color: var(--t3); line-height: 1.55; }
+
+/* ── Table ──────────────────────────────────────────────────────── */
+.table-wrap {
+  border: 1px solid var(--border); border-radius: 14px;
+  background: var(--card); overflow-x: auto;
+}
+table.cs-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+table.cs-table th {
+  text-align: left; padding: 12px 18px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--ind); background: #f8fafc;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+table.cs-table td {
+  padding: 14px 18px; color: var(--t2); line-height: 1.55;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+table.cs-table tr:last-child td { border-bottom: none; }
+table.cs-table td strong { color: var(--t1); font-weight: 700; }
+
+/* ── Skill cards (transfer) ─────────────────────────────────────── */
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+.skill-card .sk-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ind-l); margin-bottom: 8px; }
+.skill-card .sk-head { font-size: 14px; font-weight: 700; color: var(--t1); margin-bottom: 6px; }
+.skill-card .sk-body { font-size: 13px; color: var(--t2); line-height: 1.6; }
+
+/* ── Callout ────────────────────────────────────────────────────── */
+.callout {
+  background: #eef2ff; border: 1px solid var(--border-s);
+  border-left: 3px solid var(--ind);
+  border-radius: 10px; padding: 16px 18px;
+  font-size: 13px; color: var(--t2); line-height: 1.65;
+}
+.callout strong { color: var(--ind-d); }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px; margin: 20px auto 0;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 12px; color: var(--t3);
+  max-width: 1100px;
+}
+footer a { color: var(--t2); transition: color .12s; overflow-wrap: anywhere; }
+footer a:hover { color: var(--ind-l); }
+.footer-note { margin-left: auto; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #d39a28; outline-offset: 3px; border-radius: 4px; }
+.table-wrap:focus-visible { outline: 3px solid #d39a28; outline-offset: 3px; }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .case-grid { grid-template-columns: 1fr; }
+  .phase-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .stats-bar { flex-direction: row; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+}
+@media (max-width: 700px) {
+  .flow { grid-template-columns: 1fr; }
+  .flow-h { display: none; }
+  .flow-arrow { transform: rotate(90deg); height: 18px; }
+  .chart-wrap { overflow-x: auto; padding-bottom: 6px; }
+  .chart-wrap svg { width: 680px; max-width: none; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 40px 20px 32px; }
+  section { padding: 0 20px 56px; }
+  .kpi-wrap { padding: 0 20px 32px; }
+  .confidentiality-banner { padding: 10px 16px; text-align: left; }
+  .navbar { height: auto; flex-wrap: wrap; row-gap: 6px; padding: 10px 16px; }
+  .nav-brand { margin-right: 0; }
+  .nav-right { order: 2; }
+  .nav-items { order: 3; flex: 1 0 100%; flex-wrap: wrap; }
+  .nav-link { padding: 6px 8px; font-size: 12px; }
+  .nav-items .dropdown:not(:first-child) { display: none; }
+  .phase-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .project-card, .case-card { padding: 20px; }
+  footer { padding: 24px 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-eyebrow::before { animation: none; }
+  .btn-primary:hover { transform: none; }
+}
+
+/* ── Print ──────────────────────────────────────────────────────── */
+@media print {
+  @page { margin: 14mm; }
+  html { scroll-behavior: auto; }
+  body { background: #fff; font-size: 10.5pt; color: #000; }
+  .navbar, .hero-actions, .nav-right, .dropdown, .skip-link { display: none !important; }
+  .hero-eyebrow::before { animation: none; }
+  .hero { padding: 0 0 18px; max-width: none; }
+  .hero h1 { font-size: 22pt; }
+  section { padding: 0 0 20px; max-width: none; break-inside: avoid; }
+  .project-card, .case-card, .phase-card, .skill-card, .table-wrap, .stats-bar, .callout, .opt, .pin, .flow-box {
+    box-shadow: none !important; break-inside: avoid; page-break-inside: avoid;
+    background: #fff; border-color: #cbd5e1;
+  }
+  .confidentiality-banner { border-bottom: 1px solid #cbd5e1; background: #fff; }
+  .section-title { font-size: 15pt; }
+  footer { max-width: none; padding: 12px 0 0; }
+  a { color: #000 !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="confidentiality-banner">
+  <strong>Independent portfolio case study.</strong> Figures rounded; data illustrative. This case study does not reproduce any employer's data, systems, models, planning parameters or confidential business processes.
+</div>
+
+<!-- ── Navbar ──────────────────────────────────────────────────── -->
+<nav class="navbar" aria-label="Site">
+  <a class="nav-brand" href="../index.html">AJ<span> · Portfolio</span></a>
+
+  <div class="nav-items">
+    <!-- Dashboards dropdown -->
+    <div class="dropdown">
+      <button type="button" class="dropdown-toggle" aria-haspopup="true">
+        Dashboards
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://asthaj12.github.io/forecast-governance/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)" aria-hidden="true">📊</div>
+          <div class="di-text">
+            <div class="di-label">Forecast Governance</div>
+            <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)" aria-hidden="true">📅</div>
+          <div class="di-text">
+            <div class="di-label">Scenario Planning</div>
+            <div class="di-sub">Scenario modeling · Inventory commitment · Event risk</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/pricing-demand-response/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)" aria-hidden="true">💹</div>
+          <div class="di-text">
+            <div class="di-label">Pricing &amp; Demand Response</div>
+            <div class="di-sub">Elasticity modeling · Lift attribution · Demand response</div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+          <div class="di-icon" style="background:rgba(16,185,129,.15)" aria-hidden="true">🚚</div>
+          <div class="di-text">
+            <div class="di-label">Transportation Forecasting</div>
+            <div class="di-sub">SKU velocity · Peak planning · Carrier allocation</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/logitech-supply-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)" aria-hidden="true">🏭</div>
+          <div class="di-text">
+            <div class="di-label">Global Supply Planning</div>
+            <div class="di-sub">Safety stock · S&amp;OP · NPI launch</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/npi-launch-planning/">
+          <div class="di-icon" style="background:rgba(139,92,246,.15)" aria-hidden="true">🚀</div>
+          <div class="di-text">
+            <div class="di-label">NPI Launch Planning</div>
+            <div class="di-sub">CTB readiness · EOL wind-down · Material readiness</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="../index.html">← Portfolio</a>
+    <a class="nav-link" href="../index.html#projects">Projects</a>
+    <a class="nav-link active" href="#problem" aria-current="location">This Case Study</a>
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-badge" href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a class="nav-badge" href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Case Study · Excess &amp; Obsolescence Prevention</div>
+    <h1>Excess &amp; Obsolescence<br><span class="accent">Balancing</span></h1>
+    <p class="tagline">How excess builds up across demand, product transitions, design changes and events, and the check that stops each one before inventory is committed.</p>
+
+    <div class="role-strip">
+      <span class="role-pill" style="background:#eef2ff;color:#4f46e5;">Logitech · 2020–2022</span>
+      <span class="role-pill" style="background:#f0fdf4;color:#166534;">Walmart US · 2023–present</span>
+      <span class="role-pill" style="background:#f0f9ff;color:#0369a1;">Consumer electronics &amp; retail</span>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#cases">Jump to cases →</a>
+      <a class="btn btn-ghost" href="../index.html">← Back to Portfolio</a>
+    </div>
+  </div>
+</div>
+
+<div class="kpi-wrap">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">150K → 40K</div>
+      <div class="stat-lbl">Projected excess units · channel build</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$2.25M → $1.2M</div>
+      <div class="stat-lbl">Annual E&amp;O · generation transitions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$540K → $60K</div>
+      <div class="stat-lbl">E&amp;O exposure · design change</div>
+    </div>
+  </div>
+  <p class="kpi-note">Each tile is a separate case and measure with its own basis. They are shown side by side and are not added together.</p>
+</div>
+
+<!-- ── 01 Problem ──────────────────────────────────────────────── -->
+<section id="problem">
+  <div class="section-header">
+    <div class="section-label">01 · Problem</div>
+    <h2 class="section-title">Where Excess Enters</h2>
+    <div class="section-sub">Each entry point looks reasonable on its own signal. Each fails when that signal is not checked before commitment.</div>
+  </div>
+
+  <div class="project-card" style="margin-bottom:20px;">
+    <p class="card-desc">Long-lead hardware and retail buys are committed well before the product sells through. At the moment of commitment, the signal in hand is usually sell-in orders, a prior-year peak, a last-time-buy assumption or a blanket uplift. Each of these can be a reasonable input and still produce excess when nobody tests it against what customers are actually doing.</p>
+  </div>
+
+  <div class="phase-grid">
+    <div class="phase-card">
+      <div class="ph-idx">Entry 01</div>
+      <div class="ph-name">Demand signal</div>
+      <div class="ph-body">Sell-in orders can look like demand while consumer sell-through has slowed. A build sized on a prior-year surge inherits that surge.</div>
+      <div class="ph-out"><strong>Failure:</strong> build sized to sell-in, not sell-through</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph-idx">Entry 02</div>
+      <div class="ph-name">Product transition</div>
+      <div class="ph-body">A last-time buy that assumes customers stay on the old model overstates the old model's demand. The successor absorbs part of it.</div>
+      <div class="ph-out"><strong>Failure:</strong> one write-off number per transition</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph-idx">Entry 03</div>
+      <div class="ph-name">Design change</div>
+      <div class="ph-body">A revision that lands close to pilot build can leave pilot parts on the old revision in the plan.</div>
+      <div class="ph-out"><strong>Failure:</strong> pilot tested on parts that will not ship</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph-idx">Entry 04</div>
+      <div class="ph-name">Event</div>
+      <div class="ph-body">A blanket uplift credited to trend turns one event's lift into a baseline that the next purchase order inherits.</div>
+      <div class="ph-out"><strong>Failure:</strong> purchase orders sized to uplift the data does not support</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 Cases ────────────────────────────────────────────────── -->
+<section id="cases">
+  <div class="section-header">
+    <div class="section-label">02 · Cases</div>
+    <h2 class="section-title">Four Cases</h2>
+    <div class="section-sub">For each case: the signal that was rejected, the check used instead, and the measured result.</div>
+  </div>
+
+  <div class="case-grid">
+
+    <article class="case-card" aria-labelledby="case1-title">
+      <div class="case-head">
+        <span class="card-tag tag-ind">Logitech · Channel</span>
+        <span class="case-num">Case 01 · Demand signal</span>
+      </div>
+      <h3 class="case-title" id="case1-title">Speculative channel orders</h3>
+      <p class="case-situation">A follow-on education-stylus build had been sized on the prior year's remote-learning surge, while schools had stopped buying.</p>
+      <div class="opt rej"><span class="opt-lbl" aria-hidden="true">✕ Rejected</span><span class="sr-only">Rejected: </span>Trust the sell-in orders as the demand signal before any cancel decision.</div>
+      <div class="opt pick"><span class="opt-lbl" aria-hidden="true">✓ Picked</span><span class="sr-only">Picked: </span>Count the full channel pipeline first: retailer orders, consumer sell-through and channel inventory. Then recommend a smaller build.</div>
+      <div class="pin">
+        <div class="pin-lbl">Result</div>
+        <div class="pin-val">150K → 40K units</div>
+        <div class="pin-note">Projected excess, cut from 150K to 40K units · ~$4.5M build value saved</div>
+      </div>
+    </article>
+
+    <article class="case-card" aria-labelledby="case2-title">
+      <div class="case-head">
+        <span class="card-tag tag-ind">Logitech · Transitions</span>
+        <span class="case-num">Case 02 · Generation transition</span>
+      </div>
+      <h3 class="case-title" id="case2-title">Product generation transitions</h3>
+      <p class="case-situation">Last-time buys assumed 0% of customers would switch to the new model. Each transition produced one write-off number.</p>
+      <div class="opt rej"><span class="opt-lbl" aria-hidden="true">✕ Rejected</span><span class="sr-only">Rejected: </span>Last-time buy assuming 0% customer switching to the new model.</div>
+      <div class="opt pick"><span class="opt-lbl" aria-hidden="true">✓ Picked</span><span class="sr-only">Picked: </span>A substitution-adjusted last-buy method, built from scratch, with end-of-life dates set by channel.</div>
+      <div class="pin">
+        <div class="pin-lbl">Result</div>
+        <div class="pin-val">$2.25M → $1.2M</div>
+        <div class="pin-note">Annual E&amp;O within the program · write-off per transition $750K → $400K</div>
+      </div>
+    </article>
+
+    <article class="case-card" aria-labelledby="case3-title">
+      <div class="case-head">
+        <span class="card-tag tag-ind">Logitech · Design change</span>
+        <span class="case-num">Case 03 · Before pilot build</span>
+      </div>
+      <h3 class="case-title" id="case3-title">Design change before pilot build</h3>
+      <p class="case-situation">A design revision (Rev B → C) landed five weeks before pilot production.</p>
+      <div class="opt rej"><span class="opt-lbl" aria-hidden="true">✕ Rejected</span><span class="sr-only">Rejected: </span>Test the pilot on old-revision parts.</div>
+      <div class="opt pick"><span class="opt-lbl" aria-hidden="true">✓ Picked</span><span class="sr-only">Picked: </span>Ran a where-used check, then split the pilot build with Engineering and Operations.</div>
+      <div class="pin">
+        <div class="pin-lbl">Result</div>
+        <div class="pin-val">$540K → $60K</div>
+        <div class="pin-note">E&amp;O exposure</div>
+      </div>
+    </article>
+
+    <article class="case-card" aria-labelledby="case4-title">
+      <div class="case-head">
+        <span class="card-tag tag-em">Walmart US · Event</span>
+        <span class="case-num">Case 04 · Post-event excess</span>
+      </div>
+      <h3 class="case-title" id="case4-title">Post-event excess</h3>
+      <p class="case-situation">Blanket event uplifts were credited to trend across major retail events.</p>
+      <div class="opt rej"><span class="opt-lbl" aria-hidden="true">✕ Rejected</span><span class="sr-only">Rejected: </span>Credit every event uplift to trend without item-level evidence.</div>
+      <div class="opt pick"><span class="opt-lbl" aria-hidden="true">✓ Picked</span><span class="sr-only">Picked: </span>Matched-control tests per item, run with Data Science. Unsupported signals were removed before purchase orders.</div>
+      <div class="pin">
+        <div class="pin-lbl">Result</div>
+        <div class="pin-val">1.5M of 4.0M signals</div>
+        <div class="pin-note">Unsupported signals removed before purchase orders · ~$100M excess avoided</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── 03 Method ───────────────────────────────────────────────── -->
+<section id="method">
+  <div class="section-header">
+    <div class="section-label">03 · Method</div>
+    <h2 class="section-title">The Excess Prevention Checklist</h2>
+    <div class="section-sub">One check per entry point, run before inventory is bought, built, or credited to trend.</div>
+  </div>
+
+  <div class="project-card">
+    <div>
+      <div class="card-title">Where excess enters, the check, and the gate</div>
+      <div class="card-meta">Read left to right. A check that does not pass holds the commitment.</div>
+    </div>
+    <p class="method-text">The same method runs at every entry point. Name the signal, find the independent evidence it leaves out, and gate the commitment on that evidence rather than on the signal alone.</p>
+
+    <div class="flow">
+      <div class="flow-h">Where excess enters</div>
+      <div></div>
+      <div class="flow-h">Check before commitment</div>
+      <div></div>
+      <div class="flow-h">Gate</div>
+
+      <div class="flow-box flow-entry"><strong>Demand signal</strong>Sell-in orders look like demand</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-check"><strong>Count the full pipeline</strong>Retailer orders, consumer sell-through and channel inventory</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-gate"><strong>Size to sell-through</strong>Not to sell-in alone</div>
+
+      <div class="flow-box flow-entry"><strong>Product transition</strong>Last-time buy on the old model</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-check"><strong>Substitution-adjusted last buy</strong>Expected switching to the new model, with end-of-life dates by channel</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-gate"><strong>Buy net of switching</strong>One view per transition, not one number</div>
+
+      <div class="flow-box flow-entry"><strong>Design change</strong>Revision lands near pilot build</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-check"><strong>Where-used check</strong>Every affected part traced before pilot build</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-gate"><strong>Split the pilot build</strong>Agreed with Engineering and Operations</div>
+
+      <div class="flow-box flow-entry"><strong>Event</strong>Uplift credited to trend</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-check"><strong>Matched-control test per item</strong>Uplift tested against a control, item by item</div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-box flow-gate"><strong>Only supported signals</strong>Reach purchase orders</div>
+    </div>
+
+    <div class="flow-final">Commit inventory only after the check for that entry point passes.</div>
+  </div>
+
+  <div class="project-card">
+    <div>
+      <div class="card-title">Burn-down: old and new generation, with and without substitution adjustment</div>
+      <div class="card-meta">Synthetic illustrative curves. Shape only, not to scale.</div>
+    </div>
+
+    <div class="chart-wrap" tabindex="0" role="region" aria-label="Burn-down chart, scrollable on small screens">
+      <svg viewBox="0 0 800 290" role="img" aria-labelledby="bd-title bd-desc">
+        <title id="bd-title">Illustrative burn-down for old and new generation, with and without substitution adjustment</title>
+        <desc id="bd-desc">Old generation: without substitution adjustment, remaining last-buy stock levels off into a tail after end of life. With substitution adjustment, stock clears by end of life. New generation: without substitution adjustment, supply cover runs out before end of life. With substitution adjustment, cover stays positive through the window. Synthetic shapes, not to scale.</desc>
+
+        <text class="cv-title" x="60" y="22">Old generation</text>
+        <text class="cv-sub" x="60" y="38">Last-buy stock, index (no-substitution buy = 100)</text>
+        <text class="cv-title" x="460" y="22">New generation</text>
+        <text class="cv-sub" x="460" y="38">Supply cover, index (start = 100)</text>
+
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="60" y1="52" x2="370" y2="52"/>
+          <line x1="60" y1="142" x2="370" y2="142"/>
+          <line x1="60" y1="232" x2="370" y2="232"/>
+          <line x1="460" y1="52" x2="770" y2="52"/>
+          <line x1="460" y1="142" x2="770" y2="142"/>
+          <line x1="460" y1="232" x2="770" y2="232"/>
+        </g>
+        <g class="cv-tick" text-anchor="end">
+          <text x="52" y="56">100</text><text x="52" y="146">50</text><text x="52" y="236">0</text>
+          <text x="452" y="56">100</text><text x="452" y="146">50</text><text x="452" y="236">0</text>
+        </g>
+
+        <rect x="277" y="52" width="93" height="180" fill="#e11d48" fill-opacity=".06"/>
+        <text class="cv-warn" x="323" y="70" text-anchor="middle">Stranded tail</text>
+        <rect x="615" y="52" width="155" height="180" fill="#e11d48" fill-opacity=".06"/>
+        <text class="cv-warn" x="692" y="70" text-anchor="middle">Shortfall</text>
+
+        <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 3">
+          <line x1="153" y1="52" x2="153" y2="232"/>
+          <line x1="277" y1="52" x2="277" y2="232"/>
+          <line x1="553" y1="52" x2="553" y2="232"/>
+          <line x1="677" y1="52" x2="677" y2="232"/>
+        </g>
+
+        <path fill="none" stroke="#e11d48" stroke-width="2.25" stroke-dasharray="6 4" stroke-linejoin="round" d="M60.0 52.0 L67.8 63.1 L75.5 73.2 L83.2 82.3 L91.0 90.6 L98.8 98.0 L106.5 104.8 L114.2 110.9 L122.0 116.4 L129.8 121.4 L137.5 126.0 L145.2 130.1 L153.0 133.8 L160.8 137.1 L168.5 140.1 L176.2 142.9 L184.0 145.4 L191.8 147.6 L199.5 149.7 L207.2 151.5 L215.0 153.2 L222.8 154.7 L230.5 156.0 L238.2 157.3 L246.0 158.4 L253.8 159.4 L261.5 160.3 L269.2 161.1 L277.0 161.9 L284.8 162.6 L292.5 163.2 L300.2 163.7 L308.0 164.2 L315.8 164.7 L323.5 165.1 L331.2 165.5 L339.0 165.8 L346.8 166.1 L354.5 166.4 L362.2 166.6 L370.0 166.9"/>
+        <path fill="none" stroke="#059669" stroke-width="2.5" stroke-linejoin="round" d="M60.0 124.0 L67.8 129.0 L75.5 133.9 L83.2 138.8 L91.0 143.6 L98.8 148.4 L106.5 153.1 L114.2 157.7 L122.0 162.3 L129.8 166.8 L137.5 171.2 L145.2 175.5 L153.0 179.8 L160.8 184.0 L168.5 188.1 L176.2 192.2 L184.0 196.1 L191.8 199.9 L199.5 203.7 L207.2 207.3 L215.0 210.8 L222.8 214.2 L230.5 217.4 L238.2 220.5 L246.0 223.4 L253.8 226.1 L261.5 228.5 L269.2 230.6 L277.0 232.0 L370.0 232.0"/>
+        <path fill="none" stroke="#e11d48" stroke-width="2.25" stroke-dasharray="6 4" stroke-linejoin="round" d="M460.0 52.0 L467.8 61.0 L475.5 70.0 L483.2 79.0 L491.0 88.0 L498.8 97.0 L506.5 106.0 L514.2 115.0 L522.0 124.0 L529.8 133.0 L537.5 142.0 L545.2 151.0 L553.0 160.0 L560.8 169.0 L568.5 178.0 L576.2 187.0 L584.0 196.0 L591.8 205.0 L599.5 214.0 L607.2 223.0 L615.0 232.0 L770.0 232.0"/>
+        <path fill="none" stroke="#059669" stroke-width="2.5" stroke-linejoin="round" d="M460.0 52.0 L467.8 54.8 L475.5 58.0 L483.2 61.4 L491.0 64.9 L498.8 68.4 L506.5 72.1 L514.2 75.8 L522.0 79.6 L529.8 83.4 L537.5 87.3 L545.2 91.2 L553.0 95.1 L560.8 99.1 L568.5 103.0 L576.2 107.1 L584.0 111.1 L591.8 115.2 L599.5 119.3 L607.2 123.4 L615.0 127.6 L622.8 131.7 L630.5 135.9 L638.2 140.1 L646.0 144.4 L653.8 148.6 L661.5 152.9 L669.2 157.1 L677.0 161.4 L684.8 165.7 L692.5 170.1 L700.2 174.4 L708.0 178.7 L715.8 183.1 L723.5 187.5 L731.2 191.9 L739.0 196.3 L746.8 200.7 L754.5 205.1 L762.2 209.6 L770.0 214.0"/>
+
+        <text class="cv-lbl" x="60" y="252">Last buy</text>
+        <text class="cv-lbl" x="153" y="252" text-anchor="middle">Launch</text>
+        <text class="cv-lbl" x="277" y="252" text-anchor="middle">EOL</text>
+        <text class="cv-lbl" x="460" y="252">Last buy</text>
+        <text class="cv-lbl" x="553" y="252" text-anchor="middle">Launch</text>
+        <text class="cv-lbl" x="677" y="252" text-anchor="middle">EOL</text>
+        <text class="cv-sub" x="400" y="279" text-anchor="middle">Time runs left to right from last buy; not to scale</text>
+      </svg>
+    </div>
+
+    <div class="chart-legend" aria-label="Chart legend">
+      <span><span class="sw-line sw-dash" aria-hidden="true"></span>Without substitution adjustment (0% switching assumed)</span>
+      <span><span class="sw-line sw-solid" aria-hidden="true"></span>With substitution adjustment</span>
+    </div>
+    <p class="chart-cap">Old generation: the substitution-adjusted buy is smaller and clears at end of life, while the unadjusted buy leaves a stranded tail. New generation: the unadjusted case runs short before end of life, while the adjusted case keeps cover positive.</p>
+  </div>
+
+  <div class="project-card">
+    <div>
+      <div class="card-title">Before and after, four results</div>
+      <div class="card-meta">Rounded case results from Section 04. Each panel is scaled so its before bar is full height.</div>
+    </div>
+
+    <div class="chart-wrap" tabindex="0" role="region" aria-label="Before and after chart, scrollable on small screens">
+      <svg viewBox="0 0 800 270" role="img" aria-labelledby="rs-title rs-desc">
+        <title id="rs-title">Before and after bars for the four case results</title>
+        <desc id="rs-desc">Four panels, each scaled so the before bar is full height. Case 01 projected excess units: 150K before, 40K after. Case 02 annual E&amp;O: $2.25M before, $1.2M after. Case 03 E&amp;O exposure: $540K before, $60K after. Case 04 unsupported event signals: 1.5M of 4.0M removed before purchase orders. The bases are units, dollars and signals, so panels are not comparable and are not added together.</desc>
+
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="200" y1="12" x2="200" y2="256"/>
+          <line x1="400" y1="12" x2="400" y2="256"/>
+          <line x1="600" y1="12" x2="600" y2="256"/>
+        </g>
+
+        <!-- Case 01 -->
+        <text class="cv-title" x="12" y="24">Case 01 · Channel build</text>
+        <text class="cv-sub" x="12" y="40">Projected excess, units</text>
+        <rect x="30" y="80" width="60" height="150" fill="#cbd5e1"/>
+        <rect x="110" y="190" width="60" height="40" fill="#059669"/>
+        <text class="cv-val" x="60" y="72" text-anchor="middle">150K</text>
+        <text class="cv-val" x="140" y="182" text-anchor="middle">40K</text>
+        <line x1="12" y1="230" x2="188" y2="230" stroke="#cbd5e1"/>
+        <text class="cv-lbl" x="60" y="248" text-anchor="middle">Before</text>
+        <text class="cv-lbl" x="140" y="248" text-anchor="middle">After</text>
+
+        <!-- Case 02 -->
+        <text class="cv-title" x="212" y="24">Case 02 · Transitions</text>
+        <text class="cv-sub" x="212" y="40">Annual E&amp;O, $ (within program)</text>
+        <rect x="230" y="80" width="60" height="150" fill="#cbd5e1"/>
+        <rect x="310" y="150" width="60" height="80" fill="#059669"/>
+        <text class="cv-val" x="260" y="72" text-anchor="middle">$2.25M</text>
+        <text class="cv-val" x="340" y="142" text-anchor="middle">$1.2M</text>
+        <line x1="212" y1="230" x2="388" y2="230" stroke="#cbd5e1"/>
+        <text class="cv-lbl" x="260" y="248" text-anchor="middle">Before</text>
+        <text class="cv-lbl" x="340" y="248" text-anchor="middle">After</text>
+
+        <!-- Case 03 -->
+        <text class="cv-title" x="412" y="24">Case 03 · Design change</text>
+        <text class="cv-sub" x="412" y="40">E&amp;O exposure, $</text>
+        <rect x="430" y="80" width="60" height="150" fill="#cbd5e1"/>
+        <rect x="510" y="213.3" width="60" height="16.7" fill="#059669"/>
+        <text class="cv-val" x="460" y="72" text-anchor="middle">$540K</text>
+        <text class="cv-val" x="540" y="205" text-anchor="middle">$60K</text>
+        <line x1="412" y1="230" x2="588" y2="230" stroke="#cbd5e1"/>
+        <text class="cv-lbl" x="460" y="248" text-anchor="middle">Before</text>
+        <text class="cv-lbl" x="540" y="248" text-anchor="middle">After</text>
+
+        <!-- Case 04 -->
+        <text class="cv-title" x="612" y="24">Case 04 · Post-event</text>
+        <text class="cv-sub" x="612" y="40">Unsupported event signals</text>
+        <rect x="630" y="80" width="60" height="56.25" fill="#fda4af"/>
+        <rect x="630" y="136.25" width="60" height="93.75" fill="#cbd5e1"/>
+        <rect x="710" y="136.25" width="60" height="93.75" fill="#059669"/>
+        <text class="cv-val" x="660" y="72" text-anchor="middle">4.0M</text>
+        <text x="660" y="113" text-anchor="middle" font-size="11" font-weight="700" fill="#881337">1.5M</text>
+        <text class="cv-lbl" x="740" y="128" text-anchor="middle">remaining</text>
+        <line x1="612" y1="230" x2="788" y2="230" stroke="#cbd5e1"/>
+        <text class="cv-lbl" x="660" y="248" text-anchor="middle">Before</text>
+        <text class="cv-lbl" x="740" y="248" text-anchor="middle">After</text>
+      </svg>
+    </div>
+
+    <div class="chart-legend" aria-label="Chart legend">
+      <span><span class="sw-box" style="background:#cbd5e1" aria-hidden="true"></span>Before</span>
+      <span><span class="sw-box" style="background:#059669" aria-hidden="true"></span>After</span>
+      <span><span class="sw-box" style="background:#fda4af" aria-hidden="true"></span>Removed (Case 04)</span>
+    </div>
+    <p class="chart-cap">Bases differ (units, dollars and signals), so panels are not comparable with each other and no totals are shown.</p>
+  </div>
+</section>
+
+<!-- ── 04 Results ──────────────────────────────────────────────── -->
+<section id="results">
+  <div class="section-header">
+    <div class="section-label">04 · Results</div>
+    <h2 class="section-title">Measured Results</h2>
+    <div class="section-sub">Each row is its own measure with its own basis. They sit side by side and are not added.</div>
+  </div>
+
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Measured results by case">
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th scope="col">Case</th>
+          <th scope="col">Measure</th>
+          <th scope="col">Before</th>
+          <th scope="col">After</th>
+          <th scope="col">Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>01</strong> · Channel build (Logitech)</td>
+          <td>Projected excess</td>
+          <td>150K units</td>
+          <td><strong>40K units</strong></td>
+          <td>~$4.5M build value saved</td>
+        </tr>
+        <tr>
+          <td><strong>02</strong> · Transitions (Logitech)</td>
+          <td>Write-off per transition</td>
+          <td>$750K</td>
+          <td><strong>$400K</strong></td>
+          <td>Per transition</td>
+        </tr>
+        <tr>
+          <td><strong>02</strong> · Transitions (Logitech)</td>
+          <td>Annual E&amp;O, within program</td>
+          <td>$2.25M</td>
+          <td><strong>$1.2M</strong></td>
+          <td>Annual</td>
+        </tr>
+        <tr>
+          <td><strong>03</strong> · Design change (Logitech)</td>
+          <td>E&amp;O exposure</td>
+          <td>$540K</td>
+          <td><strong>$60K</strong></td>
+          <td>Rev B → C, five weeks before pilot production</td>
+        </tr>
+        <tr>
+          <td><strong>04</strong> · Post-event (Walmart US)</td>
+          <td>Unsupported event signals</td>
+          <td>4.0M signals</td>
+          <td><strong>1.5M removed</strong></td>
+          <td>~$100M excess avoided, before purchase orders</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:20px;">
+    <strong>Not summed.</strong> The rows measure different things: units, a per-transition write-off, an annual E&amp;O figure, an exposure figure and a signal count. No dollar figures are totalled anywhere on this page.
+  </div>
+</section>
+
+<!-- ── 05 Transfer ─────────────────────────────────────────────── -->
+<section id="transfer" style="padding-bottom:56px;">
+  <div class="section-header">
+    <div class="section-label">05 · Transfer</div>
+    <h2 class="section-title">Why It Matters for Long-Lead Planning</h2>
+    <div class="section-sub">The same discipline applies wherever lead times are long and commitments come early.</div>
+  </div>
+
+  <div class="project-card" style="margin-bottom:16px;">
+    <p class="card-desc">Stranded inventory is the long-lead equivalent of stranded equipment or capex. Once a long-lead part is bought against a signal that does not hold, the cost is committed and the part has no buyer. The checks in these cases carry over to any long-lead plan.</p>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="sk-cat">Transfer 01</div>
+      <div class="sk-head">Validate demand before supply</div>
+      <div class="sk-body">Test the signal against what sells through, what sits in channel and what is actually used before a long-lead commitment is cut, not after the order is confirmed.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Transfer 02</div>
+      <div class="sk-head">Sequence design changes</div>
+      <div class="sk-body">Run a where-used check on every affected part, and agree with Engineering and Operations which build proceeds on which revision before pilot or production commitments.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Transfer 03</div>
+      <div class="sk-head">Time transitions to end of life</div>
+      <div class="sk-body">Net last buys for expected substitution and set end-of-life dates by channel, so supply stops where demand stops.</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:20px;">
+    <strong>What transfers is the check, not the numbers.</strong> Each result depends on its own lead time, channel mix and data. The figures on this page are rounded and illustrative.
+  </div>
+
+  <div class="hero-actions" style="margin-top:24px;">
+    <a class="btn btn-primary" href="../index.html">← Back to Portfolio</a>
+    <a class="btn btn-ghost" href="../npi-launch-program.html">NPI Launch Program</a>
+    <a class="btn btn-ghost" href="../planning-command-center.html">Planning Command Center</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer>
+  <strong style="color:var(--t1)">Astha Jain</strong>
+  <span aria-hidden="true">·</span>
+  <a href="../index.html">Portfolio</a>
+  <span aria-hidden="true">·</span>
+  <a href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn</a>
+  <span aria-hidden="true">·</span>
+  <a href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub</a>
+  <span aria-hidden="true">·</span>
+  <a href="mailto:asthajain.sc@gmail.com">asthajain.sc@gmail.com</a>
+  <div class="footer-note">Figures rounded; data illustrative. © 2026 Astha Jain</div>
+</footer>
+
+</body>
+</html>

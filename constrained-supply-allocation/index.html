@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Constrained Supply Allocation Matrix — Astha Jain</title>
+<meta name="description" content="Case study: a ranked allocation matrix with published criteria that replaced VP-level escalation for scarce contract-manufacturer output during product launches."/>
+<link rel="canonical" href="https://asthaj12.github.io/constrained-supply-allocation/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='42' font-family='Arial,Helvetica,sans-serif' font-size='27' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EAJ%3C/text%3E%3C/svg%3E"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Astha Jain"/>
+<meta property="og:title" content="Constrained Supply Allocation Matrix — Astha Jain"/>
+<meta property="og:description" content="Case study: a ranked allocation matrix with published criteria that replaced VP-level escalation for scarce contract-manufacturer output during product launches."/>
+<meta property="og:url" content="https://asthaj12.github.io/constrained-supply-allocation/"/>
+<meta property="og:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Constrained Supply Allocation Matrix — Astha Jain"/>
+<meta name="twitter:description" content="Case study: a ranked allocation matrix with published criteria that replaced VP-level escalation for scarce contract-manufacturer output during product launches."/>
+<meta name="twitter:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta name="twitter:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<style>
+/* ── Tokens (same palette as the planning and NPI case studies; --t3 darkened for contrast) ── */
+:root {
+  --bg:       #f8fafc;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --border:   #e2e8f0;
+  --border-s: #c7d2fe;
+  --ind:      #6366f1;
+  --ind-l:    #4f46e5;
+  --ind-d:    #3730a3;
+  --em:       #059669;
+  --em-d:     #047857;
+  --rose:     #e11d48;
+  --rose-d:   #be123c;
+  --t1:       #0f172a;
+  --t2:       #475569;
+  --t3:       #64748b;
+  --t4:       #cbd5e1;
+}
+
+/* ── Reset and base ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+[hidden]{display:none !important;}
+:focus-visible{outline:3px solid var(--ind);outline-offset:3px;border-radius:4px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:-9999px;top:8px;z-index:300;background:#fff;color:var(--t1);padding:8px 12px;border-radius:6px;border:1px solid var(--border-s);font-weight:600;}
+.skip-link:focus{left:8px;}
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;gap:8px;height:56px;}
+.nav-brand{font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--t1);margin-right:24px;white-space:nowrap;}
+.nav-brand span{color:var(--ind);}
+.nav-items{display:flex;align-items:center;gap:4px;flex:1;min-width:0;}
+.nav-link{padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;color:var(--t2);transition:color .15s,background .15s;white-space:nowrap;}
+.nav-link:hover{color:var(--t1);background:rgba(99,102,241,.06);}
+.nav-link.active{color:var(--ind-l);background:rgba(99,102,241,.08);font-weight:600;}
+.dropdown{position:relative;}
+.dropdown-toggle{display:flex;align-items:center;gap:5px;border:0;background:none;font-family:inherit;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:color .15s,background .15s;user-select:none;white-space:nowrap;}
+.dropdown-toggle:hover{color:var(--t1);background:rgba(99,102,241,.06);}
+.dropdown-toggle svg{width:10px;height:10px;transition:transform .2s;}
+.dropdown:hover .dropdown-toggle svg,.dropdown:focus-within .dropdown-toggle svg{transform:rotate(180deg);}
+.dropdown-menu{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;padding:6px;min-width:280px;box-shadow:0 20px 48px rgba(15,23,42,.14);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;}
+.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
+.dropdown-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;font-size:12px;font-weight:500;color:var(--t2);transition:background .12s,color .12s;}
+.dropdown-item:hover{background:rgba(99,102,241,.1);color:var(--t1);}
+.di-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;color:var(--ind-l);background:rgba(99,102,241,.14);}
+.di-text{display:block;min-width:0;}
+.dropdown-divider{height:1px;background:var(--border);margin:5px 2px;}
+.di-label{display:block;font-weight:600;color:var(--t1);font-size:12px;}
+.di-sub{display:block;font-size:10.5px;color:var(--t3);margin-top:1px;}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nav-badge{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid var(--border);color:var(--t2);transition:background .15s,border-color .15s,color .15s;}
+.nav-badge:hover{background:#eef2ff;border-color:var(--ind);color:var(--ind);}
+
+/* ── Confidentiality banner ─────────────────────────────────────── */
+.confidentiality-banner{background:#f1f5f9;border-bottom:1px solid #cbd5e1;padding:10px 32px;font-size:11px;color:#475569;text-align:center;}
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero{max-width:1100px;margin:0 auto;padding:56px 32px 32px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:#eef2ff;border:1px solid var(--border-s);border-radius:999px;padding:4px 14px;font-size:11px;font-weight:700;color:var(--ind);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;}
+.hero-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(30px,4.2vw,46px);font-weight:800;line-height:1.1;letter-spacing:-.03em;color:var(--t1);margin-bottom:20px;}
+.hero h1 .accent{color:var(--ind);}
+.tagline{font-size:17px;color:var(--t2);max-width:760px;line-height:1.65;margin-bottom:24px;}
+.role-strip{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.role-pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;transition:all .15s;}
+.btn-primary{background:var(--ind);color:#fff;}
+.btn-primary:hover{background:var(--ind-d);transform:translateY(-1px);box-shadow:0 8px 24px rgba(99,102,241,.3);}
+.btn-ghost{background:transparent;color:var(--t2);border:1px solid var(--border-s);}
+.btn-ghost:hover{border-color:var(--ind);color:var(--ind-l);}
+
+/* ── KPI tiles ──────────────────────────────────────────────────── */
+.kpi-wrap{max-width:1100px;margin:0 auto;padding:0 32px 48px;}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 24px;}
+.kpi-val{font-size:36px;font-weight:800;letter-spacing:-.03em;color:var(--ind-l);line-height:1.05;}
+.kpi-lbl{font-size:12.5px;color:var(--t2);margin-top:8px;line-height:1.45;}
+
+/* ── Sections ───────────────────────────────────────────────────── */
+section{max-width:1100px;margin:0 auto;padding:0 32px 64px;}
+.section-header{margin-bottom:24px;}
+.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ind);margin-bottom:8px;}
+.section-title{font-size:26px;font-weight:800;color:var(--t1);letter-spacing:-.02em;line-height:1.2;}
+.section-sub{font-size:14px;color:var(--t2);margin-top:6px;max-width:760px;}
+
+/* ── Cards and tags ─────────────────────────────────────────────── */
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;}
+.card-tag{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.tag-ind{background:rgba(99,102,241,.12);color:var(--ind-l);}
+.tag-em{background:rgba(16,185,129,.12);color:var(--em-d);}
+.tag-rose{background:rgba(244,63,94,.12);color:var(--rose-d);}
+.tag-neutral{background:#f1f5f9;color:var(--t2);}
+.card-title{font-size:16px;font-weight:700;color:var(--t1);line-height:1.3;}
+.card-desc{font-size:13px;color:var(--t2);line-height:1.6;}
+.cs-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cs-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.stack{display:flex;flex-direction:column;gap:16px;}
+.method-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.method-pill{padding:3px 9px;border-radius:5px;font-size:10px;font-weight:600;color:var(--t2);background:#f8fafc;border:1px solid var(--border);}
+
+/* ── Callout ────────────────────────────────────────────────────── */
+.callout{background:#f1f5ff;border:1px solid var(--border-s);border-left:3px solid var(--ind);border-radius:10px;padding:16px 18px;font-size:13px;color:var(--t2);line-height:1.65;}
+.co-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ind-l);margin-bottom:6px;}
+.callout strong{color:var(--t1);}
+
+/* ── Decision picks ─────────────────────────────────────────────── */
+.pick{border:1px solid var(--border);border-radius:14px;padding:22px 24px;background:var(--surface);display:flex;flex-direction:column;gap:12px;}
+.pick.no{border-color:#fecdd3;background:#fff8f9;}
+.pick.yes{border-color:#a7f3d0;background:#f6fdf9;}
+.pick-top{display:flex;align-items:center;gap:10px;}
+.pick-mark{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;}
+.pick.no .pick-mark{background:#ffe4e6;color:var(--rose-d);}
+.pick.yes .pick-mark{background:#d1fae5;color:var(--em-d);}
+
+/* ── Numbered steps ─────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start;}
+.step-num{width:34px;height:34px;border-radius:8px;background:#eef2ff;border:1px solid var(--border-s);color:var(--ind-l);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.step-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:5px;}
+.step-desc{font-size:13px;color:var(--t2);line-height:1.65;}
+
+/* ── Formula block ──────────────────────────────────────────────── */
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.75;color:var(--t1);background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px 18px;overflow-x:auto;white-space:pre;}
+
+/* ── Chart cards ────────────────────────────────────────────────── */
+.chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 16px;flex-wrap:wrap;}
+.chart-cap{font-size:12.5px;color:var(--t2);line-height:1.55;max-width:760px;}
+.illus{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);border:1px solid var(--border);border-radius:999px;padding:3px 10px;white-space:nowrap;}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--t2);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;}
+.sw-demand{border:1px dashed #94a3b8;background:#f1f5f9;}
+.sw-t1{background:var(--ind-l);}
+.sw-t2{background:#818cf8;}
+.chart-svg{width:100%;height:auto;display:block;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+.chart-scroll{overflow-x:auto;}
+.chart-scroll .chart-svg{min-width:640px;}
+
+/* ── What-if controls and rows ──────────────────────────────────── */
+.seg{display:flex;flex-wrap:wrap;gap:8px;}
+.seg button{font:inherit;font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;border:1px solid var(--border-s);background:#fff;color:var(--t2);cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+.seg button:hover{border-color:var(--ind);color:var(--ind-l);}
+.seg button[aria-pressed="true"]{background:var(--ind-l);border-color:var(--ind-l);color:#fff;}
+.wi-live{font-size:13px;color:var(--t1);background:#f1f5ff;border:1px solid var(--border-s);border-radius:10px;padding:12px 16px;line-height:1.6;}
+.wi-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.wi-row{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) 128px;gap:14px;align-items:center;font-size:12.5px;}
+.wi-name{color:var(--t1);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wi-rank{color:var(--t3);font-weight:700;margin-right:6px;}
+.wi-track{height:12px;border-radius:6px;background:#f1f5f9;border:1px dashed #cbd5e1;overflow:hidden;display:block;}
+.wi-fill{display:block;height:100%;border-radius:6px;background:var(--ind-l);}
+.wi-row.t2 .wi-fill{background:#818cf8;}
+.wi-status{font-size:11.5px;font-weight:600;text-align:right;white-space:nowrap;}
+.wi-status.full{color:var(--em-d);}
+.wi-status.part{color:var(--ind-l);}
+.wi-status.zero{color:var(--rose-d);}
+
+/* ── Results ────────────────────────────────────────────────────── */
+.res-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.res-val{font-size:40px;font-weight:800;letter-spacing:-.03em;color:var(--t1);line-height:1;}
+.res-val.word{font-size:26px;letter-spacing:-.01em;padding:6px 0;}
+.meter{height:10px;border-radius:999px;background:#eef2f7;overflow:hidden;margin-top:6px;}
+.meter span{display:block;height:100%;background:var(--ind-l);border-radius:999px;}
+.meter-lbl{font-size:11px;color:var(--t3);}
+
+/* ── Companion example ──────────────────────────────────────────── */
+.comp{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:28px;align-items:start;}
+.comp-steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:6px;}
+.comp-steps li{position:relative;padding-left:22px;font-size:13px;color:var(--t2);line-height:1.6;}
+.comp-steps li::before{content:"";position:absolute;left:4px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--ind);}
+.comp-steps li strong{color:var(--t1);}
+.stack-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:8px;}
+.stackbar{display:flex;height:48px;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+.sb-undated{width:40%;background:repeating-linear-gradient(45deg,#fecdd3 0 6px,#ffe4e6 6px 12px);color:var(--rose-d);display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:700;white-space:nowrap;}
+.sb-dated{flex:1;background:#eef2ff;color:var(--ind-d);display:flex;align-items:center;justify-content:flex-end;padding:0 12px;font-size:12px;font-weight:700;white-space:nowrap;}
+.sb-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-top:6px;}
+.res-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.res-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;}
+.res-pill.g{background:#d1fae5;color:var(--em-d);}
+.res-pill.i{background:#e0e7ff;color:var(--ind-d);}
+
+/* ── Related links ──────────────────────────────────────────────── */
+.related{font-size:13px;color:var(--t2);}
+.related a{color:var(--ind-l);font-weight:600;border-bottom:1px solid var(--border-s);}
+.related a:hover{border-bottom-color:var(--ind-l);}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer{border-top:1px solid var(--border);padding:28px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--t3);max-width:1100px;margin:20px auto 0;}
+footer a{color:var(--t2);transition:color .12s;overflow-wrap:anywhere;}
+footer a:hover{color:var(--ind-l);}
+.footer-note{margin-left:auto;}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width:900px){
+  .cs-two,.cs-three,.res-grid,.comp{grid-template-columns:minmax(0,1fr);}
+  .kpi-grid{grid-template-columns:minmax(0,1fr);}
+  .kpi-val{font-size:30px;}
+  .wi-row{grid-template-columns:minmax(0,1fr) auto;}
+  .wi-track{grid-column:1 / -1;order:3;}
+}
+@media (max-width:600px){
+  .hero{padding:40px 20px 24px;}
+  section{padding:0 20px 48px;}
+  .kpi-wrap{padding:0 20px 40px;}
+  .navbar{height:auto;flex-wrap:wrap;row-gap:6px;padding:10px 16px;}
+  .nav-brand{margin-right:0;}
+  .nav-right{order:2;}
+  .nav-items{order:3;flex:1 0 100%;flex-wrap:wrap;}
+  .nav-link{padding:6px 8px;font-size:12px;}
+  .nav-link.hide-sm{display:none;}
+  .dropdown-menu{min-width:240px;}
+  .confidentiality-banner{padding:10px 20px;}
+  footer{padding:24px 20px;}
+  .footer-note{margin-left:0;}
+  .project-card,.pick{padding:20px;}
+  .section-title{font-size:22px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
+}
+
+/* ── Print ──────────────────────────────────────────────────────── */
+@media print{
+  body{background:#fff;font-size:11px;}
+  .skip-link,.navbar,.hero-actions,.nav-right,.dropdown,.seg{display:none !important;}
+  .confidentiality-banner{background:#fff;}
+  .hero{padding:12px 0 10px;}
+  .hero h1{font-size:24px;}
+  .tagline{font-size:12px;}
+  .kpi-wrap{padding:0 0 12px;}
+  .kpi{box-shadow:none;}
+  section{padding:0 0 18px;}
+  .section-title{font-size:17px;}
+  .project-card,.pick,.callout,.kpi,.chart-card{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}
+  .stack > *,.cs-two > *,.cs-three > *,.res-grid > *{break-inside:avoid;page-break-inside:avoid;}
+  a{color:inherit !important;text-decoration:none !important;}
+  footer{margin-top:8px;padding:12px 0;}
+  .meter span,.wi-fill,.sb-undated,.sb-dated{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="confidentiality-banner">
+  <strong>Independent portfolio case study.</strong> Figures rounded; data illustrative. No employer data, systems, planning parameters or confidential process is reproduced.
+</div>
+
+<!-- ── Navbar ──────────────────────────────────────────────────── -->
+<nav class="navbar" aria-label="Site">
+  <a class="nav-brand" href="../index.html">AJ<span> · Portfolio</span></a>
+
+  <div class="nav-items">
+    <div class="dropdown">
+      <button type="button" class="dropdown-toggle" aria-haspopup="true">
+        Dashboards
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="../rack-deployment-planner/">
+          <span class="di-icon" aria-hidden="true">R</span>
+          <span class="di-text"><span class="di-label">Rack Deployment Planner</span><span class="di-sub">Critical path · capacity-ready dates</span></span>
+        </a>
+        <a class="dropdown-item" href="../server-bom-readiness/">
+          <span class="di-icon" aria-hidden="true">S</span>
+          <span class="di-text"><span class="di-label">Server BOM Readiness</span><span class="di-sub">Component requirements · shortage propagation</span></span>
+        </a>
+        <a class="dropdown-item" href="../gpu-commodity-planner/">
+          <span class="di-icon" aria-hidden="true">G</span>
+          <span class="di-text"><span class="di-label">GPU, Memory &amp; Storage Planner</span><span class="di-sub">Newsvendor commits · cost distribution</span></span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="../network-capacity-optimizer/">
+          <span class="di-icon" aria-hidden="true">N</span>
+          <span class="di-text"><span class="di-label">Network &amp; Capacity Optimizer</span><span class="di-sub">Peak allocation · constrained supply</span></span>
+        </a>
+        <a class="dropdown-item" href="../ai-customer-strategy-lab/">
+          <span class="di-icon" aria-hidden="true">C</span>
+          <span class="di-text"><span class="di-label">Cloud AI Strategy Lab</span><span class="di-sub">Customer acquisition simulation</span></span>
+        </a>
+      </div>
+    </div>
+    <a class="nav-link" href="../index.html#projects">Projects</a>
+    <a class="nav-link hide-sm" href="../index.html#about">About</a>
+    <a class="nav-link active" href="#problem">Case Study</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-badge" href="../index.html">← Portfolio</a>
+    <a class="nav-badge" href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn ↗</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-eyebrow">Case Study · Global Supply Planning</div>
+  <h1>Constrained Supply<br><span class="accent">Allocation Matrix</span></h1>
+  <p class="tagline">During launches, contract-manufacturer output ran about 30% below demand. I replaced case-by-case VP escalation with one ranked allocation matrix: published criteria, filled from the top until supply runs out.</p>
+  <div class="role-strip">
+    <span class="role-pill" style="background:#eef2ff;color:#4f46e5;">Logitech</span>
+    <span class="role-pill" style="background:#f0f9ff;color:#0369a1;">Global Supply Product Planner</span>
+    <span class="role-pill" style="background:#f0fdf4;color:#166534;">Consumer electronics · ~$400M tablet-accessory portfolio</span>
+    <span class="role-pill" style="background:#fff7ed;color:#9a3412;">2020–2022</span>
+  </div>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#problem">Read the case study →</a>
+    <a class="btn btn-ghost" href="../index.html">← Back to portfolio</a>
+  </div>
+</header>
+
+<div class="kpi-wrap">
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-val">~30%</div>
+      <div class="kpi-lbl">Contract-manufacturer output short of demand during launches</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">~100%</div>
+      <div class="kpi-lbl">Tier-1 launch partners filled on day one</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">3 weeks</div>
+      <div class="kpi-lbl">Launch delivered early, from the long-lead companion example (a separate case)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01 Problem ──────────────────────────────────────────────── -->
+<section id="problem">
+  <div class="section-header">
+    <div class="section-label">01 · Context</div>
+    <h2 class="section-title">Problem</h2>
+    <p class="section-sub">Launch demand ran ahead of what the contract manufacturer could deliver, and the rule for who got supply first was never written down.</p>
+  </div>
+  <div class="cs-two">
+    <article class="project-card">
+      <div><span class="card-tag tag-rose">Symptom</span></div>
+      <h3 class="card-title">Output about 30% below demand</h3>
+      <p class="card-desc">During launches, contract-manufacturer output ran about 30% below demand. Every launch had to decide who received the constrained units first.</p>
+    </article>
+    <article class="project-card">
+      <div><span class="card-tag tag-neutral">How it was decided</span></div>
+      <h3 class="card-title">Whoever escalated got supply</h3>
+      <p class="card-desc">Allocation was settled case by case through ad-hoc VP escalations. Outcomes depended on who escalated, not on the value each partner or channel returned.</p>
+    </article>
+  </div>
+  <div class="callout" style="margin-top:16px;">
+    <div class="co-label">Root problem</div>
+    <strong>No shared rule.</strong> The same shortage could get a different answer depending on who escalated, and no published criteria explained the result.
+  </div>
+</section>
+
+<!-- ── 02 Decision ─────────────────────────────────────────────── -->
+<section id="decision">
+  <div class="section-header">
+    <div class="section-label">02 · Decision</div>
+    <h2 class="section-title">Decision</h2>
+    <p class="section-sub">Two ways to allocate scarce output. I picked the one with criteria anyone could read.</p>
+  </div>
+  <div class="cs-two">
+    <article class="pick no">
+      <div class="pick-top">
+        <span class="pick-mark" aria-hidden="true">✕</span>
+        <span class="card-tag tag-rose">Rejected</span>
+      </div>
+      <h3 class="card-title">VP-level, case-by-case escalation</h3>
+      <p class="card-desc">Each shortage went to a VP. The answer followed who escalated, not the value of the partner or channel to the launch.</p>
+    </article>
+    <article class="pick yes">
+      <div class="pick-top">
+        <span class="pick-mark" aria-hidden="true">✓</span>
+        <span class="card-tag tag-em">Chosen</span>
+      </div>
+      <h3 class="card-title">One ranked allocation matrix, published criteria</h3>
+      <p class="card-desc">Each partner and channel gets a score: margin × strategic weight. Output fills in rank order until constrained supply runs out, and the criteria are published so every outcome traces back to a rule.</p>
+    </article>
+  </div>
+  <div class="callout" style="margin-top:16px;">
+    <div class="co-label">What I owned</div>
+    I owned the constrained contract-manufacturer allocation and built the matrix. Program and category partners now see one ranking with the trade-offs written out, instead of a set of separate escalations.
+  </div>
+</section>
+
+<!-- ── 03 Method ───────────────────────────────────────────────── -->
+<section id="method">
+  <div class="section-header">
+    <div class="section-label">03 · Method</div>
+    <h2 class="section-title">Method: ranked allocation in plain words</h2>
+    <p class="section-sub">Score every partner or channel, fill from the top, and write down the tie and minimum rules before the shortage arrives.</p>
+  </div>
+
+  <div class="stack">
+    <article class="project-card">
+      <div class="step">
+        <div class="step-num" aria-hidden="true">1</div>
+        <div>
+          <h3 class="step-title">Score each partner or channel</h3>
+          <p class="step-desc">Score = margin × strategic weight. Margin is a fraction (0.34 for 34%). Strategic weight is a 1–5 scale, written into the matrix so anyone can see it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" aria-hidden="true">2</div>
+        <div>
+          <h3 class="step-title">Fill in rank order</h3>
+          <p class="step-desc">Start at rank 1 and allocate each partner's day-one demand until constrained supply runs out. The partner where supply runs out is the cut line; everyone below it waits.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" aria-hidden="true">3</div>
+        <div>
+          <h3 class="step-title">Write down the tie and minimum rules</h3>
+          <p class="step-desc"><strong>Ties:</strong> the earlier committed launch date ranks first. <strong>Minimums:</strong> a launch with a committed date keeps a minimum quantity reserved before the rank fill, so a lower score cannot zero out a live launch. The charts below set minimums to zero so the ranking stays visible.</p>
+        </div>
+      </div>
+      <pre class="formula">score     = margin × strategic weight
+allocate  = min(day-one demand, remaining supply)    in rank order
+remaining = remaining supply − allocate</pre>
+    </article>
+
+    <article class="project-card chart-card">
+      <div class="chart-head">
+        <div>
+          <h3 class="card-title">Demand vs. constrained supply, by rank</h3>
+          <p class="chart-cap">100 units of day-one demand against 70 units of constrained supply, the same ~30% gap from the launch problem. Outline = demand; solid bar = allocated units.</p>
+        </div>
+        <span class="illus">Illustrative data</span>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span><i class="sw sw-demand"></i>Day-one demand</span>
+        <span><i class="sw sw-t1"></i>Allocated, Tier 1</span>
+        <span><i class="sw sw-t2"></i>Allocated, Tier 2</span>
+      </div>
+      <div class="chart-scroll">
+<svg class="chart-svg" viewBox="0 0 780 400" role="img" aria-labelledby="c1-title c1-desc"><title id="c1-title">Day-one demand and allocated units by partner, in rank order</title><desc id="c1-desc">Illustrative data. 100 units of demand against 70 units of constrained supply. Ranks 1 to 4 (Tier 1) are filled in full. Channel E is filled in full, Channel F is filled in full, Regional G gets 3 of 14 units, and Specialty H gets none.</desc><line x1="0" y1="174" x2="780" y2="174" stroke="#e2e8f0" stroke-dasharray="6 4"/><g><text x="0" y="33" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#1  </tspan>Launch partner A</text><text x="0" y="49" font-size="11" fill="#64748b">Tier 1 · 0.34 × 5 = 1.70</text><rect x="255" y="24" width="200" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="24" width="200" height="24" rx="5" fill="#4f46e5"/><text x="465" y="41" font-size="12" font-weight="600" fill="#0f172a">10 of 10 · 100%</text></g><g><text x="0" y="73" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#2  </tspan>Launch partner B</text><text x="0" y="89" font-size="11" fill="#64748b">Tier 1 · 0.31 × 5 = 1.55</text><rect x="255" y="64" width="180" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="64" width="180" height="24" rx="5" fill="#4f46e5"/><text x="445" y="81" font-size="12" font-weight="600" fill="#0f172a">9 of 9 · 100%</text></g><g><text x="0" y="113" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#3  </tspan>Launch partner C</text><text x="0" y="129" font-size="11" fill="#64748b">Tier 1 · 0.29 × 5 = 1.45</text><rect x="255" y="104" width="160" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="104" width="160" height="24" rx="5" fill="#4f46e5"/><text x="425" y="121" font-size="12" font-weight="600" fill="#0f172a">8 of 8 · 100%</text></g><g><text x="0" y="153" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#4  </tspan>Launch partner D</text><text x="0" y="169" font-size="11" fill="#64748b">Tier 1 · 0.36 × 4 = 1.44</text><rect x="255" y="144" width="120" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="144" width="120" height="24" rx="5" fill="#4f46e5"/><text x="385" y="161" font-size="12" font-weight="600" fill="#0f172a">6 of 6 · 100%</text></g><g><text x="0" y="193" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#5  </tspan>Channel partner E</text><text x="0" y="209" font-size="11" fill="#64748b">Tier 2 · 0.27 × 4 = 1.08</text><rect x="255" y="184" width="320" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="184" width="320" height="24" rx="5" fill="#818cf8"/><text x="585" y="201" font-size="12" font-weight="600" fill="#0f172a">16 of 16 · 100%</text></g><g><text x="0" y="233" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#6  </tspan>Channel partner F</text><text x="0" y="249" font-size="11" fill="#64748b">Tier 2 · 0.24 × 3 = 0.72</text><rect x="255" y="224" width="360" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="224" width="360" height="24" rx="5" fill="#818cf8"/><text x="625" y="241" font-size="12" font-weight="600" fill="#0f172a">18 of 18 · 100%</text></g><g><text x="0" y="273" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#7  </tspan>Regional partner G</text><text x="0" y="289" font-size="11" fill="#64748b">Tier 2 · 0.22 × 3 = 0.66</text><rect x="255" y="264" width="280" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="264" width="60" height="24" rx="5" fill="#818cf8"/><text x="545" y="281" font-size="12" font-weight="600" fill="#0f172a">3 of 14 · 21%</text></g><g><text x="0" y="313" font-size="13" font-weight="700" fill="#0f172a"><tspan fill="#64748b">#8  </tspan>Specialty partner H</text><text x="0" y="329" font-size="11" fill="#64748b">Tier 2 · 0.19 × 2 = 0.38</text><rect x="255" y="304" width="380" height="24" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-dasharray="4 3"/><rect x="255" y="304" width="0" height="24" rx="5" fill="#818cf8"/><text x="645" y="321" font-size="12" font-weight="600" fill="#0f172a">0 of 19 · 0%</text></g><line x1="255" y1="344" x2="655" y2="344" stroke="#94a3b8"/><line x1="255" y1="344" x2="255" y2="349" stroke="#94a3b8"/><text x="255" y="362" font-size="11" text-anchor="middle" fill="#64748b">0</text><line x1="355" y1="344" x2="355" y2="349" stroke="#94a3b8"/><text x="355" y="362" font-size="11" text-anchor="middle" fill="#64748b">5</text><line x1="455" y1="344" x2="455" y2="349" stroke="#94a3b8"/><text x="455" y="362" font-size="11" text-anchor="middle" fill="#64748b">10</text><line x1="555" y1="344" x2="555" y2="349" stroke="#94a3b8"/><text x="555" y="362" font-size="11" text-anchor="middle" fill="#64748b">15</text><line x1="655" y1="344" x2="655" y2="349" stroke="#94a3b8"/><text x="655" y="362" font-size="11" text-anchor="middle" fill="#64748b">20</text><text x="455" y="380" font-size="11" text-anchor="middle" fill="#64748b">Units, day one (illustrative)</text></svg>
+      </div>
+    </article>
+
+    <article class="project-card chart-card">
+      <div class="chart-head">
+        <div>
+          <h3 class="card-title">What if supply drops 10, 20 or 30%?</h3>
+          <p class="chart-cap">Same demand and ranking. Supply is cut from the 70-unit base, and the cut line moves up the list as supply falls. Select a scenario.</p>
+        </div>
+        <span class="illus">Illustrative data</span>
+      </div>
+      <div class="seg" id="wi-seg" role="group" aria-label="Supply scenario"><button type="button" data-level="base" aria-pressed="true" data-summary="Filled in full: all of Tier 1, Channel E, Channel F. Partly filled: Regional G (3 of 14). Waiting for supply: Specialty H.">Base · 70 units</button><button type="button" data-level="m10" aria-pressed="false" data-summary="Filled in full: all of Tier 1, Channel E. Partly filled: Channel F (14 of 18). Waiting for supply: Regional G, Specialty H.">−10% · 63 units</button><button type="button" data-level="m20" aria-pressed="false" data-summary="Filled in full: all of Tier 1, Channel E. Partly filled: Channel F (7 of 18). Waiting for supply: Regional G, Specialty H.">−20% · 56 units</button><button type="button" data-level="m30" aria-pressed="false" data-summary="Filled in full: all of Tier 1, Channel E. Waiting for supply: Channel F, Regional G, Specialty H.">−30% · 49 units</button></div><p class="wi-live" id="wi-live" aria-live="polite">Filled in full: all of Tier 1, Channel E, Channel F. Partly filled: Regional G (3 of 14). Waiting for supply: Specialty H.</p><div class="wi-state" data-level="base"><ol class="wi-list" role="list"><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#1</span>Launch partner A</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 10 of 10</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#2</span>Launch partner B</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 9 of 9</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#3</span>Launch partner C</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 8 of 8</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#4</span>Launch partner D</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 6 of 6</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#5</span>Channel partner E</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 16 of 16</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#6</span>Channel partner F</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 18 of 18</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#7</span>Regional partner G</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:21%"></span></span><span class="wi-status part">Partial · 3 of 14</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#8</span>Specialty partner H</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 19</span></li></ol></div><div class="wi-state" data-level="m10" hidden><ol class="wi-list" role="list"><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#1</span>Launch partner A</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 10 of 10</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#2</span>Launch partner B</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 9 of 9</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#3</span>Launch partner C</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 8 of 8</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#4</span>Launch partner D</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 6 of 6</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#5</span>Channel partner E</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 16 of 16</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#6</span>Channel partner F</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:78%"></span></span><span class="wi-status part">Partial · 14 of 18</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#7</span>Regional partner G</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 14</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#8</span>Specialty partner H</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 19</span></li></ol></div><div class="wi-state" data-level="m20" hidden><ol class="wi-list" role="list"><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#1</span>Launch partner A</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 10 of 10</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#2</span>Launch partner B</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 9 of 9</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#3</span>Launch partner C</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 8 of 8</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#4</span>Launch partner D</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 6 of 6</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#5</span>Channel partner E</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 16 of 16</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#6</span>Channel partner F</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:39%"></span></span><span class="wi-status part">Partial · 7 of 18</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#7</span>Regional partner G</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 14</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#8</span>Specialty partner H</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 19</span></li></ol></div><div class="wi-state" data-level="m30" hidden><ol class="wi-list" role="list"><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#1</span>Launch partner A</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 10 of 10</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#2</span>Launch partner B</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 9 of 9</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#3</span>Launch partner C</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 8 of 8</span></li><li class="wi-row t1"><span class="wi-name"><span class="wi-rank">#4</span>Launch partner D</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 6 of 6</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#5</span>Channel partner E</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:100%"></span></span><span class="wi-status full">Filled · 16 of 16</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#6</span>Channel partner F</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 18</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#7</span>Regional partner G</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 14</span></li><li class="wi-row t2"><span class="wi-name"><span class="wi-rank">#8</span>Specialty partner H</span><span class="wi-track" aria-hidden="true"><span class="wi-fill" style="width:0%"></span></span><span class="wi-status zero">Waits · 0 of 19</span></li></ol></div>
+    </article>
+
+    <p class="related">For the optimization-model version of constrained allocation, see the <a href="../network-capacity-optimizer/">Network &amp; Capacity Optimizer</a>.</p>
+  </div>
+</section>
+
+<!-- ── 04 Results ──────────────────────────────────────────────── -->
+<section id="results">
+  <div class="section-header">
+    <div class="section-label">04 · Results</div>
+    <h2 class="section-title">Results</h2>
+    <p class="section-sub">Allocation results first. The long-lead components example is a separate case, with its own numbers, at the end of this section.</p>
+  </div>
+
+  <div class="res-grid">
+    <article class="project-card">
+      <div><span class="card-tag tag-ind">Tier 1</span></div>
+      <div class="res-val">~100%</div>
+      <h3 class="card-title">Launch partners filled on day one</h3>
+      <div class="meter" role="img" aria-label="Tier 1 day-one fill, about 100 percent"><span style="width:100%"></span></div>
+      <p class="card-desc">Tier-1 launch partners were filled in full on day one.</p>
+    </article>
+    <article class="project-card">
+      <div><span class="card-tag tag-ind">Tier 2</span></div>
+      <div class="res-val">~55%</div>
+      <h3 class="card-title">Tier-2 day-one fill</h3>
+      <div class="meter" role="img" aria-label="Tier 2 day-one fill, about 55 percent"><span style="width:55%"></span></div>
+      <p class="card-desc">The gap closed in ~3 weeks.</p>
+    </article>
+    <article class="project-card">
+      <div><span class="card-tag tag-em">Decision quality</span></div>
+      <div class="res-val word">Repeatable</div>
+      <h3 class="card-title">Decisions became explainable</h3>
+      <p class="card-desc">Each allocation could be re-run from the same rank and rule, and every partner that waited had a written reason.</p>
+    </article>
+  </div>
+
+  <article class="project-card" style="margin-top:16px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="card-tag tag-ind">Companion example</span>
+      <span class="card-tag tag-neutral">Long-lead components</span>
+    </div>
+    <h3 class="card-title" style="font-size:18px;">~$30M education launch: 120K of 300K chips had no firm dates</h3>
+    <div class="comp">
+      <div>
+        <p class="card-desc">~$12M was at risk on the 120K undated chips. I worked backward from the launch schedule, dated the chips in hand, and recommended moving ~20K chips from slower keyboard lines rather than waiting on undated supply.</p>
+        <ol class="comp-steps" style="margin-top:14px;">
+          <li><strong>Worked backward</strong> from the launch schedule to set the date each chip had to hit.</li>
+          <li><strong>Dated the chips in hand</strong> against that schedule.</li>
+          <li><strong>Recommended a move:</strong> ~20K chips from slower keyboard lines, rather than waiting on undated supply.</li>
+        </ol>
+      </div>
+      <div>
+        <div class="stack-lbl">Chips in the launch plan</div>
+        <div class="stackbar" role="img" aria-label="Of 300K chips in the launch plan, 120K had no firm dates; the rest had firm dates.">
+          <div class="sb-undated">120K no firm date</div>
+          <div class="sb-dated">Firm dates</div>
+        </div>
+        <div class="sb-scale"><span>0</span><span>300K total</span></div>
+        <div class="res-pills" style="margin-top:18px;">
+          <span class="res-pill g">Launch delivered 3 weeks early</span>
+          <span class="res-pill i">~$12M protected</span>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ── 05 Transfer ─────────────────────────────────────────────── -->
+<section id="transfer" style="padding-bottom:48px;">
+  <div class="section-header">
+    <div class="section-label">05 · Transfer</div>
+    <h2 class="section-title">Why it matters for long-lead planning</h2>
+    <p class="section-sub">When equipment or components are constrained, the same rule applies: rank first, allocate from the top, and make the cut line visible before the shortage arrives.</p>
+  </div>
+  <div class="cs-three">
+    <article class="project-card">
+      <div><span class="card-tag tag-ind">Where it applies</span></div>
+      <h3 class="card-title">Any constrained input with a launch date behind it</h3>
+      <p class="card-desc">Contract-manufacturer output, long-lead components and equipment, wherever demand is ahead of supply and a date is at stake.</p>
+    </article>
+    <article class="project-card">
+      <div><span class="card-tag tag-rose">What it replaces</span></div>
+      <h3 class="card-title">Escalation-driven allocation</h3>
+      <p class="card-desc">Outcomes that follow whoever escalated. A published rank follows the criteria, so the same shortage gets the same answer no matter who raised it.</p>
+    </article>
+    <article class="project-card">
+      <div><span class="card-tag tag-em">What it makes explicit</span></div>
+      <h3 class="card-title">Trade-offs for program and category partners</h3>
+      <p class="card-desc">Who is filled first, who waits, and the rule that decided it, in one view both groups can review and re-run.</p>
+    </article>
+  </div>
+  <div class="callout" style="margin-top:16px;">
+    <div class="co-label">Transferable pattern</div>
+    <strong>Rank first, then allocate.</strong> Score on margin × strategic weight, publish the rule, fill from the top, and show the cut line early enough for program and category partners to plan around it.
+  </div>
+  <p class="related" style="margin-top:20px;">Related: <a href="../npi-launch-program.html">NPI Launch Program</a> · <a href="../network-capacity-optimizer/">Network &amp; Capacity Optimizer</a> · <a href="../rack-deployment-planner/">Rack Deployment Planner</a></p>
+</section>
+
+</main>
+
+<footer>
+  <strong style="color:var(--t1)">Astha Jain</strong>
+  <span>·</span>
+  <a href="../index.html">Portfolio</a>
+  <span>·</span>
+  <a href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn</a>
+  <span>·</span>
+  <a href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub</a>
+  <span>·</span>
+  <a href="mailto:asthajain.sc@gmail.com">asthajain.sc@gmail.com</a>
+  <div class="footer-note">Figures rounded; data illustrative. © 2026 Astha Jain</div>
+</footer>
+
+<script>
+(function () {
+  var seg = document.getElementById('wi-seg');
+  if (!seg) return;
+  var buttons = seg.querySelectorAll('button[data-level]');
+  var states = document.querySelectorAll('.wi-state');
+  var live = document.getElementById('wi-live');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var level = btn.getAttribute('data-level');
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      states.forEach(function (s) {
+        s.hidden = s.getAttribute('data-level') !== level;
+      });
+      live.textContent = btn.getAttribute('data-summary');
+    });
+  });
+})();
+</script>
+</body>
+</html>
