@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Heat-Dome Demand Forecast · Astha Jain</title>
+<meta name="description" content="Case study: forecasting where, when and how much water demand moves in a heat dome at Walmart US, with anomaly and duration by cluster, a 136K-case pre-build inside the bottler lead time, and an incremental vs pulled-forward check."/>
+<link rel="canonical" href="https://asthaj12.github.io/heat-dome-water-demand/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='42' font-family='Arial,Helvetica,sans-serif' font-size='27' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EAJ%3C/text%3E%3C/svg%3E"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Astha Jain"/>
+<meta property="og:title" content="Heat-Dome Demand Forecast · Astha Jain"/>
+<meta property="og:description" content="Case study: forecasting where, when and how much water demand moves in a heat dome at Walmart US, with anomaly and duration by cluster, a 136K-case pre-build inside the bottler lead time, and an incremental vs pulled-forward check."/>
+<meta property="og:url" content="https://asthaj12.github.io/heat-dome-water-demand/"/>
+<meta property="og:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Heat-Dome Demand Forecast · Astha Jain"/>
+<meta name="twitter:description" content="Case study: forecasting where, when and how much water demand moves in a heat dome at Walmart US, with anomaly and duration by cluster, a 136K-case pre-build inside the bottler lead time, and an incremental vs pulled-forward check."/>
+<meta name="twitter:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
+<meta name="twitter:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
+<style>
+/* ── Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg:       #f8fafc;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --border:   #e2e8f0;
+  --border-s: #c7d2fe;
+  --ind:      #6366f1;
+  --ind-l:    #4f46e5;
+  --ind-d:    #3730a3;
+  --em:       #059669;
+  --am:       #d97706;
+  --rose:     #e11d48;
+  --t1:       #0f172a;
+  --t2:       #475569;
+  --t3:       #64748b;
+  --t4:       #cbd5e1;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;background:var(--bg);color:var(--t1);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #d39a28; outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -60px; z-index: 200;
+  background: var(--ind-l); color: #fff;
+  padding: 8px 14px; border-radius: 6px;
+  font-size: 13px; font-weight: 600; transition: top .15s;
+}
+.skip-link:focus { top: 12px; }
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 8px;
+  height: 56px;
+}
+.nav-brand {
+  font-size: 15px; font-weight: 800; letter-spacing: -.02em;
+  color: var(--t1); margin-right: 24px; white-space: nowrap;
+}
+.nav-brand span { color: var(--ind); }
+.nav-items { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow: visible; }
+.nav-link {
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  transition: color .15s, background .15s; white-space: nowrap;
+}
+.nav-link:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.nav-link.active { color: var(--ind-l); background: rgba(99,102,241,.08); font-weight: 600; }
+
+/* ── Dropdowns ──────────────────────────────────────────────────── */
+.dropdown { position: relative; }
+.dropdown-toggle {
+  display: flex; align-items: center; gap: 5px;
+  border: 0; background: none; font-family: inherit;
+  padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  cursor: pointer; transition: color .15s, background .15s;
+  user-select: none; white-space: nowrap;
+}
+.dropdown-toggle:hover { color: var(--t1); background: rgba(99,102,241,.06); }
+.dropdown-toggle svg { width:10px;height:10px;transition:transform .2s; }
+.dropdown:hover .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-menu {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px;
+  min-width: 220px;
+  box-shadow: 0 20px 60px rgba(15,23,42,.12);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .18s, transform .18s, visibility .18s;
+}
+.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+}
+.dropdown:focus-within .dropdown-toggle svg { transform: rotate(180deg); }
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--t2);
+  transition: background .12s, color .12s;
+}
+.dropdown-item:hover { background: rgba(99,102,241,.12); color: var(--t1); }
+.dropdown-item .di-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.dropdown-item .di-text .di-label { font-weight: 600; color: var(--t1); font-size: 12px; }
+.dropdown-item .di-text .di-sub { font-size: 10px; color: var(--t3); margin-top: 1px; }
+.dropdown-divider { height: 1px; background: var(--border); margin: 5px 2px; }
+
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nav-badge {
+  padding: 5px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--t2);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.nav-badge:hover { background: #eef2ff; border-color: var(--ind); color: var(--ind); }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero { max-width: 1100px; margin: 0 auto; padding: 56px 32px 40px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #eef2ff; border: 1px solid var(--border-s);
+  border-radius: 999px; padding: 4px 14px;
+  font-size: 11px; font-weight: 700; color: var(--ind-l);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-eyebrow::before { content:""; width:6px;height:6px;border-radius:50%;background:var(--ind);animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1 {
+  font-size: clamp(30px, 4.2vw, 46px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -.03em;
+  color: var(--t1); margin-bottom: 20px;
+}
+.hero h1 .accent { color: var(--ind); }
+.hero .tagline {
+  font-size: 16px; color: var(--t2); max-width: 780px;
+  line-height: 1.65; margin-bottom: 28px;
+}
+.role-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.role-pill { padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--ind); color: #fff; }
+.btn-primary:hover { background: var(--ind-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
+.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-s); }
+.btn-ghost:hover { border-color: var(--ind); color: var(--ind-l); }
+
+/* ── KPI tiles ──────────────────────────────────────────────────── */
+.kpi-wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px 40px; }
+.kpi-row {
+  list-style: none;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  background: var(--surface);
+}
+.kpi { padding: 20px 24px; border-right: 1px solid var(--border); }
+.kpi:last-child { border-right: none; }
+.kpi-val { font-size: 28px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; line-height: 1.15; }
+.kpi-val .unit { font-size: 14px; font-weight: 700; color: var(--t2); margin-left: 4px; }
+.kpi-lbl { font-size: 11px; color: var(--t3); margin-top: 6px; text-transform: uppercase; letter-spacing: .05em; }
+.data-note { font-size: 11px; color: var(--t3); margin-top: 10px; }
+
+/* ── Section ────────────────────────────────────────────────────── */
+section { max-width: 1100px; margin: 0 auto; padding: 0 32px 72px; }
+.section-header { margin-bottom: 32px; }
+.section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind-l); margin-bottom: 8px;
+}
+.section-title { font-size: 26px; font-weight: 800; color: var(--t1); letter-spacing: -.02em; line-height: 1.25; }
+.section-sub { font-size: 14px; color: var(--t2); margin-top: 6px; max-width: 760px; }
+.sub-head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--t3); margin: 36px 0 12px; }
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.two-up { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.three-up { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.project-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.project-card:hover { border-color: var(--border-s); box-shadow: 0 0 0 1px rgba(99,102,241,.1), 0 16px 32px rgba(15,23,42,.06); }
+.card-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-ind { background: rgba(99,102,241,.12); color: var(--ind-l); }
+.tag-em  { background: rgba(16,185,129,.12); color: #047857; }
+.tag-am  { background: rgba(245,158,11,.12); color: #b45309; }
+.tag-rose{ background: rgba(244,63,94,.12);  color: #be123c; }
+.card-title { font-size: 16px; font-weight: 700; color: var(--t1); line-height: 1.3; }
+.card-desc  { font-size: 13px; color: var(--t2); line-height: 1.65; }
+.card-desc + .card-desc { margin-top: 0; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.chip {
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 11px; font-weight: 600; color: var(--t2);
+  background: #f8fafc; border: 1px solid var(--border);
+}
+.chip.hi { color: var(--ind-l); background: #eef2ff; border-color: var(--border-s); }
+
+/* Decision cards */
+.decide-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.dc-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--t3); margin-bottom: 6px; }
+.dc-block p { font-size: 13px; color: var(--t2); line-height: 1.65; }
+.opt-stack { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start;
+  padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+  font-size: 13px; color: var(--t2); line-height: 1.55;
+}
+.opt strong { color: var(--t1); }
+.opt-mark {
+  width: 24px; height: 24px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 13px;
+}
+.opt.no  { background: #fff5f7; border-color: #fecdd3; }
+.opt.no .opt-mark  { background: #ffe4e6; color: #be123c; }
+.opt.yes { background: #f0fdf4; border-color: #bbf7d0; }
+.opt.yes .opt-mark { background: #dcfce7; color: #047857; }
+.dc-foot {
+  margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding-top: 14px; border-top: 1px dashed var(--border);
+  font-size: 12px; color: var(--t3);
+}
+.pin {
+  font-size: 12px; font-weight: 700; color: #047857;
+  background: rgba(16,185,129,.1); border-radius: 999px; padding: 4px 12px;
+}
+
+/* Skill / method cards */
+.skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.sk-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ind-l); margin-bottom: 8px; }
+.sk-head { font-size: 14px; font-weight: 700; color: var(--t1); margin-bottom: 6px; }
+.sk-body { font-size: 13px; color: var(--t2); line-height: 1.6; }
+
+/* Callout */
+.callout {
+  background: #f1f5ff; border: 1px solid var(--border-s);
+  border-left: 3px solid var(--ind);
+  border-radius: 10px; padding: 16px 18px;
+  font-size: 13px; color: var(--t2); line-height: 1.65;
+}
+.callout .co-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ind-l); margin-bottom: 6px;
+}
+.callout strong { color: var(--t1); }
+
+/* Formula */
+.formula {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px; line-height: 1.85; color: var(--t1);
+  background: #f8fafc; border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; overflow-x: auto;
+}
+.formula .f-lbl { color: var(--t3); display: inline-block; width: 150px; }
+.formula .f-eq { color: var(--ind-l); font-weight: 700; }
+
+/* Figures and charts */
+.figure {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px 22px 18px; margin: 0;
+}
+.figure-hd { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.figure-title { font-size: 15px; font-weight: 700; color: var(--t1); }
+.svg-scroll { overflow-x: auto; }
+.svg-scroll svg { display: block; width: 100%; height: auto; }
+.svg-ttl  { font-size: 12px; font-weight: 700; fill: var(--t1); }
+.svg-sub  { font-size: 11px; fill: var(--t3); }
+.svg-tick { font-size: 10px; fill: var(--t3); }
+.svg-ax   { font-size: 10.5px; fill: var(--t2); }
+.svg-lbl  { font-size: 12px; fill: var(--t2); }
+.svg-lbl-b{ font-size: 12px; font-weight: 700; fill: var(--t1); }
+.svg-seg  { font-size: 12px; font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--t2); margin-top: 12px; }
+.legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.sw-line { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.sw-box { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.figure figcaption { font-size: 12px; color: var(--t3); margin-top: 12px; line-height: 1.6; }
+
+/* Metric row */
+.metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+  flex: 1; min-width: 160px;
+}
+.metric .m-val { font-size: 18px; font-weight: 800; color: var(--t1); }
+.metric .m-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* Note block */
+.data-foot { font-size: 11px; color: var(--t3); margin-top: 16px; }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  font-size: 12px; color: var(--t3);
+  max-width: 1100px; margin: 20px auto 0;
+}
+footer a { color: var(--t2); transition: color .12s; overflow-wrap: anywhere; }
+footer a:hover { color: var(--ind-l); }
+.footer-note { margin-left: auto; }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .two-up, .three-up { grid-template-columns: minmax(0, 1fr); }
+  .kpi-row { grid-template-columns: minmax(0, 1fr); }
+  .kpi { border-right: none; border-bottom: 1px solid var(--border); }
+  .kpi:last-child { border-bottom: none; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 40px 20px 32px; }
+  section { padding: 0 20px 56px; }
+  .kpi-wrap { padding: 0 20px 32px; }
+  .navbar { height: auto; flex-wrap: wrap; row-gap: 6px; padding: 10px 16px; }
+  .nav-brand { margin-right: 0; }
+  .nav-right { order: 2; }
+  .nav-items { order: 3; flex: 1 0 100%; flex-wrap: wrap; }
+  .nav-link { padding: 6px 8px; font-size: 12px; }
+  .svg-scroll svg { min-width: 540px; }
+  .footer-note { margin-left: 0; }
+  footer { padding: 24px 20px; }
+  .figure { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-eyebrow::before { animation: none; }
+  * { transition: none !important; }
+}
+
+/* ── Print ──────────────────────────────────────────────────────── */
+@media print {
+  @page { margin: 14mm; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; font-size: 11px; }
+  .navbar, .hero-actions, .nav-right, .skip-link { display: none !important; }
+  .hero { padding: 16px 0 12px; }
+  .hero h1 { font-size: 24px; }
+  .hero .tagline { font-size: 12px; }
+  section { padding: 0 0 22px; }
+  .section-title { font-size: 17px; }
+  .project-card, .decide-card, .skill-card, .figure, .kpi-row, .callout, .metric, .formula {
+    box-shadow: none !important; break-inside: avoid; page-break-inside: avoid;
+  }
+  .two-up, .three-up { grid-template-columns: 1fr 1fr; }
+  .three-up { grid-template-columns: repeat(3, 1fr); }
+  a { color: inherit !important; text-decoration: none !important; }
+  footer { margin-top: 8px; }
+}
+
+/* ── Heat-dome additions ───────────────────────────────────────── */
+.subline { font-size: 18px; font-weight: 600; color: var(--t1); line-height: 1.4; margin: -8px 0 16px; }
+.kpi-row { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) {
+  .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpi { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .kpi:nth-child(2n) { border-right: none; }
+  .kpi:nth-last-child(-n+2) { border-bottom: none; }
+}
+@media (max-width: 600px) {
+  .kpi-row { grid-template-columns: minmax(0, 1fr); }
+  .kpi { border-right: none; border-bottom: 1px solid var(--border); }
+  .kpi:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .kpi:last-child { border-bottom: none; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ── Navbar ──────────────────────────────────────────────────── -->
+<nav class="navbar" aria-label="Site">
+  <a class="nav-brand" href="../index.html">AJ<span> · Portfolio</span></a>
+
+  <div class="nav-items">
+    <!-- Dashboards dropdown -->
+    <div class="dropdown">
+      <button type="button" class="dropdown-toggle" aria-haspopup="true">
+        Dashboards
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://asthaj12.github.io/forecast-governance/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">📊</div>
+          <div class="di-text">
+            <div class="di-label">Forecast Governance</div>
+            <div class="di-sub">Anomaly triage · Bias correction · Override governance</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/seasonal-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">📅</div>
+          <div class="di-text">
+            <div class="di-label">Scenario Planning</div>
+            <div class="di-sub">Scenario modeling · Inventory commitment · Event risk</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/pricing-demand-response/">
+          <div class="di-icon" style="background:rgba(99,102,241,.15)">💹</div>
+          <div class="di-text">
+            <div class="di-label">Pricing &amp; Demand Response</div>
+            <div class="di-sub">Elasticity modeling · Lift attribution · Demand response</div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://asthaj12.github.io/shopify-demand-forecasting/">
+          <div class="di-icon" style="background:rgba(16,185,129,.15)">🚚</div>
+          <div class="di-text">
+            <div class="di-label">Transportation Forecasting</div>
+            <div class="di-sub">SKU velocity · Peak planning · Carrier allocation</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/logitech-supply-planning/">
+          <div class="di-icon" style="background:rgba(245,158,11,.15)">🏭</div>
+          <div class="di-text">
+            <div class="di-label">Global Supply Planning</div>
+            <div class="di-sub">Safety stock · S&amp;OP · NPI launch</div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="https://asthaj12.github.io/npi-launch-planning/">
+          <div class="di-icon" style="background:rgba(139,92,246,.15)">🚀</div>
+          <div class="di-text">
+            <div class="di-label">NPI Launch Planning</div>
+            <div class="di-sub">CTB readiness · EOL wind-down · Material readiness</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-link" href="../index.html">← Portfolio</a>
+    <a class="nav-link" href="../index.html#projects">Projects</a>
+    <a class="nav-link active" href="#problem">This Case Study</a>
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-badge" href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a class="nav-badge" href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Case Study · Weather-Driven Demand Planning</div>
+  <h1>Heat-Dome<br><span class="accent">Demand Forecast</span></h1>
+  <p class="subline">Where, when and how much water demand moves in a heat wave</p>
+  <p class="tagline">Astha built a 7-day forecast for a heat dome over Texas and the Southwest, where demand followed how far heat ran above each region's normal and how many days in a row it held, not the absolute temperature. She pre-built 136,000 cases inside the bottler's lead-time gap, allocated them by cluster, and lifted peak <span style="white-space:nowrap">in-stock</span> from 84% to 96%.</p>
+
+  <div class="role-strip">
+    <span class="role-pill" style="background:#eef2ff;color:#4f46e5;">Walmart US</span>
+    <span class="role-pill" style="background:#f0fdf4;color:#166534;">Water &amp; ice</span>
+    <span class="role-pill" style="background:#fff7ed;color:#9a3412;">Texas &amp; Southwest</span>
+    <span class="role-pill" style="background:#f0f9ff;color:#0369a1;">Summer 2025 heat dome</span>
+  </div>
+
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#problem">Read the case study →</a>
+    <a class="btn btn-ghost" href="../index.html">← Back to portfolio</a>
+  </div>
+</div>
+
+<div class="kpi-wrap">
+  <ul class="kpi-row" aria-label="Headline results">
+    <li class="kpi">
+      <div class="kpi-val">84% → 96%</div>
+      <div class="kpi-lbl">Peak in-stock</div>
+    </li>
+    <li class="kpi">
+      <div class="kpi-val">136K <span class="unit">cases</span></div>
+      <div class="kpi-lbl">Pre-built at the DCs</div>
+    </li>
+    <li class="kpi">
+      <div class="kpi-val">1,200 <span class="unit">stores</span></div>
+      <div class="kpi-lbl">In 4 clusters</div>
+    </li>
+    <li class="kpi">
+      <div class="kpi-val">~4%</div>
+      <div class="kpi-lbl">Peak-week forecast error. Unadjusted baseline: 45% under-forecast</div>
+    </li>
+  </ul>
+  <p class="data-note">Figures rounded; data illustrative.</p>
+</div>
+
+<!-- ── 01 · Problem ─────────────────────────────────────────────── -->
+<section id="problem" aria-labelledby="problem-title">
+  <div class="section-header">
+    <div class="section-label">01 · Problem</div>
+    <h2 class="section-title" id="problem-title">Heat looked like one national number. Demand did not.</h2>
+    <p class="section-sub">Demand depended on how far heat ran above each region's normal and on how many days in a row it held. The bottler's surge also arrived after the warning.</p>
+  </div>
+
+  <div class="two-up">
+    <article class="project-card">
+      <div><span class="card-tag tag-am">Problem A · Where and when</span></div>
+      <h3 class="card-title">The same 106°F high meant different things in two places</h3>
+      <p class="card-desc">Dallas-Fort Worth had a normal late-July high of 96 and a dome high of 106, an anomaly of +10. Phoenix had a normal high of 106 and the same dome high, an anomaly of 0. A national temperature forecast reads both days the same, so it sizes Phoenix for a heat event that did not happen there.</p>
+      <p class="card-desc">Demand also did not respond to the first hot day. It moved on the third day in a row.</p>
+      <div class="chip-row">
+        <span class="chip hi">Dallas anomaly +10</span>
+        <span class="chip">Phoenix anomaly 0</span>
+        <span class="chip">Responds from day 3</span>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div><span class="card-tag tag-am">Problem B · Lead time</span></div>
+      <h3 class="card-title">The warning came 7 days out. The bottler needed 10.</h3>
+      <p class="card-desc">A surge ordered on the warning would land 10 days later, 3 days after the heat arrived. Normal bottler supply was 400,000 cases a week, and the peak week needed about 607,000.</p>
+      <p class="card-desc">Waiting for the surge would leave the stores short during those 3 days, and short again for the rest of the peak week after it landed.</p>
+      <div class="chip-row">
+        <span class="chip hi">7-day warning</span>
+        <span class="chip">10-day lead time</span>
+        <span class="chip">3 days uncovered</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 02 · Decision ────────────────────────────────────────────── -->
+<section id="decision" aria-labelledby="decision-title">
+  <div class="section-header">
+    <div class="section-label">02 · Decision</div>
+    <h2 class="section-title" id="decision-title">What to forecast on, and how much to pre-build</h2>
+    <p class="section-sub">Each decision changed the question before any stock was ordered.</p>
+  </div>
+
+  <div class="two-up">
+    <article class="decide-card">
+      <div><span class="card-tag tag-ind">Decision A · Forecast driver</span></div>
+      <h3 class="card-title">Forecast on anomaly × duration, by cluster</h3>
+      <div class="dc-block">
+        <div class="dc-lbl">Diagnose</div>
+        <p>Astha diagnosed the first model's error. It used absolute temperature and over-forecast Phoenix by 67%. Phoenix's 106°F dome high was its normal, so the model treated a normal day as a heat event. Switching to anomaly by cluster fixed it.</p>
+      </div>
+      <div class="dc-block">
+        <div class="dc-lbl">Decide</div>
+        <div class="opt-stack">
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> absolute temperature with one national uplift, the same % for every store. That sends Phoenix stock it does not need and starves Dallas.</span>
+          </div>
+          <div class="opt yes">
+            <span class="opt-mark" aria-hidden="true">✓</span>
+            <span><strong>Picked:</strong> anomaly against each region's own normal, times a duration factor, with a response per degree set for each cluster.</span>
+          </div>
+        </div>
+      </div>
+      <div class="dc-foot">
+        <span>Astha owned the water plan</span>
+        <span class="pin">Peak-week error +18% → ~4%</span>
+      </div>
+    </article>
+
+    <article class="decide-card">
+      <div><span class="card-tag tag-ind">Decision B · Pre-build and allocation</span></div>
+      <h3 class="card-title">Pre-build 136K cases to the 80th percentile and allocate by cluster share</h3>
+      <div class="dc-block">
+        <div class="dc-lbl">Diagnose</div>
+        <p>Astha diagnosed the lead-time gap. The surge would land 3 days after the heat, leaving about 88,850 cases uncovered over those days. Even after it landed, supply stayed 47,320 cases a week short of the peak-week need.</p>
+      </div>
+      <div class="dc-block">
+        <div class="dc-lbl">Decide</div>
+        <div class="opt-stack">
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> wait for the bottler surge. It lands 3 days after the heat.</span>
+          </div>
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> pre-build to the average case or the heavy case. The average leaves stores short in every outcome above it, and the heavy case carries more stock than the 80th percentile needs.</span>
+          </div>
+          <div class="opt yes">
+            <span class="opt-mark" aria-hidden="true">✓</span>
+            <span><strong>Picked:</strong> pre-build to the 80th percentile and split it by each cluster's share of peak-week demand. Water keeps and sells in the recovery week, so overstock is cheap and a stockout loses sales.</span>
+          </div>
+        </div>
+      </div>
+      <div class="dc-foot">
+        <span>Astha owned the water plan</span>
+        <span class="pin">136K cases pre-built</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 03 · Method ──────────────────────────────────────────────── -->
+<section id="method" aria-labelledby="method-title">
+  <div class="section-header">
+    <div class="section-label">03 · Method</div>
+    <h2 class="section-title" id="method-title">Where, when and how much demand moves</h2>
+    <p class="section-sub">Three effects set each cluster's response. Name each one before setting a stock number.</p>
+  </div>
+
+  <div class="callout">
+    <div class="co-label">Plain-words version</div>
+    <p>The forecast reads heat as a departure from normal, not as a temperature. It asks how far above the local normal the high is, whether the heat has lasted long enough to move buying, and how much each cluster buys per degree of heat. A 106°F day is a major event in Dallas and a normal day in Phoenix.</p>
+  </div>
+
+  <div class="three-up" style="margin-top:14px;">
+    <div class="skill-card">
+      <div class="sk-cat">Where</div>
+      <div class="sk-head">Anomaly vs local normal</div>
+      <div class="sk-body">The dome high minus the 30-year normal high for that date and place. Dallas: 106 − 96 = +10. Phoenix: 106 − 106 = 0, until the dome reached 110 (+4) late in the week.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">When</div>
+      <div class="sk-head">Duration factor</div>
+      <div class="sk-body">Day 1 of a run of hot days counts 0, day 2 counts 0.5, and day 3 onward counts 1.0. Demand moved on the third day in a row, not the first.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">How much</div>
+      <div class="sk-head">Cluster response per degree</div>
+      <div class="sk-body">Dallas responds at 0.15 per degree of anomaly, so +10 gives 1 + 0.15 × 10 = 2.5x on full-effect days.</div>
+    </div>
+  </div>
+
+  <div class="formula" style="margin-top:14px;" aria-label="Multiplier, peak-week demand and allocation shares">
+    <div><span class="f-lbl">Multiplier</span>1 <span class="f-eq">+</span> response × anomaly × duration</div>
+    <div><span class="f-lbl">Store, normal week</span>40 cases a day × 7 days = 280 cases</div>
+    <div><span class="f-lbl">Dallas-Fort Worth</span>240 × 280 × 2.5 = 168,000 cases</div>
+    <div><span class="f-lbl">Houston</span>210 × 280 × 2.1 = 123,480 cases</div>
+    <div><span class="f-lbl">Phoenix</span>180 × 280 × 1.2 = 60,480 cases</div>
+    <div><span class="f-lbl">Rest of Texas</span>570 × 280 × 1.6 = 255,360 cases</div>
+    <div><span class="f-lbl">Peak week, total</span>607,320 cases, against 336,000 in a normal week</div>
+    <div><span class="f-lbl">Allocation share</span>Dallas-Fort Worth ~28% · Houston ~20% · Phoenix ~10% · Rest of Texas ~42%</div>
+  </div>
+
+  <h3 class="sub-head">Chart 1 · Peak-week multiple by cluster</h3>
+  <figure class="figure" aria-labelledby="fig1-title">
+    <div class="figure-hd">
+      <div class="figure-title" id="fig1-title">Peak-week demand against a normal week, by cluster</div>
+      <span class="card-tag tag-ind">Illustrative</span>
+    </div>
+    <div class="svg-scroll">
+      <svg viewBox="0 0 640 262" role="img" aria-labelledby="fig1-svg-t fig1-svg-d">
+        <title id="fig1-svg-t">Peak-week demand multiple by cluster</title>
+        <desc id="fig1-svg-d">Bars show the peak-week demand multiple against a normal week. Dallas-Fort Worth 2.5x, Houston 2.1x, rest of Texas 1.6x, Phoenix 1.2x. A dashed line marks 1.0x, a normal week. The Phoenix note says 106 degrees Fahrenheit is normal there. Illustrative.</desc>
+
+        <line x1="60" y1="50" x2="620" y2="50" stroke="#e2e8f0"/>
+        <line x1="60" y1="100" x2="620" y2="100" stroke="#e2e8f0"/>
+        <line x1="60" y1="200" x2="620" y2="200" stroke="#cbd5e1"/>
+        <text class="svg-tick" x="52" y="204" text-anchor="end">0</text>
+        <text class="svg-tick" x="52" y="154" text-anchor="end">1.0x</text>
+        <text class="svg-tick" x="52" y="104" text-anchor="end">2.0x</text>
+        <text class="svg-tick" x="52" y="54" text-anchor="end">3.0x</text>
+
+        <rect x="88" y="75" width="84" height="125" rx="4" fill="#6366f1"/>
+        <rect x="228" y="95" width="84" height="105" rx="4" fill="#6366f1"/>
+        <rect x="368" y="120" width="84" height="80" rx="4" fill="#6366f1"/>
+        <rect x="508" y="140" width="84" height="60" rx="4" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+        <line x1="60" y1="150" x2="620" y2="150" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+
+        <text class="svg-lbl-b" x="130" y="67" text-anchor="middle">2.5x</text>
+        <text class="svg-lbl-b" x="270" y="87" text-anchor="middle">2.1x</text>
+        <text class="svg-lbl-b" x="410" y="112" text-anchor="middle">1.6x</text>
+        <text class="svg-sub" x="550" y="116" text-anchor="middle">106°F = normal here</text>
+        <text class="svg-lbl-b" x="550" y="132" text-anchor="middle">1.2x</text>
+
+        <text class="svg-lbl-b" x="130" y="218" text-anchor="middle">Dallas-Fort Worth</text>
+        <text class="svg-sub" x="130" y="234" text-anchor="middle">240 stores</text>
+        <text class="svg-lbl-b" x="270" y="218" text-anchor="middle">Houston</text>
+        <text class="svg-sub" x="270" y="234" text-anchor="middle">210 stores</text>
+        <text class="svg-lbl-b" x="410" y="218" text-anchor="middle">Rest of Texas</text>
+        <text class="svg-sub" x="410" y="234" text-anchor="middle">570 stores</text>
+        <text class="svg-lbl-b" x="550" y="218" text-anchor="middle">Phoenix</text>
+        <text class="svg-sub" x="550" y="234" text-anchor="middle">180 stores</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="sw-box" style="background:#6366f1" aria-hidden="true"></span>Heat response</span>
+      <span class="legend-item"><span class="sw-box" style="background:#cbd5e1;border:1px solid #64748b" aria-hidden="true"></span>No anomaly (normal heat)</span>
+      <span class="legend-item"><span class="sw-line" style="background:#64748b;height:1px" aria-hidden="true"></span>1.0x = normal week</span>
+    </div>
+    <figcaption>Illustrative. Dallas-Fort Worth: 1 + 0.15 × 10 = 2.5x on full-effect days. Phoenix's 106°F dome high is its normal, so those days stayed at 1.0x. The dome pushed Phoenix to 110°F (+4) for its last days; at Phoenix's response of 0.05 a degree, those days reached 1 + 0.05 × 4 = 1.2x.</figcaption>
+  </figure>
+
+  <h3 class="sub-head">Chart 2 · Daily index over a 7-day dome, then the recovery week</h3>
+  <figure class="figure" aria-labelledby="fig2-title">
+    <div class="figure-hd">
+      <div class="figure-title" id="fig2-title">Dallas-Fort Worth daily demand index, normal = 100</div>
+      <span class="card-tag tag-ind">Illustrative</span>
+    </div>
+    <div class="svg-scroll">
+      <svg viewBox="0 0 640 262" role="img" aria-labelledby="fig2-svg-t fig2-svg-d">
+        <title id="fig2-svg-t">Daily demand index over a 7-day dome and the recovery week</title>
+        <desc id="fig2-svg-d">Day 1 of the dome is flat at the normal index of 100. Day 2 is half the response, at 175. Day 3 through day 7 are at the full response, 250. The seven recovery days run about 8 percent below normal, at roughly 90 to 94. Illustrative.</desc>
+
+        <line x1="60" y1="108" x2="620" y2="108" stroke="#e2e8f0"/>
+        <line x1="340" y1="44" x2="340" y2="220" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="60" y1="220" x2="620" y2="220" stroke="#cbd5e1"/>
+        <text class="svg-tick" x="52" y="112" text-anchor="end">200</text>
+        <text class="svg-tick" x="52" y="224" text-anchor="end">0</text>
+
+        <text class="svg-lbl-b" x="200" y="50" text-anchor="middle">Dome week</text>
+        <text class="svg-lbl-b" x="480" y="50" text-anchor="middle">Recovery week</text>
+
+        <rect x="67" y="164" width="26" height="56" rx="3" fill="#6366f1"/>
+        <rect x="107" y="122" width="26" height="98" rx="3" fill="#6366f1"/>
+        <rect x="147" y="80" width="26" height="140" rx="3" fill="#6366f1"/>
+        <rect x="187" y="80" width="26" height="140" rx="3" fill="#6366f1"/>
+        <rect x="227" y="80" width="26" height="140" rx="3" fill="#6366f1"/>
+        <rect x="267" y="80" width="26" height="140" rx="3" fill="#6366f1"/>
+        <rect x="307" y="80" width="26" height="140" rx="3" fill="#6366f1"/>
+
+        <rect x="347" y="167.36" width="26" height="52.64" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <rect x="387" y="169.04" width="26" height="50.96" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <rect x="427" y="169.6" width="26" height="50.4" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <rect x="467" y="169.04" width="26" height="50.96" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <rect x="507" y="168.48" width="26" height="51.52" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <rect x="547" y="167.92" width="26" height="52.08" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+        <rect x="587" y="168.48" width="26" height="51.52" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+
+        <line x1="60" y1="164" x2="620" y2="164" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+        <text class="svg-tick" x="618" y="157" text-anchor="end">Normal = 100</text>
+
+        <text class="svg-ax" x="80" y="156" text-anchor="middle">Flat</text>
+        <text class="svg-ax" x="120" y="114" text-anchor="middle">Half</text>
+        <text class="svg-ax" x="240" y="72" text-anchor="middle">Full from day 3</text>
+        <text class="svg-ax" x="467" y="152" text-anchor="middle">About 8% below normal</text>
+
+        <text class="svg-tick" x="80" y="236" text-anchor="middle">1</text>
+        <text class="svg-tick" x="120" y="236" text-anchor="middle">2</text>
+        <text class="svg-tick" x="160" y="236" text-anchor="middle">3</text>
+        <text class="svg-tick" x="200" y="236" text-anchor="middle">4</text>
+        <text class="svg-tick" x="240" y="236" text-anchor="middle">5</text>
+        <text class="svg-tick" x="280" y="236" text-anchor="middle">6</text>
+        <text class="svg-tick" x="320" y="236" text-anchor="middle">7</text>
+        <text class="svg-tick" x="360" y="236" text-anchor="middle">8</text>
+        <text class="svg-tick" x="400" y="236" text-anchor="middle">9</text>
+        <text class="svg-tick" x="440" y="236" text-anchor="middle">10</text>
+        <text class="svg-tick" x="480" y="236" text-anchor="middle">11</text>
+        <text class="svg-tick" x="520" y="236" text-anchor="middle">12</text>
+        <text class="svg-tick" x="560" y="236" text-anchor="middle">13</text>
+        <text class="svg-tick" x="600" y="236" text-anchor="middle">14</text>
+        <text class="svg-ax" x="340" y="254" text-anchor="middle">Day of the dome (1 to 7), then the recovery week (8 to 14)</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="sw-box" style="background:#6366f1" aria-hidden="true"></span>Dome day</span>
+      <span class="legend-item"><span class="sw-box" style="background:#fef3c7;border:1px solid #d97706" aria-hidden="true"></span>Recovery day (stock-up being used)</span>
+    </div>
+    <figcaption>Illustrative. Day 2 is half the response, so the index is 1 + 1.5 × 0.5 = 175. Day 3 onward is the full response, 250, which is the 2.5x multiple. The recovery week averages about 8% below normal.</figcaption>
+  </figure>
+
+  <h3 class="sub-head">Chart 3 · Supply and demand in the peak week</h3>
+  <figure class="figure" aria-labelledby="fig3-title">
+    <div class="figure-hd">
+      <div class="figure-title" id="fig3-title">Bottler supply against peak-week need, in cases a week</div>
+      <span class="card-tag tag-ind">Illustrative</span>
+    </div>
+    <div class="svg-scroll">
+      <svg viewBox="0 0 640 262" role="img" aria-labelledby="fig3-svg-t fig3-svg-d">
+        <title id="fig3-svg-t">Bottler supply and peak-week demand with the 3-day gap covered by pre-build</title>
+        <desc id="fig3-svg-d">The warning is on day 0 and the heat starts on day 7. Bottler supply is 400,000 a week until the surge lands on day 10, then 560,000. Peak-week need is 607,320 from day 7. A shaded gap between supply and need covers days 7 to 10 and is labeled about 88,850 cases. A smaller band after the surge shows a 47,320 case weekly shortfall. The pre-build covers both, about 136,000 cases. Illustrative.</desc>
+
+        <line x1="70" y1="64.57" x2="610" y2="64.57" stroke="#e2e8f0"/>
+        <line x1="70" y1="112.86" x2="610" y2="112.86" stroke="#e2e8f0"/>
+        <line x1="70" y1="161.43" x2="610" y2="161.43" stroke="#e2e8f0"/>
+        <line x1="70" y1="210" x2="610" y2="210" stroke="#cbd5e1"/>
+        <text class="svg-tick" x="62" y="68" text-anchor="end">600K</text>
+        <text class="svg-tick" x="62" y="116" text-anchor="end">400K</text>
+        <text class="svg-tick" x="62" y="165" text-anchor="end">200K</text>
+        <text class="svg-tick" x="62" y="214" text-anchor="end">0</text>
+
+        <line x1="340" y1="40" x2="340" y2="210" stroke="#e11d48" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="455.7" y1="40" x2="455.7" y2="210" stroke="#059669" stroke-width="1" stroke-dasharray="3 3"/>
+
+        <polygon points="340,62.5 455.7,62.5 455.7,112.86 340,112.86" fill="#fef3c7" stroke="#d97706" stroke-width="1" stroke-dasharray="4 3"/>
+        <polygon points="455.7,62.5 610,62.5 610,74 455.7,74" fill="#fecdd3"/>
+
+        <polyline points="70,112.86 455.7,112.86 455.7,74 610,74" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round"/>
+        <polyline points="70,128.4 340,128.4 340,62.5 610,62.5" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-linejoin="round"/>
+
+        <text class="svg-sub" x="74" y="104">Bottler supply, 400,000 a week</text>
+        <text class="svg-sub" x="74" y="142">Normal week demand, 336,000</text>
+        <text class="svg-lbl-b" x="346" y="56">Peak-week need, 607,320</text>
+
+        <text class="svg-lbl-b" x="398" y="88" text-anchor="middle">3-day gap</text>
+        <text class="svg-lbl-b" x="398" y="102" text-anchor="middle">~88,850 cases</text>
+
+        <text class="svg-lbl-b" x="532" y="88" text-anchor="middle">Surge: 560,000 a week</text>
+        <text class="svg-lbl-b" x="532" y="102" text-anchor="middle">47,320 short a week</text>
+
+        <text class="svg-lbl-b" x="532" y="150" text-anchor="middle">Pre-build covers both:</text>
+        <text class="svg-lbl-b" x="532" y="165" text-anchor="middle">about 136,000 cases</text>
+
+        <text class="svg-tick" x="70" y="228" text-anchor="start">Warning, day 0</text>
+        <text class="svg-tick" x="340" y="228" text-anchor="middle">Heat, day 7</text>
+        <text class="svg-tick" x="455.7" y="228" text-anchor="middle">Surge, day 10</text>
+        <text class="svg-tick" x="610" y="228" text-anchor="end">Day 14</text>
+        <text class="svg-ax" x="340" y="248" text-anchor="middle">Days from the warning</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="sw-line" style="background:#4f46e5" aria-hidden="true"></span>Bottler supply</span>
+      <span class="legend-item"><span class="sw-line" style="background:#e11d48" aria-hidden="true"></span>Demand</span>
+      <span class="legend-item"><span class="sw-box" style="background:#fef3c7;border:1px solid #d97706" aria-hidden="true"></span>Gap covered by pre-build</span>
+      <span class="legend-item"><span class="sw-box" style="background:#fecdd3" aria-hidden="true"></span>Shortfall after surge</span>
+    </div>
+    <figcaption>Illustrative. The shaded gap is 3 of 7 days at the excess over bottler supply: 3/7 × (607,320 − 400,000) ≈ 88,850 cases. The pre-build covers that gap and the weekly shortfall after the surge lands.</figcaption>
+  </figure>
+
+  <div class="formula" style="margin-top:14px;" aria-label="Pre-build sizing">
+    <div><span class="f-lbl">Gap, first 3 days</span>3 ÷ 7 × (607,320 − 400,000) <span class="f-eq">≈</span> 88,850 cases</div>
+    <div><span class="f-lbl">Weekly shortfall</span>607,320 − 560,000 <span class="f-eq">=</span> 47,320 cases a week</div>
+    <div><span class="f-lbl">Pre-build total</span>88,850 + 47,320 <span class="f-eq">=</span> 136,170, rounded to 136,000</div>
+  </div>
+
+  <h3 class="sub-head">Incremental or pulled forward? The three-week check</h3>
+  <p class="section-sub" style="margin-bottom:14px;">The check set the week before, the dome week and the recovery week against a normal week. It splits the lift into new consumption and purchases made early.</p>
+  <div class="metric-row">
+    <div class="metric">
+      <div class="m-val">+271,000</div>
+      <div class="m-lbl">Dome week vs normal, cases</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">~244,000 (~90%)</div>
+      <div class="m-lbl">Incremental consumption</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">~27,000 (~10%)</div>
+      <div class="m-lbl">Purchases pulled forward</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">−8% (−27,000)</div>
+      <div class="m-lbl">Recovery week vs normal</div>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:14px;">
+    <div class="co-label">Rule from the check</div>
+    <p>Plan the next dome's lift as mostly incremental, about 90%. Trim the recovery week by about 8% instead of assuming it returns to normal right away. The dip is the pulled-forward stock: households were using pantry stock bought during the dome.</p>
+  </div>
+
+  <h3 class="sub-head">Updating as the forecast firms up</h3>
+  <div class="three-up">
+    <div class="skill-card">
+      <div class="sk-cat">Daily re-run</div>
+      <div class="sk-head">The forecast reruns each day</div>
+      <div class="sk-body">The model reran each day from the Weather AI anomaly feed as the 7-day weather forecast firmed up.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Allocation</div>
+      <div class="sk-head">Shares re-cut by cluster</div>
+      <div class="sk-body">The allocation was re-cut by cluster each day. Houston's anomaly was revised from +6 to +7 two days out, and its share moved up.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Persistence rule</div>
+      <div class="sk-head">Wait for the third hot day</div>
+      <div class="sk-body">No store-level uplift was applied until the third forecast hot day was confirmed in the 3-day forecast.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 · Results ─────────────────────────────────────────────── -->
+<section id="results" aria-labelledby="results-title">
+  <div class="section-header">
+    <div class="section-label">04 · Results</div>
+    <h2 class="section-title" id="results-title">What the heat dome looked like in the numbers</h2>
+    <p class="section-sub">Validation was out of sample. The forecast was frozen 7 days before the dome and scored against actuals.</p>
+  </div>
+
+  <div class="metric-row" style="margin-bottom:20px;">
+    <div class="metric">
+      <div class="m-val">84% → 96%</div>
+      <div class="m-lbl">Peak in-stock</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">136K cases</div>
+      <div class="m-lbl">Pre-built inside the lead-time gap</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">~4%</div>
+      <div class="m-lbl">Peak-week forecast error</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">67% → fixed</div>
+      <div class="m-lbl">Phoenix over-forecast on absolute temperature</div>
+    </div>
+    <div class="metric">
+      <div class="m-val">~90%</div>
+      <div class="m-lbl">Of the lift was incremental</div>
+    </div>
+  </div>
+
+  <div class="three-up">
+    <div class="skill-card">
+      <div class="sk-cat">Unadjusted baseline</div>
+      <div class="sk-head">−45% (under-forecast)</div>
+      <div class="sk-body">The forecast without the heat adjustment under-forecast the peak week by 45%.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Absolute temperature</div>
+      <div class="sk-head">+18% overall</div>
+      <div class="sk-body">The first model over-forecast the peak week by 18%. Phoenix alone was over by 67%.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Anomaly × duration, by cluster</div>
+      <div class="sk-head">~4%</div>
+      <div class="sk-body">The model used for the dome, scored on the same peak week.</div>
+    </div>
+  </div>
+
+  <div class="two-up" style="margin-top:16px;">
+    <article class="project-card">
+      <div><span class="card-tag tag-em">Peak in-stock</span></div>
+      <h3 class="card-title">Peak in-stock rose from 84% to 96%</h3>
+      <p class="card-desc">The 136,000 cases were pre-built to the 80th percentile and split by cluster share. Stock went where the peak-week need was, not evenly across stores.</p>
+    </article>
+
+    <article class="project-card">
+      <div><span class="card-tag tag-em">Lasting change</span></div>
+      <h3 class="card-title">A reserved surge option now sits in the bottler contract</h3>
+      <p class="card-desc">The next dome starts with a 3-day head start instead of a 3-day gap. The playbook of anomaly, duration and cluster response is reusable for any heat event.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ── 05 · Transfer ────────────────────────────────────────────── -->
+<section id="transfer" aria-labelledby="transfer-title" style="padding-bottom:64px;">
+  <div class="section-header">
+    <div class="section-label">05 · Transfer</div>
+    <h2 class="section-title" id="transfer-title">Why it matters for capacity planning</h2>
+    <p class="section-sub">These principles come from the heat dome. They apply to any capacity commitment made before the demand is known.</p>
+  </div>
+
+  <div class="callout">
+    <div class="co-label">The principle</div>
+    <p>Capacity and long-lead supply are committed before the real shape of demand is visible. A signal that mixes local conditions, early buying and a slow supply response sizes the commitment for demand that will not repeat. Measure each signal against its own baseline, wait for it to persist, and split it before sizing.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px;">
+    <div class="skill-card">
+      <div class="sk-cat">Principle 01</div>
+      <div class="sk-head">Measure against the local normal</div>
+      <div class="sk-body">A region's demand signal means something only against its own baseline. The same temperature can be an event in one place and a normal day in another.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Principle 02</div>
+      <div class="sk-head">Wait for persistence before committing</div>
+      <div class="sk-body">Demand responded on the third day in a row, not the first. Commit once the signal has held, not on the first forecast of a hot day.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Principle 03</div>
+      <div class="sk-head">Split incremental from pulled forward</div>
+      <div class="sk-body">Before sizing the next commitment, separate new consumption from demand bought early. Here about 90% of the lift was new and about 10% was pulled forward.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Principle 04</div>
+      <div class="sk-head">Close the lead-time gap</div>
+      <div class="sk-body">When the lead time is longer than the warning, pre-build the gap or reserve an option in advance. Here the gap was 3 days.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">Principle 05</div>
+      <div class="sk-head">Allocate by share of the peak</div>
+      <div class="sk-body">Give each region its share of the peak-week need, not one national uplift that sends stock to places that do not need it.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong style="color:var(--t1)">Astha Jain</strong>
+  <span>·</span>
+  <a href="../index.html">Portfolio</a>
+  <span>·</span>
+  <a href="../planning-command-center.html">Planning Command Center</a>
+  <span>·</span>
+  <a href="../npi-launch-program.html">NPI Launch Program</a>
+  <span>·</span>
+  <a href="https://linkedin.com/in/asthajain12" target="_blank" rel="noopener">LinkedIn</a>
+  <span>·</span>
+  <a href="https://github.com/asthaj12" target="_blank" rel="noopener">GitHub</a>
+  <span>·</span>
+  <a href="mailto:asthajain.sc@gmail.com">asthajain.sc@gmail.com</a>
+  <div class="footer-note">Figures rounded; data illustrative. © 2026 Astha Jain</div>
+</footer>
+
+</body>
+</html>
