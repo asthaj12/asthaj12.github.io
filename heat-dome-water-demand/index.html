@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Heat-Dome Demand Forecast · Astha Jain</title>
-<meta name="description" content="Case study: forecasting where, when and how much water demand moves in a heat dome at Walmart US, with anomaly and duration by cluster, a 136K-case pre-build inside the bottler lead time, and an incremental vs pulled-forward check."/>
+<title>Leading-Signal Demand Forecasting by Region — Astha Jain</title>
+<meta name="description" content="Case study: forecasting where, when and how much demand moves ahead of an outside signal, shown on a heat dome at Walmart US. Covers anomaly and duration by cluster, a 136K-case pre-build inside the supplier lead time, and an incremental vs pulled-forward check."/>
 <link rel="canonical" href="https://asthaj12.github.io/heat-dome-water-demand/"/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='42' font-family='Arial,Helvetica,sans-serif' font-size='27' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EAJ%3C/text%3E%3C/svg%3E"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Astha Jain"/>
-<meta property="og:title" content="Heat-Dome Demand Forecast · Astha Jain"/>
-<meta property="og:description" content="Case study: forecasting where, when and how much water demand moves in a heat dome at Walmart US, with anomaly and duration by cluster, a 136K-case pre-build inside the bottler lead time, and an incremental vs pulled-forward check."/>
+<meta property="og:title" content="Leading-Signal Demand Forecasting by Region — Astha Jain"/>
+<meta property="og:description" content="Case study: forecasting where, when and how much demand moves ahead of an outside signal, shown on a heat dome at Walmart US. Covers anomaly and duration by cluster, a 136K-case pre-build inside the supplier lead time, and an incremental vs pulled-forward check."/>
 <meta property="og:url" content="https://asthaj12.github.io/heat-dome-water-demand/"/>
 <meta property="og:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta property="og:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Heat-Dome Demand Forecast · Astha Jain"/>
-<meta name="twitter:description" content="Case study: forecasting where, when and how much water demand moves in a heat dome at Walmart US, with anomaly and duration by cluster, a 136K-case pre-build inside the bottler lead time, and an incremental vs pulled-forward check."/>
+<meta name="twitter:title" content="Leading-Signal Demand Forecasting by Region — Astha Jain"/>
+<meta name="twitter:description" content="Case study: forecasting where, when and how much demand moves ahead of an outside signal, shown on a heat dome at Walmart US. Covers anomaly and duration by cluster, a 136K-case pre-build inside the supplier lead time, and an incremental vs pulled-forward check."/>
 <meta name="twitter:image" content="https://asthaj12.github.io/assets/portfolio-share.png"/>
 <meta name="twitter:image:alt" content="Astha Jain. Planning, Programs &amp; Decision Systems."/>
 <style>
@@ -462,7 +462,7 @@ footer a:hover { color: var(--ind-l); }
 
     <a class="nav-link" href="../index.html">← Portfolio</a>
     <a class="nav-link" href="../index.html#projects">Projects</a>
-    <a class="nav-link active" href="#problem">This Case Study</a>
+    <a class="nav-link active" href="#glance">This Case Study</a>
   </div>
 
   <div class="nav-right">
@@ -475,10 +475,11 @@ footer a:hover { color: var(--ind-l); }
 
 <!-- ── Hero ────────────────────────────────────────────────────── -->
 <div class="hero">
-  <div class="hero-eyebrow">Case Study · Weather-Driven Demand Planning</div>
-  <h1>Heat-Dome<br><span class="accent">Demand Forecast</span></h1>
-  <p class="subline">Where, when and how much water demand moves in a heat wave</p>
-  <p class="tagline">Astha built a 7-day forecast for a heat dome over Texas and the Southwest, where demand followed how far heat ran above each region's normal and how many days in a row it held, not the absolute temperature. She pre-built 136,000 cases inside the bottler's lead-time gap, allocated them by cluster, and lifted peak <span style="white-space:nowrap">in-stock</span> from 84% to 96%.</p>
+  <div class="hero-eyebrow">Case study · Customer demand behavior</div>
+  <h1>Leading-Signal Demand Forecasting<br><span class="accent">by Region</span></h1>
+  <p class="subline">When an outside signal moves demand, and moves it differently in each region</p>
+  <p class="tagline" style="margin-bottom:10px;">Forecast where, when and how much demand moves ahead of an external signal, measured against each region's own normal, then pre-build and allocate inside the supplier's lead time. Example: a heat dome over 1,200 stores, peak in-stock 84% → 96%.</p>
+  <p class="data-note" style="font-size:12px;margin:0 0 28px;">Example project: Heat-dome water demand · Walmart US · Summer 2025</p>
 
   <div class="role-strip">
     <span class="role-pill" style="background:#eef2ff;color:#4f46e5;">Walmart US</span>
@@ -488,7 +489,7 @@ footer a:hover { color: var(--ind-l); }
   </div>
 
   <div class="hero-actions">
-    <a class="btn btn-primary" href="#problem">Read the case study →</a>
+    <a class="btn btn-primary" href="#glance">Read the case study →</a>
     <a class="btn btn-ghost" href="../index.html">← Back to portfolio</a>
   </div>
 </div>
@@ -515,151 +516,16 @@ footer a:hover { color: var(--ind-l); }
   <p class="data-note">Figures rounded; data illustrative.</p>
 </div>
 
-<!-- ── 01 · Problem ─────────────────────────────────────────────── -->
-<section id="problem" aria-labelledby="problem-title">
+<!-- ── 01 · At a glance -->
+<section id="glance" aria-labelledby="glance-title">
   <div class="section-header">
-    <div class="section-label">01 · Problem</div>
-    <h2 class="section-title" id="problem-title">Heat looked like one national number. Demand did not.</h2>
-    <p class="section-sub">Demand depended on how far heat ran above each region's normal and on how many days in a row it held. The bottler's surge also arrived after the warning.</p>
+    <div class="section-label">01 · At a glance</div>
+    <h2 class="section-title" id="glance-title">The pattern in three charts</h2>
+    <p class="section-sub">Where demand moved, when it moved, and why supply needed a pre-build.</p>
   </div>
 
-  <div class="two-up">
-    <article class="project-card">
-      <div><span class="card-tag tag-am">Problem A · Where and when</span></div>
-      <h3 class="card-title">The same 106°F high meant different things in two places</h3>
-      <p class="card-desc">Dallas-Fort Worth had a normal late-July high of 96 and a dome high of 106, an anomaly of +10. Phoenix had a normal high of 106 and the same dome high, an anomaly of 0. A national temperature forecast reads both days the same, so it sizes Phoenix for a heat event that did not happen there.</p>
-      <p class="card-desc">Demand also did not respond to the first hot day. It moved on the third day in a row.</p>
-      <div class="chip-row">
-        <span class="chip hi">Dallas anomaly +10</span>
-        <span class="chip">Phoenix anomaly 0</span>
-        <span class="chip">Responds from day 3</span>
-      </div>
-    </article>
-
-    <article class="project-card">
-      <div><span class="card-tag tag-am">Problem B · Lead time</span></div>
-      <h3 class="card-title">The warning came 7 days out. The bottler needed 10.</h3>
-      <p class="card-desc">A surge ordered on the warning would land 10 days later, 3 days after the heat arrived. Normal bottler supply was 400,000 cases a week, and the peak week needed about 607,000.</p>
-      <p class="card-desc">Waiting for the surge would leave the stores short during those 3 days, and short again for the rest of the peak week after it landed.</p>
-      <div class="chip-row">
-        <span class="chip hi">7-day warning</span>
-        <span class="chip">10-day lead time</span>
-        <span class="chip">3 days uncovered</span>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ── 02 · Decision ────────────────────────────────────────────── -->
-<section id="decision" aria-labelledby="decision-title">
-  <div class="section-header">
-    <div class="section-label">02 · Decision</div>
-    <h2 class="section-title" id="decision-title">What to forecast on, and how much to pre-build</h2>
-    <p class="section-sub">Each decision changed the question before any stock was ordered.</p>
-  </div>
-
-  <div class="two-up">
-    <article class="decide-card">
-      <div><span class="card-tag tag-ind">Decision A · Forecast driver</span></div>
-      <h3 class="card-title">Forecast on anomaly × duration, by cluster</h3>
-      <div class="dc-block">
-        <div class="dc-lbl">Diagnose</div>
-        <p>Astha diagnosed the first model's error. It used absolute temperature and over-forecast Phoenix by 67%. Phoenix's 106°F dome high was its normal, so the model treated a normal day as a heat event. Switching to anomaly by cluster fixed it.</p>
-      </div>
-      <div class="dc-block">
-        <div class="dc-lbl">Decide</div>
-        <div class="opt-stack">
-          <div class="opt no">
-            <span class="opt-mark" aria-hidden="true">✕</span>
-            <span><strong>Rejected:</strong> absolute temperature with one national uplift, the same % for every store. That sends Phoenix stock it does not need and starves Dallas.</span>
-          </div>
-          <div class="opt yes">
-            <span class="opt-mark" aria-hidden="true">✓</span>
-            <span><strong>Picked:</strong> anomaly against each region's own normal, times a duration factor, with a response per degree set for each cluster.</span>
-          </div>
-        </div>
-      </div>
-      <div class="dc-foot">
-        <span>Astha owned the water plan</span>
-        <span class="pin">Peak-week error +18% → ~4%</span>
-      </div>
-    </article>
-
-    <article class="decide-card">
-      <div><span class="card-tag tag-ind">Decision B · Pre-build and allocation</span></div>
-      <h3 class="card-title">Pre-build 136K cases to the 80th percentile and allocate by cluster share</h3>
-      <div class="dc-block">
-        <div class="dc-lbl">Diagnose</div>
-        <p>Astha diagnosed the lead-time gap. The surge would land 3 days after the heat, leaving about 88,850 cases uncovered over those days. Even after it landed, supply stayed 47,320 cases a week short of the peak-week need.</p>
-      </div>
-      <div class="dc-block">
-        <div class="dc-lbl">Decide</div>
-        <div class="opt-stack">
-          <div class="opt no">
-            <span class="opt-mark" aria-hidden="true">✕</span>
-            <span><strong>Rejected:</strong> wait for the bottler surge. It lands 3 days after the heat.</span>
-          </div>
-          <div class="opt no">
-            <span class="opt-mark" aria-hidden="true">✕</span>
-            <span><strong>Rejected:</strong> pre-build to the average case or the heavy case. The average leaves stores short in every outcome above it, and the heavy case carries more stock than the 80th percentile needs.</span>
-          </div>
-          <div class="opt yes">
-            <span class="opt-mark" aria-hidden="true">✓</span>
-            <span><strong>Picked:</strong> pre-build to the 80th percentile and split it by each cluster's share of peak-week demand. Water keeps and sells in the recovery week, so overstock is cheap and a stockout loses sales.</span>
-          </div>
-        </div>
-      </div>
-      <div class="dc-foot">
-        <span>Astha owned the water plan</span>
-        <span class="pin">136K cases pre-built</span>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ── 03 · Method ──────────────────────────────────────────────── -->
-<section id="method" aria-labelledby="method-title">
-  <div class="section-header">
-    <div class="section-label">03 · Method</div>
-    <h2 class="section-title" id="method-title">Where, when and how much demand moves</h2>
-    <p class="section-sub">Three effects set each cluster's response. Name each one before setting a stock number.</p>
-  </div>
-
-  <div class="callout">
-    <div class="co-label">Plain-words version</div>
-    <p>The forecast reads heat as a departure from normal, not as a temperature. It asks how far above the local normal the high is, whether the heat has lasted long enough to move buying, and how much each cluster buys per degree of heat. A 106°F day is a major event in Dallas and a normal day in Phoenix.</p>
-  </div>
-
-  <div class="three-up" style="margin-top:14px;">
-    <div class="skill-card">
-      <div class="sk-cat">Where</div>
-      <div class="sk-head">Anomaly vs local normal</div>
-      <div class="sk-body">The dome high minus the 30-year normal high for that date and place. Dallas: 106 − 96 = +10. Phoenix: 106 − 106 = 0, until the dome reached 110 (+4) late in the week.</div>
-    </div>
-    <div class="skill-card">
-      <div class="sk-cat">When</div>
-      <div class="sk-head">Duration factor</div>
-      <div class="sk-body">Day 1 of a run of hot days counts 0, day 2 counts 0.5, and day 3 onward counts 1.0. Demand moved on the third day in a row, not the first.</div>
-    </div>
-    <div class="skill-card">
-      <div class="sk-cat">How much</div>
-      <div class="sk-head">Cluster response per degree</div>
-      <div class="sk-body">Dallas responds at 0.15 per degree of anomaly, so +10 gives 1 + 0.15 × 10 = 2.5x on full-effect days.</div>
-    </div>
-  </div>
-
-  <div class="formula" style="margin-top:14px;" aria-label="Multiplier, peak-week demand and allocation shares">
-    <div><span class="f-lbl">Multiplier</span>1 <span class="f-eq">+</span> response × anomaly × duration</div>
-    <div><span class="f-lbl">Store, normal week</span>40 cases a day × 7 days = 280 cases</div>
-    <div><span class="f-lbl">Dallas-Fort Worth</span>240 × 280 × 2.5 = 168,000 cases</div>
-    <div><span class="f-lbl">Houston</span>210 × 280 × 2.1 = 123,480 cases</div>
-    <div><span class="f-lbl">Phoenix</span>180 × 280 × 1.2 = 60,480 cases</div>
-    <div><span class="f-lbl">Rest of Texas</span>570 × 280 × 1.6 = 255,360 cases</div>
-    <div><span class="f-lbl">Peak week, total</span>607,320 cases, against 336,000 in a normal week</div>
-    <div><span class="f-lbl">Allocation share</span>Dallas-Fort Worth ~28% · Houston ~20% · Phoenix ~10% · Rest of Texas ~42%</div>
-  </div>
-
-  <h3 class="sub-head">Chart 1 · Peak-week multiple by cluster</h3>
+  <h3 class="sub-head" style="margin-top:0;">Chart 1 · Peak-week multiple by cluster</h3>
+  <p class="section-sub" style="margin:0 0 14px;"><strong style="color:var(--t1);">Where:</strong> the same 106°F was +10 above normal in Dallas and normal in Phoenix.</p>
   <figure class="figure" aria-labelledby="fig1-title">
     <div class="figure-hd">
       <div class="figure-title" id="fig1-title">Peak-week demand against a normal week, by cluster</div>
@@ -709,6 +575,7 @@ footer a:hover { color: var(--ind-l); }
   </figure>
 
   <h3 class="sub-head">Chart 2 · Daily index over a 7-day dome, then the recovery week</h3>
+  <p class="section-sub" style="margin:0 0 14px;"><strong style="color:var(--t1);">When:</strong> demand moved on the third hot day in a row, then dipped about 8% in the recovery week.</p>
   <figure class="figure" aria-labelledby="fig2-title">
     <div class="figure-hd">
       <div class="figure-title" id="fig2-title">Dallas-Fort Worth daily demand index, normal = 100</div>
@@ -777,6 +644,7 @@ footer a:hover { color: var(--ind-l); }
   </figure>
 
   <h3 class="sub-head">Chart 3 · Supply and demand in the peak week</h3>
+  <p class="section-sub" style="margin:0 0 14px;"><strong style="color:var(--t1);">How much and when to commit:</strong> the 10-day bottler lead time left a 3-day gap, covered by a 136,000-case pre-build.</p>
   <figure class="figure" aria-labelledby="fig3-title">
     <div class="figure-hd">
       <div class="figure-title" id="fig3-title">Bottler supply against peak-week need, in cases a week</div>
@@ -833,6 +701,152 @@ footer a:hover { color: var(--ind-l); }
     </div>
     <figcaption>Illustrative. The shaded gap is 3 of 7 days at the excess over bottler supply: 3/7 × (607,320 − 400,000) ≈ 88,850 cases. The pre-build covers that gap and the weekly shortfall after the surge lands.</figcaption>
   </figure>
+</section>
+
+<!-- ── 02 · The situation ─────────────────────────────────────────────── -->
+<section id="problem" aria-labelledby="problem-title">
+  <div class="section-header">
+    <div class="section-label">02 · The situation</div>
+    <h2 class="section-title" id="problem-title">Demand that follows a signal, not the calendar</h2>
+    <p class="section-sub">An outside signal, such as weather, a policy date or an event, shifts customer buying before sales data shows it. The same signal means different things in different regions. Supply has to be committed before the signal is certain.</p>
+  </div>
+
+  <p class="sub-head" style="margin-top:0;">Example: heat-dome water demand</p>
+  <div class="two-up">
+    <article class="project-card">
+      <div><span class="card-tag tag-am">Problem A · Where and when</span></div>
+      <h3 class="card-title">The same 106°F high meant different things in two places</h3>
+      <p class="card-desc">Dallas-Fort Worth had a normal late-July high of 96 and a dome high of 106, an anomaly of +10. Phoenix had a normal high of 106 and the same dome high, an anomaly of 0. A national temperature forecast reads both days the same, so it sizes Phoenix for a heat event that did not happen there.</p>
+      <p class="card-desc">Demand also did not respond to the first hot day. It moved on the third day in a row.</p>
+      <div class="chip-row">
+        <span class="chip hi">Dallas anomaly +10</span>
+        <span class="chip">Phoenix anomaly 0</span>
+        <span class="chip">Responds from day 3</span>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div><span class="card-tag tag-am">Problem B · Lead time</span></div>
+      <h3 class="card-title">The warning came 7 days out. The bottler needed 10.</h3>
+      <p class="card-desc">A surge ordered on the warning would land 10 days later, 3 days after the heat arrived. Normal bottler supply was 400,000 cases a week, and the peak week needed about 607,000.</p>
+      <p class="card-desc">Waiting for the surge would leave the stores short during those 3 days, and short again for the rest of the peak week after it landed.</p>
+      <div class="chip-row">
+        <span class="chip hi">7-day warning</span>
+        <span class="chip">10-day lead time</span>
+        <span class="chip">3 days uncovered</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 03 · Decision ────────────────────────────────────────────── -->
+<section id="decision" aria-labelledby="decision-title">
+  <div class="section-header">
+    <div class="section-label">03 · Decision</div>
+    <h2 class="section-title" id="decision-title">What to forecast on, and how much to pre-build</h2>
+    <p class="section-sub">Each decision changed the question before any stock was ordered.</p>
+  </div>
+
+  <div class="two-up">
+    <article class="decide-card">
+      <div><span class="card-tag tag-ind">Decision A · Forecast driver</span></div>
+      <h3 class="card-title">Forecast on anomaly × duration, by cluster</h3>
+      <div class="dc-block">
+        <div class="dc-lbl">Diagnose</div>
+        <p>Astha diagnosed the first model's error. It used absolute temperature and over-forecast Phoenix by 67%. Phoenix's 106°F dome high was its normal, so the model treated a normal day as a heat event. Switching to anomaly by cluster fixed it.</p>
+      </div>
+      <div class="dc-block">
+        <div class="dc-lbl">Decide</div>
+        <div class="opt-stack">
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> absolute temperature with one national uplift, the same % for every store. That sends Phoenix stock it does not need and starves Dallas.</span>
+          </div>
+          <div class="opt yes">
+            <span class="opt-mark" aria-hidden="true">✓</span>
+            <span><strong>Picked:</strong> anomaly against each region's own normal, times a duration factor, with a response per degree set for each cluster.</span>
+          </div>
+        </div>
+      </div>
+      <div class="dc-foot">
+        <span>Astha owned the water plan</span>
+        <span class="pin">Peak-week error +18% → ~4%</span>
+      </div>
+    </article>
+
+    <article class="decide-card">
+      <div><span class="card-tag tag-ind">Decision B · Pre-build and allocation</span></div>
+      <h3 class="card-title">Pre-build 136K cases to the 80th percentile and allocate by cluster share</h3>
+      <div class="dc-block">
+        <div class="dc-lbl">Diagnose</div>
+        <p>Astha diagnosed the lead-time gap. The surge would land 3 days after the heat, leaving about 88,850 cases uncovered over those days. Even after it landed, supply stayed 47,320 cases a week short of the peak-week need.</p>
+      </div>
+      <div class="dc-block">
+        <div class="dc-lbl">Decide</div>
+        <div class="opt-stack">
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> wait for the bottler surge. It lands 3 days after the heat.</span>
+          </div>
+          <div class="opt no">
+            <span class="opt-mark" aria-hidden="true">✕</span>
+            <span><strong>Rejected:</strong> pre-build to the average case or the heavy case. The average leaves stores short in every outcome above it, and the heavy case carries more stock than the 80th percentile needs.</span>
+          </div>
+          <div class="opt yes">
+            <span class="opt-mark" aria-hidden="true">✓</span>
+            <span><strong>Picked:</strong> pre-build to the 80th percentile and split it by each cluster's share of peak-week demand. Water keeps and sells in the recovery week, so overstock is cheap and a stockout loses sales.</span>
+          </div>
+        </div>
+      </div>
+      <div class="dc-foot">
+        <span>Astha owned the water plan</span>
+        <span class="pin">136K cases pre-built</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 04 · Method ──────────────────────────────────────────────── -->
+<section id="method" aria-labelledby="method-title">
+  <div class="section-header">
+    <div class="section-label">04 · Method</div>
+    <h2 class="section-title" id="method-title">Where, when and how much demand moves</h2>
+    <p class="section-sub">Three effects set each cluster's response. Name each one before setting a stock number.</p>
+  </div>
+
+  <div class="callout">
+    <div class="co-label">Plain-words version</div>
+    <p>The forecast reads heat as a departure from normal, not as a temperature. It asks how far above the local normal the high is, whether the heat has lasted long enough to move buying, and how much each cluster buys per degree of heat. A 106°F day is a major event in Dallas and a normal day in Phoenix.</p>
+  </div>
+
+  <div class="three-up" style="margin-top:14px;">
+    <div class="skill-card">
+      <div class="sk-cat">Where</div>
+      <div class="sk-head">Anomaly vs local normal</div>
+      <div class="sk-body">The dome high minus the 30-year normal high for that date and place. Dallas: 106 − 96 = +10. Phoenix: 106 − 106 = 0, until the dome reached 110 (+4) late in the week.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">When</div>
+      <div class="sk-head">Duration factor</div>
+      <div class="sk-body">Day 1 of a run of hot days counts 0, day 2 counts 0.5, and day 3 onward counts 1.0. Demand moved on the third day in a row, not the first.</div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-cat">How much</div>
+      <div class="sk-head">Cluster response per degree</div>
+      <div class="sk-body">Dallas responds at 0.15 per degree of anomaly, so +10 gives 1 + 0.15 × 10 = 2.5x on full-effect days.</div>
+    </div>
+  </div>
+
+  <div class="formula" style="margin-top:14px;" aria-label="Multiplier, peak-week demand and allocation shares">
+    <div><span class="f-lbl">Multiplier</span>1 <span class="f-eq">+</span> response × anomaly × duration</div>
+    <div><span class="f-lbl">Store, normal week</span>40 cases a day × 7 days = 280 cases</div>
+    <div><span class="f-lbl">Dallas-Fort Worth</span>240 × 280 × 2.5 = 168,000 cases</div>
+    <div><span class="f-lbl">Houston</span>210 × 280 × 2.1 = 123,480 cases</div>
+    <div><span class="f-lbl">Phoenix</span>180 × 280 × 1.2 = 60,480 cases</div>
+    <div><span class="f-lbl">Rest of Texas</span>570 × 280 × 1.6 = 255,360 cases</div>
+    <div><span class="f-lbl">Peak week, total</span>607,320 cases, against 336,000 in a normal week</div>
+    <div><span class="f-lbl">Allocation share</span>Dallas-Fort Worth ~28% · Houston ~20% · Phoenix ~10% · Rest of Texas ~42%</div>
+  </div>
 
   <div class="formula" style="margin-top:14px;" aria-label="Pre-build sizing">
     <div><span class="f-lbl">Gap, first 3 days</span>3 ÷ 7 × (607,320 − 400,000) <span class="f-eq">≈</span> 88,850 cases</div>
@@ -870,7 +884,7 @@ footer a:hover { color: var(--ind-l); }
     <div class="skill-card">
       <div class="sk-cat">Daily re-run</div>
       <div class="sk-head">The forecast reruns each day</div>
-      <div class="sk-body">The model reran each day from the Weather AI anomaly feed as the 7-day weather forecast firmed up.</div>
+      <div class="sk-body">The model reran each day from the weather anomaly feed as the 7-day weather forecast firmed up.</div>
     </div>
     <div class="skill-card">
       <div class="sk-cat">Allocation</div>
@@ -885,10 +899,10 @@ footer a:hover { color: var(--ind-l); }
   </div>
 </section>
 
-<!-- ── 04 · Results ─────────────────────────────────────────────── -->
+<!-- ── 05 · Results ─────────────────────────────────────────────── -->
 <section id="results" aria-labelledby="results-title">
   <div class="section-header">
-    <div class="section-label">04 · Results</div>
+    <div class="section-label">05 · Results</div>
     <h2 class="section-title" id="results-title">What the heat dome looked like in the numbers</h2>
     <p class="section-sub">Validation was out of sample. The forecast was frozen 7 days before the dome and scored against actuals.</p>
   </div>
@@ -949,12 +963,12 @@ footer a:hover { color: var(--ind-l); }
   </div>
 </section>
 
-<!-- ── 05 · Transfer ────────────────────────────────────────────── -->
+<!-- ── 06 · Where this applies ────────────────────────────────────────────── -->
 <section id="transfer" aria-labelledby="transfer-title" style="padding-bottom:64px;">
   <div class="section-header">
-    <div class="section-label">05 · Transfer</div>
+    <div class="section-label">06 · Where this applies</div>
     <h2 class="section-title" id="transfer-title">Why it matters for capacity planning</h2>
-    <p class="section-sub">These principles come from the heat dome. They apply to any capacity commitment made before the demand is known.</p>
+    <p class="section-sub">Any demand that responds to an outside signal: weather, policy dates, events, launches, or capacity requests that arrive with a lead time. These principles come from the heat dome.</p>
   </div>
 
   <div class="callout">
